@@ -13,15 +13,30 @@ namespace EPBLib
         #region Types
         public enum BluePrintType
         {
-            BA = 0x02,
-            SV = 0x04,
-            CV = 0x08,
-            HV = 0x10
+            Voxel         = 0x00,
+            Base          = 0x02,
+            SmallVessel   = 0x04,
+            CapitalVessel = 0x08,
+            HoverVessel   = 0x10
+        }
+
+        public enum MetaKey
+        {
+            CreatorID    = 0x0b,
+            CreatorName  = 0x0a,
+            OwnerId      = 0x0d,
+            OwnerName    = 0x0c,
+            UnknownMeta1 = 0x10,
+            UnknownMeta2 = 0x12
+        }
+        public enum MetaType
+        {
+            String = 0x00000000,
+            Unknown = 0x05000000
         }
         #endregion Types
 
-        protected static readonly byte[] DataStartPattern = new byte[] {0x03, 0x04, 0x14, 0x00, 0x00, 0x00, 0x08, 0x00};
-        protected static readonly byte[] PK = new byte[] { 0x50, 0x4b };
+        protected static readonly byte[] ZipDataStartPattern = new byte[] {0x00, 0x00, 0x03, 0x04, 0x14, 0x00, 0x00, 0x00, 0x08, 0x00};
 
         #region Fields
         public UInt32 Version;
@@ -29,7 +44,6 @@ namespace EPBLib
         public UInt32 Width;
         public UInt32 Height;
         public UInt32 Depth;
-        public Byte[] Metadata;
         #endregion Fields
 
         public EPB (string path)
@@ -78,19 +92,96 @@ namespace EPBLib
             Console.WriteLine($"Height:   {Height}");
             Console.WriteLine($"Depth:    {Depth}");
 
-            // TODO: This is funky stuff, should figure out the proper format instead:
+            byte[] unknown01 = reader.ReadBytes(132);
+            bytesLeft -= 132;
+            Console.WriteLine($"Unknown01: {BitConverter.ToString(unknown01).Replace("-", "")}");
+
+            UInt32 nMeta = reader.ReadUInt32(); //TODO: Something fishy here! In some files this is one short!
+            bytesLeft -= 4;
+            Console.WriteLine($"nMeta:   {nMeta}");
+            MetaKey metaKey;
+            MetaType metaType;
+            for (int i = 0; i < nMeta; i++)
+            {
+                metaKey = (MetaKey)reader.ReadUInt32();
+                metaType = (MetaType)reader.ReadUInt32();
+                bytesLeft -= 4 + 4;
+                switch (metaType)
+                {
+                    case MetaType.String:
+                        string metaStringValue = "";
+                        bytesLeft = ReadString(reader, bytesLeft, out metaStringValue);
+                        Console.WriteLine($"{metaKey,-15}: \"{metaStringValue}\"");
+                        break;
+                    case MetaType.Unknown:
+                        byte[] unknownMeta2 = reader.ReadBytes(4 * 5);
+                        bytesLeft -= 4 * 5;
+                        Console.WriteLine($"{metaKey,-15}: metaType={metaType} {BitConverter.ToString(unknownMeta2).Replace("-", "")}");
+                        break;
+                }                
+            }
+
+            byte[] unknown03 = reader.ReadBytes(19);
+            bytesLeft -= 19;
+            Console.WriteLine($"Unknown03: {BitConverter.ToString(unknown03).Replace("-", "")}");
+
+            if (Version <= 12)
+            {
+                byte[] unknown04 = reader.ReadBytes(5);
+                bytesLeft -= 5;
+                Console.WriteLine($"Unknown04: 5 {BitConverter.ToString(unknown04).Replace("-", "")}");
+            }
+            else
+            {
+                UInt16 nUnknown04 = reader.ReadUInt16();
+                bytesLeft -= 2;
+                int bytesToRead = nUnknown04 * 6 - 4; // First value is 2 bytes, the rest are 6 bytes each
+                byte[] unknown04 = reader.ReadBytes(bytesToRead);
+                bytesLeft -= bytesToRead;
+                Console.WriteLine($"Unknown04: {nUnknown04:x4} {BitConverter.ToString(unknown04).Replace("-", "")}");
+            }
+
+            byte[] unknown05 = reader.ReadBytes(5);
+            bytesLeft -= 5;
+            Console.WriteLine($"Unknown05: {BitConverter.ToString(unknown05).Replace("-", "")}");
+
+            UInt16 nGroups = reader.ReadUInt16();
+            bytesLeft -= 2;
+            Console.WriteLine($"Groups ({nGroups})");
+            for (int g = 0; g < nGroups; g++)
+            {
+                string groupName = "";
+                bytesLeft = ReadString(reader, bytesLeft, out groupName);
+                UInt16 groupUnknown01 = reader.ReadUInt16();
+                UInt16 nDevicesInGroup = reader.ReadUInt16();
+                bytesLeft -= 2 + 2;
+                Console.WriteLine($"    {groupName} ({groupUnknown01:x4})");
+                for (int d = 0; d < nDevicesInGroup; d++)
+                {
+                    UInt32 deviceUnknown01 = reader.ReadUInt32();
+                    bytesLeft -= 4;
+                    string deviceName = "";
+                    bytesLeft = ReadString(reader, bytesLeft, out deviceName);
+                    Console.WriteLine($"        device: {deviceUnknown01:x8} \"{deviceName}\"");
+                }
+            }
+
+            // Here comes a block of unknown length, so read the rest and do some precarious searching for things:
             byte[] buf = reader.ReadBytes((int)bytesLeft);
-            int dataStart = buf.IndexOf(DataStartPattern);
+            int dataStart;
+
+            dataStart = buf.IndexOf(ZipDataStartPattern);
             if (dataStart == -1)
             {
-                throw new Exception("ReadHeader: Unable to locate dataStart.");
+                throw new Exception("ReadHeader: Unable to locate ZipDataStart.");
             }
-            Metadata = buf.Take(dataStart).ToArray();
+            byte[] unknown8 = buf.Take(dataStart).ToArray();
             bytesLeft -= dataStart;
-//            Console.WriteLine(BitConverter.ToString(Metadata).Replace("-", ""));
+            Console.WriteLine($"BeforeZIP: {BitConverter.ToString(unknown8).Replace("-", "")}");
 
-            byte[] zippedData = PK.Concat(buf.Skip(dataStart).Take((int)bytesLeft)).ToArray();
-
+            byte[] zippedData = buf.Skip(dataStart).Take((int)bytesLeft).ToArray();
+            zippedData[0] = 0x50;
+            zippedData[1] = 0x4b;
             using (ZipFile zf = new ZipFile(new MemoryStream(zippedData)))
             {
                 zf.IsStreamOwner = true;
@@ -111,6 +202,13 @@ namespace EPBLib
                     }
                 }
             }
+        }
+
+        protected long ReadString(BinaryReader reader, long bytesLeft, out string s)
+        {
+            byte len = reader.ReadByte();
+            s = (len == 0) ? "" : System.Text.Encoding.ASCII.GetString(reader.ReadBytes(len));
+            return bytesLeft;
         }
 
         protected void ReadBlocks(BinaryReader reader, long length)
@@ -180,17 +278,28 @@ namespace EPBLib
                 return b - 8;
             });
 
-            int unknown7Count = 0;
-            bytesLeft = ReadMatrix("Unknown7", reader, length, (r, x, y, z, b) =>
+            if (Version >= 20)
             {
-                byte unknown71 = r.ReadByte();
-                byte unknown72 = r.ReadByte();
-                byte unknown73 = r.ReadByte();
-                byte unknown74 = r.ReadByte();
-                unknown7Count++;
-                Console.WriteLine($"    {unknown7Count} ({x}, {y}, {z}): 0x{unknown71:x2} 0x{unknown72:x2} 0x{unknown73:x2} 0x{unknown74:x2}");
-                return b - 4;
-            });
+                int unknown7Count = 0;
+                bytesLeft = ReadMatrix("Unknown7", reader, length, (r, x, y, z, b) =>
+                {
+                    byte unknown71 = r.ReadByte();
+                    unknown7Count++;
+                    Console.WriteLine($"    {unknown7Count} ({x}, {y}, {z}): 0x{unknown71:x2}");
+                    return b - 1;
+                });
+            }
+            else
+            {
+                int unknown7Count = 0;
+                bytesLeft = ReadMatrix("Unknown7", reader, length, (r, x, y, z, b) =>
+                {
+                    UInt32 unknown71 = r.ReadUInt32();
+                    unknown7Count++;
+                    Console.WriteLine($"    {unknown7Count} ({x}, {y}, {z}): 0x{unknown71:x8}");
+                    return b - 4;
+                });
+            }
 
             int symbolCount = 0;
             bytesLeft = ReadMatrix("Symbol", reader, length, (r, x, y, z, b) =>
