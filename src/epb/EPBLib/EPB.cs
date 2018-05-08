@@ -22,31 +22,101 @@ namespace EPBLib
 
         public enum MetaKey
         {
-            CreatorID    = 0x0b,
-            CreatorName  = 0x0a,
-            OwnerId      = 0x0d,
-            OwnerName    = 0x0c,
-            UnknownMeta1 = 0x10,
-            UnknownMeta2 = 0x12
+            UnknownMetax01 = 0x01,
+            UnknownMetax03 = 0x03,
+            UnknownMetax04 = 0x04,
+            UnknownMetax05 = 0x05,
+            UnknownMetax06 = 0x06,
+            UnknownMetax07 = 0x07,
+            UnknownMetax08 = 0x08,
+            UnknownMetax09 = 0x09,
+            CreatorName    = 0x0a,
+            CreatorID      = 0x0b,
+            OwnerName      = 0x0c,
+            OwnerId        = 0x0d,
+            UnknownMetax0e = 0x0e,
+            UnknownMetax0f = 0x0f,
+            UnknownMetax10 = 0x10,
+            UnknownMetax11 = 0x11,
+            UnknownMetax12 = 0x12
         }
         public enum MetaType
         {
-            String = 0x00000000,
-            Unknown = 0x05000000
+            String     = 0x00000000,
+            Unknownx01 = 0x01000000,
+            Unknownx02 = 0x02000000,
+            Unknownx03 = 0x03000000,
+            Unknownx04 = 0x04000000,
+            Unknownx05 = 0x05000000
         }
         #endregion Types
 
+        protected static readonly UInt32 Identifier = 0x78945245;
+        protected static readonly byte[] BoilerPlate_Unknown01 = new byte[]
+        {
+            0x01, 0x00, 0x10, 0x00, 0x11, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x03, 0x00, 0x00, 0x00, 0x00,
+            0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x0e, 0x00, 0x00, 0x00, 0x00,
+            0x00, 0x00, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x03,
+            0x00, 0x00, 0x00, 0x00, 0x00, 0x05, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x04,
+            0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00, 0x00, 0x00,
+            0x00, 0x00, 0x00, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+            0x00, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x09, 0x00, 0x00, 0x00, 0x00, 0x00,
+            0x00, 0x05, 0x94, 0x90, 0x35, 0xdf, 0x0a, 0xb2, 0xd5, 0x88, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00,
+            0x00, 0x00, 0x02, 0x4a
+        };
+        protected static readonly byte[] BoilerPlate_UnknownXX = new byte[]
+        {
+            0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+            0x01, 0x00,
+            0x2e, 0x02,
+            0x01, 0x00, 0x00, 0x00, 0x04
+        };
         protected static readonly byte[] ZipDataStartPattern = new byte[] {0x00, 0x00, 0x03, 0x04, 0x14, 0x00, 0x00, 0x00, 0x08, 0x00};
 
-        #region Fields
-        public UInt32 Version;
-        public BluePrintType Type;
-        public UInt32 Width;
-        public UInt32 Height;
-        public UInt32 Depth;
-        #endregion Fields
+        #region Properties
+        public UInt32 Version { get; protected set; }
+        public BluePrintType Type { get; protected set; }
+        public UInt32 Width { get; protected set; }
+        public UInt32 Height { get; protected set; }
+        public UInt32 Depth { get; protected set; }
+
+        public string CreatorId { get; set; }
+        public string CreatorName { get; set; }
+        public string OwnerId { get; set; }
+        public string OwnerName { get; set; }
+
+        #endregion Properties
+
+        public EPB (BluePrintType type, UInt32 width, UInt32 height, UInt32 depth, string creatorId, string creatorName, string ownerId, string ownerName)
+        {
+            Version     = 20;
+            Type        = type;
+            Width       = width;
+            Height      = height;
+            Depth       = depth;
+            CreatorId   = creatorId;
+            CreatorName = creatorName;
+            OwnerId     = ownerId;
+            OwnerName   = ownerName;
+        }
 
         public EPB (string path)
+        {
+            Read(path);
+        }
+
+        public void Write (string path)
+        {
+            using (FileStream stream = File.Create(path))
+            {
+                using (BinaryWriter writer = new BinaryWriter(stream))
+                {
+                    WriteFile(writer);
+                }
+            }
+        }
+
+        public void Read (string path)
         {
             using (FileStream stream = File.OpenRead(path))
             {
@@ -66,12 +136,92 @@ namespace EPBLib
             }
         }
 
+        protected void WriteFile(BinaryWriter writer)
+        {
+            writer.Write(Identifier);
+            writer.Write(Version);
+            writer.Write((byte)Type);
+            writer.Write(Width);
+            writer.Write(Height);
+            writer.Write(Depth);
+            writer.Write(BoilerPlate_Unknown01);
+            writer.Write((UInt32)6); //nMeta;
+            WriteMeta(writer, MetaKey.CreatorID, CreatorId);
+            WriteMeta(writer, MetaKey.CreatorName, CreatorName);
+            WriteMeta(writer, MetaKey.OwnerId, OwnerId);
+            WriteMeta(writer, MetaKey.OwnerName, OwnerName);
+            WriteMeta(writer, MetaKey.UnknownMetax10, "");
+            WriteMeta(writer, MetaKey.UnknownMetax12, new byte[] { 0x00, 0x80, 0x80, 0x80, 0x00, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01 });
+            writer.Write(BoilerPlate_UnknownXX);
+            writer.Write((UInt16)0); //nGroups
+            byte[] blockBuffer = CreateBlocks();
+            byte[] zipBuffer = CreateZIP(blockBuffer, "0");
+            zipBuffer[0] = 0x00;
+            zipBuffer[1] = 0x00;
+            writer.Write(zipBuffer);
+        }
+
+        protected void WriteMeta(BinaryWriter writer, MetaKey key, string value)
+        {
+            writer.Write((UInt32)key);
+            writer.Write((UInt32)0);
+            WriteString(writer, value);
+        }
+        protected void WriteMeta(BinaryWriter writer, MetaKey key, byte[] value)
+        {
+            writer.Write((UInt32)key);
+            writer.Write((UInt32)0x05000000);
+            writer.Write (value);
+        }
+
+        protected void WriteString (BinaryWriter writer, string s)
+        {
+            byte[] buf = System.Text.Encoding.ASCII.GetBytes(s);
+            writer.Write((byte)buf.Length);
+            writer.Write(buf);
+        }
+
+        public byte[] CreateZIP (byte[] data, string zipEntryName)
+        {
+            byte[] zip;
+            using (MemoryStream outputMemStream = new MemoryStream())
+            {
+                using (MemoryStream memStreamIn = new MemoryStream(data))
+                {
+                    ZipOutputStream zipStream = new ZipOutputStream(outputMemStream);
+                    ZipEntry newEntry = new ZipEntry(zipEntryName);
+                    newEntry.DateTime = DateTime.Now;
+                    newEntry.CompressionMethod = CompressionMethod.Deflated;
+                    newEntry.Size = data.Length;         // If the size is not set, it will force zip64! Zip64 is not supported by Empyrion
+                    zipStream.PutNextEntry(newEntry);
+                    StreamUtils.Copy(memStreamIn, zipStream, new byte[4096]);
+                    zipStream.CloseEntry();
+                    zipStream.IsStreamOwner = false;    // False stops the Close also Closing the underlying stream.
+                    zipStream.Close();                  // Must finish the ZipOutputStream before using outputMemStream.
+                }
+                outputMemStream.Position = 0;
+                zip = outputMemStream.ToArray();
+            }
+            return zip;
+        }
+
+        protected byte[] CreateBlocks()
+        {
+            return new byte[]
+            {
+                0x01, 0x00, 0x00, 0x00, 0x01, 0x2e, 0x0a, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x01, 0x7f,
+                0x01, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x01,
+                0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+            };
+        }
+
         protected void ReadFile(BinaryReader reader, long fileSize)
         {
             long bytesLeft = fileSize;
  
             UInt32 identifier = reader.ReadUInt32();
-            if (identifier != 0x78945245)
+            if (identifier != Identifier)
             {
                 throw new Exception($"Unknown file identifier. 0x{identifier:x4}");
             }
@@ -84,21 +234,18 @@ namespace EPBLib
             Width = reader.ReadUInt32();
             Height = reader.ReadUInt32();
             Depth = reader.ReadUInt32();
-            bytesLeft -= 4 + 4 + 1 + 4 + 4 + 4;
+            UInt16 unknown01 = reader.ReadUInt16();
+            UInt16 nMeta     = reader.ReadUInt16();
+            bytesLeft -= 4 + 4 + 1 + 4 + 4 + 4 + 2 + 2;
 
             Console.WriteLine($"Version:  {Version}");
             Console.WriteLine($"Type:     {Type}");
             Console.WriteLine($"Width:    {Width}");
             Console.WriteLine($"Height:   {Height}");
             Console.WriteLine($"Depth:    {Depth}");
+            Console.WriteLine($"Unkown01: {unknown01}");
+            Console.WriteLine($"nMeta:    {nMeta}");
 
-            byte[] unknown01 = reader.ReadBytes(132);
-            bytesLeft -= 132;
-            Console.WriteLine($"Unknown01: {BitConverter.ToString(unknown01).Replace("-", "")}");
-
-            UInt32 nMeta = reader.ReadUInt32(); //TODO: Something fishy here! In some files this is one short!
-            bytesLeft -= 4;
-            Console.WriteLine($"nMeta:   {nMeta}");
             MetaKey metaKey;
             MetaType metaType;
             for (int i = 0; i < nMeta; i++)
@@ -106,29 +253,49 @@ namespace EPBLib
                 metaKey = (MetaKey)reader.ReadUInt32();
                 metaType = (MetaType)reader.ReadUInt32();
                 bytesLeft -= 4 + 4;
+                byte[] metaBuf;
                 switch (metaType)
                 {
                     case MetaType.String:
-                        string metaStringValue = "";
-                        bytesLeft = ReadString(reader, bytesLeft, out metaStringValue);
+                        bytesLeft = ReadString(reader, bytesLeft, out var metaStringValue);
                         Console.WriteLine($"{metaKey,-15}: \"{metaStringValue}\"");
                         break;
-                    case MetaType.Unknown:
-                        byte[] unknownMeta2 = reader.ReadBytes(4 * 5);
-                        bytesLeft -= 4 * 5;
-                        Console.WriteLine($"{metaKey,-15}: metaType={metaType} {BitConverter.ToString(unknownMeta2).Replace("-", "")}");
+                    case MetaType.Unknownx01:
+                        metaBuf = reader.ReadBytes(2);
+                        bytesLeft -= 2;
+                        Console.WriteLine($"{metaKey,-15}: metaType={metaType} {BitConverter.ToString(metaBuf).Replace("-", "")}");
+                        break;
+                    case MetaType.Unknownx02:
+                        metaBuf = reader.ReadBytes(5);
+                        bytesLeft -= 5;
+                        Console.WriteLine($"{metaKey,-15}: metaType={metaType} {BitConverter.ToString(metaBuf).Replace("-", "")}");
+                        break;
+                    case MetaType.Unknownx03:
+                        metaBuf = reader.ReadBytes(5);
+                        bytesLeft -= 5;
+                        Console.WriteLine($"{metaKey,-15}: metaType={metaType} {BitConverter.ToString(metaBuf).Replace("-", "")}");
+                        break;
+                    case MetaType.Unknownx04:
+                        metaBuf = reader.ReadBytes(13);
+                        bytesLeft -= 13;
+                        Console.WriteLine($"{metaKey,-15}: metaType={metaType} {BitConverter.ToString(metaBuf).Replace("-", "")}");
+                        break;
+                    case MetaType.Unknownx05:
+                        metaBuf = reader.ReadBytes(9);
+                        bytesLeft -= 9;
+                        Console.WriteLine($"{metaKey,-15}: metaType={metaType} {BitConverter.ToString(metaBuf).Replace("-", "")}");
                         break;
                 }                
             }
 
-            byte[] unknown03 = reader.ReadBytes(19);
-            bytesLeft -= 19;
-            Console.WriteLine($"Unknown03: {BitConverter.ToString(unknown03).Replace("-", "")}");
+            byte[] unknown02 = reader.ReadBytes(30);
+            bytesLeft -= 30;
+            Console.WriteLine($"Unknown02: {BitConverter.ToString(unknown02).Replace("-", "")}");
 
             if (Version <= 12)
             {
-                byte[] unknown04 = reader.ReadBytes(5);
-                bytesLeft -= 5;
+                byte[] unknown04 = reader.ReadBytes(6);
+                bytesLeft -= 6;
                 Console.WriteLine($"Unknown04: 5 {BitConverter.ToString(unknown04).Replace("-", "")}");
             }
             else

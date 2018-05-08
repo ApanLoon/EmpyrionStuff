@@ -12,6 +12,17 @@ namespace epb
         static string exectutableName;
         static bool showHelp = false;
 
+        static bool write = false;
+        static string writePath = "NewBlueprint.epb";
+        static EPB.BluePrintType type = EPB.BluePrintType.Base;
+        static UInt32 width       = 1;
+        static UInt32 height      = 1;
+        static UInt32 depth       = 1;
+        static string creatorId   = "76561198111970779";
+        static string creatorName = "Apan Loon";
+        static string ownerId     = "76561198111970779";
+        static string ownerName   = "Apan Loon";
+
         static List<string> inPaths;
 
         static void Main(string[] args)
@@ -21,6 +32,8 @@ namespace epb
 
             var optionSet = new OptionSet()
             {
+                { "c|create=",      "Create a new blueprint",
+                                v => { write = v != null; writePath = v; } },
                 { "h|help",      "Show this message and exit",
                                 v => showHelp       = v != null }
             };
@@ -45,6 +58,12 @@ namespace epb
                 return;
             }
 
+            if (write)
+            {
+                CreateEPB(writePath);
+                return;
+            }
+
             foreach (string inPath in inPaths)
             {
                 try
@@ -56,6 +75,12 @@ namespace epb
                     Console.WriteLine(string.Format("Error on file {0}: {1}\n{2}\n{3}", inPath, ex.Message, ex.InnerException, ex.StackTrace));
                 }
             }
+        }
+
+        static void CreateEPB(string path)
+        {
+            EPB epb = new EPB(type, width, height, depth, creatorId, creatorName, ownerId, ownerName);
+            epb.Write(path);
         }
 
         static void OpenEPB(string inPath)
