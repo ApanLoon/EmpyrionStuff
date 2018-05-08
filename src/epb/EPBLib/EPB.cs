@@ -226,14 +226,10 @@ namespace EPBLib
                 throw new Exception($"Unknown file identifier. 0x{identifier:x4}");
             }
             Version = reader.ReadUInt32();
-            if (Version < 12)
-            {
-                throw new Exception($"Version {Version} is too old. (Needs to be at least 12)");
-            }
-            Type = (BluePrintType)reader.ReadByte();
-            Width = reader.ReadUInt32();
-            Height = reader.ReadUInt32();
-            Depth = reader.ReadUInt32();
+            Type    = (BluePrintType)reader.ReadByte();
+            Width   = reader.ReadUInt32();
+            Height  = reader.ReadUInt32();
+            Depth   = reader.ReadUInt32();
             UInt16 unknown01 = reader.ReadUInt16();
             UInt16 nMeta     = reader.ReadUInt16();
             bytesLeft -= 4 + 4 + 1 + 4 + 4 + 4 + 2 + 2;
@@ -288,17 +284,29 @@ namespace EPBLib
                 }                
             }
 
-            byte[] unknown02 = reader.ReadBytes(30);
-            bytesLeft -= 30;
-            Console.WriteLine($"Unknown02: {BitConverter.ToString(unknown02).Replace("-", "")}");
-
-            if (Version <= 12)
+            // TODO: Funky
+            int nUnknown02;
+            if (Version <= 4)
             {
-                byte[] unknown04 = reader.ReadBytes(6);
-                bytesLeft -= 6;
-                Console.WriteLine($"Unknown04: 5 {BitConverter.ToString(unknown04).Replace("-", "")}");
+                nUnknown02 = 33;
+            }
+            else if (Version <= 12)
+            {
+                nUnknown02 = 36;
+            }
+            else if (Version <= 17)
+            {
+                nUnknown02 = 26;
             }
             else
+            {
+                nUnknown02 = 30;
+            }
+            byte[] unknown02 = reader.ReadBytes(nUnknown02);
+            bytesLeft -= nUnknown02;
+            Console.WriteLine($"Unknown02: {BitConverter.ToString(unknown02).Replace("-", "")}");
+
+            if (Version > 12)
             {
                 UInt16 nUnknown04 = reader.ReadUInt16();
                 bytesLeft -= 2;
