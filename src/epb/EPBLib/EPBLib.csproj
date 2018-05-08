@@ -44,6 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EpbDevice.cs" />
+    <Compile Include="EpbDeviceGroup.cs" />
     <Compile Include="EpBlueprint.cs" />
     <Compile Include="EpMetaTag02.cs" />
     <Compile Include="EpMetaTag03.cs" />

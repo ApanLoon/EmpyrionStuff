@@ -11,5 +11,10 @@ namespace EPBLib.Helpers
         }
 
         public UInt16 Value { get; set; }
+
+        public override string ToString()
+        {
+            return $"{base.ToString()} Value={Value}";
+        }
     }
 }

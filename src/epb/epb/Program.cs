@@ -146,6 +146,21 @@ namespace epb
             metaTag12.Value = new byte[] { 0x00, 0x80, 0x80, 0x80, 0x00, 0x80, 0x00, 0x00, 0x00 };
             epb.MetaTags.Add(metaTag12.Key, metaTag12);
 
+            //Core:
+            EpbDeviceGroup group = new EpbDeviceGroup();
+            group.Name = "Core";
+            group.Flags = 0xff01;
+            EpbDevice core = new EpbDevice();
+            core.Unknown = (UInt32) 0x80400804;
+            core.Name = "";
+            group.Devices.Add(core);
+            epb.DeviceGroups.Add(group);
+
+            group = new EpbDeviceGroup();
+            group.Name = "Ungrouped";
+            group.Flags = 0xff00;
+            epb.DeviceGroups.Add(group);
+
             using (FileStream stream = File.Create(path))
             {
                 using (BinaryWriter writer = new BinaryWriter(stream))

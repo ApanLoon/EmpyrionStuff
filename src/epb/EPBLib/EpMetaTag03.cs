@@ -1,4 +1,6 @@
-﻿namespace EPBLib
+﻿using System;
+
+namespace EPBLib
 {
     public class EpMetaTag03 : EpMetaTag
     {
@@ -9,5 +11,10 @@
         }
 
         public byte[] Value { get; set; }
+
+        public override string ToString()
+        {
+            return $"{base.ToString()} Value={BitConverter.ToString(Value).Replace("-", "")}";
+        }
     }
 }

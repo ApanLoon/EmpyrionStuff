@@ -11,6 +11,7 @@ namespace EPBLib.Helpers
 {
     public static class BinaryWriterExtensions
     {
+        #region EpBlueprint
         public static readonly UInt32 EpbIdentifier = 0x78945245;
         public static UInt32 EpbVersion = 20;
 
@@ -39,10 +40,12 @@ namespace EPBLib.Helpers
             writer.Write(BoilerPlate_Unknown01);
             writer.Write(epb.MetaTags);
             writer.Write(BoilerPlate_UnknownXX);
-            writer.Write((UInt16) 0); //nGroups
+            writer.Write(epb.DeviceGroups);
             writer.WriteEpbBlocks(epb);
         }
+        #endregion EpBlueprint
 
+        #region EpbBlocks
         public static void WriteEpbBlocks(this BinaryWriter writer, EpBlueprint epb)
         {
             byte[] blockBuffer = new byte[]
@@ -75,14 +78,36 @@ namespace EPBLib.Helpers
                 writer.Write(zipBuffer);
             }
         }
+        #endregion EpbBlocks
 
-
-
-        public static void WriteEpString(this BinaryWriter writer, string s)
+        #region EpbMetaTags
+        public static void Write(this BinaryWriter writer, Dictionary<EpMetaTagKey, EpMetaTag> dictionary)
         {
-            byte[] buf = System.Text.Encoding.ASCII.GetBytes(s);
-            writer.Write((byte)buf.Length);
-            writer.Write(buf);
+            writer.Write((UInt16)dictionary.Count);
+            foreach (EpMetaTag tag in dictionary.Values)
+            {
+                switch (tag.TagType)
+                {
+                    case EpMetaTagType.String:
+                        writer.Write((EpMetaTagString)tag);
+                        break;
+                    case EpMetaTagType.Unknownx01:
+                        writer.Write((EpMetaTag01)tag);
+                        break;
+                    case EpMetaTagType.Unknownx02:
+                        writer.Write((EpMetaTag02)tag);
+                        break;
+                    case EpMetaTagType.Unknownx03:
+                        writer.Write((EpMetaTag03)tag);
+                        break;
+                    case EpMetaTagType.Unknownx04:
+                        writer.Write((EpMetaTag04)tag);
+                        break;
+                    case EpMetaTagType.Unknownx05:
+                        writer.Write((EpMetaTag05)tag);
+                        break;
+                }
+            }
         }
 
         public static void Write(this BinaryWriter writer, EpMetaTagString tag)
@@ -122,33 +147,43 @@ namespace EPBLib.Helpers
             writer.Write((UInt32)tag.TagType);
         }
 
-        public static void Write(this BinaryWriter writer, Dictionary<EpMetaTagKey, EpMetaTag> dictionary)
+        #endregion EpbMetaTags
+
+        #region EpbDevices
+
+        public static void Write(this BinaryWriter writer, List<EpbDeviceGroup> groups)
         {
-            writer.Write((UInt16)dictionary.Count);
-            foreach (EpMetaTag tag in dictionary.Values)
+            writer.Write((UInt16)groups.Count);
+            foreach (var group in groups)
             {
-                switch (tag.TagType)
-                {
-                    case EpMetaTagType.String:
-                        writer.Write((EpMetaTagString)tag);
-                        break;
-                    case EpMetaTagType.Unknownx01:
-                        writer.Write((EpMetaTag01)tag);
-                        break;
-                    case EpMetaTagType.Unknownx02:
-                        writer.Write((EpMetaTag02)tag);
-                        break;
-                    case EpMetaTagType.Unknownx03:
-                        writer.Write((EpMetaTag03)tag);
-                        break;
-                    case EpMetaTagType.Unknownx04:
-                        writer.Write((EpMetaTag04)tag);
-                        break;
-                    case EpMetaTagType.Unknownx05:
-                        writer.Write((EpMetaTag05)tag);
-                        break;
-                }
+                writer.Write(group);
             }
         }
+
+        public static void Write(this BinaryWriter writer, EpbDeviceGroup group)
+        {
+            writer.WriteEpString(group.Name);
+            writer.Write(group.Flags);
+            writer.Write((UInt16)group.Devices.Count);
+            foreach (var device in @group.Devices)
+            {
+                writer.Write(device);
+            }
+        }
+
+        public static void Write(this BinaryWriter writer, EpbDevice device)
+        {
+            writer.Write(device.Unknown);
+            writer.WriteEpString(device.Name);
+        }
+        #endregion EpbDevices
+
+        public static void WriteEpString(this BinaryWriter writer, string s)
+        {
+            byte[] buf = System.Text.Encoding.ASCII.GetBytes(s);
+            writer.Write((byte)buf.Length);
+            writer.Write(buf);
+        }
+
     }
 }

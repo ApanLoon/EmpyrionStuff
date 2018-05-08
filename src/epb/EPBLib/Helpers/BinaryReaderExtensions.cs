@@ -8,6 +8,7 @@ namespace EPBLib.Helpers
 {
     public static class BinaryReaderExtensions
     {
+        #region EpBlueprint
         public static readonly UInt32 EpbIdentifier = 0x78945245;
         public static readonly byte[] ZipDataStartPattern = new byte[] { 0x00, 0x00, 0x03, 0x04, 0x14, 0x00, 0x00, 0x00, 0x08, 0x00 };
 
@@ -40,6 +41,10 @@ namespace EPBLib.Helpers
             Console.WriteLine($"Unkown01: {unknown01}");
 
             epb.MetaTags = reader.ReadEpMetaTagDictionary(ref bytesLeft);
+            foreach (EpMetaTag tag in epb.MetaTags.Values)
+            {
+                Console.WriteLine(tag.ToString());
+            }
 
 
             // TODO: Funky
@@ -78,24 +83,35 @@ namespace EPBLib.Helpers
             bytesLeft -= 5;
             Console.WriteLine($"Unknown05: {BitConverter.ToString(unknown05).Replace("-", "")}");
 
-            UInt16 nGroups = reader.ReadUInt16();
-            bytesLeft -= 2;
-            Console.WriteLine($"Groups ({nGroups})");
-            for (int g = 0; g < nGroups; g++)
+            epb.DeviceGroups = reader.ReadEpbDeviceGroups(ref bytesLeft);
+            Console.WriteLine($"DeviceGroups ({epb.DeviceGroups.Count}):");
+            foreach (EpbDeviceGroup group in epb.DeviceGroups)
             {
-                string groupName = reader.ReadEpString(ref bytesLeft);
-                UInt16 groupUnknown01 = reader.ReadUInt16();
-                UInt16 nDevicesInGroup = reader.ReadUInt16();
-                bytesLeft -= 2 + 2;
-                Console.WriteLine($"    {groupName} ({groupUnknown01:x4})");
-                for (int d = 0; d < nDevicesInGroup; d++)
+                Console.WriteLine($"    {group.Name} (Flags=0x{group.Flags:x4})");
+                foreach (EpbDevice device in group.Devices)
                 {
-                    UInt32 deviceUnknown01 = reader.ReadUInt32();
-                    bytesLeft -= 4;
-                    string deviceName = reader.ReadEpString(ref bytesLeft);
-                    Console.WriteLine($"        device: {deviceUnknown01:x8} \"{deviceName}\"");
+                    Console.WriteLine($"        {device.Unknown:x8} {device.Name}");
                 }
             }
+
+            //UInt16 nGroups = reader.ReadUInt16();
+            //bytesLeft -= 2;
+            //Console.WriteLine($"Groups ({nGroups})");
+            //for (int g = 0; g < nGroups; g++)
+            //{
+            //    string groupName = reader.ReadEpString(ref bytesLeft);
+            //    UInt16 groupUnknown01 = reader.ReadUInt16();
+            //    UInt16 nDevicesInGroup = reader.ReadUInt16();
+            //    bytesLeft -= 2 + 2;
+            //    Console.WriteLine($"    {groupName} ({groupUnknown01:x4})");
+            //    for (int d = 0; d < nDevicesInGroup; d++)
+            //    {
+            //        UInt32 deviceUnknown01 = reader.ReadUInt32();
+            //        bytesLeft -= 4;
+            //        string deviceName = reader.ReadEpString(ref bytesLeft);
+            //        Console.WriteLine($"        device: {deviceUnknown01:x8} \"{deviceName}\"");
+            //    }
+            //}
 
             // There might be a number of unparsed bytes remaining at this point, so read the rest and search for the PKZip header:
             byte[] buf = reader.ReadBytes((int)bytesLeft);
@@ -134,8 +150,9 @@ namespace EPBLib.Helpers
 
             return epb;
         }
+        #endregion EpBlueprint
 
-
+        #region EpbBlocks
         public static void ReadEpbBlocks(this BinaryReader reader, EpBlueprint epb, UInt32 version, long length)
         {
             long bytesLeft = length;
@@ -288,7 +305,9 @@ namespace EPBLib.Helpers
             }
             return bytesLeft;
         }
+        #endregion EpbBlocks
 
+        #region EpMetaTags
 
         public static Dictionary<EpMetaTagKey, EpMetaTag> ReadEpMetaTagDictionary(this BinaryReader reader, ref long bytesLeft)
         {
@@ -354,6 +373,45 @@ namespace EPBLib.Helpers
             }
             return tag;
         }
+        #endregion EpMetaTags
+
+        #region EpbDevices
+
+        public static List<EpbDeviceGroup> ReadEpbDeviceGroups(this BinaryReader reader, ref long bytesLeft)
+        {
+            List<EpbDeviceGroup> groups = new List<EpbDeviceGroup>();
+            UInt16 nGroups = reader.ReadUInt16();
+            bytesLeft -= 2;
+            for (int i = 0; i < nGroups; i++)
+            {
+                groups.Add(reader.ReadEpbDeviceGroup(ref bytesLeft));
+            }
+            return groups;
+        }
+        public static EpbDeviceGroup ReadEpbDeviceGroup(this BinaryReader reader, ref long bytesLeft)
+        {
+            EpbDeviceGroup group = new EpbDeviceGroup();
+            group.Name = reader.ReadEpString(ref bytesLeft);
+            group.Flags = reader.ReadUInt16();
+            bytesLeft -= 2;
+            UInt16 nDevices = reader.ReadUInt16();
+            bytesLeft -= 2;
+            for (int i = 0; i < nDevices; i++)
+            {
+                group.Devices.Add(reader.ReadEpbDevice(ref bytesLeft));
+            }
+            return group;
+        }
+        public static EpbDevice ReadEpbDevice(this BinaryReader reader, ref long bytesLeft)
+        {
+            EpbDevice device = new EpbDevice();
+            device.Unknown = reader.ReadUInt32();
+            bytesLeft -= 4;
+            device.Name = reader.ReadEpString(ref bytesLeft);
+            return device;
+        }
+
+        #endregion EpbDevices
 
         public static string ReadEpString(this BinaryReader reader, ref long bytesLeft)
         {

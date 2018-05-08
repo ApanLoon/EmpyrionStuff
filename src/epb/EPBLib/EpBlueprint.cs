@@ -31,16 +31,19 @@ namespace EPBLib
 
         public Dictionary<EpMetaTagKey, EpMetaTag> MetaTags;
 
+        public List<EpbDeviceGroup> DeviceGroups;
+
         #endregion Properties
 
         public EpBlueprint (EpbType type, UInt32 width, UInt32 height, UInt32 depth)
         {
-            Version     = 20;
-            Type        = type;
-            Width       = width;
-            Height      = height;
-            Depth       = depth;
-            MetaTags    = new Dictionary<EpMetaTagKey, EpMetaTag>();
+            Version      = 20;
+            Type         = type;
+            Width        = width;
+            Height       = height;
+            Depth        = depth;
+            MetaTags     = new Dictionary<EpMetaTagKey, EpMetaTag>();
+            DeviceGroups = new List<EpbDeviceGroup>();
         }
 
     }
