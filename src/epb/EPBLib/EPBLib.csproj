@@ -44,8 +44,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EPB.cs" />
+    <Compile Include="EpBlueprint.cs" />
+    <Compile Include="EpMetaTag02.cs" />
+    <Compile Include="EpMetaTag03.cs" />
+    <Compile Include="EpMetaTag04.cs" />
+    <Compile Include="EpMetaTag05.cs" />
+    <Compile Include="EpMetaTagString.cs" />
+    <Compile Include="Helpers\BinaryReaderExtensions.cs" />
+    <Compile Include="Helpers\BinaryWriterExtensions.cs" />
     <Compile Include="Helpers\ByteArrayExtensions.cs" />
+    <Compile Include="EpMetaTag.cs" />
+    <Compile Include="EpMetaTag01.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
