@@ -149,12 +149,20 @@ namespace EPBLib.Helpers
             int blockCount = 0;
             bytesLeft = reader.ReadEpbMatrix(epb, "Blocks", length, (r, e, x, y, z, b) =>
             {
-                byte type = r.ReadByte();
+                EpbBlock.EpbBlockType type = (EpbBlock.EpbBlockType)r.ReadByte();
                 byte rotation = r.ReadByte();
                 byte unknown2 = r.ReadByte();
                 byte variant = r.ReadByte();
                 blockCount++;
-                Console.WriteLine($"    {blockCount} ({x}, {y}, {z}): Type=0x{type:x2} Rot=0x{rotation:x2} Unknown2=0x{unknown2:x2} Variant=0x{variant:x2}");
+                EpbBlock block = new EpbBlock()
+                {
+                    BlockType = type,
+                    Rotation = rotation,
+                    Unknown00 = unknown2,
+                    Variant = variant
+                };
+                epb.SetBlock(block, x, y, z);
+                Console.WriteLine($"    {blockCount} ({x}, {y}, {z}): Type={type} Rot=0x{rotation:x2} Unknown2=0x{unknown2:x2} Variant=0x{variant:x2}");
                 return b - 4;
             });
 
@@ -183,30 +191,30 @@ namespace EPBLib.Helpers
             int colourCount = 0;
             bytesLeft = reader.ReadEpbMatrix(epb, "Colour", length, (r, e, x, y, z, b) =>
             {
+                EpbBlock block = epb.Blocks[x, y, z];
                 UInt32 bits = r.ReadUInt32();
-                byte[] colours = new byte[6];
                 for (int i = 0; i < 6; i++)
                 {
-                    colours[i] = (byte)(bits & 0x1f);
+                    block.FaceColours[i] = (byte)(bits & 0x1f);
                     bits = bits >> 5;
                 }
                 colourCount++;
-                Console.WriteLine($"    {colourCount} ({x}, {y}, {z}): {string.Join(", ", colours)}");
+                Console.WriteLine($"    {colourCount} ({x}, {y}, {z}): {string.Join(", ", block.FaceColours)}");
                 return b - 4;
             });
 
             int textureCount = 0;
             bytesLeft = reader.ReadEpbMatrix(epb, "Texture", length, (r, e, x, y, z, b) =>
             {
+                EpbBlock block = epb.Blocks[x, y, z];
                 UInt64 bits = r.ReadUInt64();
-                byte[] textures = new byte[6];
                 for (int i = 0; i < 6; i++)
                 {
-                    textures[i] = (byte)(bits & 0x3f);
+                    block.FaceTextures[i] = (byte)(bits & 0x3f);
                     bits = bits >> 6;
                 }
                 textureCount++;
-                Console.WriteLine($"    {textureCount} ({x}, {y}, {z}): {string.Join(", ", textures)}");
+                Console.WriteLine($"    {textureCount} ({x}, {y}, {z}): {string.Join(", ", block.FaceTextures)}");
                 return b - 8;
             });
 
@@ -236,16 +244,16 @@ namespace EPBLib.Helpers
             int symbolCount = 0;
             bytesLeft = reader.ReadEpbMatrix(epb, "Symbol", length, (r, e, x, y, z, b) =>
             {
+                EpbBlock block = epb.Blocks[x, y, z];
                 UInt32 bits = r.ReadUInt32();
-                byte[] symbols = new byte[6];
                 for (int i = 0; i < 6; i++)
                 {
-                    symbols[i] = (byte)(bits & 0x1f);
+                    block.FaceSymbols[i] = (byte)(bits & 0x1f);
                     bits = bits >> 5;
                 }
-                byte symbolPage = (byte)bits;
+                block.SymbolPage = (byte)bits;
                 symbolCount++;
-                Console.WriteLine($"    {symbolCount} ({x}, {y}, {z}): Page={symbolPage} {string.Join(", ", symbols)}");
+                Console.WriteLine($"    {symbolCount} ({x}, {y}, {z}): Page={block.SymbolPage} {string.Join(", ", block.FaceSymbols)}");
                 return b - 4;
             });
 
@@ -268,7 +276,7 @@ namespace EPBLib.Helpers
             Console.WriteLine($"Remaining data: {BitConverter.ToString(remainingData).Replace("-", "")}");
         }
 
-        public static long ReadEpbMatrix(this BinaryReader reader, EpBlueprint epb, string name, long bytesLeft, Func<BinaryReader, EpBlueprint, int, int, int, long, long> func)
+        public static long ReadEpbMatrix(this BinaryReader reader, EpBlueprint epb, string name, long bytesLeft, Func<BinaryReader, EpBlueprint, UInt32, UInt32, UInt32, long, long> func)
         {
             UInt32 matrixSize = reader.ReadUInt32();
             byte[] matrix = reader.ReadBytes((int)matrixSize);
@@ -280,11 +288,11 @@ namespace EPBLib.Helpers
             }
 
             bool[] m = matrix.ToBoolArray();
-            for (int z = 0; z < epb.Depth; z++)
+            for (UInt32 z = 0; z < epb.Depth; z++)
             {
-                for (int y = 0; y < epb.Height; y++)
+                for (UInt32 y = 0; y < epb.Height; y++)
                 {
-                    for (int x = 0; x < epb.Width; x++)
+                    for (UInt32 x = 0; x < epb.Width; x++)
                     {
                         if (m[z * epb.Width * epb.Height + y * epb.Width + x])
                         {

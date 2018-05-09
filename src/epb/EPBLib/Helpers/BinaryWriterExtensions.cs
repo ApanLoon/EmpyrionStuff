@@ -19,13 +19,10 @@ namespace EPBLib.Helpers
         {
             0x01, 0x00
         };
-        public static readonly byte[] BoilerPlate_UnknownXX = new byte[]
+        public static readonly byte[] BoilerPlate_Unknown02 = new byte[]
         {
             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00,
-            0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-            0x01, 0x00, // nUnknown04
-            0x2e, 0x02,
-            0x01, 0x00, 0x00, 0x00, 0x04 // unknown05
+            0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
         };
 
 
@@ -33,13 +30,44 @@ namespace EPBLib.Helpers
         {
             writer.Write(EpbIdentifier);
             writer.Write(EpbVersion);
-            writer.Write((byte) epb.Type);
+            writer.Write((byte)epb.Type);
             writer.Write(epb.Width);
             writer.Write(epb.Height);
             writer.Write(epb.Depth);
             writer.Write(BoilerPlate_Unknown01);
             writer.Write(epb.MetaTags);
-            writer.Write(BoilerPlate_UnknownXX);
+            writer.Write(BoilerPlate_Unknown02);
+
+            Dictionary<EpbBlock.EpbBlockType, UInt32> blockCounts = new Dictionary<EpbBlock.EpbBlockType, uint>();
+            for (UInt32 z = 0; z < epb.Depth; z++)
+            {
+                for (UInt32 y = 0; y < epb.Height; y++)
+                {
+                    for (UInt32 x = 0; x < epb.Width; x++)
+                    {
+                        EpbBlock block = epb.Blocks[x, y, z];
+                        if (block != null)
+                        {
+                            if (!blockCounts.ContainsKey(block.BlockType))
+                            {
+                                blockCounts.Add(block.BlockType, 0);
+                            }
+                            blockCounts[block.BlockType]++;
+                        }
+                    }
+                }
+            }
+
+            writer.Write((UInt16)blockCounts.Count);
+            foreach (EpbBlock.EpbBlockType type in blockCounts.Keys)
+            {
+                writer.Write((byte)type);
+                writer.Write((byte)0x01); // Unknown
+                writer.Write(blockCounts[type]);
+            }
+
+            writer.Write((byte)0x04); // unknown05
+
             writer.Write(epb.DeviceGroups);
             writer.WriteEpbBlocks(epb);
         }
@@ -48,13 +76,80 @@ namespace EPBLib.Helpers
         #region EpbBlocks
         public static void WriteEpbBlocks(this BinaryWriter writer, EpBlueprint epb)
         {
-            byte[] blockBuffer = new byte[]
+            long byteCount = 0;
+            List<byte> byteList = new List<byte>();
+
+            // Blocks:
+            byteCount += AddEpbMatrixToList(epb, byteList, (blueprint, x, y, z, list) =>
             {
-                0x01, 0x00, 0x00, 0x00, 0x01, 0x2e, 0x0a, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x01, 0x7f,
-                0x01, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x01,
-                0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-            };
+                EpbBlock block = epb.Blocks[x, y, z];
+                if (block == null)
+                {
+                    return false;
+                }
+
+                list.Add((byte)block.BlockType);
+                list.Add((byte)block.Rotation);
+                list.Add((byte)block.Unknown00);
+                list.Add((byte)block.Variant);
+                return true;
+            });
+
+            // Unknown3:
+            byteCount += AddEpbMatrixToList(epb, byteList, (blueprint, x, y, z, list) =>
+            {
+                return false;
+            });
+
+            //nUnknown4:
+            byteList.Add(0x01);
+            byteCount += 1;
+            //Unknown4:
+            byteList.Add(0x7f);
+            byteCount += 1;
+
+            // Colours:
+            byteCount += AddEpbMatrixToList(epb, byteList, (blueprint, x, y, z, list) =>
+            {
+                return false;
+            });
+
+            // Textures:
+            byteCount += AddEpbMatrixToList(epb, byteList, (blueprint, x, y, z, list) =>
+            {
+                return false;
+            });
+
+            // Unknown7:
+            byteCount += AddEpbMatrixToList(epb, byteList, (blueprint, x, y, z, list) =>
+            {
+                return false;
+            });
+
+            // Symbols:
+            byteCount += AddEpbMatrixToList(epb, byteList, (blueprint, x, y, z, list) =>
+            {
+                return false;
+            });
+
+            // Unknown9:
+            byteCount += AddEpbMatrixToList(epb, byteList, (blueprint, x, y, z, list) =>
+            {
+                return false;
+            });
+
+            byteList.AddRange(new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 });
+            byteCount += 14;
+
+            byte[] blockBuffer = byteList.ToArray();
+
+            //byte[] blockBuffer = new byte[]
+            //{
+            //    0x01, 0x00, 0x00, 0x00, 0x01, 0x2e, 0x0a, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x01, 0x7f,
+            //    0x01, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x01,
+            //    0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+            //    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+            //};
 
             using (MemoryStream outputMemStream = new MemoryStream())
             {
@@ -78,6 +173,38 @@ namespace EPBLib.Helpers
                 writer.Write(zipBuffer);
             }
         }
+
+
+        public static long AddEpbMatrixToList(EpBlueprint epb, List<byte> list, Func<EpBlueprint, UInt32, UInt32, UInt32, List<byte>, bool> func)
+        {
+            bool[] m = new bool[epb.Width * epb.Height * epb.Depth];
+            List<byte> tmpList = new List<byte>();
+
+            for (UInt32 z = 0; z < epb.Depth; z++)
+            {
+                for (UInt32 y = 0; y < epb.Height; y++)
+                {
+                    for (UInt32 x = 0; x < epb.Width; x++)
+                    {
+                        if (func(epb, x, y, z, tmpList))
+                        {
+                            m[z * epb.Width * epb.Height + y * epb.Width + x] = true;
+                        }
+                    }
+                }
+            }
+
+            byte[] matrix = m.ToByteArray();
+            UInt32 matrixLength = (UInt32)matrix.Length;
+            list.AddRange(BitConverter.GetBytes(matrixLength));
+            list.AddRange(matrix);
+            list.AddRange(tmpList);
+            return 4 + matrix.Length + tmpList.Count;
+        }
+
+
+
+
         #endregion EpbBlocks
 
         #region EpbMetaTags

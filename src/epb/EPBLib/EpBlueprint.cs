@@ -20,14 +20,6 @@ namespace EPBLib
             CapitalVessel = 0x08,
             HoverVessel   = 0x10
         }
-
-        public enum EpbBlockType
-        {
-            CvCockpit    = 0x01,
-            CvFuelTankT1 = 0x03,
-            Core         = 0x2e,
-            SteelBlockL  = 0x93
-        }
         #endregion Types
 
         #region Properties
@@ -40,6 +32,8 @@ namespace EPBLib
         public Dictionary<EpMetaTagKey, EpMetaTag> MetaTags;
 
         public List<EpbDeviceGroup> DeviceGroups;
+
+        public EpbBlock[,,] Blocks { get; set; }
 
         #endregion Properties
 
@@ -54,5 +48,20 @@ namespace EPBLib
             DeviceGroups = new List<EpbDeviceGroup>();
         }
 
+        public void SetBlock(EpbBlock block, UInt32 x, UInt32 y, UInt32 z)
+        {
+            if (x >= Width || y >= Height || z >= Depth)
+            {
+                return;
+            }
+
+            if (Blocks == null)
+            {
+                Blocks = new EpbBlock[Width, Height, Depth];
+            }
+
+            // TODO: Update blockCounts
+            Blocks[x, y, z] = block;
+        }
     }
 }

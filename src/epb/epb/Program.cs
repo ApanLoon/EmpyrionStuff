@@ -10,10 +10,19 @@ namespace epb
 {
     class Program
     {
+        public enum CreateTemplate
+        {
+            None,
+            BaseBoxCheckered,
+            BaseBoxFilled,
+            BaseBoxFramed,
+            BaseBlockTypes
+        }
+
         static string exectutableName;
         static bool showHelp = false;
 
-        static bool write = false;
+        static CreateTemplate createTemplate = CreateTemplate.None;
         static string writePath = "NewBlueprint.epb";
         static EpBlueprint.EpbType type = EpBlueprint.EpbType.Base;
         static UInt32 width       = 1;
@@ -33,10 +42,47 @@ namespace epb
 
             var optionSet = new OptionSet()
             {
-                { "c|create=",      "Create a new blueprint",
-                                v => { write = v != null; writePath = v; } },
-                { "h|help",      "Show this message and exit",
-                                v => showHelp       = v != null }
+                {
+                    "c|create=",
+                    $"Create a new blueprint. Options are: {string.Join(", ", Enum.GetNames(typeof(CreateTemplate)))}",
+                    v =>
+                    {
+                        if (v != null)
+                        {
+                            createTemplate = (CreateTemplate)Enum.Parse(typeof(CreateTemplate), v);
+                        }
+                    }
+                },
+                {
+                    "o|outpath=",
+                    $"Path and name of the created blueprint.",
+                    v =>
+                    {
+                        if (v != null)
+                        {
+                            writePath = v;
+                        }
+                    }
+                },
+                {
+                    "s|size=",
+                    "Size of new blueprint (w,h,d) No spaces",
+                    v =>
+                    {
+                        if (v != null)
+                        {
+                            string[] a = v.Split(',');
+                            width  = UInt32.Parse(a[0]);
+                            height = UInt32.Parse(a[1]);
+                            depth  = UInt32.Parse(a[2]);
+                        }
+                    }
+                },
+                {
+                    "h|help",
+                    "Show this message and exit",
+                    v => showHelp = v != null
+                }
             };
 
             try
@@ -59,26 +105,186 @@ namespace epb
                 return;
             }
 
-            if (write)
+            switch (createTemplate)
             {
-                CreateEpb(writePath);
-                return;
+                case CreateTemplate.None:
+                    foreach (string inPath in inPaths)
+                    {
+                        try
+                        {
+                            OpenEpb(inPath);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"Error on file {inPath}: {ex.Message}\r\n{ex.InnerException}\r\n{ex.StackTrace}");
+                        }
+                    }
+                    break;
+                case CreateTemplate.BaseBoxCheckered:
+                    CreateBoxCheckered(writePath);
+                    break;
+                case CreateTemplate.BaseBoxFilled:
+                    CreateBoxFilled(writePath);
+                    break;
+                case CreateTemplate.BaseBoxFramed:
+                    CreateBoxFramed(writePath);
+                    break;
+                case CreateTemplate.BaseBlockTypes:
+                    width = 16;
+                    height = 1;
+                    depth = 16;
+                    CreateBlockTypes(writePath);
+                    break;
+            }
+        }
+
+
+
+        static void CreateBoxFilled(string path)
+        {
+            EpBlueprint epb = CreateCommon();
+
+            for (UInt32 z = 0; z < depth; z++)
+            {
+                for (UInt32 y = 0; y < height; y++)
+                {
+                    for (UInt32 x = 0; x < width; x++)
+                    {
+                        if (x == width / 2 && y == height / 2 && z == depth / 2)
+                        {
+                            epb.SetBlock(new EpbBlock() { BlockType = EpbBlock.EpbBlockType.Core, Rotation = 0x0a, Unknown00 = 0x02, Variant = 0x00 }, x, y, z);
+                        }
+                        else
+                        {
+                            epb.SetBlock(new EpbBlock() { BlockType = EpbBlock.EpbBlockType.SteelBlockL, Rotation = 0x01, Unknown00 = 0x00, Variant = 0x00 }, x, y, z);
+                        }
+                    }
+                }
             }
 
-            foreach (string inPath in inPaths)
+            //// Create Device list:
+            //EpbDeviceGroup group = new EpbDeviceGroup
+            //{
+            //    Name = "Core",
+            //    Flags = 0xff01
+            //};
+            //EpbDeviceGroupEntry core = new EpbDeviceGroupEntry
+            //{
+            //    Unknown = new byte[] {0x00, 0x08, 0x00, 0x80},
+            //    Name = ""
+            //};
+            //group.Entries.Add(core);
+            //epb.DeviceGroups.Add(group);
+
+            //group = new EpbDeviceGroup
+            //{
+            //    Name = "Ungrouped",
+            //    Flags = 0xff00
+            //};
+            //epb.DeviceGroups.Add(group);
+
+
+            // Write the file:
+            using (FileStream stream = File.Create(path))
             {
-                try
+                using (BinaryWriter writer = new BinaryWriter(stream))
                 {
-                    OpenEpb(inPath);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Error on file {inPath}: {ex.Message}\r\n{ex.InnerException}\r\n{ex.StackTrace}");
+                    writer.Write(epb);
                 }
             }
         }
 
-        static void CreateEpb(string path)
+        static void CreateBoxCheckered(string path)
+        {
+            EpBlueprint epb = CreateCommon();
+
+            for (UInt32 z = 0; z < depth; z++)
+            {
+                for (UInt32 y = 0; y < height; y++)
+                {
+                    for (UInt32 x = 0; x < width; x++)
+                    {
+                        if ((x % (width - 1) == 0) ^ (y % (height - 1) == 0) ^ (z % (depth - 1) == 0))
+                        {
+                            epb.SetBlock(new EpbBlock() { BlockType = EpbBlock.EpbBlockType.SteelBlockL, Rotation = 0x01, Unknown00 = 0x00, Variant = 0x00 }, x, y, z);
+                        }
+                    }
+                }
+            }
+
+            // Write the file:
+            using (FileStream stream = File.Create(path))
+            {
+                using (BinaryWriter writer = new BinaryWriter(stream))
+                {
+                    writer.Write(epb);
+                }
+            }
+        }
+
+        static void CreateBoxFramed(string path)
+        {
+            EpBlueprint epb = CreateCommon();
+
+            for (UInt32 z = 0; z < depth; z++)
+            {
+                for (UInt32 y = 0; y < height; y++)
+                {
+                    for (UInt32 x = 0; x < width; x++)
+                    {
+                        bool a = x % (width  - 1) == 0;
+                        bool b = y % (height - 1) == 0;
+                        bool c = z % (depth  - 1) == 0;
+
+                        if (!(
+                               (!a && !b &&  c)
+                            || (!a &&  b && !c)
+                            || ( a && !b && !c)
+                            || (!a && !b && !c)
+                           ))
+                        {
+                            epb.SetBlock(new EpbBlock() { BlockType = EpbBlock.EpbBlockType.SteelBlockL, Rotation = 0x01, Unknown00 = 0x00, Variant = 0x00 }, x, y, z);
+                        }
+                    }
+                }
+            }
+
+            // Write the file:
+            using (FileStream stream = File.Create(path))
+            {
+                using (BinaryWriter writer = new BinaryWriter(stream))
+                {
+                    writer.Write(epb);
+                }
+            }
+        }
+
+
+        //TODO: This creates a blueprint that can't be spawned in game
+        static void CreateBlockTypes(string path)
+        {
+            EpBlueprint epb = CreateCommon();
+
+            for (UInt32 i = 0; i < 256; i++)
+            {
+                {
+                    UInt32 x = i % width;
+                    UInt32 z = i / width;
+                    epb.SetBlock(new EpbBlock() { BlockType = (EpbBlock.EpbBlockType)i, Rotation = 0x01, Unknown00 = 0x00, Variant = 0x00 }, x, 0, z);
+                }
+            }
+
+            // Write the file:
+            using (FileStream stream = File.Create(path))
+            {
+                using (BinaryWriter writer = new BinaryWriter(stream))
+                {
+                    writer.Write(epb);
+                }
+            }
+        }
+
+        static EpBlueprint CreateCommon()
         {
             EpBlueprint epb = new EpBlueprint(type, width, height, depth);
 
@@ -166,43 +372,16 @@ namespace epb
             };
             epb.MetaTags.Add(ownerNameTag.Key, ownerNameTag);
 
-            EpMetaTagString metaTag10 = new EpMetaTagString(EpMetaTagKey.UnknownMetax10) {Value = ""};
+            EpMetaTagString metaTag10 = new EpMetaTagString(EpMetaTagKey.UnknownMetax10) { Value = "" };
             epb.MetaTags.Add(metaTag10.Key, metaTag10);
 
             EpMetaTag05 metaTag12 = new EpMetaTag05(EpMetaTagKey.UnknownMetax12)
             {
-                Value = new byte[] {0x00, 0x80, 0x80, 0x80, 0x00, 0x80, 0x00, 0x00, 0x00}
+                Value = new byte[] { 0x00, 0x80, 0x80, 0x80, 0x00, 0x80, 0x00, 0x00, 0x00 }
             };
             epb.MetaTags.Add(metaTag12.Key, metaTag12);
 
-            //Core:
-            EpbDeviceGroup group = new EpbDeviceGroup
-            {
-                Name = "Core",
-                Flags = 0xff01
-            };
-            EpbDeviceGroupEntry core = new EpbDeviceGroupEntry
-            {
-                Unknown = new byte[] {0x00, 0x08, 0x00, 0x80},
-                Name = ""
-            };
-            group.Entries.Add(core);
-            epb.DeviceGroups.Add(group);
-
-            group = new EpbDeviceGroup
-            {
-                Name = "Ungrouped",
-                Flags = 0xff00
-            };
-            epb.DeviceGroups.Add(group);
-
-            using (FileStream stream = File.Create(path))
-            {
-                using (BinaryWriter writer = new BinaryWriter(stream))
-                {
-                    writer.Write(epb);
-                }
-            }
+            return epb;
         }
 
         static void OpenEpb(string path)
