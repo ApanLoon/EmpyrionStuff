@@ -20,6 +20,14 @@ namespace EPBLib
             CapitalVessel = 0x08,
             HoverVessel   = 0x10
         }
+
+        public enum EpbBlockType
+        {
+            CvCockpit    = 0x01,
+            CvFuelTankT1 = 0x03,
+            Core         = 0x2e,
+            SteelBlockL  = 0x93
+        }
         #endregion Types
 
         #region Properties

@@ -164,17 +164,17 @@ namespace EPBLib.Helpers
         {
             writer.WriteEpString(group.Name);
             writer.Write(group.Flags);
-            writer.Write((UInt16)group.Devices.Count);
-            foreach (var device in @group.Devices)
+            writer.Write((UInt16)group.Entries.Count);
+            foreach (var device in group.Entries)
             {
                 writer.Write(device);
             }
         }
 
-        public static void Write(this BinaryWriter writer, EpbDevice device)
+        public static void Write(this BinaryWriter writer, EpbDeviceGroupEntry entry)
         {
-            writer.Write(device.Unknown);
-            writer.WriteEpString(device.Name);
+            writer.Write(entry.Unknown);
+            writer.WriteEpString(entry.Name);
         }
         #endregion EpbDevices
 
