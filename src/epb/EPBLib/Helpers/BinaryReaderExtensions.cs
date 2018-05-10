@@ -166,27 +166,27 @@ namespace EPBLib.Helpers
                 return b - 4;
             });
 
-            int unknown3Count = 0;
-            bytesLeft = reader.ReadEpbMatrix(epb, "Unknown3", length, (r, e, x, y, z, b) =>
+            int unknown01Count = 0;
+            bytesLeft = reader.ReadEpbMatrix(epb, "unknown01", length, (r, e, x, y, z, b) =>
             {
-                byte unknown31 = r.ReadByte();
-                byte unknown32 = r.ReadByte();
-                byte unknown33 = r.ReadByte();
-                byte unknown34 = r.ReadByte();
-                unknown3Count++;
-                Console.WriteLine($"    {unknown3Count} ({x}, {y}, {z}): 0x{unknown31:x2} 0x{unknown32:x2} 0x{unknown33:x2} 0x{unknown34:x2}");
+                byte unknown01a = r.ReadByte();
+                byte unknown01b = r.ReadByte();
+                byte unknown01c = r.ReadByte();
+                byte unknown01d = r.ReadByte();
+                unknown01Count++;
+                Console.WriteLine($"    {unknown01Count} ({x}, {y}, {z}): 0x{unknown01a:x2} 0x{unknown01b:x2} 0x{unknown01c:x2} 0x{unknown01d:x2}");
                 return b - 4;
             });
 
-            int nUnknown4 = reader.ReadByte();
+            int unknown02Count = reader.ReadByte();
             bytesLeft -= 1;
-            if (nUnknown4 == 0)
+            if (unknown02Count == 0)
             {
-                nUnknown4 = (int)(epb.Width * epb.Height * epb.Depth); // blockCount;
+                unknown02Count = (int)(epb.Width * epb.Height * epb.Depth); // blockCount;
             }
-            byte[] unknown4 = reader.ReadBytes(nUnknown4);
-            bytesLeft -= nUnknown4;
-            Console.WriteLine($"Unknown4: {BitConverter.ToString(unknown4).Replace("-", "")}");
+            byte[] unknown02 = reader.ReadBytes(unknown02Count);
+            bytesLeft -= unknown02Count;
+            Console.WriteLine($"unknown02: {BitConverter.ToString(unknown02).Replace("-", "")}");
 
             int colourCount = 0;
             bytesLeft = reader.ReadEpbMatrix(epb, "Colour", length, (r, e, x, y, z, b) =>
@@ -220,23 +220,23 @@ namespace EPBLib.Helpers
 
             if (version >= 20)
             {
-                int unknown7Count = 0;
-                bytesLeft = reader.ReadEpbMatrix(epb, "Unknown7", length, (r, e, x, y, z, b) =>
+                int unknown03Count = 0;
+                bytesLeft = reader.ReadEpbMatrix(epb, "Unknown03", length, (r, e, x, y, z, b) =>
                 {
-                    byte unknown71 = r.ReadByte();
-                    unknown7Count++;
-                    Console.WriteLine($"    {unknown7Count} ({x}, {y}, {z}): 0x{unknown71:x2}");
+                    byte unknown03a = r.ReadByte();
+                    unknown03Count++;
+                    Console.WriteLine($"    {unknown03Count} ({x}, {y}, {z}): 0x{unknown03a:x2}");
                     return b - 1;
                 });
             }
             else
             {
-                int unknown7Count = 0;
-                bytesLeft = reader.ReadEpbMatrix(epb, "Unknown7", length, (r, e, x, y, z, b) =>
+                int unknown04Count = 0;
+                bytesLeft = reader.ReadEpbMatrix(epb, "Unknown04", length, (r, e, x, y, z, b) =>
                 {
-                    UInt32 unknown71 = r.ReadUInt32();
-                    unknown7Count++;
-                    Console.WriteLine($"    {unknown7Count} ({x}, {y}, {z}): 0x{unknown71:x8}");
+                    UInt32 unknown04a = r.ReadUInt32();
+                    unknown04Count++;
+                    Console.WriteLine($"    {unknown04Count} ({x}, {y}, {z}): 0x{unknown04a:x8}");
                     return b - 4;
                 });
             }
@@ -259,18 +259,34 @@ namespace EPBLib.Helpers
 
             if (version >= 20) // TODO: I have no idea when this appeared
             {
-                int unknown9Count = 0;
-                bytesLeft = reader.ReadEpbMatrix(epb, "Unknown9", length, (r, e, x, y, z, b) =>
+                int unknown05Count = 0;
+                bytesLeft = reader.ReadEpbMatrix(epb, "Unknown05", length, (r, e, x, y, z, b) =>
                 {
-                    byte unknown91 = r.ReadByte();
-                    byte unknown92 = r.ReadByte();
-                    byte unknown93 = r.ReadByte();
-                    byte unknown94 = r.ReadByte();
-                    unknown9Count++;
-                    Console.WriteLine($"    {unknown9Count} ({x}, {y}, {z}): 0x{unknown91:x2} 0x{unknown92:x2} 0x{unknown93:x2} 0x{unknown94:x2}");
+                    byte unknown05a = r.ReadByte();
+                    byte unknown05b = r.ReadByte();
+                    byte unknown05c = r.ReadByte();
+                    byte unknown05d = r.ReadByte();
+                    unknown05Count++;
+                    Console.WriteLine($"    {unknown05Count} ({x}, {y}, {z}): 0x{unknown05a:x2} 0x{unknown05b:x2} 0x{unknown05c:x2} 0x{unknown05d:x2}");
                     return b - 4;
                 });
             }
+
+            int unknown06Count = 0;
+            if (version <= 12)
+            {
+                unknown06Count = 4;
+            }
+            else if (version <= 17)
+            {
+                unknown06Count = 12;
+            }
+            else
+            {
+                unknown06Count = 14;
+            }
+            byte[] unknown06 = reader.ReadBytes(unknown06Count);
+            Console.WriteLine($"Unknown06: {unknown06Count:x8} {BitConverter.ToString(unknown06).Replace("-", "")}");
 
             byte[] remainingData = reader.ReadBytes((int)(bytesLeft));
             Console.WriteLine($"Remaining data: {BitConverter.ToString(remainingData).Replace("-", "")}");
@@ -281,7 +297,7 @@ namespace EPBLib.Helpers
             UInt32 matrixSize = reader.ReadUInt32();
             byte[] matrix = reader.ReadBytes((int)matrixSize);
             bytesLeft -= 4;
-            Console.WriteLine($"{name} Matrix: {BitConverter.ToString(matrix).Replace("-", "")}");
+            Console.WriteLine($"{name} Matrix: MatrixSize=0x{matrixSize:x8} Matrix={BitConverter.ToString(matrix).Replace("-", "")}");
             if (func == null)
             {
                 return bytesLeft;

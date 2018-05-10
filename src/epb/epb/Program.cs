@@ -16,6 +16,7 @@ namespace epb
             BaseBoxCheckered,
             BaseBoxFilled,
             BaseBoxFramed,
+            BaseSingleBlock,
             BaseBlockTypes
         }
 
@@ -25,6 +26,7 @@ namespace epb
         static CreateTemplate createTemplate = CreateTemplate.None;
         static string writePath = "NewBlueprint.epb";
         static EpBlueprint.EpbType type = EpBlueprint.EpbType.Base;
+        private static EpbBlock.EpbBlockType blockType = EpbBlock.EpbBlockType.SteelBlockL;
         static UInt32 width       = 1;
         static UInt32 height      = 1;
         static UInt32 depth       = 1;
@@ -75,6 +77,18 @@ namespace epb
                             width  = UInt32.Parse(a[0]);
                             height = UInt32.Parse(a[1]);
                             depth  = UInt32.Parse(a[2]);
+                        }
+                    }
+                },
+                {
+                    "b|blocktype=",
+                    "Block type to use for shapes.",
+                    v =>
+                    {
+                        if (v != null)
+                        {
+                            byte b = (byte)new System.ComponentModel.ByteConverter().ConvertFromString(v);
+                            blockType = (EpbBlock.EpbBlockType)b;
                         }
                     }
                 },
@@ -152,7 +166,7 @@ namespace epb
                     {
                         if (x == width / 2 && y == height / 2 && z == depth / 2)
                         {
-                            epb.SetBlock(new EpbBlock() { BlockType = EpbBlock.EpbBlockType.Core, Rotation = 0x0a, Unknown00 = 0x02, Variant = 0x00 }, x, y, z);
+                            epb.SetBlock(new EpbBlock() { BlockType = blockType, Rotation = 0x0a, Unknown00 = 0x00, Variant = 0x00 }, x, y, z);
                         }
                         else
                         {
@@ -206,7 +220,7 @@ namespace epb
                     {
                         if ((x % (width - 1) == 0) ^ (y % (height - 1) == 0) ^ (z % (depth - 1) == 0))
                         {
-                            epb.SetBlock(new EpbBlock() { BlockType = EpbBlock.EpbBlockType.SteelBlockL, Rotation = 0x01, Unknown00 = 0x00, Variant = 0x00 }, x, y, z);
+                            epb.SetBlock(new EpbBlock() { BlockType = blockType, Rotation = 0x01, Unknown00 = 0x00, Variant = 0x00 }, x, y, z);
                         }
                     }
                 }
@@ -243,7 +257,7 @@ namespace epb
                             || (!a && !b && !c)
                            ))
                         {
-                            epb.SetBlock(new EpbBlock() { BlockType = EpbBlock.EpbBlockType.SteelBlockL, Rotation = 0x01, Unknown00 = 0x00, Variant = 0x00 }, x, y, z);
+                            epb.SetBlock(new EpbBlock() { BlockType = blockType, Rotation = 0x01, Unknown00 = 0x00, Variant = 0x00 }, x, y, z);
                         }
                     }
                 }
