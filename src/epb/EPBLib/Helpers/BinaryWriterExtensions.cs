@@ -87,11 +87,8 @@ namespace EPBLib.Helpers
                 {
                     return false;
                 }
-
-                list.Add((byte)block.BlockType);
-                list.Add((byte)block.Rotation);
-                list.Add((byte)block.Unknown00);
-                list.Add((byte)block.Variant);
+                UInt32 data = (UInt32)block.BlockType + (UInt32)(block.Rotation << 8) + (UInt32)(block.Unknown00 << 16) + (UInt32)(block.Variant << 25);
+                list.AddRange(BitConverter.GetBytes(data));
                 return true;
             });
 

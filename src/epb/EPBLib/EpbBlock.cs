@@ -1,4 +1,7 @@
 ﻿
+using System;
+using System.Collections.Generic;
+
 namespace EPBLib
 {
     public class EpbBlock
@@ -23,8 +26,9 @@ namespace EPBLib
             x71 = 0x71, x72 = 0x72, x73 = 0x73, x74 = 0x74, x75 = 0x75, x76 = 0x76, x77 = 0x77, x78 = 0x78, x79 = 0x79, x7a = 0x7a, x7b = 0x7b, x7c = 0x7c, x7d = 0x7d, x7e = 0x7e, x7f = 0x7f, x80 = 0x80,
             x81 = 0x81, x82 = 0x82, x83 = 0x83, x84 = 0x84, x85 = 0x85, x86 = 0x86, x87 = 0x87, x88 = 0x88, x89 = 0x89, x8a = 0x8a, x8b = 0x8b, x8c = 0x8c, x8d = 0x8d, x8e = 0x8e, x8f = 0x8f, x90 = 0x90,
             x91 = 0x91, x92 = 0x92,
-            SteelBlockL = 0x93,
-            x94 = 0x94, x95 = 0x95, x96 = 0x96, x97 = 0x97, x98 = 0x98, x99 = 0x99, x9a = 0x9a, x9b = 0x9b, x9c = 0x9c, x9d = 0x9d, x9e = 0x9e, x9f = 0x9f, xa0 = 0xa0,
+            SteelBlockL_A = 0x93, // Variants 0x00-0x1f
+            SteelBlockL_B = 0x94, // Variants 0x00-0x1e
+            x95 = 0x95, x96 = 0x96, x97 = 0x97, x98 = 0x98, x99 = 0x99, x9a = 0x9a, x9b = 0x9b, x9c = 0x9c, x9d = 0x9d, x9e = 0x9e, x9f = 0x9f, xa0 = 0xa0,
             xa1 = 0xa1, xa2 = 0xa2, xa3 = 0xa3, xa4 = 0xa4, xa5 = 0xa5, xa6 = 0xa6, xa7 = 0xa7, xa8 = 0xa8, xa9 = 0xa9, xaa = 0xaa, xab = 0xab, xac = 0xac, xad = 0xad, xae = 0xae, xaf = 0xaf, xb0 = 0xb0,
             xb1 = 0xb1, xb2 = 0xb2, xb3 = 0xb3, xb4 = 0xb4, xb5 = 0xb5, xb6 = 0xb6, xb7 = 0xb7, xb8 = 0xb8, xb9 = 0xb9, xba = 0xba, xbb = 0xbb, xbc = 0xbc, xbd = 0xbd, xbe = 0xbe, xbf = 0xbf, xc0 = 0xc0,
             xc1 = 0xc1, xc2 = 0xc2, xc3 = 0xc3, xc4 = 0xc4, xc5 = 0xc5, xc6 = 0xc6, xc7 = 0xc7, xc8 = 0xc8, xc9 = 0xc9, xca = 0xca, xcb = 0xcb, xcc = 0xcc, xcd = 0xcd, xce = 0xce, xcf = 0xcf, xd0 = 0xd0,
@@ -33,11 +37,80 @@ namespace EPBLib
             xf1 = 0xf1, xf2 = 0xf2, xf3 = 0xf3, xf4 = 0xf4, xf5 = 0xf5, xf6 = 0xf6, xf7 = 0xf7, xf8 = 0xf8, xf9 = 0xf9, xfa = 0xfa, xfb = 0xfb, xfc = 0xfc, xfd = 0xfd, xfe = 0xfe, xff = 0xff
         }
 
+        public struct EpbBlockVariant
+        {
+            public string Name { get; set; }
+            public byte Id { get; set; }
+        }
         #endregion Types
+
+        #region Variants
+        public static readonly Dictionary<EpbBlockType,string[]> BlockVariants = new Dictionary<EpbBlockType, string[]>()
+        {
+            {
+                EpbBlockType.SteelBlockL_A, new string[]
+                {
+                    "Cube", "Cut Corner", "Corner Long A", "Corner Long B", "Corner Long C",
+                    "Corner Long D", "Corner Large A", "Corner", "Ramp Bottom", "Ramp Top",
+                    "Slope", "Curved Corner", "Round Cut Corner", "Round Corner",
+                    "Round Corner Long", "Round Slope", "Cylinder", "Inward Corner",
+                    "Inward Round Slope", "Inward Curved Corner", "Round Slope Edge Inward",
+                    "Cylinder End A", "Cylinder End B", "Cylinder End C", "Ramp Wedge Top",
+                    "Round 4 Way Connector", "Round Slope Edge", "Corner Large B", "Corner Large C",
+                    "Corner Large D", "Corner Long E", "Pyramid A"
+                }
+            },
+            {
+                EpbBlockType.SteelBlockL_B, new string[]
+                {
+                    "Wall", "Wall L-shape", "Thin Slope", "Thin Corner", "Sloped Wall",
+                    "Sloped Wall Bottom (right)", "Sloped Wall Top (right)",
+                    "Sloped Wall Bottom (left)", "Sloped Wall Top (left)", "Round Corner Thin",
+                    "Round Slope Thin", "Round Cut Corner Thin", "Round Slope Edge Thin",
+                    "Round Corner Long Thin", "Corner Round Thin 2", "Corner Thin 2",
+                    "Wall 3 Corner", "Wall Half", "Cube Half", "Ramp Top Double", "Ramp Bottom A",
+                    "Ramp Bottom B", "Ramp Bottom C", "Ramp Wedge Bottom", "Beam", "Cylinder Thin",
+                    "Cylinder Thin T Joint", "Cylinder Thin Curved", "Cylinder Fence Bottom",
+                    "Cylinder Fence Top", "Slope Half"
+                }
+            }
+        };
+
+        public static byte GetVariant(EpbBlockType type, string variantName)
+        {
+            if (!BlockVariants.ContainsKey(type))
+            {
+                return 0x00;
+            }
+
+            int i = Array.FindIndex(BlockVariants[type], s => s == variantName);
+            if (i == -1)
+            {
+                return 0x00;
+            }
+
+            return (byte)i;
+        }
+
+        public static string GetVariantName(EpbBlockType type, byte variant)
+        {
+            if (!BlockVariants.ContainsKey(type) || variant >= BlockVariants[type].Length)
+            {
+                return $"{variant:x2}";
+            }
+            return BlockVariants[type][variant];
+        }
+        #endregion Variants
+
         public EpbBlockType BlockType { get; set; }
         public byte Rotation { get; set; }
-        public byte Unknown00 { get; set; }
+        public UInt16 Unknown00 { get; set; }
         public byte Variant { get; set; }
+        public string VariantName
+        {
+            get => GetVariantName(BlockType, Variant);
+            set => Variant = GetVariant(BlockType, value);
+        }
 
         public byte[] FaceColours = new byte[6]; // 5 bit colour index
         public byte[] FaceTextures = new byte[6]; // 6 bit texture index

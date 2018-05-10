@@ -23,17 +23,18 @@ namespace epb
         static string exectutableName;
         static bool showHelp = false;
 
-        static CreateTemplate createTemplate = CreateTemplate.None;
-        static string writePath = "NewBlueprint.epb";
-        static EpBlueprint.EpbType type = EpBlueprint.EpbType.Base;
-        private static EpbBlock.EpbBlockType blockType = EpbBlock.EpbBlockType.SteelBlockL;
-        static UInt32 width       = 1;
-        static UInt32 height      = 1;
-        static UInt32 depth       = 1;
-        static string creatorId   = "Gronk";
-        static string creatorName = "Apan Loon";
-        static string ownerId     = "Gronkers";
-        static string ownerName   = "Apan Loony";
+        static CreateTemplate        createTemplate = CreateTemplate.None;
+        static string                writePath      = "NewBlueprint.epb";
+        static EpBlueprint.EpbType   type           = EpBlueprint.EpbType.Base;
+        static EpbBlock.EpbBlockType blockType      = EpbBlock.EpbBlockType.SteelBlockL_A;
+        static byte                  blockVariant   = 0x00;
+        static UInt32                width          = 1;
+        static UInt32                height         = 1;
+        static UInt32                depth          = 1;
+        static string                creatorId      = "Gronk";
+        static string                creatorName    = "Apan Loon";
+        static string                ownerId        = "Gronkers";
+        static string                ownerName      = "Apan Loony";
 
         static List<string> inPaths;
 
@@ -87,8 +88,32 @@ namespace epb
                     {
                         if (v != null)
                         {
-                            byte b = (byte)new System.ComponentModel.ByteConverter().ConvertFromString(v);
-                            blockType = (EpbBlock.EpbBlockType)b;
+                            try
+                            {
+                                blockType = (EpbBlock.EpbBlockType)(byte)new System.ComponentModel.ByteConverter().ConvertFromString(v);
+                            }
+                            catch (Exception e)
+                            {
+                                blockType = (EpbBlock.EpbBlockType)Enum.Parse(typeof(EpbBlock.EpbBlockType), v);
+                            }
+                        }
+                    }
+                },
+                {
+                    "v|blockvariant=",
+                    "Block variant to use for shapes.",
+                    v =>
+                    {
+                        if (v != null)
+                        {
+                            try
+                            {
+                                blockVariant = (byte)new System.ComponentModel.ByteConverter().ConvertFromString(v);
+                            }
+                            catch (Exception e)
+                            {
+                                blockVariant = EpbBlock.GetVariant(blockType, v);
+                            }
                         }
                     }
                 },
@@ -166,11 +191,11 @@ namespace epb
                     {
                         if (x == width / 2 && y == height / 2 && z == depth / 2)
                         {
-                            epb.SetBlock(new EpbBlock() { BlockType = blockType, Rotation = 0x0a, Unknown00 = 0x00, Variant = 0x00 }, x, y, z);
+                            epb.SetBlock(new EpbBlock() { BlockType = blockType, Rotation = 0x0a, Unknown00 = 0x00, Variant = blockVariant }, x, y, z);
                         }
                         else
                         {
-                            epb.SetBlock(new EpbBlock() { BlockType = EpbBlock.EpbBlockType.SteelBlockL, Rotation = 0x01, Unknown00 = 0x00, Variant = 0x00 }, x, y, z);
+                            epb.SetBlock(new EpbBlock() { BlockType = EpbBlock.EpbBlockType.SteelBlockL_A, Rotation = 0x01, Unknown00 = 0x00, Variant = 0x00 }, x, y, z);
                         }
                     }
                 }
@@ -220,7 +245,7 @@ namespace epb
                     {
                         if ((x % (width - 1) == 0) ^ (y % (height - 1) == 0) ^ (z % (depth - 1) == 0))
                         {
-                            epb.SetBlock(new EpbBlock() { BlockType = blockType, Rotation = 0x01, Unknown00 = 0x00, Variant = 0x00 }, x, y, z);
+                            epb.SetBlock(new EpbBlock() { BlockType = blockType, Rotation = 0x01, Unknown00 = 0x00, Variant = blockVariant }, x, y, z);
                         }
                     }
                 }
@@ -257,7 +282,7 @@ namespace epb
                             || (!a && !b && !c)
                            ))
                         {
-                            epb.SetBlock(new EpbBlock() { BlockType = blockType, Rotation = 0x01, Unknown00 = 0x00, Variant = 0x00 }, x, y, z);
+                            epb.SetBlock(new EpbBlock() { BlockType = blockType, Rotation = 0x01, Unknown00 = 0x00, Variant = blockVariant }, x, y, z);
                         }
                     }
                 }
@@ -284,7 +309,7 @@ namespace epb
                 {
                     UInt32 x = i % width;
                     UInt32 z = i / width;
-                    epb.SetBlock(new EpbBlock() { BlockType = (EpbBlock.EpbBlockType)i, Rotation = 0x01, Unknown00 = 0x00, Variant = 0x00 }, x, 0, z);
+                    epb.SetBlock(new EpbBlock() { BlockType = (EpbBlock.EpbBlockType)i, Rotation = 0x01, Unknown00 = 0x00, Variant = blockVariant }, x, 0, z);
                 }
             }
 
