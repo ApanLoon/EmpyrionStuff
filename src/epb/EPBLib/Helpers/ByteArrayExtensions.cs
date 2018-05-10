@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace EPBLib.Helpers
@@ -31,6 +32,11 @@ namespace EPBLib.Helpers
                 }
             }
             return result;
+        }
+
+        public static string ToHexString(this byte[] buf)
+        {
+            return BitConverter.ToString(buf).Replace("-", "");
         }
     }
 }

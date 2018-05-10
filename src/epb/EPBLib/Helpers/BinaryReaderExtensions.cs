@@ -67,7 +67,7 @@ namespace EPBLib.Helpers
             }
             byte[] unknown02 = reader.ReadBytes(nUnknown02);
             bytesLeft -= nUnknown02;
-            Console.WriteLine($"Unknown02: {BitConverter.ToString(unknown02).Replace("-", "")}");
+            Console.WriteLine($"Unknown02: {unknown02.ToHexString()}");
 
             if (version > 12)
             {
@@ -90,7 +90,7 @@ namespace EPBLib.Helpers
 
             byte[] unknown05 = reader.ReadBytes(1);
             bytesLeft -= 1;
-            Console.WriteLine($"Unknown05: {BitConverter.ToString(unknown05).Replace("-", "")}");
+            Console.WriteLine($"Unknown05: {unknown05.ToHexString()}");
 
             epb.DeviceGroups = reader.ReadEpbDeviceGroups(ref bytesLeft);
             Console.WriteLine($"DeviceGroups ({epb.DeviceGroups.Count}):");
@@ -99,7 +99,7 @@ namespace EPBLib.Helpers
                 Console.WriteLine($"    {group.Name} (Flags=0x{group.Flags:x4})");
                 foreach (EpbDeviceGroupEntry entry in group.Entries)
                 {
-                    Console.WriteLine($"        Unknown={BitConverter.ToString(entry.Unknown).Replace("-", "")} \"{entry.Name}\"");
+                    Console.WriteLine($"        Unknown={entry.Unknown.ToHexString()} \"{entry.Name}\"");
                 }
             }
 
@@ -112,7 +112,7 @@ namespace EPBLib.Helpers
             }
             byte[] unknown8 = buf.Take(dataStart).ToArray();
             bytesLeft -= dataStart;
-            Console.WriteLine($"BeforeZIP: {BitConverter.ToString(unknown8).Replace("-", "")}");
+            Console.WriteLine($"BeforeZIP: {unknown8.ToHexString()}");
 
             byte[] zippedData = buf.Skip(dataStart).Take((int)bytesLeft).ToArray();
             zippedData[0] = 0x50;
@@ -143,13 +143,14 @@ namespace EPBLib.Helpers
         #endregion EpBlueprint
 
         #region EpbBlocks
+
         public static void ReadEpbBlocks(this BinaryReader reader, EpBlueprint epb, UInt32 version, long length)
         {
             long bytesLeft = length;
             int blockCount = 0;
             bytesLeft = reader.ReadEpbMatrix(epb, "Blocks", length, (r, e, x, y, z, b) =>
             {
-                EpbBlock.EpbBlockType type = (EpbBlock.EpbBlockType)r.ReadByte();
+                EpbBlock.EpbBlockType type = (EpbBlock.EpbBlockType) r.ReadByte();
                 byte rotation = r.ReadByte();
                 byte unknown2 = r.ReadByte();
                 byte variant = r.ReadByte();
@@ -162,7 +163,8 @@ namespace EPBLib.Helpers
                     Variant = variant
                 };
                 epb.SetBlock(block, x, y, z);
-                Console.WriteLine($"    {blockCount} ({x}, {y}, {z}): Type={type} Rot=0x{rotation:x2} Unknown2=0x{unknown2:x2} Variant=0x{variant:x2}");
+                Console.WriteLine(
+                    $"    {blockCount} ({x}, {y}, {z}): Type={type} Rot=0x{rotation:x2} Unknown2=0x{unknown2:x2} Variant=0x{variant:x2}");
                 return b - 4;
             });
 
@@ -174,7 +176,8 @@ namespace EPBLib.Helpers
                 byte unknown01c = r.ReadByte();
                 byte unknown01d = r.ReadByte();
                 unknown01Count++;
-                Console.WriteLine($"    {unknown01Count} ({x}, {y}, {z}): 0x{unknown01a:x2} 0x{unknown01b:x2} 0x{unknown01c:x2} 0x{unknown01d:x2}");
+                Console.WriteLine(
+                    $"    {unknown01Count} ({x}, {y}, {z}): 0x{unknown01a:x2} 0x{unknown01b:x2} 0x{unknown01c:x2} 0x{unknown01d:x2}");
                 return b - 4;
             });
 
@@ -182,11 +185,12 @@ namespace EPBLib.Helpers
             bytesLeft -= 1;
             if (unknown02Count == 0)
             {
-                unknown02Count = (int)(epb.Width * epb.Height * epb.Depth); // blockCount;
+                unknown02Count = (int) (epb.Width * epb.Height * epb.Depth); // blockCount;
             }
+
             byte[] unknown02 = reader.ReadBytes(unknown02Count);
             bytesLeft -= unknown02Count;
-            Console.WriteLine($"unknown02: {BitConverter.ToString(unknown02).Replace("-", "")}");
+            Console.WriteLine($"unknown02: {unknown02.ToHexString()}");
 
             int colourCount = 0;
             bytesLeft = reader.ReadEpbMatrix(epb, "Colour", length, (r, e, x, y, z, b) =>
@@ -195,9 +199,10 @@ namespace EPBLib.Helpers
                 UInt32 bits = r.ReadUInt32();
                 for (int i = 0; i < 6; i++)
                 {
-                    block.FaceColours[i] = (byte)(bits & 0x1f);
+                    block.FaceColours[i] = (byte) (bits & 0x1f);
                     bits = bits >> 5;
                 }
+
                 colourCount++;
                 Console.WriteLine($"    {colourCount} ({x}, {y}, {z}): {string.Join(", ", block.FaceColours)}");
                 return b - 4;
@@ -210,9 +215,10 @@ namespace EPBLib.Helpers
                 UInt64 bits = r.ReadUInt64();
                 for (int i = 0; i < 6; i++)
                 {
-                    block.FaceTextures[i] = (byte)(bits & 0x3f);
+                    block.FaceTextures[i] = (byte) (bits & 0x3f);
                     bits = bits >> 6;
                 }
+
                 textureCount++;
                 Console.WriteLine($"    {textureCount} ({x}, {y}, {z}): {string.Join(", ", block.FaceTextures)}");
                 return b - 8;
@@ -248,12 +254,14 @@ namespace EPBLib.Helpers
                 UInt32 bits = r.ReadUInt32();
                 for (int i = 0; i < 6; i++)
                 {
-                    block.FaceSymbols[i] = (byte)(bits & 0x1f);
+                    block.FaceSymbols[i] = (byte) (bits & 0x1f);
                     bits = bits >> 5;
                 }
-                block.SymbolPage = (byte)bits;
+
+                block.SymbolPage = (byte) bits;
                 symbolCount++;
-                Console.WriteLine($"    {symbolCount} ({x}, {y}, {z}): Page={block.SymbolPage} {string.Join(", ", block.FaceSymbols)}");
+                Console.WriteLine(
+                    $"    {symbolCount} ({x}, {y}, {z}): Page={block.SymbolPage} {string.Join(", ", block.FaceSymbols)}");
                 return b - 4;
             });
 
@@ -267,29 +275,134 @@ namespace EPBLib.Helpers
                     byte unknown05c = r.ReadByte();
                     byte unknown05d = r.ReadByte();
                     unknown05Count++;
-                    Console.WriteLine($"    {unknown05Count} ({x}, {y}, {z}): 0x{unknown05a:x2} 0x{unknown05b:x2} 0x{unknown05c:x2} 0x{unknown05d:x2}");
+                    Console.WriteLine(
+                        $"    {unknown05Count} ({x}, {y}, {z}): 0x{unknown05a:x2} 0x{unknown05b:x2} 0x{unknown05c:x2} 0x{unknown05d:x2}");
                     return b - 4;
                 });
             }
 
-            int unknown06Count = 0;
-            if (version <= 12)
+            UInt16 unknown06Count = reader.ReadUInt16();
+            bytesLeft -= 2;
+            Console.WriteLine($"Unknown06 ({unknown06Count})");
+            for (int i = 0; i < unknown06Count; i++)
             {
-                unknown06Count = 4;
+                byte[] unknown06a = reader.ReadBytes(5);
+                bytesLeft -= 5;
+                Console.WriteLine($"    unknown06a: {unknown06a.ToHexString()}");
+                UInt16 nTags = reader.ReadUInt16();
+                bytesLeft -= 2;
+                Console.WriteLine($"    BlockTags: {nTags}");
+                for (int tagIndex = 0; tagIndex < nTags; tagIndex++)
+                {
+                    EpbBlockTag tag = reader.ReadEpbBlockTag(ref bytesLeft);
+                    Console.WriteLine($"        {tagIndex}: {tag}");
+                }
             }
-            else if (version <= 17)
+
+            UInt16 unknown07Count = reader.ReadUInt16();
+            bytesLeft -= 2;
+            Console.WriteLine($"Unknown07 ({unknown07Count})");
+
+
+            UInt16 signalCount = reader.ReadUInt16();
+            bytesLeft -= 2;
+            Console.WriteLine($"Signals ({signalCount})");
+            for (int i = 0; i < signalCount; i++)
             {
-                unknown06Count = 12;
+                byte[] signalUnknown = reader.ReadBytes(1);
+                bytesLeft -= 1;
+                Console.WriteLine($"    Unknown: {signalUnknown.ToHexString()}");
+                UInt16 nTags = reader.ReadUInt16();
+                bytesLeft -= 2;
+                Console.WriteLine($"    BlockTags: {nTags}");
+                for (int tagIndex = 0; tagIndex < nTags; tagIndex++)
+                {
+                    EpbBlockTag tag = reader.ReadEpbBlockTag(ref bytesLeft);
+                    Console.WriteLine($"        {tagIndex}: {tag}");
+                }
+            }
+
+            if (version < 20)
+            {
+                // Check CV_Prefab_Tier2.epb.hex for v18
             }
             else
             {
-                unknown06Count = 14;
+                UInt16 logicCount = reader.ReadUInt16();
+                bytesLeft -= 2;
+                Console.WriteLine($"Logic ({logicCount})");
+                for (int i = 0; i < logicCount; i++)
+                {
+                    if (i > 0)
+                    {
+                        byte logicUnknown01 = reader.ReadByte();
+                        bytesLeft -= 1;
+                        Console.WriteLine($"    LogicUnknown01: 0x{logicUnknown01:x2}");
+                    }
+
+                    string name = reader.ReadEpString(ref bytesLeft);
+                    UInt16 nRules = reader.ReadUInt16();
+                    bytesLeft -= 2;
+                    byte logicUnknown02 = reader.ReadByte();
+                    bytesLeft -= 1;
+                    UInt16 nTags = reader.ReadByte();
+                    bytesLeft -= 1;
+                    Console.WriteLine($"    Name:           {name}");
+                    Console.WriteLine($"    nRules:         {nRules}");
+                    Console.WriteLine($"    LogicUnknown02: 0x{logicUnknown02:x2}");
+                    Console.WriteLine($"    nTags:          {nTags}");
+                    for (int j = 0; j < nRules; j++)
+                    {
+                        byte ruleUnknown01 = reader.ReadByte();
+                        bytesLeft -= 1;
+                        Console.WriteLine($"        RuleUnknown01: 0x{ruleUnknown01:x2}");
+                        if (j > 0)
+                        {
+                            byte ruleUnknown02 = reader.ReadByte();
+                            bytesLeft -= 1;
+                            nTags = reader.ReadUInt16();
+                            bytesLeft -= 2;
+                            Console.WriteLine($"        RuleUnknown02: 0x{ruleUnknown02:x2}");
+                            Console.WriteLine($"        nTags:         {nTags}");
+                        }
+
+                        for (int tagIndex = 0; tagIndex < nTags; tagIndex++)
+                        {
+                            EpbBlockTag tag = reader.ReadEpbBlockTag(ref bytesLeft);
+                            Console.WriteLine($"            {tagIndex}: {tag}");
+                        }
+
+                    }
+                }
+
+                byte unknown08 = reader.ReadByte();
+                bytesLeft -= 1;
+                Console.WriteLine($"Unknown08: 0x{unknown08:x2}");
+
+                UInt16 logicOpsCount = reader.ReadUInt16();
+                bytesLeft -= 2;
+                Console.WriteLine($"LogicOps ({logicOpsCount})");
+                for (int i = 0; i < logicOpsCount; i++)
+                {
+                    byte logicOpUnknown01 = reader.ReadByte();
+                    bytesLeft -= 1;
+                    UInt16 nTags = reader.ReadUInt16();
+                    bytesLeft -= 2;
+                    Console.WriteLine($"    LogicOpUnknown01: 0x{logicOpUnknown01:x2}");
+                    Console.WriteLine($"    nTags:            {nTags}");
+                    for (int tagIndex = 0; tagIndex < nTags; tagIndex++)
+                    {
+                        EpbBlockTag tag = reader.ReadEpbBlockTag(ref bytesLeft);
+                        Console.WriteLine($"        {tagIndex}: {tag}");
+                    }
+                }
             }
-            byte[] unknown06 = reader.ReadBytes(unknown06Count);
-            Console.WriteLine($"Unknown06: {unknown06Count:x8} {BitConverter.ToString(unknown06).Replace("-", "")}");
+
+
+
 
             byte[] remainingData = reader.ReadBytes((int)(bytesLeft));
-            Console.WriteLine($"Remaining data: {BitConverter.ToString(remainingData).Replace("-", "")}");
+            Console.WriteLine($"Remaining data: {remainingData.ToHexString()}");
         }
 
         public static long ReadEpbMatrix(this BinaryReader reader, EpBlueprint epb, string name, long bytesLeft, Func<BinaryReader, EpBlueprint, UInt32, UInt32, UInt32, long, long> func)
@@ -318,6 +431,49 @@ namespace EPBLib.Helpers
                 }
             }
             return bytesLeft;
+        }
+
+        public static EpbBlockTag ReadEpbBlockTag(this BinaryReader reader, ref long bytesLeft)
+        {
+            EpbBlockTag.TagType type = (EpbBlockTag.TagType)reader.ReadByte();
+            bytesLeft -= 1;
+            string name = reader.ReadEpString(ref bytesLeft);
+
+            EpbBlockTag tag;
+            switch (type)
+            {
+                case EpbBlockTag.TagType.UInt32:
+                    EpbBlockTagUInt32 tagUInt32 = new EpbBlockTagUInt32(name);
+                    tagUInt32.Value = reader.ReadUInt32();
+                    bytesLeft -= 4;
+                    tag = tagUInt32;
+                    break;
+                case EpbBlockTag.TagType.String:
+                    EpbBlockTagString tagString = new EpbBlockTagString(name);
+                    tagString.Value = reader.ReadEpString(ref bytesLeft);
+                    tag = tagString;
+                    break;
+                case EpbBlockTag.TagType.Bool:
+                    EpbBlockTagBool tagBool = new EpbBlockTagBool(name);
+                    tag = tagBool;
+                    break;
+                case EpbBlockTag.TagType.Colour:
+                    EpbBlockTagColour tagColour = new EpbBlockTagColour(name);
+                    tagColour.Value = reader.ReadUInt32();
+                    bytesLeft -= 4;
+                    tag = tagColour;
+                    break;
+                case EpbBlockTag.TagType.x03:
+                    EpbBlockTagx03 tagx03 = new EpbBlockTagx03(name);
+                    tagx03.Value = reader.ReadBytes(4);
+                    bytesLeft -= 4;
+                    tag = tagx03;
+                    break;
+                default:
+                    tag = null;
+                    break;
+            }
+            return tag;
         }
         #endregion EpbBlocks
 
@@ -429,9 +585,21 @@ namespace EPBLib.Helpers
 
         public static string ReadEpString(this BinaryReader reader, ref long bytesLeft)
         {
-            byte len = reader.ReadByte();
-            string s = (len == 0) ? "" : System.Text.Encoding.ASCII.GetString(reader.ReadBytes(len));
-            bytesLeft -= 1 + len;
+            int len = 0;
+
+            bool more;
+            int shift = 0;
+            do
+            {
+                byte b = reader.ReadByte();
+                bytesLeft -= 1;
+                more = (b & 0x80) != 0;
+                len += (b & 0x7f) << shift;
+                shift += 7;
+            } while (more);
+
+            string s = (len == 0) ? "" : System.Text.Encoding.UTF8.GetString(reader.ReadBytes(len));
+            bytesLeft -= len;
             return s;
         }
 

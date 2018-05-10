@@ -307,8 +307,8 @@ namespace EPBLib.Helpers
 
         public static void WriteEpString(this BinaryWriter writer, string s)
         {
-            byte[] buf = System.Text.Encoding.ASCII.GetBytes(s);
-            writer.Write((byte)buf.Length);
+            byte[] buf = System.Text.Encoding.UTF8.GetBytes(s);
+            writer.Write((byte)buf.Length); //TODO: Handle multi-byte length
             writer.Write(buf);
         }
 
