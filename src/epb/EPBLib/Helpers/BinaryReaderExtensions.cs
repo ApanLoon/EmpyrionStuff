@@ -155,13 +155,13 @@ namespace EPBLib.Helpers
                 blockCount++;
                 EpbBlock block = new EpbBlock()
                 {
-                    BlockType = (EpbBlock.EpbBlockType)(data & 0xff),
-                    Rotation  = (byte)((data >> 8) & 0xff),
-                    Unknown00 = (UInt16)((data >> 16) & 0x1ff),
-                    Variant   = (byte)((data >> 25) & 0x1f)
+                    BlockType = (EpbBlock.EpbBlockType)(data & 0x7ff),
+                    Rotation  = (byte)((data >> 11) & 0x1f),
+                    Unknown00 = (UInt16)((data >> 16) & 0x3ff),
+                    Variant   = (byte)((data >> 26) & 0x1f)
                 };
                 epb.SetBlock(block, x, y, z);
-                Console.WriteLine($"    {blockCount} ({x}, {y}, {z}): Type={block.BlockType} Rot=0x{block.Rotation:x2} Unknown2=0x{block.Unknown00:x3} Variant={block.VariantName}");
+                Console.WriteLine($"    {blockCount} ({x}, {y}, {z}): {data:x08} Type={block.BlockType} Rot=0x{block.Rotation:x2} Unknown2=0x{block.Unknown00:x3} Variant={block.VariantName}");
                 return b - 4;
             });
 

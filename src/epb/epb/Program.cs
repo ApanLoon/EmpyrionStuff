@@ -17,6 +17,7 @@ namespace epb
             BaseBoxFilled,
             BaseBoxFramed,
             BaseSingleBlock,
+            BasePyramidFilled,
             BaseBlockTypes
         }
 
@@ -168,6 +169,9 @@ namespace epb
                 case CreateTemplate.BaseBoxFramed:
                     CreateBoxFramed(writePath);
                     break;
+                case CreateTemplate.BasePyramidFilled:
+                    CreatePyramidFilled(writePath);
+                    break;
                 case CreateTemplate.BaseBlockTypes:
                     width = 16;
                     height = 1;
@@ -297,6 +301,40 @@ namespace epb
                 }
             }
         }
+
+
+        static void CreatePyramidFilled(string path)
+        {
+            EpBlueprint epb = CreateCommon();
+
+            UInt32 w = width;
+            UInt32 h = height;
+            UInt32 d = depth;
+
+            for (UInt32 y = 0; y < h; y++)
+            {
+                for (UInt32 z = y; z < d; z++)
+                {
+                    for (UInt32 x = y; x < w; x++)
+                    {
+                        epb.SetBlock(new EpbBlock() { BlockType = blockType, Rotation = 0x0a, Unknown00 = 0x00, Variant = blockVariant }, x, y, z);
+                    }
+                }
+
+                w -= 1;
+                d -= 1;
+            }
+
+            // Write the file:
+            using (FileStream stream = File.Create(path))
+            {
+                using (BinaryWriter writer = new BinaryWriter(stream))
+                {
+                    writer.Write(epb);
+                }
+            }
+        }
+
 
 
         //TODO: This creates a blueprint that can't be spawned in game
