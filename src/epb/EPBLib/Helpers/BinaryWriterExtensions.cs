@@ -114,19 +114,61 @@ namespace EPBLib.Helpers
             // Colours:
             byteCount += AddEpbMatrixToList(epb, byteList, (blueprint, x, y, z, list) =>
             {
-                return false;
+                EpbBlock block = epb.Blocks[x, y, z];
+                if (block == null)
+                {
+                    return false;
+                }
+
+                UInt32 bits = 0;
+                int factor = 1;
+                for (int i = 0; i < 6; i++)
+                {
+                    bits += (UInt32)(block.FaceColours[i] * factor);
+                    factor = factor << 5;
+                }
+                list.AddRange(BitConverter.GetBytes(bits));
+                return true;
             });
 
             // Textures:
             byteCount += AddEpbMatrixToList(epb, byteList, (blueprint, x, y, z, list) =>
             {
-                return false;
+                EpbBlock block = epb.Blocks[x, y, z];
+                if (block == null)
+                {
+                    return false;
+                }
+
+                UInt64 bits = 0;
+                int factor = 1;
+                for (int i = 0; i < 6; i++)
+                {
+                    bits += (UInt64)(block.Textures[i] * factor);
+                    factor = factor << 6;
+                }
+                list.AddRange(BitConverter.GetBytes(bits));
+                return true;
             });
 
-            // Unknown7:
+            // TextureFlip:
             byteCount += AddEpbMatrixToList(epb, byteList, (blueprint, x, y, z, list) =>
             {
-                return false;
+                EpbBlock block = epb.Blocks[x, y, z];
+                if (block == null)
+                {
+                    return false;
+                }
+
+                byte bits = 0;
+                int factor = 1;
+                for (int i = 0; i < 6; i++)
+                {
+                    bits += (byte)((block.TextureFlips[i] ? 1 : 0) * factor);
+                    factor = factor << 1;
+                }
+                list.Add(bits);
+                return true;
             });
 
             // Symbols:

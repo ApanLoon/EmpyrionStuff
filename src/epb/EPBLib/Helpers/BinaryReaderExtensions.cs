@@ -73,7 +73,7 @@ namespace EPBLib.Helpers
             {
                 UInt16 nBlockCounts = reader.ReadUInt16();
                 bytesLeft -= 2;
-                Console.WriteLine($"BlockCounts ({nBlockCounts:x4})");
+                Console.WriteLine($"BlockCounts (0x{nBlockCounts:x4})");
                 UInt32 nBlocks = 0;
                 for (int i = 0; i < nBlockCounts; i++)
                 {
@@ -165,7 +165,7 @@ namespace EPBLib.Helpers
                     Variant   = (byte)((data >> 25) & 0x1f)
                 };
                 epb.SetBlock(block, x, y, z);
-                Console.WriteLine($"    {blockCount} ({x}, {y}, {z}): {data:x08} Type={block.BlockType} Rot={block.Rotation} Unknown2=0x{block.Unknown00:x3} Variant={block.VariantName}");
+                Console.WriteLine($"    {blockCount} ({x}, {y}, {z}): 0x{data:x08} Type={block.BlockType} Rot={block.Rotation} Unknown2=0x{block.Unknown00:x3} Variant={block.VariantName}");
                 return b - 4;
             });
 
@@ -192,7 +192,7 @@ namespace EPBLib.Helpers
 
             byte[] unknown02 = reader.ReadBytes(unknown02Count);
             bytesLeft -= unknown02Count;
-            Console.WriteLine($"unknown02: {unknown02.ToHexString()}");
+            Console.WriteLine($"unknown02: 0x{unknown02.ToHexString()}");
 
             int colourCount = 0;
             Console.WriteLine("Colour matrix");
@@ -219,38 +219,46 @@ namespace EPBLib.Helpers
                 UInt64 bits = r.ReadUInt64();
                 for (int i = 0; i < 6; i++)
                 {
-                    block.FaceTextures[i] = (byte) (bits & 0x3f);
+                    block.Textures[i] = (byte) (bits & 0x3f);
                     bits = bits >> 6;
                 }
 
                 textureCount++;
-                Console.WriteLine($"    {textureCount} ({x}, {y}, {z}): {string.Join(", ", block.FaceTextures)}");
+                Console.WriteLine($"    {textureCount} ({x}, {y}, {z}): {string.Join(", ", block.Textures)}");
                 return b - 8;
             });
 
             if (version >= 20)
             {
-                int unknown03Count = 0;
-                Console.WriteLine("Unknown03 matrix");
+                int textureFlipCount = 0;
+                Console.WriteLine("TextureFlip matrix");
                 bytesLeft = reader.ReadEpbMatrix(epb, length, (r, e, x, y, z, b) =>
                 {
-                    byte unknown03a = r.ReadByte();
-                    unknown03Count++;
-                    Console.WriteLine($"    {unknown03Count} ({x}, {y}, {z}): 0x{unknown03a:x2}");
+                    EpbBlock block = epb.Blocks[x, y, z];
+                    byte bits = r.ReadByte();
+                    for (int i = 0; i < 6; i++)
+                    {
+                        block.TextureFlips[i] = (bits & 0x01) != 0;
+                        bits = (byte)(bits >> 1);
+                    }
+
+                    textureFlipCount++;
+                    Console.WriteLine($"    {textureFlipCount} ({x}, {y}, {z}): {string.Join(", ", block.TextureFlips)}");
                     return b - 1;
                 });
             }
             else
             {
-                int unknown04Count = 0;
-                Console.WriteLine("Unknown04 matrix");
-                bytesLeft = reader.ReadEpbMatrix(epb, length, (r, e, x, y, z, b) =>
-                {
-                    UInt32 unknown04a = r.ReadUInt32();
-                    unknown04Count++;
-                    Console.WriteLine($"    {unknown04Count} ({x}, {y}, {z}): 0x{unknown04a:x8}");
-                    return b - 4;
-                });
+                // My guess is that this is, in fact, the symbol matrix!
+                //int unknown04Count = 0;
+                //Console.WriteLine("Unknown04 matrix");
+                //bytesLeft = reader.ReadEpbMatrix(epb, length, (r, e, x, y, z, b) =>
+                //{
+                //    UInt32 unknown04a = r.ReadUInt32();
+                //    unknown04Count++;
+                //    Console.WriteLine($"    {unknown04Count} ({x}, {y}, {z}): 0x{unknown04a:x8}");
+                //    return b - 4;
+                //});
             }
 
             int symbolCount = 0;
@@ -278,13 +286,10 @@ namespace EPBLib.Helpers
                 Console.WriteLine("Unknown05 matrix");
                 bytesLeft = reader.ReadEpbMatrix(epb, length, (r, e, x, y, z, b) =>
                 {
-                    byte unknown05a = r.ReadByte();
-                    byte unknown05b = r.ReadByte();
-                    byte unknown05c = r.ReadByte();
-                    byte unknown05d = r.ReadByte();
+                    UInt32 unknown05 = r.ReadUInt32();
                     unknown05Count++;
                     Console.WriteLine(
-                        $"    {unknown05Count} ({x}, {y}, {z}): 0x{unknown05a:x2} 0x{unknown05b:x2} 0x{unknown05c:x2} 0x{unknown05d:x2}");
+                        $"    {unknown05Count} ({x}, {y}, {z}): 0x{unknown05:x8}");
                     return b - 4;
                 });
             }

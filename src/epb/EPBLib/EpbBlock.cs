@@ -22,12 +22,6 @@ namespace EPBLib
             SteelBlockL_A = 0x0193, // Variants 0x00-0x1f
             SteelBlockL_B = 0x0194  // Variants 0x00-0x1e
         }
-
-        public struct EpbBlockVariant
-        {
-            public string Name { get; set; }
-            public byte Id { get; set; }
-        }
         #endregion Types
 
         #region Variants
@@ -99,7 +93,8 @@ namespace EPBLib
         }
 
         public byte[] FaceColours = new byte[6]; // 5 bit colour index
-        public byte[] FaceTextures = new byte[6]; // 6 bit texture index
+        public byte[] Textures = new byte[6]; // 6 bit texture index
+        public bool[] TextureFlips = new bool[6];
         public byte SymbolPage { get; set; } // 2 bit page index
         public byte[] FaceSymbols = new byte[6]; // 5 bit symbol index
 

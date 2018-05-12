@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Text;
 using EPBLib.Helpers;
 
 namespace epb
@@ -13,33 +14,33 @@ namespace epb
         public enum CreateTemplate
         {
             None,
-            BaseBoxCheckered,
-            BaseBoxFilled,
-            BaseBoxFramed,
+            BaseBox,
+            BaseBoxFrame,
             BaseSingleBlock,
-            BasePyramidFilled,
+            BasePyramid,
             BaseBlockTypes
         }
 
-        static string exectutableName;
-        static bool showHelp = false;
+        public static string exectutableName;
+        public static bool showHelp = false;
 
-        static CreateTemplate        createTemplate = CreateTemplate.None;
-        static string                writePath      = "NewBlueprint.epb";
-        static EpBlueprint.EpbType   type           = EpBlueprint.EpbType.Base;
-        static EpbBlock.EpbBlockType blockType      = EpbBlock.EpbBlockType.SteelBlockL_A;
-        static byte                  blockVariant   = 0x00;
-        static UInt32                width          = 1;
-        static UInt32                height         = 1;
-        static UInt32                depth          = 1;
-        static string                creatorId      = "Gronk";
-        static string                creatorName    = "Apan Loon";
-        static string                ownerId        = "Gronkers";
-        static string                ownerName      = "Apan Loony";
+        public static CreateTemplate        createTemplate = CreateTemplate.None;
+        public static bool                  hollow = false;
+        public static string                writePath      = "NewBlueprint.epb";
+        public static EpBlueprint.EpbType   type           = EpBlueprint.EpbType.Base;
+        public static EpbBlock.EpbBlockType blockType      = EpbBlock.EpbBlockType.SteelBlockL_A;
+        public static byte                  blockVariant   = 0x00;
+        public static UInt32                width          = 1;
+        public static UInt32                height         = 1;
+        public static UInt32                depth          = 1;
+        public static string                creatorId      = "Gronk";
+        public static string                creatorName    = "Apan Loon";
+        public static string                ownerId        = "Gronkers";
+        public static string                ownerName      = "Apan Loony";
 
-        static List<string> inPaths;
+        public static List<string> inPaths;
 
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             string codeBase = Assembly.GetExecutingAssembly().CodeBase;
             exectutableName = Path.GetFileName(codeBase);
@@ -56,6 +57,11 @@ namespace epb
                             createTemplate = (CreateTemplate)Enum.Parse(typeof(CreateTemplate), v);
                         }
                     }
+                },
+                {
+                    "hollow",
+                    $"Make the created blueprint hollow.",
+                    v => hollow = v != null
                 },
                 {
                     "o|outpath=",
@@ -160,17 +166,14 @@ namespace epb
                         }
                     }
                     break;
-                case CreateTemplate.BaseBoxCheckered:
-                    CreateBoxCheckered(writePath);
+                case CreateTemplate.BaseBox:
+                    CreateBox(writePath, hollow);
                     break;
-                case CreateTemplate.BaseBoxFilled:
-                    CreateBoxFilled(writePath);
+                case CreateTemplate.BaseBoxFrame:
+                    CreateBoxFrame(writePath);
                     break;
-                case CreateTemplate.BaseBoxFramed:
-                    CreateBoxFramed(writePath);
-                    break;
-                case CreateTemplate.BasePyramidFilled:
-                    CreatePyramidFilled(writePath);
+                case CreateTemplate.BasePyramid:
+                    CreatePyramid(writePath, hollow);
                     break;
                 case CreateTemplate.BaseBlockTypes:
                     width = 16;
@@ -183,7 +186,7 @@ namespace epb
 
 
 
-        static void CreateBoxFilled(string path)
+        static void CreateBox(string path, bool hollow)
         {
             EpBlueprint epb = CreateCommon();
 
@@ -193,13 +196,16 @@ namespace epb
                 {
                     for (UInt32 x = 0; x < width; x++)
                     {
-                        if (x == width / 2 && y == height / 2 && z == depth / 2)
+                        bool isInterior =    (x > 0 && x < (width  - 1))
+                                          && (y > 0 && y < (height - 1))
+                                          && (z > 0 && z < (depth  - 1));
+                        byte[] c = isInterior ? new byte[] { 3, 3, 3, 3, 3, 3 } : new byte[] { 0, 0, 0, 0, 0, 0 };
+                        byte[] t = new byte[]  {14, 14, 14, 14, 14, 14};
+                        bool[] tf = ((x % 2) == 0) ? new bool[] {false, false, false, false, false, false} : new bool[] { true, true, true, true, true, true };
+
+                        if (!isInterior || !hollow)
                         {
-                            epb.SetBlock(new EpbBlock() { BlockType = blockType, Rotation = EpbBlock.EpbBlockRotation.PzPy, Unknown00 = 0x00, Variant = blockVariant }, x, y, z);
-                        }
-                        else
-                        {
-                            epb.SetBlock(new EpbBlock() { BlockType = EpbBlock.EpbBlockType.SteelBlockL_A, Variant = 0x00 }, x, y, z);
+                            epb.SetBlock(new EpbBlock() { BlockType = blockType, Variant = blockVariant, FaceColours = c, Textures = t, TextureFlips = tf}, x, y, z);
                         }
                     }
                 }
@@ -237,35 +243,7 @@ namespace epb
             }
         }
 
-        static void CreateBoxCheckered(string path)
-        {
-            EpBlueprint epb = CreateCommon();
-
-            for (UInt32 z = 0; z < depth; z++)
-            {
-                for (UInt32 y = 0; y < height; y++)
-                {
-                    for (UInt32 x = 0; x < width; x++)
-                    {
-                        if ((x % (width - 1) == 0) ^ (y % (height - 1) == 0) ^ (z % (depth - 1) == 0))
-                        {
-                            epb.SetBlock(new EpbBlock() { BlockType = blockType, Variant = blockVariant }, x, y, z);
-                        }
-                    }
-                }
-            }
-
-            // Write the file:
-            using (FileStream stream = File.Create(path))
-            {
-                using (BinaryWriter writer = new BinaryWriter(stream))
-                {
-                    writer.Write(epb);
-                }
-            }
-        }
-
-        static void CreateBoxFramed(string path)
+        static void CreateBoxFrame(string path)
         {
             EpBlueprint epb = CreateCommon();
 
@@ -302,8 +280,7 @@ namespace epb
             }
         }
 
-
-        static void CreatePyramidFilled(string path)
+        static void CreatePyramid(string path, bool hollow)
         {
             EpBlueprint epb = CreateCommon();
 
@@ -317,7 +294,74 @@ namespace epb
                 {
                     for (UInt32 x = y; x < w; x++)
                     {
-                        epb.SetBlock(new EpbBlock() { BlockType = blockType, Variant = blockVariant }, x, y, z);
+                        bool isBackEdge  = (z == y);
+                        bool isFrontEdge = (z == (d - 1));
+                        bool isLeftEdge  = (x == y);
+                        bool isRightEdge = (x == (w - 1));
+                        bool isInterior  = !isBackEdge && ! isFrontEdge && !isRightEdge && !isLeftEdge && y > 0 && y < (h - 1);
+
+                        EpbBlock.EpbBlockType     t = blockType;
+                        EpbBlock.EpbBlockRotation r = EpbBlock.EpbBlockRotation.PzPy;
+                        byte                      v = blockVariant;
+                        byte[]                    c = new byte[] { 0, 0, 0, 0, 0, 0 };
+
+                        if (isBackEdge && isLeftEdge)
+                        {
+                            t = EpbBlock.EpbBlockType.SteelBlockL_A;
+                            v = EpbBlock.GetVariant(t, "Corner Large A");
+                            r = EpbBlock.EpbBlockRotation.PxPy;
+                        }
+                        else if (isBackEdge && isRightEdge)
+                        {
+                            t = EpbBlock.EpbBlockType.SteelBlockL_A;
+                            v = EpbBlock.GetVariant(t, "Corner Large A");
+                            r = EpbBlock.EpbBlockRotation.PzPy;
+                        }
+                        else if (isFrontEdge && isLeftEdge)
+                        {
+                            t = EpbBlock.EpbBlockType.SteelBlockL_A;
+                            v = EpbBlock.GetVariant(t, "Corner Large A");
+                            r = EpbBlock.EpbBlockRotation.NzPy;
+                        }
+                        else if (isFrontEdge && isRightEdge)
+                        {
+                            t = EpbBlock.EpbBlockType.SteelBlockL_A;
+                            v = EpbBlock.GetVariant(t, "Corner Large A");
+                            r = EpbBlock.EpbBlockRotation.NxPy;
+                        }
+                        else if (isBackEdge)
+                        {
+                            t = EpbBlock.EpbBlockType.SteelBlockL_A;
+                            v = EpbBlock.GetVariant(t, "Slope");
+                            r = EpbBlock.EpbBlockRotation.NzPy;
+                        }
+                        else if (isFrontEdge)
+                        {
+                            t = EpbBlock.EpbBlockType.SteelBlockL_A;
+                            v = EpbBlock.GetVariant(t, "Slope");
+                            r = EpbBlock.EpbBlockRotation.PzPy;
+                        }
+                        else if (isLeftEdge)
+                        {
+                            t = EpbBlock.EpbBlockType.SteelBlockL_A;
+                            v = EpbBlock.GetVariant(t, "Slope");
+                            r = EpbBlock.EpbBlockRotation.NxPy;
+                        }
+                        else if (isRightEdge)
+                        {
+                            t = EpbBlock.EpbBlockType.SteelBlockL_A;
+                            v = EpbBlock.GetVariant(t, "Slope");
+                            r = EpbBlock.EpbBlockRotation.PxPy;
+                        }
+                        else if (isInterior)
+                        {
+                            c = new byte[] { 3, 3, 3, 3, 3, 3 };
+                        }
+
+                        if (!isInterior || !hollow)
+                        {
+                            epb.SetBlock(new EpbBlock() { BlockType = t, Rotation = r, Variant = v, FaceColours = c }, x, y, z);
+                        }
                     }
                 }
 
