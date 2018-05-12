@@ -8,12 +8,17 @@ namespace EPBLib
     {
         #region Types
 
+        public enum EpbBlockRotation
+        {
+            // FwdUp : P=Positive, N=Negative
+            PzPy, PxPy, NzPy, NxPy, PzPx, PyPx, NzPx, NyPx, NzNy, NxNy, PzNy, PxNy, PzNx, PyNx, NzNx, NyNx, PyNz, PxNz, NyNz, NxNz, NxPz, NyPz, PxPz, PyPz
+        }
         public enum EpbBlockType
         {
             CvCockpit     = 0x0101,
             CvFuelTankT1  = 0x0103,
-            CvCore        = 0x022e,
-            BaCore        = 0x0a2e,
+            VesselCore    = 0x022e,
+            BaseCore      = 0x0a2e,
             SteelBlockL_A = 0x0193, // Variants 0x00-0x1f
             SteelBlockL_B = 0x0194  // Variants 0x00-0x1e
         }
@@ -84,7 +89,7 @@ namespace EPBLib
         #endregion Variants
 
         public EpbBlockType BlockType { get; set; }
-        public byte Rotation { get; set; }
+        public EpbBlockRotation Rotation { get; set; }
         public UInt16 Unknown00 { get; set; }
         public byte Variant { get; set; }
         public string VariantName
@@ -98,6 +103,13 @@ namespace EPBLib
         public byte SymbolPage { get; set; } // 2 bit page index
         public byte[] FaceSymbols = new byte[6]; // 5 bit symbol index
 
+        public EpbBlock()
+        {
+            BlockType = EpbBlockType.SteelBlockL_A;
+            Variant = GetVariant(BlockType, "Cube");
+            Rotation = EpbBlock.EpbBlockRotation.PzPy;
+            Unknown00 = 0x0000;
+        }
 
     }
 }

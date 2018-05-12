@@ -61,8 +61,7 @@ namespace EPBLib.Helpers
             writer.Write((UInt16)blockCounts.Count);
             foreach (EpbBlock.EpbBlockType type in blockCounts.Keys)
             {
-                writer.Write((byte)type);
-                writer.Write((byte)0x01); // Unknown
+                writer.Write(type);
                 writer.Write(blockCounts[type]);
             }
 
@@ -74,6 +73,12 @@ namespace EPBLib.Helpers
         #endregion EpBlueprint
 
         #region EpbBlocks
+
+        public static void Write(this BinaryWriter writer, EpbBlock.EpbBlockType type)
+        {
+            writer.Write((UInt16) type);
+        }
+
         public static void WriteEpbBlocks(this BinaryWriter writer, EpBlueprint epb)
         {
             long byteCount = 0;
@@ -88,7 +93,7 @@ namespace EPBLib.Helpers
                     return false;
                 }
 
-                UInt32 data = (UInt32)block.BlockType + (UInt32)(block.Rotation << 11) + (UInt32)(block.Unknown00 << 16) + (UInt32)(block.Variant << 26);
+                UInt32 data = (UInt32)block.BlockType + (UInt32)((byte)block.Rotation << 11) + (UInt32)(block.Unknown00 << 16) + (UInt32)(block.Variant << 25);
                 list.AddRange(BitConverter.GetBytes(data));
                 return true;
             });

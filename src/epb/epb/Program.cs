@@ -195,11 +195,11 @@ namespace epb
                     {
                         if (x == width / 2 && y == height / 2 && z == depth / 2)
                         {
-                            epb.SetBlock(new EpbBlock() { BlockType = blockType, Rotation = 0x0a, Unknown00 = 0x00, Variant = blockVariant }, x, y, z);
+                            epb.SetBlock(new EpbBlock() { BlockType = blockType, Rotation = EpbBlock.EpbBlockRotation.PzPy, Unknown00 = 0x00, Variant = blockVariant }, x, y, z);
                         }
                         else
                         {
-                            epb.SetBlock(new EpbBlock() { BlockType = EpbBlock.EpbBlockType.SteelBlockL_A, Rotation = 0x01, Unknown00 = 0x00, Variant = 0x00 }, x, y, z);
+                            epb.SetBlock(new EpbBlock() { BlockType = EpbBlock.EpbBlockType.SteelBlockL_A, Variant = 0x00 }, x, y, z);
                         }
                     }
                 }
@@ -249,7 +249,7 @@ namespace epb
                     {
                         if ((x % (width - 1) == 0) ^ (y % (height - 1) == 0) ^ (z % (depth - 1) == 0))
                         {
-                            epb.SetBlock(new EpbBlock() { BlockType = blockType, Rotation = 0x01, Unknown00 = 0x00, Variant = blockVariant }, x, y, z);
+                            epb.SetBlock(new EpbBlock() { BlockType = blockType, Variant = blockVariant }, x, y, z);
                         }
                     }
                 }
@@ -286,7 +286,7 @@ namespace epb
                             || (!a && !b && !c)
                            ))
                         {
-                            epb.SetBlock(new EpbBlock() { BlockType = blockType, Rotation = 0x01, Unknown00 = 0x00, Variant = blockVariant }, x, y, z);
+                            epb.SetBlock(new EpbBlock() { BlockType = blockType, Variant = blockVariant }, x, y, z);
                         }
                     }
                 }
@@ -317,7 +317,7 @@ namespace epb
                 {
                     for (UInt32 x = y; x < w; x++)
                     {
-                        epb.SetBlock(new EpbBlock() { BlockType = blockType, Rotation = 0x0a, Unknown00 = 0x00, Variant = blockVariant }, x, y, z);
+                        epb.SetBlock(new EpbBlock() { BlockType = blockType, Variant = blockVariant }, x, y, z);
                     }
                 }
 
@@ -347,7 +347,7 @@ namespace epb
                 {
                     UInt32 x = i % width;
                     UInt32 z = i / width;
-                    epb.SetBlock(new EpbBlock() { BlockType = (EpbBlock.EpbBlockType)i, Rotation = 0x01, Unknown00 = 0x00, Variant = blockVariant }, x, 0, z);
+                    epb.SetBlock(new EpbBlock() { BlockType = (EpbBlock.EpbBlockType)i, Variant = blockVariant }, x, 0, z);
                 }
             }
 

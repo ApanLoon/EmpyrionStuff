@@ -77,11 +77,10 @@ namespace EPBLib.Helpers
                 UInt32 nBlocks = 0;
                 for (int i = 0; i < nBlockCounts; i++)
                 {
-                    byte blockType = reader.ReadByte();
-                    byte unknown = reader.ReadByte();
+                    EpbBlock.EpbBlockType blockType = reader.ReadEpbBlockType();
                     UInt32 blockCount = reader.ReadUInt32();
                     bytesLeft -= 6;
-                    Console.WriteLine($"    BlockType=0x{blockType:x2} Unknown=0x{unknown:x2} Count={blockCount}");
+                    Console.WriteLine($"    BlockType={blockType} Count={blockCount}");
 
                     nBlocks += blockCount;
                 }
@@ -144,6 +143,11 @@ namespace EPBLib.Helpers
 
         #region EpbBlocks
 
+        public static EpbBlock.EpbBlockType ReadEpbBlockType(this BinaryReader reader)
+        {
+            return(EpbBlock.EpbBlockType)reader.ReadUInt16();
+        }
+
         public static void ReadEpbBlocks(this BinaryReader reader, EpBlueprint epb, UInt32 version, long length)
         {
             long bytesLeft = length;
@@ -156,12 +160,12 @@ namespace EPBLib.Helpers
                 EpbBlock block = new EpbBlock()
                 {
                     BlockType = (EpbBlock.EpbBlockType)(data & 0x7ff),
-                    Rotation  = (byte)((data >> 11) & 0x1f),
+                    Rotation  = (EpbBlock.EpbBlockRotation)((data >> 11) & 0x1f),
                     Unknown00 = (UInt16)((data >> 16) & 0x3ff),
-                    Variant   = (byte)((data >> 26) & 0x1f)
+                    Variant   = (byte)((data >> 25) & 0x1f)
                 };
                 epb.SetBlock(block, x, y, z);
-                Console.WriteLine($"    {blockCount} ({x}, {y}, {z}): {data:x08} Type={block.BlockType} Rot=0x{block.Rotation:x2} Unknown2=0x{block.Unknown00:x3} Variant={block.VariantName}");
+                Console.WriteLine($"    {blockCount} ({x}, {y}, {z}): {data:x08} Type={block.BlockType} Rot={block.Rotation} Unknown2=0x{block.Unknown00:x3} Variant={block.VariantName}");
                 return b - 4;
             });
 
