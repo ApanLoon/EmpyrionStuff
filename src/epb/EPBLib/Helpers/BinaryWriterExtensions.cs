@@ -121,12 +121,18 @@ namespace EPBLib.Helpers
                 }
 
                 UInt32 bits = 0;
-                int factor = 1;
+                UInt32 factor = 1;
                 for (int i = 0; i < 6; i++)
                 {
-                    bits += (UInt32)(block.FaceColours[i] * factor);
+                    bits += (byte)block.Colours[i] * factor;
                     factor = factor << 5;
                 }
+
+                if (bits == 0)
+                {
+                    return false;
+                }
+
                 list.AddRange(BitConverter.GetBytes(bits));
                 return true;
             });
@@ -141,12 +147,18 @@ namespace EPBLib.Helpers
                 }
 
                 UInt64 bits = 0;
-                int factor = 1;
+                UInt64 factor = 1;
                 for (int i = 0; i < 6; i++)
                 {
-                    bits += (UInt64)(block.Textures[i] * factor);
+                    bits += block.Textures[i] * factor;
                     factor = factor << 6;
                 }
+
+                if (bits == 0)
+                {
+                    return false;
+                }
+
                 list.AddRange(BitConverter.GetBytes(bits));
                 return true;
             });
@@ -167,6 +179,12 @@ namespace EPBLib.Helpers
                     bits += (byte)((block.TextureFlips[i] ? 1 : 0) * factor);
                     factor = factor << 1;
                 }
+
+                if (bits == 0)
+                {
+                    return false;
+                }
+
                 list.Add(bits);
                 return true;
             });
@@ -174,13 +192,54 @@ namespace EPBLib.Helpers
             // Symbols:
             byteCount += AddEpbMatrixToList(epb, byteList, (blueprint, x, y, z, list) =>
             {
-                return false;
+                EpbBlock block = epb.Blocks[x, y, z];
+                if (block == null)
+                {
+                    return false;
+                }
+
+                UInt32 bits = 0;
+                UInt32 factor = 1;
+                for (int i = 0; i < 6; i++)
+                {
+                    bits += block.Symbols[i] * factor;
+                    factor = factor << 5;
+                }
+                bits += block.SymbolPage * factor;
+
+                if (bits == 0)
+                {
+                    return false;
+                }
+
+                list.AddRange(BitConverter.GetBytes(bits));
+                return true;
             });
 
-            // Unknown9:
+            // SymbolRotations:
             byteCount += AddEpbMatrixToList(epb, byteList, (blueprint, x, y, z, list) =>
             {
-                return false;
+                EpbBlock block = epb.Blocks[x, y, z];
+                if (block == null)
+                {
+                    return false;
+                }
+
+                UInt32 bits = 0;
+                UInt32 factor = 1;
+                for (int i = 0; i < 6; i++)
+                {
+                    bits += (byte)block.SymbolRotations[i] * factor;
+                    factor = factor << 2;
+                }
+
+                if (bits == 0)
+                {
+                    return false;
+                }
+
+                list.AddRange(BitConverter.GetBytes(bits));
+                return true;
             });
 
             byteList.AddRange(new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 });
@@ -188,13 +247,8 @@ namespace EPBLib.Helpers
 
             byte[] blockBuffer = byteList.ToArray();
 
-            //byte[] blockBuffer = new byte[]
-            //{
-            //    0x01, 0x00, 0x00, 0x00, 0x01, 0x2e, 0x0a, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x01, 0x7f,
-            //    0x01, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x01,
-            //    0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-            //    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-            //};
+
+
 
             using (MemoryStream outputMemStream = new MemoryStream())
             {

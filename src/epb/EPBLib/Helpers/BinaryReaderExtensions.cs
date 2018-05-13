@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using EPBLib.BlockData;
 using ICSharpCode.SharpZipLib.Zip;
 
 namespace EPBLib.Helpers
@@ -160,9 +161,9 @@ namespace EPBLib.Helpers
                 EpbBlock block = new EpbBlock()
                 {
                     BlockType = (EpbBlock.EpbBlockType)(data & 0x7ff),
-                    Rotation  = (EpbBlock.EpbBlockRotation)((data >> 11) & 0x1f),
+                    Rotation = (EpbBlock.EpbBlockRotation)((data >> 11) & 0x1f),
                     Unknown00 = (UInt16)((data >> 16) & 0x3ff),
-                    Variant   = (byte)((data >> 25) & 0x1f)
+                    Variant = (byte)((data >> 25) & 0x1f)
                 };
                 epb.SetBlock(block, x, y, z);
                 Console.WriteLine($"    {blockCount} ({x}, {y}, {z}): 0x{data:x08} Type={block.BlockType} Rot={block.Rotation} Unknown2=0x{block.Unknown00:x3} Variant={block.VariantName}");
@@ -202,12 +203,12 @@ namespace EPBLib.Helpers
                 UInt32 bits = r.ReadUInt32();
                 for (int i = 0; i < 6; i++)
                 {
-                    block.FaceColours[i] = (byte) (bits & 0x1f);
+                    block.Colours[i] = (EpbColour)(bits & 0x1f);
                     bits = bits >> 5;
                 }
 
                 colourCount++;
-                Console.WriteLine($"    {colourCount} ({x}, {y}, {z}): {string.Join(", ", block.FaceColours)}");
+                Console.WriteLine($"    {colourCount} ({x}, {y}, {z}): {string.Join(", ", block.Colours)}");
                 return b - 4;
             });
 
@@ -269,27 +270,33 @@ namespace EPBLib.Helpers
                 UInt32 bits = r.ReadUInt32();
                 for (int i = 0; i < 6; i++)
                 {
-                    block.FaceSymbols[i] = (byte) (bits & 0x1f);
+                    block.Symbols[i] = (byte) (bits & 0x1f);
                     bits = bits >> 5;
                 }
 
                 block.SymbolPage = (byte) bits;
                 symbolCount++;
                 Console.WriteLine(
-                    $"    {symbolCount} ({x}, {y}, {z}): Page={block.SymbolPage} {string.Join(", ", block.FaceSymbols)}");
+                    $"    {symbolCount} ({x}, {y}, {z}): Page={block.SymbolPage} {string.Join(", ", block.Symbols)}");
                 return b - 4;
             });
 
-            if (version >= 20) // TODO: I have no idea when this appeared
+            if (version >= 20)
             {
-                int unknown05Count = 0;
-                Console.WriteLine("Unknown05 matrix");
+                int symbolRotationCount = 0;
+                Console.WriteLine("SymbolRotation matrix");
                 bytesLeft = reader.ReadEpbMatrix(epb, length, (r, e, x, y, z, b) =>
                 {
-                    UInt32 unknown05 = r.ReadUInt32();
-                    unknown05Count++;
+                    EpbBlock block = epb.Blocks[x, y, z];
+                    UInt32 bits = r.ReadUInt32();
+                    for (int i = 0; i < 6; i++)
+                    {
+                        block.SymbolRotations[i] = (EpbBlock.SymbolRotation)(bits & 0x3);
+                        bits = bits >> 2;
+                    }
+                    symbolRotationCount++;
                     Console.WriteLine(
-                        $"    {unknown05Count} ({x}, {y}, {z}): 0x{unknown05:x8}");
+                        $"    {symbolRotationCount} ({x}, {y}, {z}): {string.Join(", ", block.SymbolRotations)}");
                     return b - 4;
                 });
             }

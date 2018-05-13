@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="BlockData\BlockTags\EpbBlockTagColour.cs" />
     <Compile Include="BlockData\BlockTags\EpbBlockTagx03.cs" />
+    <Compile Include="BlockData\EpbColour.cs" />
     <Compile Include="EpbBlock.cs" />
     <Compile Include="BlockData\BlockTags\EpbBlockTag.cs" />
     <Compile Include="BlockData\BlockTags\EpbBlockTagBool.cs" />

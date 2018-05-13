@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using EPBLib.BlockData;
 
 namespace EPBLib
 {
@@ -21,6 +22,21 @@ namespace EPBLib
             BaseCore      = 0x0a2e,
             SteelBlockL_A = 0x0193, // Variants 0x00-0x1f
             SteelBlockL_B = 0x0194  // Variants 0x00-0x1e
+        }
+
+        public enum FaceIndex
+        {
+            All    = -1,
+            Top    = 0,
+            Bottom = 1,
+            Front  = 2,
+            Left   = 3,
+            Back   = 4,
+            Right  = 5
+        }
+        public enum SymbolRotation
+        {
+            Up, Left, Down, Right
         }
         #endregion Types
 
@@ -92,11 +108,75 @@ namespace EPBLib
             set => Variant = GetVariant(BlockType, value);
         }
 
-        public byte[] FaceColours = new byte[6]; // 5 bit colour index
-        public byte[] Textures = new byte[6]; // 6 bit texture index
+        public EpbColour[] Colours = new EpbColour[6];     // 5 bit colour index
+        public byte[] Textures = new byte[6];        // 6 bit texture index
         public bool[] TextureFlips = new bool[6];
-        public byte SymbolPage { get; set; } // 2 bit page index
-        public byte[] FaceSymbols = new byte[6]; // 5 bit symbol index
+        public byte   SymbolPage { get; set; }       // 2 bit page index
+        public byte[] Symbols = new byte[6];         // 5 bit symbol index
+        public SymbolRotation[] SymbolRotations = new SymbolRotation[6]; // 2 bit symbol rotation
+
+
+        public void SetColour(EpbColour colour, FaceIndex face = FaceIndex.All)
+        {
+            if ((int)face < -1 || (int)face >= 6 || (byte)colour > 0x1f)
+            {
+                return;
+            }
+
+            if (face == FaceIndex.All)
+            {
+                for (int i = 0; i < 6; i++)
+                {
+                    Colours[i] = colour;
+                }
+            }
+            else
+            {
+                Colours[(byte)face] = colour;
+            }
+        }
+        public void SetTexture(byte texture, bool flip = false, FaceIndex face = FaceIndex.All)
+        {
+            if ((int)face < -1 || (int)face >= 6 || texture > 0x3f)
+            {
+                return;
+            }
+
+            if (face == FaceIndex.All)
+            {
+                for (int i = 0; i < 6; i++)
+                {
+                    Textures[i] = texture;
+                    TextureFlips[i] = flip;
+                }
+            }
+            else
+            {
+                Textures[(byte)face] = texture;
+                TextureFlips[(byte)face] = flip;
+            }
+        }
+        public void SetSymbol(byte symbol, SymbolRotation rotation = SymbolRotation.Up, FaceIndex face = FaceIndex.All)
+        {
+            if ((int)face < -1 || (int)face >= 6 || symbol > 0x1f)
+            {
+                return;
+            }
+
+            if (face == FaceIndex.All)
+            {
+                for (int i = 0; i < 6; i++)
+                {
+                    Symbols[i] = symbol;
+                    SymbolRotations[i] = rotation;
+                }
+            }
+            else
+            {
+                Symbols[(byte)face] = symbol;
+                SymbolRotations[(byte)face] = rotation;
+            }
+        }
 
         public EpbBlock()
         {
