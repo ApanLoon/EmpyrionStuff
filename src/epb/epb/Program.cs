@@ -33,7 +33,7 @@ namespace epb
         public static bool                  Hollow          = false;
         public static string                OutputPath      = "NewBlueprint.epb";
         public static EpBlueprint.EpbType   BlueprintType   = EpBlueprint.EpbType.Base;
-        public static EpbBlock.EpbBlockType BlockType       = EpbBlock.EpbBlockType.SteelBlockL_A;
+        public static EpbBlock.EpbBlockType BlockType       = EpbBlock.GetBlockType("Steel Blocks L", "Cube");
         public static byte                  BlockVariant    = 0x00;
         public static UInt32                Width           = 1;
         public static UInt32                Height          = 1;
@@ -109,6 +109,7 @@ namespace epb
                             }
                             catch (Exception e)
                             {
+                                //TODO: This no longer works - the enum is empty:
                                 BlockType = (EpbBlock.EpbBlockType)Enum.Parse(typeof(EpbBlock.EpbBlockType), v);
                             }
                         }
@@ -428,49 +429,49 @@ namespace epb
 
                         if (isBackEdge && isLeftEdge)
                         {
-                            t = EpbBlock.EpbBlockType.SteelBlockL_A;
+                            t = EpbBlock.GetBlockType("Steel Blocks L", "Corner Large A");
                             v = EpbBlock.GetVariant(t, "Corner Large A");
                             r = EpbBlock.EpbBlockRotation.PxPy;
                         }
                         else if (isBackEdge && isRightEdge)
                         {
-                            t = EpbBlock.EpbBlockType.SteelBlockL_A;
+                            t = EpbBlock.GetBlockType("Steel Blocks L", "Corner Large A"); 
                             v = EpbBlock.GetVariant(t, "Corner Large A");
                             r = EpbBlock.EpbBlockRotation.PzPy;
                         }
                         else if (isFrontEdge && isLeftEdge)
                         {
-                            t = EpbBlock.EpbBlockType.SteelBlockL_A;
+                            t = EpbBlock.GetBlockType("Steel Blocks L", "Corner Large A");
                             v = EpbBlock.GetVariant(t, "Corner Large A");
                             r = EpbBlock.EpbBlockRotation.NzPy;
                         }
                         else if (isFrontEdge && isRightEdge)
                         {
-                            t = EpbBlock.EpbBlockType.SteelBlockL_A;
+                            t = EpbBlock.GetBlockType("Steel Blocks L", "Corner Large A");
                             v = EpbBlock.GetVariant(t, "Corner Large A");
                             r = EpbBlock.EpbBlockRotation.NxPy;
                         }
                         else if (isBackEdge)
                         {
-                            t = EpbBlock.EpbBlockType.SteelBlockL_A;
+                            t = EpbBlock.GetBlockType("Steel Blocks L", "Slope");
                             v = EpbBlock.GetVariant(t, "Slope");
                             r = EpbBlock.EpbBlockRotation.NzPy;
                         }
                         else if (isFrontEdge)
                         {
-                            t = EpbBlock.EpbBlockType.SteelBlockL_A;
+                            t = EpbBlock.GetBlockType("Steel Blocks L", "Slope");
                             v = EpbBlock.GetVariant(t, "Slope");
                             r = EpbBlock.EpbBlockRotation.PzPy;
                         }
                         else if (isLeftEdge)
                         {
-                            t = EpbBlock.EpbBlockType.SteelBlockL_A;
+                            t = EpbBlock.GetBlockType("Steel Blocks L", "Slope");
                             v = EpbBlock.GetVariant(t, "Slope");
                             r = EpbBlock.EpbBlockRotation.NxPy;
                         }
                         else if (isRightEdge)
                         {
-                            t = EpbBlock.EpbBlockType.SteelBlockL_A;
+                            t = EpbBlock.GetBlockType("Steel Blocks L", "Slope");
                             v = EpbBlock.GetVariant(t, "Slope");
                             r = EpbBlock.EpbBlockRotation.PxPy;
                         }
