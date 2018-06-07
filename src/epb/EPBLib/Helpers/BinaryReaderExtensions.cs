@@ -168,8 +168,8 @@ namespace EPBLib.Helpers
                     Variant = (byte)((data >> 25) & 0x1f)
                 };
                 epb.SetBlock(block, x, y, z);
-                Console.WriteLine($"{BitConverter.GetBytes(data).ToHexString()} | 0x{data:x08} {Convert.ToString(data, 2).PadLeft(32, '0')}");
-//                Console.WriteLine($"    {blockCount} ({x}, {y}, {z}): 0x{data:x08} Rot={block.Rotation} Unknown2=0x{block.Unknown00:x3} Type={EpbBlock.GetBlockTypeName(block.BlockType)} Variant={block.VariantName}");
+                Console.Write($"{BitConverter.GetBytes(data).ToHexString()} | 0x{data:x08} {Convert.ToString(data, 2).PadLeft(32, '0')} |");
+                Console.WriteLine($"    {blockCount,5} ({x,4}, {y,4}, {z,4}): Rot={block.Rotation} Unknown2=0x{block.Unknown00:x3} Type={EpbBlock.GetBlockTypeName(block.BlockType)} Variant={block.VariantName}");
                 return b - 4;
             });
 
@@ -183,7 +183,7 @@ namespace EPBLib.Helpers
                 byte unknown01d = r.ReadByte();
                 unknown01Count++;
                 Console.WriteLine(
-                    $"    {unknown01Count} ({x}, {y}, {z}): 0x{unknown01a:x2} 0x{unknown01b:x2} 0x{unknown01c:x2} 0x{unknown01d:x2}");
+                    $"    {unknown01Count,5} ({x,4}, {y,4}, {z,4}): 0x{unknown01a:x2} 0x{unknown01b:x2} 0x{unknown01c:x2} 0x{unknown01d:x2}");
                 return b - 4;
             });
 
@@ -211,7 +211,7 @@ namespace EPBLib.Helpers
                 }
 
                 colourCount++;
-                Console.WriteLine($"    {colourCount} ({x}, {y}, {z}): {string.Join(", ", block.Colours)}");
+                Console.WriteLine($"    {colourCount,5} ({x,4}, {y,4}, {z,4}): {string.Join(", ", block.Colours)}");
                 return b - 4;
             });
 
@@ -228,7 +228,7 @@ namespace EPBLib.Helpers
                 }
 
                 textureCount++;
-                Console.WriteLine($"    {textureCount} ({x}, {y}, {z}): {string.Join(", ", block.Textures)}");
+                Console.WriteLine($"    {textureCount,5} ({x,4}, {y,4}, {z,4}): {string.Join(", ", block.Textures)}");
                 return b - 8;
             });
 
@@ -247,7 +247,7 @@ namespace EPBLib.Helpers
                     }
 
                     textureFlipCount++;
-                    Console.WriteLine($"    {textureFlipCount} ({x}, {y}, {z}): {string.Join(", ", block.TextureFlips)}");
+                    Console.WriteLine($"    {textureFlipCount,5} ({x,4}, {y,4}, {z,4}): {string.Join(", ", block.TextureFlips)}");
                     return b - 1;
                 });
             }
@@ -280,7 +280,7 @@ namespace EPBLib.Helpers
                 block.SymbolPage = (byte) bits;
                 symbolCount++;
                 Console.WriteLine(
-                    $"    {symbolCount} ({x}, {y}, {z}): Page={block.SymbolPage} {string.Join(", ", block.Symbols)}");
+                    $"    {symbolCount,5} ({x,4}, {y,4}, {z,4}): Page={block.SymbolPage} {string.Join(", ", block.Symbols)}");
                 return b - 4;
             });
 
@@ -299,7 +299,7 @@ namespace EPBLib.Helpers
                     }
                     symbolRotationCount++;
                     Console.WriteLine(
-                        $"    {symbolRotationCount} ({x}, {y}, {z}): {string.Join(", ", block.SymbolRotations)}");
+                        $"    {symbolRotationCount,5} ({x,4}, {y,4}, {z,4}): {string.Join(", ", block.SymbolRotations)}");
                     return b - 4;
                 });
             }
@@ -418,6 +418,15 @@ namespace EPBLib.Helpers
                         EpbBlockTag tag = reader.ReadEpbBlockTag(ref bytesLeft);
                         Console.WriteLine($"        {tagIndex}: {tag}");
                     }
+                }
+
+                UInt16 nCustom = reader.ReadUInt16();
+                Console.WriteLine($"Custom ({nCustom})");
+                for (int i = 0; i < nCustom; i++)
+                {
+                    string s = ReadEpString(reader, ref bytesLeft);
+                    UInt16 unknown09 = reader.ReadUInt16();
+                    Console.WriteLine($"    {i}: 0x{unknown09:x4} \"{s}\"");
                 }
             }
 
