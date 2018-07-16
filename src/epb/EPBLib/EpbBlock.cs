@@ -177,12 +177,14 @@ namespace EPBLib
         }
         public static string GetBlockTypeName(EpbBlockType type)
         {
-            if (!BlockTypeDefinitions.ContainsKey(type))
+            string s = "";
+            if (BlockTypeDefinitions.ContainsKey(type))
             {
-                return $"0x{(UInt16)type:x4}";
+                s = $"\"{BlockTypeDefinitions[type].Name}\"";
             }
 
-            return $"\"{BlockTypeDefinitions[type].Name}\"";
+            return $"{s} (0x{(UInt16)type:x4}={(UInt16)type})";
+
         }
 
         public static byte GetVariant(EpbBlockType type, string variantName)
@@ -203,11 +205,12 @@ namespace EPBLib
 
         public static string GetVariantName(EpbBlockType type, byte variant)
         {
-            if (!BlockTypeDefinitions.ContainsKey(type) || variant >= BlockTypeDefinitions[type].VariantNames.Length)
+            string s = "";
+            if (BlockTypeDefinitions.ContainsKey(type) && variant < BlockTypeDefinitions[type].VariantNames.Length)
             {
-                return $"{variant:x2}";
+                s = $"\"{BlockTypeDefinitions[type].VariantNames[variant]}\"";
             }
-            return $"\"{BlockTypeDefinitions[type].VariantNames[variant]}\"";
+            return $"{s} (0x{variant:x2}={variant})";
         }
 
 

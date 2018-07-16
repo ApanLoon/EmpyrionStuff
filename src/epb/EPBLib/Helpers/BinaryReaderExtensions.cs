@@ -173,18 +173,15 @@ namespace EPBLib.Helpers
                 return b - 4;
             });
 
-            int unknown01Count = 0;
-            Console.WriteLine("Unknown01 matrix");
+            int damageStateCount = 0;
+            Console.WriteLine("Damage state matrix");
             bytesLeft = reader.ReadEpbMatrix(epb, length, (r, e, x, y, z, b) =>
             {
-                byte unknown01a = r.ReadByte();
-                byte unknown01b = r.ReadByte();
-                byte unknown01c = r.ReadByte();
-                byte unknown01d = r.ReadByte();
-                unknown01Count++;
+                UInt16 damage = r.ReadUInt16();
+                damageStateCount++;
                 Console.WriteLine(
-                    $"    {unknown01Count,5} ({x,4}, {y,4}, {z,4}): 0x{unknown01a:x2} 0x{unknown01b:x2} 0x{unknown01c:x2} 0x{unknown01d:x2}");
-                return b - 4;
+                    $"    {damageStateCount,5} ({x,4}, {y,4}, {z,4}): {damage} (0x{damage:x4})");
+                return b - 2;
             });
 
             int unknown02Count = reader.ReadByte();
@@ -429,7 +426,6 @@ namespace EPBLib.Helpers
                     Console.WriteLine($"    {i}: 0x{unknown09:x4} \"{s}\"");
                 }
             }
-
 
 
 
