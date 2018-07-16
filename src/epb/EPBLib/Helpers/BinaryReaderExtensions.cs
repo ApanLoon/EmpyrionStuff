@@ -51,13 +51,9 @@ namespace EPBLib.Helpers
 
             // TODO: Funky
             int nUnknown02;
-            if (version <= 4)
+            if (version <= 12)
             {
-                nUnknown02 = 37;
-            }
-            else if (version <= 12)
-            {
-                nUnknown02 = 40;
+                nUnknown02 = 22;
             }
             else if (version <= 17)
             {
@@ -71,36 +67,44 @@ namespace EPBLib.Helpers
             bytesLeft -= nUnknown02;
             Console.WriteLine($"Unknown02: {unknown02.ToHexString()}");
 
-            if (version > 12)
+            UInt16 nBlockCounts = reader.ReadUInt16();
+            bytesLeft -= 2;
+            Console.WriteLine($"BlockCounts (0x{nBlockCounts:x4})");
+            UInt32 nBlocks = 0;
+            for (int i = 0; i < nBlockCounts; i++)
             {
-                UInt16 nBlockCounts = reader.ReadUInt16();
-                bytesLeft -= 2;
-                Console.WriteLine($"BlockCounts (0x{nBlockCounts:x4})");
-                UInt32 nBlocks = 0;
-                for (int i = 0; i < nBlockCounts; i++)
+                EpbBlock.EpbBlockType blockType = reader.ReadEpbBlockType();
+                if (version <= 12)
                 {
-                    EpbBlock.EpbBlockType blockType = reader.ReadEpbBlockType();
-                    UInt32 blockCount = reader.ReadUInt32();
-                    bytesLeft -= 6;
-                    Console.WriteLine($"    BlockType={EpbBlock.GetBlockTypeName(blockType)} Count={blockCount}");
-
-                    nBlocks += blockCount;
+                    reader.ReadUInt16(); // Block types were 32 bit in the early versions, but these bytes were probably always zero, so we simply ignore them.
                 }
-                Console.WriteLine($"Total number of blocks: {nBlocks}");
+
+                UInt32 blockCount = reader.ReadUInt32();
+                bytesLeft -= 6;
+                Console.WriteLine($"    BlockType={EpbBlock.GetBlockTypeName(blockType)} Count={blockCount}");
+
+                nBlocks += blockCount;
+            }
+            Console.WriteLine($"Total number of blocks: {nBlocks}");
+
+            if (version > 4)
+            {
+                byte[] unknown05 = reader.ReadBytes(1);
+                bytesLeft -= 1;
+                Console.WriteLine($"Unknown05: {unknown05.ToHexString()}");
             }
 
-            byte[] unknown05 = reader.ReadBytes(1);
-            bytesLeft -= 1;
-            Console.WriteLine($"Unknown05: {unknown05.ToHexString()}");
-
-            epb.DeviceGroups = reader.ReadEpbDeviceGroups(ref bytesLeft);
-            Console.WriteLine($"DeviceGroups ({epb.DeviceGroups.Count}):");
-            foreach (EpbDeviceGroup group in epb.DeviceGroups)
+            if (version > 4)
             {
-                Console.WriteLine($"    {group.Name} (Flags=0x{group.Flags:x4})");
-                foreach (EpbDeviceGroupEntry entry in group.Entries)
+                epb.DeviceGroups = reader.ReadEpbDeviceGroups(ref bytesLeft);
+                Console.WriteLine($"DeviceGroups ({epb.DeviceGroups.Count}):");
+                foreach (EpbDeviceGroup group in epb.DeviceGroups)
                 {
-                    Console.WriteLine($"        Unknown={entry.Unknown.ToHexString()} \"{entry.Name}\"");
+                    Console.WriteLine($"    {group.Name} (Flags=0x{group.Flags:x4})");
+                    foreach (EpbDeviceGroupEntry entry in group.Entries)
+                    {
+                        Console.WriteLine($"        Unknown={entry.Unknown.ToHexString()} \"{entry.Name}\"");
+                    }
                 }
             }
 
