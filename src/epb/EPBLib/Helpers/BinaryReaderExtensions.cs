@@ -157,82 +157,159 @@ namespace EPBLib.Helpers
         public static void ReadEpbBlocks(this BinaryReader reader, EpBlueprint epb, UInt32 version, long length)
         {
             long bytesLeft = length;
-            int blockCount = 0;
+
+            #region Blocks
             Console.WriteLine("Block matrix");
-            bytesLeft = reader.ReadEpbMatrix(epb, length, (r, e, x, y, z, b) =>
+            int blockCount = 0;
+            if (version <= 4)
             {
-                UInt32 data = reader.ReadUInt32();
-                blockCount++;
-                EpbBlock block = new EpbBlock()
+                for (UInt32 z = 0; z < epb.Depth; z++)
                 {
+                    for (UInt32 y = 0; y < epb.Height; y++)
+                    {
+                        for (UInt32 x = 0; x < epb.Width; x++)
+                        {
+                            UInt32 data = reader.ReadUInt32();
+                            bytesLeft -= 4;
+                            EpbBlock block = new EpbBlock()
+                            {
 
-                    BlockType = (EpbBlock.EpbBlockType)(data & 0x7ff),
-                    Rotation = (EpbBlock.EpbBlockRotation)((data >> 11) & 0x1f),
-                    Unknown00 = (UInt16)((data >> 16) & 0x3ff),
-                    Variant = (byte)((data >> 25) & 0x1f)
-                };
-                epb.SetBlock(block, x, y, z);
-                Console.Write($"{BitConverter.GetBytes(data).ToHexString()} | 0x{data:x08} {Convert.ToString(data, 2).PadLeft(32, '0')} |");
-                Console.WriteLine($"    {blockCount,5} ({x,4}, {y,4}, {z,4}): Rot={block.Rotation} Unknown2=0x{block.Unknown00:x3} Type={EpbBlock.GetBlockTypeName(block.BlockType)} Variant={block.VariantName}");
-                return b - 4;
-            });
-
-            int damageStateCount = 0;
-            Console.WriteLine("Damage state matrix");
-            bytesLeft = reader.ReadEpbMatrix(epb, length, (r, e, x, y, z, b) =>
+                                BlockType = (EpbBlock.EpbBlockType)(data & 0x7ff),
+                                Rotation = (EpbBlock.EpbBlockRotation)((data >> 11) & 0x1f),
+                                Unknown00 = (UInt16)((data >> 16) & 0x3ff),
+                                Variant = (byte)((data >> 25) & 0x1f)
+                            };
+                            if (block.BlockType != 0)
+                            {
+                                blockCount++;
+                                epb.SetBlock(block, x, y, z);
+                                Console.Write($"{BitConverter.GetBytes(data).ToHexString()} | 0x{data:x08} {Convert.ToString(data, 2).PadLeft(32, '0')} |");
+                                Console.WriteLine($"    {blockCount,5} ({x,4}, {y,4}, {z,4}): Rot={block.Rotation} Unknown2=0x{block.Unknown00:x3} Type={EpbBlock.GetBlockTypeName(block.BlockType)} Variant={block.VariantName}");
+                            }
+                        }
+                    }
+                }
+            }
+            else
             {
-                UInt16 damage = r.ReadUInt16();
-                damageStateCount++;
-                Console.WriteLine(
-                    $"    {damageStateCount,5} ({x,4}, {y,4}, {z,4}): {damage} (0x{damage:x4})");
-                return b - 2;
-            });
+                bytesLeft = reader.ReadEpbMatrix(epb, length, (r, e, x, y, z, b) =>
+                {
+                    UInt32 data = reader.ReadUInt32();
+                    blockCount++;
+                    EpbBlock block = new EpbBlock()
+                    {
 
+                        BlockType = (EpbBlock.EpbBlockType)(data & 0x7ff),
+                        Rotation = (EpbBlock.EpbBlockRotation)((data >> 11) & 0x1f),
+                        Unknown00 = (UInt16)((data >> 16) & 0x3ff),
+                        Variant = (byte)((data >> 25) & 0x1f)
+                    };
+                    epb.SetBlock(block, x, y, z);
+                    Console.Write($"{BitConverter.GetBytes(data).ToHexString()} | 0x{data:x08} {Convert.ToString(data, 2).PadLeft(32, '0')} |");
+                    Console.WriteLine($"    {blockCount,5} ({x,4}, {y,4}, {z,4}): Rot={block.Rotation} Unknown2=0x{block.Unknown00:x3} Type={EpbBlock.GetBlockTypeName(block.BlockType)} Variant={block.VariantName}");
+                    return b - 4;
+                });
+            }
+            #endregion Blocks
+
+            #region DamageState
+            if (version > 4) // TODO: Verify version, maybe this is newer than this
+            {
+                int damageStateCount = 0;
+                Console.WriteLine("Damage state matrix");
+                bytesLeft = reader.ReadEpbMatrix(epb, length, (r, e, x, y, z, b) =>
+                {
+                    UInt16 damage = r.ReadUInt16();
+                    damageStateCount++;
+                    Console.WriteLine(
+                        $"    {damageStateCount,5} ({x,4}, {y,4}, {z,4}): {damage} (0x{damage:x4})");
+                    return b - 2;
+                });
+            }
+            #endregion DamageState
+
+            #region Unknown02
             int unknown02Count = reader.ReadByte();
             bytesLeft -= 1;
             if (unknown02Count == 0)
             {
                 unknown02Count = (int) (epb.Width * epb.Height * epb.Depth); // blockCount;
             }
-
             byte[] unknown02 = reader.ReadBytes(unknown02Count);
             bytesLeft -= unknown02Count;
             Console.WriteLine($"unknown02: 0x{unknown02.ToHexString()}");
+            #endregion Unknown02
 
-            int colourCount = 0;
-            Console.WriteLine("Colour matrix");
-            bytesLeft = reader.ReadEpbMatrix(epb, length, (r, e, x, y, z, b) =>
+            #region Colours
+            if (version > 4)
             {
-                EpbBlock block = epb.Blocks[x, y, z];
-                UInt32 bits = r.ReadUInt32();
-                for (int i = 0; i < 6; i++)
+                int colourCount = 0;
+                Console.WriteLine("Colour matrix");
+                if (version <= 12)
                 {
-                    block.Colours[i] = (EpbColour)(bits & 0x1f);
-                    bits = bits >> 5;
+                    Console.WriteLine("TODO: Read but not properly parsed!");
+                    bytesLeft = reader.ReadEpbRawMatrix(epb, bytesLeft, (b, e, s) =>
+                    {
+                        // TODO: Extract and apply the colour
+                        return s + 1;
+                    });
                 }
+                else
+                {
+                    bytesLeft = reader.ReadEpbMatrix(epb, length, (r, e, x, y, z, b) =>
+                    {
+                        EpbBlock block = epb.Blocks[x, y, z];
+                        UInt32 bits = r.ReadUInt32();
+                        for (int i = 0; i < 6; i++)
+                        {
+                            block.Colours[i] = (EpbColour)(bits & 0x1f);
+                            bits = bits >> 5;
+                        }
 
-                colourCount++;
-                Console.WriteLine($"    {colourCount,5} ({x,4}, {y,4}, {z,4}): {string.Join(", ", block.Colours)}");
-                return b - 4;
-            });
+                        colourCount++;
+                        Console.WriteLine($"    {colourCount,5} ({x,4}, {y,4}, {z,4}): {string.Join(", ", block.Colours)}");
+                        return b - 4;
+                    });
+                }
+            }
+            #endregion Colours
 
-            int textureCount = 0;
-            Console.WriteLine("Texture matrix");
-            bytesLeft = reader.ReadEpbMatrix(epb, length, (r, e, x, y, z, b) =>
+            #region Textures
+            if (version > 4)
             {
-                EpbBlock block = epb.Blocks[x, y, z];
-                UInt64 bits = r.ReadUInt64();
-                for (int i = 0; i < 6; i++)
+                int textureCount = 0;
+                Console.WriteLine("Texture matrix");
+                if (version <= 12)
                 {
-                    block.Textures[i] = (byte) (bits & 0x3f);
-                    bits = bits >> 6;
+                    Console.WriteLine("TODO: Read but not properly parsed!");
+                    bytesLeft = reader.ReadEpbRawMatrix(epb, bytesLeft, (b, e, s) =>
+                    {
+                        // TODO: Extract and apply the texture
+                        return s + 1;
+                    });
                 }
+                else
+                {
+                    bytesLeft = reader.ReadEpbMatrix(epb, length, (r, e, x, y, z, b) =>
+                    {
+                        EpbBlock block = epb.Blocks[x, y, z];
+                        UInt64 bits = r.ReadUInt64();
+                        for (int i = 0; i < 6; i++)
+                        {
+                            block.Textures[i] = (byte) (bits & 0x3f);
+                            bits = bits >> 6;
+                        }
 
-                textureCount++;
-                Console.WriteLine($"    {textureCount,5} ({x,4}, {y,4}, {z,4}): {string.Join(", ", block.Textures)}");
-                return b - 8;
-            });
+                        textureCount++;
+                        Console.WriteLine(
+                            $"    {textureCount,5} ({x,4}, {y,4}, {z,4}): {string.Join(", ", block.Textures)}");
+                        return b - 8;
+                    });
+                }
+            }
+            #endregion Textures
 
+            #region TextureFlips
             if (version >= 20)
             {
                 int textureFlipCount = 0;
@@ -252,100 +329,140 @@ namespace EPBLib.Helpers
                     return b - 1;
                 });
             }
-            else
-            {
-                // My guess is that this is, in fact, the symbol matrix!
-                //int unknown04Count = 0;
-                //Console.WriteLine("Unknown04 matrix");
-                //bytesLeft = reader.ReadEpbMatrix(epb, length, (r, e, x, y, z, b) =>
-                //{
-                //    UInt32 unknown04a = r.ReadUInt32();
-                //    unknown04Count++;
-                //    Console.WriteLine($"    {unknown04Count} ({x}, {y}, {z}): 0x{unknown04a:x8}");
-                //    return b - 4;
-                //});
-            }
+            #endregion TextureFlips
 
-            int symbolCount = 0;
-            Console.WriteLine("Symbol matrix");
-            bytesLeft = reader.ReadEpbMatrix(epb, length, (r, e, x, y, z, b) =>
+            #region Symbols
+            if (version > 4) // TODO: Verify version, maybe this is newer than this
             {
-                EpbBlock block = epb.Blocks[x, y, z];
-                UInt32 bits = r.ReadUInt32();
-                for (int i = 0; i < 6; i++)
+                int symbolCount = 0;
+                Console.WriteLine("Symbol matrix");
+                if (version <= 12)
                 {
-                    block.Symbols[i] = (byte) (bits & 0x1f);
-                    bits = bits >> 5;
+                    Console.WriteLine("TODO: Read but not properly parsed!");
+                    bytesLeft = reader.ReadEpbRawMatrix(epb, bytesLeft, (b, e, s) =>
+                    {
+                        // TODO: Extract and apply the symbol
+                        return s + 1;
+                    });
                 }
+                else
+                {
+                    bytesLeft = reader.ReadEpbMatrix(epb, length, (r, e, x, y, z, b) =>
+                    {
+                        EpbBlock block = epb.Blocks[x, y, z];
+                        UInt32 bits = r.ReadUInt32();
+                        for (int i = 0; i < 6; i++)
+                        {
+                            block.Symbols[i] = (byte) (bits & 0x1f);
+                            bits = bits >> 5;
+                        }
 
-                block.SymbolPage = (byte) bits;
-                symbolCount++;
-                Console.WriteLine(
-                    $"    {symbolCount,5} ({x,4}, {y,4}, {z,4}): Page={block.SymbolPage} {string.Join(", ", block.Symbols)}");
-                return b - 4;
-            });
+                        block.SymbolPage = (byte) bits;
+                        symbolCount++;
+                        Console.WriteLine(
+                            $"    {symbolCount,5} ({x,4}, {y,4}, {z,4}): Page={block.SymbolPage} {string.Join(", ", block.Symbols)}");
+                        return b - 4;
+                    });
+                }
+            }
+            #endregion Symbols
 
-            if (version >= 20)
+
+            #region SymbolRotations
+            if (version > 4) //version >= 20)
             {
                 int symbolRotationCount = 0;
                 Console.WriteLine("SymbolRotation matrix");
-                bytesLeft = reader.ReadEpbMatrix(epb, length, (r, e, x, y, z, b) =>
+                if (version < 20)
                 {
-                    EpbBlock block = epb.Blocks[x, y, z];
-                    UInt32 bits = r.ReadUInt32();
-                    for (int i = 0; i < 6; i++)
+                    //TODO: "BAO_AntarisSpacefarm.epd" proves that this is NOT correct.
+                    Console.WriteLine("TODO: Read but not properly parsed!");
+                    bytesLeft = reader.ReadEpbRawMatrix(epb, bytesLeft, (b, e, s) =>
                     {
-                        block.SymbolRotations[i] = (EpbBlock.SymbolRotation)(bits & 0x3);
-                        bits = bits >> 2;
+                        // TODO: Extract and apply the symbol rotation
+                        return s + 1;
+                    });
+                }
+                else
+                {
+                    bytesLeft = reader.ReadEpbMatrix(epb, length, (r, e, x, y, z, b) =>
+                    {
+                        EpbBlock block = epb.Blocks[x, y, z];
+                        UInt32 bits = r.ReadUInt32();
+                        for (int i = 0; i < 6; i++)
+                        {
+                            block.SymbolRotations[i] = (EpbBlock.SymbolRotation) (bits & 0x3);
+                            bits = bits >> 2;
+                        }
+
+                        symbolRotationCount++;
+                        Console.WriteLine(
+                            $"    {symbolRotationCount,5} ({x,4}, {y,4}, {z,4}): {string.Join(", ", block.SymbolRotations)}");
+                        return b - 4;
+                    });
+                }
+            }
+            #endregion SymbolRotations
+
+            #region "Unknown06 - Spawners?"
+            if (version > 4) // TODO: Verify version, maybe this is newer than this
+            {
+                UInt16 unknown06Count = reader.ReadUInt16();
+                bytesLeft -= 2;
+                Console.WriteLine($"Unknown06 - Spawners? ({unknown06Count})");
+                for (int i = 0; i < unknown06Count; i++)
+                {
+                    byte[] unknown06a = reader.ReadBytes(5);
+                    bytesLeft -= 5;
+                    Console.WriteLine($"    unknown06a: {unknown06a.ToHexString()}");
+                    UInt16 nTags = reader.ReadUInt16();
+                    bytesLeft -= 2;
+                    Console.WriteLine($"    BlockTags: {nTags}");
+                    for (int tagIndex = 0; tagIndex < nTags; tagIndex++)
+                    {
+                        EpbBlockTag tag = reader.ReadEpbBlockTag(ref bytesLeft);
+                        Console.WriteLine($"        {tagIndex}: {tag}");
                     }
-                    symbolRotationCount++;
-                    Console.WriteLine(
-                        $"    {symbolRotationCount,5} ({x,4}, {y,4}, {z,4}): {string.Join(", ", block.SymbolRotations)}");
-                    return b - 4;
-                });
-            }
-
-            UInt16 unknown06Count = reader.ReadUInt16();
-            bytesLeft -= 2;
-            Console.WriteLine($"Unknown06 ({unknown06Count})");
-            for (int i = 0; i < unknown06Count; i++)
-            {
-                byte[] unknown06a = reader.ReadBytes(5);
-                bytesLeft -= 5;
-                Console.WriteLine($"    unknown06a: {unknown06a.ToHexString()}");
-                UInt16 nTags = reader.ReadUInt16();
-                bytesLeft -= 2;
-                Console.WriteLine($"    BlockTags: {nTags}");
-                for (int tagIndex = 0; tagIndex < nTags; tagIndex++)
-                {
-                    EpbBlockTag tag = reader.ReadEpbBlockTag(ref bytesLeft);
-                    Console.WriteLine($"        {tagIndex}: {tag}");
                 }
             }
+            #endregion "Unknown06 - Spawners?"
 
-            UInt16 unknown07Count = reader.ReadUInt16();
-            bytesLeft -= 2;
-            Console.WriteLine($"Unknown07 ({unknown07Count})");
-
-
-            UInt16 signalCount = reader.ReadUInt16();
-            bytesLeft -= 2;
-            Console.WriteLine($"Signals ({signalCount})");
-            for (int i = 0; i < signalCount; i++)
+            #region Unknown07
+            if (version > 4) // TODO: Verify version, maybe this is newer than this
             {
-                byte[] signalUnknown = reader.ReadBytes(1);
-                bytesLeft -= 1;
-                Console.WriteLine($"    Unknown: {signalUnknown.ToHexString()}");
-                UInt16 nTags = reader.ReadUInt16();
+
+                UInt16 unknown07Count = reader.ReadUInt16();
                 bytesLeft -= 2;
-                Console.WriteLine($"    BlockTags: {nTags}");
-                for (int tagIndex = 0; tagIndex < nTags; tagIndex++)
+                byte[] unknown07 = reader.ReadBytes(unknown07Count * 6);
+                bytesLeft -= unknown07Count * 6;
+                Console.WriteLine($"Unknown07: {unknown07.ToHexString()}");
+            }
+            #endregion Unknown07
+
+            #region Signals
+            if (version > 12) // TODO: Verify version, maybe this is newer than this
+            {
+                UInt16 signalCount = reader.ReadUInt16();
+                bytesLeft -= 2;
+                Console.WriteLine($"Signals ({signalCount})");
+                for (int i = 0; i < signalCount; i++)
                 {
-                    EpbBlockTag tag = reader.ReadEpbBlockTag(ref bytesLeft);
-                    Console.WriteLine($"        {tagIndex}: {tag}");
+                    byte signalUnknown01 = reader.ReadByte();
+                    bytesLeft -= 1;
+                    Console.WriteLine($"    SignalUnknown01: 0x{signalUnknown01:x2}");
+                    UInt16 nTags = reader.ReadUInt16();
+                    bytesLeft -= 2;
+                    Console.WriteLine($"    BlockTags: {nTags}");
+                    for (int tagIndex = 0; tagIndex < nTags; tagIndex++)
+                    {
+                        EpbBlockTag tag = reader.ReadEpbBlockTag(ref bytesLeft);
+                        Console.WriteLine($"        {tagIndex}: {tag}");
+                    }
                 }
             }
+            #endregion Signals
 
+            #region Logic
             if (version < 20)
             {
                 // Check CV_Prefab_Tier2.epb.hex for v18
@@ -421,20 +538,41 @@ namespace EPBLib.Helpers
                     }
                 }
 
+                byte unknown09 = reader.ReadByte();
+                bytesLeft -= 1;
+                Console.WriteLine($"Unknown09: 0x{unknown09:x2}");
+
                 UInt16 nCustom = reader.ReadUInt16();
                 Console.WriteLine($"Custom ({nCustom})");
                 for (int i = 0; i < nCustom; i++)
                 {
                     string s = ReadEpString(reader, ref bytesLeft);
-                    UInt16 unknown09 = reader.ReadUInt16();
-                    Console.WriteLine($"    {i}: 0x{unknown09:x4} \"{s}\"");
+                    UInt16 customUnknown01 = reader.ReadUInt16();
+                    Console.WriteLine($"    {i}: 0x{customUnknown01:x4} \"{s}\"");
                 }
             }
-
-
+            #endregion Logic
 
             byte[] remainingData = reader.ReadBytes((int)(bytesLeft));
-            Console.WriteLine($"Remaining data: {remainingData.ToHexString()}");
+            Console.WriteLine($"Remaining data:\n\r{remainingData.ToHexDump()}");
+        }
+
+        public static long ReadEpbRawMatrix(this BinaryReader reader, EpBlueprint epb, long bytesLeft, Func<byte[], EpBlueprint, long, long> func)
+        {
+            UInt32 matrixSize = reader.ReadUInt32();
+            byte[] data = reader.ReadBytes((int)matrixSize);
+            bytesLeft -= 4;
+            if (func == null)
+            {
+                return bytesLeft;
+            }
+
+            long index = 0;
+            while (index < matrixSize)
+            {
+                index = func(data, epb, index);
+            }
+            return bytesLeft;
         }
 
         public static long ReadEpbMatrix(this BinaryReader reader, EpBlueprint epb, long bytesLeft, Func<BinaryReader, EpBlueprint, UInt32, UInt32, UInt32, long, long> func)
