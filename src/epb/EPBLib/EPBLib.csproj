@@ -65,7 +65,7 @@
     <Compile Include="Helpers\BoolArrayExtensions.cs" />
     <Compile Include="Helpers\ByteArrayExtensions.cs" />
     <Compile Include="EpMetaTag.cs" />
-    <Compile Include="EpMetaTag01.cs" />
+    <Compile Include="EpMetaTagUInt16.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

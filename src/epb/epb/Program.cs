@@ -212,11 +212,11 @@ namespace epb
             };
             epb.MetaTags.Add(metaTag11.Key, metaTag11);
 
-            EpMetaTag01 metaTag01 = new EpMetaTag01(EpMetaTagKey.UnknownMetax01)
+            EpMetaTagUInt16 metaTagUInt16 = new EpMetaTagUInt16(EpMetaTagKey.UnknownMetax01)
             {
                 Value = 0x0000
             };
-            epb.MetaTags.Add(metaTag01.Key, metaTag01);
+            epb.MetaTags.Add(metaTagUInt16.Key, metaTagUInt16);
 
             EpMetaTag03 metaTag0E = new EpMetaTag03(EpMetaTagKey.UnknownMetax0E)
             {
@@ -230,7 +230,7 @@ namespace epb
             };
             epb.MetaTags.Add(metaTag0F.Key, metaTag0F);
 
-            EpMetaTag01 metaTag05 = new EpMetaTag01(EpMetaTagKey.UnknownMetax05)
+            EpMetaTagUInt16 metaTag05 = new EpMetaTagUInt16(EpMetaTagKey.UnknownMetax05)
             {
                 Value = 0x0000
             };
@@ -260,7 +260,7 @@ namespace epb
             };
             epb.MetaTags.Add(metaTag09.Key, metaTag09);
 
-            EpMetaTag02 metaTag08 = new EpMetaTag02(EpMetaTagKey.UnknownMetax08)
+            EpMetaTag02 metaTag08 = new EpMetaTag02(EpMetaTagKey.BuildVersion)
             {
                 Value = new byte[] { 0x4a, 0x06, 0x00, 0x00, 0x00 }
             };

@@ -158,8 +158,8 @@ namespace EPBLib.Helpers
         {
             long bytesLeft = length;
 
-            #region Blocks
-            Console.WriteLine("Block matrix");
+            #region BlockTypes
+            Console.WriteLine("Block type matrix");
             int blockCount = 0;
             if (version <= 4)
             {
@@ -210,7 +210,7 @@ namespace EPBLib.Helpers
                     return b - 4;
                 });
             }
-            #endregion Blocks
+            #endregion BlockTypes
 
             #region DamageState
             if (version > 4) // TODO: Verify version, maybe this is newer than this
@@ -676,11 +676,11 @@ namespace EPBLib.Helpers
                     tagString.Value = reader.ReadEpString(ref bytesLeft);
                     tag = tagString;
                     break;
-                case EpMetaTagType.Unknownx01:
-                    EpMetaTag01 tag01 = new EpMetaTag01(key);
-                    tag01.Value = reader.ReadUInt16();
+                case EpMetaTagType.UInt16:
+                    EpMetaTagUInt16 tagUInt16 = new EpMetaTagUInt16(key);
+                    tagUInt16.Value = reader.ReadUInt16();
                     bytesLeft -= 2;
-                    tag = tag01;
+                    tag = tagUInt16;
                     break;
                 case EpMetaTagType.Unknownx02:
                     EpMetaTag02 tag02 = new EpMetaTag02(key);

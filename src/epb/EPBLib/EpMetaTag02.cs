@@ -14,7 +14,8 @@ namespace EPBLib
 
         public override string ToString()
         {
-            return $"{base.ToString()} Value={BitConverter.ToString(Value).Replace("-", "")}";
+            return $"{Key,-14}: {BitConverter.ToInt32(Value, 0)} {Value[4]}";
+//            return $"{base.ToString()} Value={BitConverter.ToString(Value).Replace("-", "")}";
         }
     }
 }

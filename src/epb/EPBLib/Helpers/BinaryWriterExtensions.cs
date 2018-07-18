@@ -317,8 +317,8 @@ namespace EPBLib.Helpers
                     case EpMetaTagType.String:
                         writer.Write((EpMetaTagString)tag);
                         break;
-                    case EpMetaTagType.Unknownx01:
-                        writer.Write((EpMetaTag01)tag);
+                    case EpMetaTagType.UInt16:
+                        writer.Write((EpMetaTagUInt16)tag);
                         break;
                     case EpMetaTagType.Unknownx02:
                         writer.Write((EpMetaTag02)tag);
@@ -341,7 +341,7 @@ namespace EPBLib.Helpers
             writer.Write((EpMetaTag)tag);
             writer.WriteEpString(tag.Value);
         }
-        public static void Write(this BinaryWriter writer, EpMetaTag01 tag)
+        public static void Write(this BinaryWriter writer, EpMetaTagUInt16 tag)
         {
             writer.Write((EpMetaTag)tag);
             writer.Write(tag.Value);

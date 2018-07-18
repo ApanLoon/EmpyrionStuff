@@ -22,7 +22,7 @@ namespace EPBLib
         UnknownMetax05 = 0x05,
         UnknownMetax06 = 0x06,
         UnknownMetax07 = 0x07,
-        UnknownMetax08 = 0x08,
+        BuildVersion   = 0x08,
         UnknownMetax09 = 0x09,
         CreatorName    = 0x0a,
         CreatorId      = 0x0b, // Shows up in the statistics tab in game
@@ -38,7 +38,7 @@ namespace EPBLib
     public enum EpMetaTagType
     {
         String     = 0x00000000,
-        Unknownx01 = 0x01000000,
+        UInt16     = 0x01000000,
         Unknownx02 = 0x02000000,
         Unknownx03 = 0x03000000,
         Unknownx04 = 0x04000000,

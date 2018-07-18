@@ -2,11 +2,11 @@
 
 namespace EPBLib.Helpers
 {
-    public class EpMetaTag01 : EpMetaTag
+    public class EpMetaTagUInt16 : EpMetaTag
     {
-        public EpMetaTag01(EpMetaTagKey key)
+        public EpMetaTagUInt16(EpMetaTagKey key)
         {
-            TagType = EpMetaTagType.Unknownx01;
+            TagType = EpMetaTagType.UInt16;
             Key = key;
         }
 
@@ -14,7 +14,7 @@ namespace EPBLib.Helpers
 
         public override string ToString()
         {
-            return $"{base.ToString()} Value={Value}";
+            return $"{Key,-14}: {Value}";
         }
     }
 }
