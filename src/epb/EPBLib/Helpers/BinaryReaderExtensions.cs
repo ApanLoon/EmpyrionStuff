@@ -96,11 +96,11 @@ namespace EPBLib.Helpers
 
             if (version > 4)
             {
-                epb.DeviceGroups = reader.ReadEpbDeviceGroups(ref bytesLeft);
+                epb.DeviceGroups = reader.ReadEpbDeviceGroups(version, ref bytesLeft);
                 Console.WriteLine($"DeviceGroups ({epb.DeviceGroups.Count}):");
                 foreach (EpbDeviceGroup group in epb.DeviceGroups)
                 {
-                    Console.WriteLine($"    {group.Name} (Flags=0x{group.Flags:x4})");
+                    Console.WriteLine($"    {group.Name} (DeviceGroupUnknown01=0x{group.DeviceGroupUnknown01:x2}, DeviceGroupUnknown02=0x{group.DeviceGroupUnknown02:x2})");
                     foreach (EpbDeviceGroupEntry entry in group.Entries)
                     {
                         Console.WriteLine($"        Pos={entry.Pos} \"{entry.Name}\"");
@@ -725,23 +725,28 @@ namespace EPBLib.Helpers
 
         #region EpbDevices
 
-        public static List<EpbDeviceGroup> ReadEpbDeviceGroups(this BinaryReader reader, ref long bytesLeft)
+        public static List<EpbDeviceGroup> ReadEpbDeviceGroups(this BinaryReader reader, UInt32 version, ref long bytesLeft)
         {
             List<EpbDeviceGroup> groups = new List<EpbDeviceGroup>();
             UInt16 nGroups = reader.ReadUInt16();
             bytesLeft -= 2;
             for (int i = 0; i < nGroups; i++)
             {
-                groups.Add(reader.ReadEpbDeviceGroup(ref bytesLeft));
+                groups.Add(reader.ReadEpbDeviceGroup(version, ref bytesLeft));
             }
             return groups;
         }
-        public static EpbDeviceGroup ReadEpbDeviceGroup(this BinaryReader reader, ref long bytesLeft)
+        public static EpbDeviceGroup ReadEpbDeviceGroup(this BinaryReader reader, UInt32 version, ref long bytesLeft)
         {
             EpbDeviceGroup group = new EpbDeviceGroup();
             group.Name = reader.ReadEpString(ref bytesLeft);
-            group.Flags = reader.ReadUInt16();
-            bytesLeft -= 2;
+            group.DeviceGroupUnknown01 = reader.ReadByte();
+            bytesLeft -= 1;
+            if (version > 14)
+            {
+                group.DeviceGroupUnknown02 = reader.ReadByte();
+                bytesLeft -= 1;
+            }
             UInt16 nDevices = reader.ReadUInt16();
             bytesLeft -= 2;
             for (int i = 0; i < nDevices; i++)

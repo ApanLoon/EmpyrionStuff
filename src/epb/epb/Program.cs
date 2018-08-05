@@ -337,7 +337,7 @@ namespace epb
             //EpbDeviceGroup group = new EpbDeviceGroup
             //{
             //    Name = "Core",
-            //    Flags = 0xff01
+            //    DeviceGroupUnknown01 = 0xff01
             //};
             //EpbDeviceGroupEntry core = new EpbDeviceGroupEntry
             //{
@@ -350,7 +350,8 @@ namespace epb
             //group = new EpbDeviceGroup
             //{
             //    Name = "Ungrouped",
-            //    Flags = 0xff00
+            //    DeviceGroupUnknown01 = 0x00
+            //    DeviceGroupUnknown02 = 0xff
             //};
             //epb.DeviceGroups.Add(group);
 

@@ -389,7 +389,8 @@ namespace EPBLib.Helpers
         public static void Write(this BinaryWriter writer, EpbDeviceGroup group)
         {
             writer.WriteEpString(group.Name);
-            writer.Write(group.Flags);
+            writer.Write(group.DeviceGroupUnknown01);
+            writer.Write(group.DeviceGroupUnknown02);
             writer.Write((UInt16)group.Entries.Count);
             foreach (var device in group.Entries)
             {
