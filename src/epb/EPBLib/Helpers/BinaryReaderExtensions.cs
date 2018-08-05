@@ -48,7 +48,6 @@ namespace EPBLib.Helpers
                 Console.WriteLine(tag.ToString());
             }
 
-
             // TODO: Funky
             int nUnknown02;
             if (version <= 12)
@@ -66,6 +65,7 @@ namespace EPBLib.Helpers
             byte[] unknown02 = reader.ReadBytes(nUnknown02);
             bytesLeft -= nUnknown02;
             Console.WriteLine($"Unknown02: {unknown02.ToHexString()}");
+
 
             UInt16 nBlockCounts = reader.ReadUInt16();
             bytesLeft -= 2;
@@ -103,7 +103,7 @@ namespace EPBLib.Helpers
                     Console.WriteLine($"    {group.Name} (Flags=0x{group.Flags:x4})");
                     foreach (EpbDeviceGroupEntry entry in group.Entries)
                     {
-                        Console.WriteLine($"        Unknown={entry.Unknown.ToHexString()} \"{entry.Name}\"");
+                        Console.WriteLine($"        Pos={entry.Pos} \"{entry.Name}\"");
                     }
                 }
             }
@@ -612,10 +612,19 @@ namespace EPBLib.Helpers
             switch (type)
             {
                 case EpbBlockTag.TagType.UInt32:
-                    EpbBlockTagUInt32 tagUInt32 = new EpbBlockTagUInt32(name);
-                    tagUInt32.Value = reader.ReadUInt32();
-                    bytesLeft -= 4;
-                    tag = tagUInt32;
+                    if (name == "Pos")
+                    {
+                        EpbBlockTagPos tagPos = new EpbBlockTagPos();
+                        tagPos.Value = reader.ReadEpbBlockPos(ref bytesLeft);
+                        tag = tagPos;
+                    }
+                    else
+                    {
+                        EpbBlockTagUInt32 tagUInt32 = new EpbBlockTagUInt32(name);
+                        tagUInt32.Value = reader.ReadUInt32();
+                        bytesLeft -= 4;
+                        tag = tagUInt32;
+                    }
                     break;
                 case EpbBlockTag.TagType.String:
                     EpbBlockTagString tagString = new EpbBlockTagString(name);
@@ -744,13 +753,26 @@ namespace EPBLib.Helpers
         public static EpbDeviceGroupEntry ReadEpbDeviceGroupEntry(this BinaryReader reader, ref long bytesLeft)
         {
             EpbDeviceGroupEntry entry = new EpbDeviceGroupEntry();
-            entry.Unknown = reader.ReadBytes(4);
-            bytesLeft -= 4;
+            entry.Pos = reader.ReadEpbBlockPos(ref bytesLeft);
             entry.Name = reader.ReadEpString(ref bytesLeft);
             return entry;
         }
 
         #endregion EpbDevices
+
+        public static EpbBlockPos ReadEpbBlockPos(this BinaryReader reader, ref long bytesLeft)
+        {
+            UInt32 data = reader.ReadUInt32();
+            bytesLeft -= 4;
+            return new EpbBlockPos()
+            {
+                U1 = (byte)((data >> 28) & 0x0f),
+                X  = (byte)((data >> 20) & 0xff),
+                Y  = (byte)((data >> 12) & 0xff),
+                U2 = (byte)((data >>  8) & 0x0f),
+                Z  = (byte)((data >>  0) & 0xff)
+            };
+        }
 
         public static string ReadEpString(this BinaryReader reader, ref long bytesLeft)
         {

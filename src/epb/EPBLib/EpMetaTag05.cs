@@ -14,7 +14,8 @@ namespace EPBLib
 
         public override string ToString()
         {
-            return $"{base.ToString()} Value={BitConverter.ToString(Value).Replace("-", "")}";
+            System.DateTime dt = DateTime.FromBinary(BitConverter.ToInt64(Value, 0));
+            return $"{base.ToString()} Value={BitConverter.ToString(Value).Replace("-", "")} {dt}";
         }
     }
 }

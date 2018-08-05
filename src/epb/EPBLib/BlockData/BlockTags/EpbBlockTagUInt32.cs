@@ -14,7 +14,7 @@ namespace EPBLib
 
         public override string ToString()
         {
-            return $"{base.ToString()} Value={Value}";
+            return $"{base.ToString()} Value=0x{Value:x8}({Value})";
         }
     }
 }

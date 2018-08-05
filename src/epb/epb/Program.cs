@@ -254,7 +254,7 @@ namespace epb
             };
             epb.MetaTags.Add(metaTag07.Key, metaTag07);
 
-            EpMetaTag05 metaTag09 = new EpMetaTag05(EpMetaTagKey.UnknownMetax09)
+            EpMetaTag05 metaTag09 = new EpMetaTag05(EpMetaTagKey.CreationTime)
             {
                 Value = new byte[] { 0x94, 0x90, 0x35, 0xdf, 0x0a, 0xb2, 0xd5, 0x88, 0x00 }
             };
@@ -341,7 +341,7 @@ namespace epb
             //};
             //EpbDeviceGroupEntry core = new EpbDeviceGroupEntry
             //{
-            //    Unknown = new byte[] {0x00, 0x08, 0x00, 0x80},
+            //    Pos = 0x80000800, //new byte[] {0x00, 0x08, 0x00, 0x80},
             //    Name = ""
             //};
             //group.Entries.Add(core);

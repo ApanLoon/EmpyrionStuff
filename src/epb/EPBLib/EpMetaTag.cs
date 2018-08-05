@@ -23,7 +23,7 @@ namespace EPBLib
         UnknownMetax06 = 0x06,
         UnknownMetax07 = 0x07,
         BuildVersion   = 0x08,
-        UnknownMetax09 = 0x09,
+        CreationTime   = 0x09,
         CreatorName    = 0x0a,
         CreatorId      = 0x0b, // Shows up in the statistics tab in game
         OwnerName      = 0x0c,

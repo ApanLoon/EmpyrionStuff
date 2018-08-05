@@ -4,7 +4,7 @@ namespace EPBLib
 {
     public class EpbDeviceGroupEntry
     {
-        public byte[] Unknown { get; set; }
+        public EpbBlockPos Pos { get; set; }
         public string Name { get; set; }
 
     }

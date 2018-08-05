@@ -399,11 +399,16 @@ namespace EPBLib.Helpers
 
         public static void Write(this BinaryWriter writer, EpbDeviceGroupEntry entry)
         {
-            writer.Write(entry.Unknown);
+            writer.Write(entry.Pos);
             writer.WriteEpString(entry.Name);
         }
         #endregion EpbDevices
 
+        public static void Write(this BinaryWriter writer, EpbBlockPos pos)
+        {
+            UInt32 data = (UInt32)(pos.U1 << 28 | pos.X << 20 | pos.Y << 12 | pos.U2 << 8 | pos.Z);
+            writer.Write(data);
+        }
         public static void WriteEpString(this BinaryWriter writer, string s)
         {
             byte[] buf = System.Text.Encoding.UTF8.GetBytes(s);
