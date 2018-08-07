@@ -48,29 +48,36 @@ namespace EPBLib.Helpers
                 Console.WriteLine(tag.ToString());
             }
 
-            // TODO: Funky
-            int nUnknown02;
-            if (version <= 12)
-            {
-                nUnknown02 = 22;
-            }
-            else if (version <= 17)
-            {
-                nUnknown02 = 26;
-            }
-            else
-            {
-                nUnknown02 = 30;
-            }
-            byte[] unknown02 = reader.ReadBytes(nUnknown02);
-            bytesLeft -= nUnknown02;
-            Console.WriteLine($"Unknown02: {unknown02.ToHexString()}");
 
+            UInt16 unknown02 = reader.ReadUInt16();
+            Console.WriteLine($"Unknown02: 0x{unknown02:x4}");
+
+            UInt32 nLights = reader.ReadUInt32();
+            Console.WriteLine($"nLights:        {nLights} (0x{nLights:x8})");
+            UInt32 unknownCount01 = reader.ReadUInt32();
+            Console.WriteLine($"unknownCount01: {unknownCount01} (0x{unknownCount01:x8})");
+            UInt32 nDevices = reader.ReadUInt32();
+            Console.WriteLine($"nDevices:       {nDevices} (0x{nDevices:x8})");
+            UInt32 unknownCount02 = reader.ReadUInt32();
+            Console.WriteLine($"unknownCount02: {unknownCount02} (0x{unknownCount02:x8})");
+            UInt32 nBlocks = reader.ReadUInt32();
+            Console.WriteLine($"nBlocks:        {nBlocks} (0x{nBlocks:x8})");
+
+            if (version >= 14)
+            {
+                UInt32 unknownCount03 = reader.ReadUInt32();
+                Console.WriteLine($"unknownCount03: {unknownCount03} (0x{unknownCount03:x8})");
+            }
+            if (version >= 18)
+            {
+                UInt32 unknownCount04 = reader.ReadUInt32();
+                Console.WriteLine($"unknownCount04: {unknownCount04} (0x{unknownCount04:x8})");
+            }
 
             UInt16 nBlockCounts = reader.ReadUInt16();
             bytesLeft -= 2;
             Console.WriteLine($"BlockCounts (0x{nBlockCounts:x4})");
-            UInt32 nBlocks = 0;
+            UInt32 nBlocksTotal = 0;
             for (int i = 0; i < nBlockCounts; i++)
             {
                 EpbBlock.EpbBlockType blockType = reader.ReadEpbBlockType();
@@ -83,9 +90,9 @@ namespace EPBLib.Helpers
                 bytesLeft -= 6;
                 Console.WriteLine($"    BlockType={EpbBlock.GetBlockTypeName(blockType)} Count={blockCount}");
 
-                nBlocks += blockCount;
+                nBlocksTotal += blockCount;
             }
-            Console.WriteLine($"Total number of blocks: {nBlocks}");
+            Console.WriteLine($"Total number of blocks: {nBlocksTotal}");
 
             if (version > 4)
             {
@@ -538,7 +545,7 @@ namespace EPBLib.Helpers
                     }
                 }
 
-                byte unknown09 = reader.ReadByte();
+                byte unknown09 = reader.ReadByte(); //In "/PrefabsStock/BA_Prefab_Tier5a/BA_Prefab_Tier5a.epb", this does not exist.
                 bytesLeft -= 1;
                 Console.WriteLine($"Unknown09: 0x{unknown09:x2}");
 
@@ -547,8 +554,9 @@ namespace EPBLib.Helpers
                 for (int i = 0; i < nCustom; i++)
                 {
                     string s = ReadEpString(reader, ref bytesLeft);
-                    UInt16 customUnknown01 = reader.ReadUInt16();
-                    Console.WriteLine($"    {i}: 0x{customUnknown01:x4} \"{s}\"");
+                    //UInt16 customUnknown01 = reader.ReadUInt16();
+                    //Console.WriteLine($"    {i}: 0x{customUnknown01:x4} \"{s}\"");
+                    Console.WriteLine($"    {i}: \"{s}\"");
                 }
             }
             #endregion Logic
