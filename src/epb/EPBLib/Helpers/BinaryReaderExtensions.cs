@@ -70,8 +70,8 @@ namespace EPBLib.Helpers
             }
             if (version >= 18)
             {
-                UInt32 unknownCount04 = reader.ReadUInt32();
-                Console.WriteLine($"unknownCount04: {unknownCount04} (0x{unknownCount04:x8})");
+                UInt32 nTriangles = reader.ReadUInt32();
+                Console.WriteLine($"nTriangles:     {nTriangles} (0x{nTriangles:x8})");
             }
 
             UInt16 nBlockCounts = reader.ReadUInt16();
@@ -374,7 +374,6 @@ namespace EPBLib.Helpers
             }
             #endregion Symbols
 
-
             #region SymbolRotations
             if (version > 4) //version >= 20)
             {
@@ -411,15 +410,15 @@ namespace EPBLib.Helpers
             }
             #endregion SymbolRotations
 
-            #region "Unknown06 - Spawners?"
+            #region "Unknown06"
             if (version > 4) // TODO: Verify version, maybe this is newer than this
             {
-                UInt16 unknown06Count = reader.ReadUInt16();
+                UInt16 nUnknown06 = reader.ReadUInt16();
                 bytesLeft -= 2;
-                Console.WriteLine($"Unknown06 - Spawners? ({unknown06Count})");
-                for (int i = 0; i < unknown06Count; i++)
+                Console.WriteLine($"Unknown06 ({nUnknown06})");
+                for (int i = 0; i < nUnknown06; i++)
                 {
-                    byte[] unknown06a = reader.ReadBytes(5);
+                    byte[] unknown06a = reader.ReadBytes(5); //TODO: This is possibly a EpbBlockPos, hinting on a flexible length construct to accomodate for larger coordinates
                     bytesLeft -= 5;
                     Console.WriteLine($"    unknown06a: {unknown06a.ToHexString()}");
                     UInt16 nTags = reader.ReadUInt16();
@@ -432,7 +431,7 @@ namespace EPBLib.Helpers
                     }
                 }
             }
-            #endregion "Unknown06 - Spawners?"
+            #endregion "Unknown06"
 
             #region Unknown07
             if (version > 4) // TODO: Verify version, maybe this is newer than this

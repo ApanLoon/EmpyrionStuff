@@ -33,7 +33,7 @@ namespace EPBLib.Helpers
             writer.Write((UInt32)0); // UnknownCount02
             writer.Write((UInt32)epb.Blocks.Length);
             writer.Write((UInt32)0); // UnknownCount03
-            writer.Write((UInt32)0); // UnknownCount04
+            writer.Write((UInt32)0); // TODO: Count the number of triangles in the model
 
             Dictionary<EpbBlock.EpbBlockType, UInt32> blockCounts = new Dictionary<EpbBlock.EpbBlockType, uint>();
             for (UInt32 z = 0; z < epb.Depth; z++)
