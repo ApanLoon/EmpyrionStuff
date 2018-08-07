@@ -105,7 +105,7 @@ namespace epb
                         {
                             try
                             {
-                                BlockType = (EpbBlock.EpbBlockType)(byte)new System.ComponentModel.ByteConverter().ConvertFromString(v);
+                                BlockType = (EpbBlock.EpbBlockType)(int)new System.ComponentModel.ByteConverter().ConvertFromString(v);
                             }
                             catch (Exception e)
                             {
@@ -254,9 +254,13 @@ namespace epb
             };
             epb.MetaTags.Add(metaTag07.Key, metaTag07);
 
+            DateTime creationTime = DateTime.Now;
+            byte[] creationTimeBuffer = new byte[9];
+            Buffer.BlockCopy(BitConverter.GetBytes(creationTime.ToBinary()), 0, creationTimeBuffer, 0, 8);
+            creationTimeBuffer[8] = 0;
             EpMetaTag05 metaTag09 = new EpMetaTag05(EpMetaTagKey.CreationTime)
             {
-                Value = new byte[] { 0x94, 0x90, 0x35, 0xdf, 0x0a, 0xb2, 0xd5, 0x88, 0x00 }
+                Value = creationTimeBuffer
             };
             epb.MetaTags.Add(metaTag09.Key, metaTag09);
 
@@ -561,6 +565,12 @@ namespace epb
             Console.WriteLine();
             Console.WriteLine("Options:");
             optionSet.WriteOptionDescriptions(Console.Out);
+            Console.WriteLine();
+            Console.WriteLine("Examples:");
+            Console.WriteLine("    epb -c BaseBox -b 412 -v 0 -s 10,10,10 -o Box.epb");
+            Console.WriteLine("    epb -c BaseBox --hollow -b 412 -v 0 -s 10,10,10 -o BoxHollow.epb");
+            Console.WriteLine("    epb -c BaseFrame -b 412 -v 0 -s 10,10,10 -o Frame.epb");
+            Console.WriteLine("    epb -c BasePyramid -s 8,4,8 -o Pyramid.epb");
         }
 
         static void PauseOnExit()

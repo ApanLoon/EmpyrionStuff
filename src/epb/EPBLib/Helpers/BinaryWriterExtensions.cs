@@ -15,17 +15,6 @@ namespace EPBLib.Helpers
         public static readonly UInt32 EpbIdentifier = 0x78945245;
         public static UInt32 EpbVersion = 20;
 
-        public static readonly byte[] BoilerPlate_Unknown01 = new byte[]
-        {
-            0x01, 0x00
-        };
-        public static readonly byte[] BoilerPlate_Unknown02 = new byte[]
-        {
-            0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00,
-            0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-        };
-
-
         public static void Write(this BinaryWriter writer, EpBlueprint epb)
         {
             writer.Write(EpbIdentifier);
@@ -34,9 +23,17 @@ namespace EPBLib.Helpers
             writer.Write(epb.Width);
             writer.Write(epb.Height);
             writer.Write(epb.Depth);
-            writer.Write(BoilerPlate_Unknown01);
+            writer.Write((UInt16)1); //Unknown01
             writer.Write(epb.MetaTags);
-            writer.Write(BoilerPlate_Unknown02);
+
+            writer.Write((UInt16)0); //Unknown02
+            writer.Write((UInt32)0); // TODO: Count the number of light blocks in the model
+            writer.Write((UInt32)0); // UnknownCount01
+            writer.Write((UInt32)0); // TODO: Count the number of devices in the model
+            writer.Write((UInt32)0); // UnknownCount02
+            writer.Write((UInt32)epb.Blocks.Length);
+            writer.Write((UInt32)0); // UnknownCount03
+            writer.Write((UInt32)0); // UnknownCount04
 
             Dictionary<EpbBlock.EpbBlockType, UInt32> blockCounts = new Dictionary<EpbBlock.EpbBlockType, uint>();
             for (UInt32 z = 0; z < epb.Depth; z++)
