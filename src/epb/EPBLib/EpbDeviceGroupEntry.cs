@@ -6,6 +6,5 @@ namespace EPBLib
     {
         public EpbBlockPos Pos { get; set; }
         public string Name { get; set; }
-
     }
 }

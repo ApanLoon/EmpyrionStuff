@@ -341,7 +341,9 @@ namespace epb
             //EpbDeviceGroup group = new EpbDeviceGroup
             //{
             //    Name = "Core",
-            //    DeviceGroupUnknown01 = 0xff01
+            //    DeviceGroupUnknown03 = 0x01,
+            //    DeviceGroupUnknown01 = 0x01,
+            //    Shortcut = 0xff
             //};
             //EpbDeviceGroupEntry core = new EpbDeviceGroupEntry
             //{
@@ -354,8 +356,9 @@ namespace epb
             //group = new EpbDeviceGroup
             //{
             //    Name = "Ungrouped",
-            //    DeviceGroupUnknown01 = 0x00
-            //    DeviceGroupUnknown02 = 0xff
+            //    DeviceGroupUnknown03 = 0x01,
+            //    DeviceGroupUnknown01 = 0x00,
+            //    Shortcut = 0xff
             //};
             //epb.DeviceGroups.Add(group);
 

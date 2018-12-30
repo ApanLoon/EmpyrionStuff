@@ -104,19 +104,11 @@ namespace EPBLib.Helpers
             if (version > 4)
             {
                 epb.DeviceGroups = reader.ReadEpbDeviceGroups(version, ref bytesLeft);
-                Console.WriteLine($"DeviceGroups ({epb.DeviceGroups.Count}):");
-                foreach (EpbDeviceGroup group in epb.DeviceGroups)
-                {
-                    Console.WriteLine($"    {group.Name} (DeviceGroupUnknown01=0x{group.DeviceGroupUnknown01:x2}, DeviceGroupUnknown02=0x{group.DeviceGroupUnknown02:x2})");
-                    foreach (EpbDeviceGroupEntry entry in group.Entries)
-                    {
-                        Console.WriteLine($"        Pos={entry.Pos} \"{entry.Name}\"");
-                    }
-                }
             }
 
-            // There might be a number of unparsed bytes remaining at this point, so read the rest and search for the PKZip header:
+            /* TODO: We now assume that we reas all the bytes up to the zipped section correctly and don't skip any bytes.
             byte[] buf = reader.ReadBytes((int)bytesLeft);
+            // There might be a number of unparsed bytes remaining at this point, so read the rest and search for the PKZip header:
             int dataStart = buf.IndexOf(ZipDataStartPattern);
             if (dataStart == -1)
             {
@@ -125,10 +117,12 @@ namespace EPBLib.Helpers
             byte[] unknown8 = buf.Take(dataStart).ToArray();
             bytesLeft -= dataStart;
             Console.WriteLine($"BeforeZIP: {unknown8.ToHexString()}");
-
             byte[] zippedData = buf.Skip(dataStart).Take((int)bytesLeft).ToArray();
-            zippedData[0] = 0x50;
-            zippedData[1] = 0x4b;
+            */
+            byte[] zippedData = reader.ReadBytes((int)bytesLeft);
+
+            zippedData[0] = 0x50; // Prior to version 22 this byte was zero, set to 'P'
+            zippedData[1] = 0x4b; // Prior to version 22 this byte was zero, set to 'K'
             using (ZipFile zf = new ZipFile(new MemoryStream(zippedData)))
             {
                 zf.IsStreamOwner = true;
@@ -737,6 +731,7 @@ namespace EPBLib.Helpers
             List<EpbDeviceGroup> groups = new List<EpbDeviceGroup>();
             UInt16 nGroups = reader.ReadUInt16();
             bytesLeft -= 2;
+            Console.WriteLine($"DeviceGroups ({nGroups}):");
             for (int i = 0; i < nGroups; i++)
             {
                 groups.Add(reader.ReadEpbDeviceGroup(version, ref bytesLeft));
@@ -747,15 +742,29 @@ namespace EPBLib.Helpers
         {
             EpbDeviceGroup group = new EpbDeviceGroup();
             group.Name = reader.ReadEpString(ref bytesLeft);
+            Console.Write($"    {group.Name,-30} (");
+
+            if (version >= 20) //TODO: Some v20 files omit this byte. I don't know how to filter that.
+            {
+                group.DeviceGroupUnknown03 = reader.ReadByte();
+                bytesLeft -= 1;
+                Console.Write($" u3=0x{group.DeviceGroupUnknown03:x2}");
+            }
+
             group.DeviceGroupUnknown01 = reader.ReadByte();
             bytesLeft -= 1;
+            Console.Write($" u1=0x{group.DeviceGroupUnknown01:x2}");
+
             if (version > 14)
             {
-                group.DeviceGroupUnknown02 = reader.ReadByte();
+                group.Shortcut = reader.ReadByte();
                 bytesLeft -= 1;
+                Console.Write($" Shortcut=" + (group.Shortcut != 0xff ?  $"{group.Shortcut + 1,-4}" : "None"));
             }
             UInt16 nDevices = reader.ReadUInt16();
             bytesLeft -= 2;
+            Console.WriteLine($" n=0x{nDevices:x4})");
+
             for (int i = 0; i < nDevices; i++)
             {
                 group.Entries.Add(reader.ReadEpbDeviceGroupEntry(ref bytesLeft));
@@ -766,7 +775,11 @@ namespace EPBLib.Helpers
         {
             EpbDeviceGroupEntry entry = new EpbDeviceGroupEntry();
             entry.Pos = reader.ReadEpbBlockPos(ref bytesLeft);
+            Console.Write($"        Pos={entry.Pos}");
+
             entry.Name = reader.ReadEpString(ref bytesLeft);
+            Console.WriteLine($" Name=\"{entry.Name}\"");
+
             return entry;
         }
 

@@ -12,7 +12,7 @@ namespace EPBLib
 
         public override string ToString()
         {
-            return $"({X}, {Y}, {Z}) U1=0x{U1:x1} U2=0x{U2:x1}";
+            return $"({X}, {Y}, {Z}) u1=0x{U1:x2} u2=0x{U2:x2}";
         }
     }
 }
