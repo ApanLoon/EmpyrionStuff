@@ -170,14 +170,14 @@ namespace EPBLib.Helpers
             bytesLeft = reader.ReadTextureFlipMatrix(epb, version, length, bytesLeft);
             bytesLeft = reader.ReadSymbolMatrix(epb, version, length, bytesLeft);
             bytesLeft = reader.ReadSymbolRotationMatrix(epb, version, length, bytesLeft);
-            bytesLeft = reader.ReadBlockTags(version, bytesLeft);
-            bytesLeft = reader.ReadUnknown07(version, bytesLeft);
-            bytesLeft = reader.ReadSignals(version, bytesLeft);
-            bytesLeft = reader.ReadLogic(version, bytesLeft);
-            bytesLeft = reader.ReadUnknown08(version, bytesLeft);
-            bytesLeft = reader.ReadLogicOps(version, bytesLeft);
-            bytesLeft = reader.ReadUnknown09(version, bytesLeft);
-            bytesLeft = reader.ReadCustomNames(version, bytesLeft);
+            bytesLeft = reader.ReadBlockTags(epb, version, bytesLeft);
+            bytesLeft = reader.ReadUnknown07(epb, version, bytesLeft);
+            bytesLeft = reader.ReadSignals(epb, version, bytesLeft);
+            bytesLeft = reader.ReadLogic(epb, version, bytesLeft);
+            bytesLeft = reader.ReadUnknown08(epb, version, bytesLeft);
+            bytesLeft = reader.ReadLogicOps(epb, version, bytesLeft);
+            bytesLeft = reader.ReadUnknown09(epb, version, bytesLeft);
+            bytesLeft = reader.ReadCustomNames(epb, version, bytesLeft);
 
             byte[] remainingData = reader.ReadBytes((int)(bytesLeft));
             Console.WriteLine($"Remaining data:\n{remainingData.ToHexDump()}");
@@ -283,7 +283,7 @@ namespace EPBLib.Helpers
         {
             if (version > 4)
             {
-                int colourCount = 0;
+                int count = 0;
                 Console.WriteLine("Colour matrix");
                 if (version <= 12)
                 {
@@ -298,16 +298,22 @@ namespace EPBLib.Helpers
                 {
                     bytesLeft = reader.ReadEpbMatrix(epb, length, (r, e, x, y, z, b) =>
                     {
-                        EpbBlock block = epb.Blocks[x, y, z];
                         UInt32 bits = r.ReadUInt32();
-                        for (int i = 0; i < 6; i++)
+                        count++;
+                        EpbBlock block = epb.Blocks[x, y, z];
+                        if (block == null)
                         {
-                            block.Colours[i] = (EpbColour)(bits & 0x1f);
-                            bits = bits >> 5;
+                            Console.WriteLine($"    {count,5} ({x,4}, {y,4}, {z,4}): WARNING: No block");
                         }
-
-                        colourCount++;
-                        Console.WriteLine($"    {colourCount,5} ({x,4}, {y,4}, {z,4}): {string.Join(", ", block.Colours)}");
+                        else
+                        {
+                            for (int i = 0; i < 6; i++)
+                            {
+                                block.Colours[i] = (EpbColour)(bits & 0x1f);
+                                bits = bits >> 5;
+                            }
+                            Console.WriteLine($"    {count,5} ({x,4}, {y,4}, {z,4}): {string.Join(", ", block.Colours)}");
+                        }
                         return b - 4;
                     });
                 }
@@ -322,7 +328,7 @@ namespace EPBLib.Helpers
         {
             if (version > 4)
             {
-                int textureCount = 0;
+                int count = 0;
                 Console.WriteLine("Texture matrix");
                 if (version <= 12)
                 {
@@ -337,17 +343,23 @@ namespace EPBLib.Helpers
                 {
                     bytesLeft = reader.ReadEpbMatrix(epb, length, (r, e, x, y, z, b) =>
                     {
-                        EpbBlock block = epb.Blocks[x, y, z];
                         UInt64 bits = r.ReadUInt64();
-                        for (int i = 0; i < 6; i++)
+                        count++;
+                        EpbBlock block = epb.Blocks[x, y, z];
+                        if (block == null)
                         {
-                            block.Textures[i] = (byte)(bits & 0x3f);
-                            bits = bits >> 6;
+                            Console.WriteLine($"    {count,5} ({x,4}, {y,4}, {z,4}): WARNING: No block");
+                        }
+                        else
+                        {
+                            for (int i = 0; i < 6; i++)
+                            {
+                                block.Textures[i] = (byte) (bits & 0x3f);
+                                bits = bits >> 6;
+                            }
+                            Console.WriteLine($"    {count,5} ({x,4}, {y,4}, {z,4}): {string.Join(", ", block.Textures)}");
                         }
 
-                        textureCount++;
-                        Console.WriteLine(
-                            $"    {textureCount,5} ({x,4}, {y,4}, {z,4}): {string.Join(", ", block.Textures)}");
                         return b - 8;
                     });
                 }
@@ -362,20 +374,26 @@ namespace EPBLib.Helpers
         {
             if (version >= 20)
             {
-                int textureFlipCount = 0;
+                int count = 0;
                 Console.WriteLine("TextureFlip matrix");
                 bytesLeft = reader.ReadEpbMatrix(epb, length, (r, e, x, y, z, b) =>
                 {
-                    EpbBlock block = epb.Blocks[x, y, z];
                     byte bits = r.ReadByte();
-                    for (int i = 0; i < 6; i++)
+                    count++;
+                    EpbBlock block = epb.Blocks[x, y, z];
+                    if (block == null)
                     {
-                        block.TextureFlips[i] = (bits & 0x01) != 0;
-                        bits = (byte)(bits >> 1);
+                        Console.WriteLine($"    {count,5} ({x,4}, {y,4}, {z,4}): WARNING: No block");
                     }
-
-                    textureFlipCount++;
-                    Console.WriteLine($"    {textureFlipCount,5} ({x,4}, {y,4}, {z,4}): {string.Join(", ", block.TextureFlips)}");
+                    else
+                    {
+                        for (int i = 0; i < 6; i++)
+                        {
+                            block.TextureFlips[i] = (bits & 0x01) != 0;
+                            bits = (byte) (bits >> 1);
+                        }
+                        Console.WriteLine($"    {count,5} ({x,4}, {y,4}, {z,4}): {string.Join(", ", block.TextureFlips)}");
+                    }
                     return b - 1;
                 });
             }
@@ -389,7 +407,7 @@ namespace EPBLib.Helpers
         {
             if (version > 4) // TODO: Verify version, maybe this is newer than this
             {
-                int symbolCount = 0;
+                int count = 0;
                 Console.WriteLine("Symbol matrix");
                 if (version <= 12)
                 {
@@ -404,18 +422,24 @@ namespace EPBLib.Helpers
                 {
                     bytesLeft = reader.ReadEpbMatrix(epb, length, (r, e, x, y, z, b) =>
                     {
-                        EpbBlock block = epb.Blocks[x, y, z];
                         UInt32 bits = r.ReadUInt32();
-                        for (int i = 0; i < 6; i++)
+                        count++;
+                        EpbBlock block = epb.Blocks[x, y, z];
+                        if (block == null)
                         {
-                            block.Symbols[i] = (byte)(bits & 0x1f);
-                            bits = bits >> 5;
+                            Console.WriteLine($"    {count,5} ({x,4}, {y,4}, {z,4}): WARNING: No block");
                         }
+                        else
+                        {
+                            for (int i = 0; i < 6; i++)
+                            {
+                                block.Symbols[i] = (byte) (bits & 0x1f);
+                                bits = bits >> 5;
+                            }
 
-                        block.SymbolPage = (byte)bits;
-                        symbolCount++;
-                        Console.WriteLine(
-                            $"    {symbolCount,5} ({x,4}, {y,4}, {z,4}): Page={block.SymbolPage} {string.Join(", ", block.Symbols)}");
+                            block.SymbolPage = (byte) bits;
+                            Console.WriteLine($"    {count,5} ({x,4}, {y,4}, {z,4}): Page={block.SymbolPage} {string.Join(", ", block.Symbols)}");
+                        }
                         return b - 4;
                     });
                 }
@@ -430,23 +454,28 @@ namespace EPBLib.Helpers
         {
             if (version > 4) //version >= 20)
             {
-                int symbolRotationCount = 0;
+                int count = 0;
                 Console.WriteLine("SymbolRotation matrix");
                 if (version >= 20)
                 {
                     bytesLeft = reader.ReadEpbMatrix(epb, length, (r, e, x, y, z, b) =>
                     {
-                        EpbBlock block = epb.Blocks[x, y, z];
                         UInt32 bits = r.ReadUInt32();
-                        for (int i = 0; i < 6; i++)
+                        count++;
+                        EpbBlock block = epb.Blocks[x, y, z];
+                        if (block == null)
                         {
-                            block.SymbolRotations[i] = (EpbBlock.SymbolRotation)(bits & 0x3);
-                            bits = bits >> 2;
+                            Console.WriteLine($"    {count,5} ({x,4}, {y,4}, {z,4}): WARNING: No block");
                         }
-
-                        symbolRotationCount++;
-                        Console.WriteLine(
-                            $"    {symbolRotationCount,5} ({x,4}, {y,4}, {z,4}): {string.Join(", ", block.SymbolRotations)}");
+                        else
+                        {
+                            for (int i = 0; i < 6; i++)
+                            {
+                                block.SymbolRotations[i] = (EpbBlock.SymbolRotation) (bits & 0x3);
+                                bits = bits >> 2;
+                            }
+                            Console.WriteLine($"    {count,5} ({x,4}, {y,4}, {z,4}): {string.Join(", ", block.SymbolRotations)}");
+                        }
                         return b - 4;
                     });
                 }
@@ -455,17 +484,22 @@ namespace EPBLib.Helpers
                     //TODO: "BAO_AntarisSpacefarm.epd", v17, has 4 bytes per data point, but since all symbols are on the fifth side this implies that there are five bits per side.
                     bytesLeft = reader.ReadEpbMatrix(epb, length, (r, e, x, y, z, b) =>
                     {
-                        EpbBlock block = epb.Blocks[x, y, z];
                         UInt32 bits = r.ReadUInt32();
-                        for (int i = 0; i < 6; i++)
+                        count++;
+                        EpbBlock block = epb.Blocks[x, y, z];
+                        if (block == null)
                         {
-                            block.SymbolRotations[i] = (EpbBlock.SymbolRotation)(bits & 0x1f);
-                            bits = bits >> 5;
+                            Console.WriteLine($"    {count,5} ({x,4}, {y,4}, {z,4}): WARNING: No block");
                         }
-
-                        symbolRotationCount++;
-                        Console.WriteLine(
-                            $"    {symbolRotationCount,5} ({x,4}, {y,4}, {z,4}): {string.Join(", ", block.SymbolRotations)}");
+                        else
+                        {
+                            for (int i = 0; i < 6; i++)
+                            {
+                                block.SymbolRotations[i] = (EpbBlock.SymbolRotation) (bits & 0x1f);
+                                bits = bits >> 5;
+                            }
+                            Console.WriteLine($"    {count,5} ({x,4}, {y,4}, {z,4}): {string.Join(", ", block.SymbolRotations)}");
+                        }
                         return b - 4;
                     });
                 }
@@ -485,7 +519,7 @@ namespace EPBLib.Helpers
         #endregion SymbolRotationMatrix
 
         #region BlockTags
-        public static long ReadBlockTags(this BinaryReader reader, uint version, long bytesLeft)
+        public static long ReadBlockTags(this BinaryReader reader, EpBlueprint epb, uint version, long bytesLeft)
         {
             if (version > 4) // TODO: Verify version, maybe this is newer than this
             {
@@ -515,7 +549,7 @@ namespace EPBLib.Helpers
         #endregion BlockTags
 
         #region Unknown07
-        public static long ReadUnknown07(this BinaryReader reader, uint version, long bytesLeft)
+        public static long ReadUnknown07(this BinaryReader reader, EpBlueprint epb, uint version, long bytesLeft)
         {
             if (version > 4) // TODO: Verify version, maybe this is newer than this
             {
@@ -532,7 +566,7 @@ namespace EPBLib.Helpers
         #endregion Unknown07
 
         #region Signals
-        public static long ReadSignals(this BinaryReader reader, uint version, long bytesLeft)
+        public static long ReadSignals(this BinaryReader reader, EpBlueprint epb, uint version, long bytesLeft)
         {
             if (version > 12) // TODO: Verify version, maybe this is newer than this
             {
@@ -560,7 +594,7 @@ namespace EPBLib.Helpers
         #endregion Signals
 
         #region Logic
-        public static long ReadLogic(this BinaryReader reader, uint version, long bytesLeft)
+        public static long ReadLogic(this BinaryReader reader, EpBlueprint epb, uint version, long bytesLeft)
         {
             if (version < 20)
             {
@@ -648,7 +682,7 @@ namespace EPBLib.Helpers
         #endregion Logic
 
         #region Unknown08
-        public static long ReadUnknown08(this BinaryReader reader, uint version, long bytesLeft)
+        public static long ReadUnknown08(this BinaryReader reader, EpBlueprint epb, uint version, long bytesLeft)
         {
             if (version >= 21)
             {
@@ -670,7 +704,7 @@ namespace EPBLib.Helpers
         #endregion Unknown08
 
         #region LogicOps
-        public static long ReadLogicOps(this BinaryReader reader, uint version, long bytesLeft)
+        public static long ReadLogicOps(this BinaryReader reader, EpBlueprint epb, uint version, long bytesLeft)
         {
             if (version >= 20)
             {
@@ -698,7 +732,7 @@ namespace EPBLib.Helpers
         #endregion LogicOps
 
         #region Unknown09
-        public static long ReadUnknown09(this BinaryReader reader, uint version, long bytesLeft)
+        public static long ReadUnknown09(this BinaryReader reader, EpBlueprint epb, uint version, long bytesLeft)
         {
             if (version >= 21)
             {
@@ -715,7 +749,7 @@ namespace EPBLib.Helpers
         #endregion Unknown09
 
         #region CustomNames
-        public static long ReadCustomNames(this BinaryReader reader, uint version, long bytesLeft)
+        public static long ReadCustomNames(this BinaryReader reader, EpBlueprint epb, uint version, long bytesLeft)
         {
             if (version >= 20)
             {
