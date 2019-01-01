@@ -49,6 +49,8 @@ namespace epb
 
         public static void Main(string[] args)
         {
+            Console.Out.NewLine = "\n";
+
             string codeBase = Assembly.GetExecutingAssembly().CodeBase;
             ExectutableName = Path.GetFileName(codeBase);
 
@@ -193,7 +195,7 @@ namespace epb
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine($"Error on file {inPath}: {ex.Message}\r\n{ex.InnerException}\r\n{ex.StackTrace}");
+                        Console.WriteLine($"Error on file {inPath}: {ex.Message}\n{ex.InnerException}\n{ex.StackTrace}");
                     }
                 }
                 break;

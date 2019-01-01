@@ -9,7 +9,7 @@ namespace EPBLib
             UInt32 = 0x00,
             String = 0x01,
             Bool   = 0x02,
-            x03    = 0x03,
+            Float  = 0x03,
             Colour = 0x05
         }
         #endregion Types

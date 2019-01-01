@@ -103,7 +103,10 @@ namespace EPBLib.Helpers
 
             if (version > 4)
             {
-                epb.DeviceGroups = reader.ReadEpbDeviceGroups(version, ref bytesLeft);
+                //TODO: Check if EpMetaTag02 is used for anything other than BuildVersion and if not, rename and make accessors for the build version.
+                EpMetaTag02 buildVersion = (EpMetaTag02)epb.MetaTags[EpMetaTagKey.BuildVersion];
+                int build = BitConverter.ToInt32(buildVersion.Value, 0);
+                epb.DeviceGroups = reader.ReadEpbDeviceGroups(version, build, ref bytesLeft);
             }
 
             /* TODO: We now assume that we reas all the bytes up to the zipped section correctly and don't skip any bytes.
@@ -367,23 +370,12 @@ namespace EPBLib.Helpers
                 }
             }
             #endregion Symbols
-
             #region SymbolRotations
             if (version > 4) //version >= 20)
             {
                 int symbolRotationCount = 0;
                 Console.WriteLine("SymbolRotation matrix");
-                if (version < 20)
-                {
-                    //TODO: "BAO_AntarisSpacefarm.epd" proves that this is NOT correct.
-                    Console.WriteLine("TODO: Read but not properly parsed!");
-                    bytesLeft = reader.ReadEpbRawMatrix(epb, bytesLeft, (b, e, s) =>
-                    {
-                        // TODO: Extract and apply the symbol rotation
-                        return s + 1;
-                    });
-                }
-                else
+                if (version >= 20)
                 {
                     bytesLeft = reader.ReadEpbMatrix(epb, length, (r, e, x, y, z, b) =>
                     {
@@ -391,7 +383,7 @@ namespace EPBLib.Helpers
                         UInt32 bits = r.ReadUInt32();
                         for (int i = 0; i < 6; i++)
                         {
-                            block.SymbolRotations[i] = (EpbBlock.SymbolRotation) (bits & 0x3);
+                            block.SymbolRotations[i] = (EpbBlock.SymbolRotation)(bits & 0x3);
                             bits = bits >> 2;
                         }
 
@@ -401,23 +393,53 @@ namespace EPBLib.Helpers
                         return b - 4;
                     });
                 }
+                else if (version >= 17)
+                {
+                    //TODO: "BAO_AntarisSpacefarm.epd", v17, has 4 bytes per data point, but since all symbols are on the fifth side this implies that there are five bits per side.
+                    bytesLeft = reader.ReadEpbMatrix(epb, length, (r, e, x, y, z, b) =>
+                    {
+                        EpbBlock block = epb.Blocks[x, y, z];
+                        UInt32 bits = r.ReadUInt32();
+                        for (int i = 0; i < 6; i++)
+                        {
+                            block.SymbolRotations[i] = (EpbBlock.SymbolRotation)(bits & 0x1f);
+                            bits = bits >> 5;
+                        }
+
+                        symbolRotationCount++;
+                        Console.WriteLine(
+                            $"    {symbolRotationCount,5} ({x,4}, {y,4}, {z,4}): {string.Join(", ", block.SymbolRotations)}");
+                        return b - 4;
+                    });
+                }
+                else
+                {
+                    Console.WriteLine("TODO: Read but not properly parsed!");
+                    bytesLeft = reader.ReadEpbRawMatrix(epb, bytesLeft, (b, e, s) =>
+                    {
+                        // TODO: Extract and apply the symbol rotation
+                        return s + 1;
+                    });
+                }
             }
             #endregion SymbolRotations
 
-            #region "Unknown06"
+            #region "BlockTags"
             if (version > 4) // TODO: Verify version, maybe this is newer than this
             {
-                UInt16 nUnknown06 = reader.ReadUInt16();
+                UInt16 nBlockTags = reader.ReadUInt16();
                 bytesLeft -= 2;
-                Console.WriteLine($"Unknown06 ({nUnknown06})");
-                for (int i = 0; i < nUnknown06; i++)
+                Console.WriteLine($"BlockTags ({nBlockTags})");
+                for (int i = 0; i < nBlockTags; i++)
                 {
-                    byte[] unknown06a = reader.ReadBytes(5); //TODO: This is possibly a EpbBlockPos, hinting on a flexible length construct to accomodate for larger coordinates
-                    bytesLeft -= 5;
-                    Console.WriteLine($"    unknown06a: {unknown06a.ToHexString()}");
+                    EpbBlockPos pos = reader.ReadEpbBlockPos(ref bytesLeft);
+                    byte unknown06 = reader.ReadByte();
+                    bytesLeft -= 1;
                     UInt16 nTags = reader.ReadUInt16();
                     bytesLeft -= 2;
-                    Console.WriteLine($"    BlockTags: {nTags}");
+
+                    Console.WriteLine($"{pos}, {unknown06:x2}, {nTags}");
+
                     for (int tagIndex = 0; tagIndex < nTags; tagIndex++)
                     {
                         EpbBlockTag tag = reader.ReadEpbBlockTag(ref bytesLeft);
@@ -425,7 +447,7 @@ namespace EPBLib.Helpers
                     }
                 }
             }
-            #endregion "Unknown06"
+            #endregion "BlockTags"
 
             #region Unknown07
             if (version > 4) // TODO: Verify version, maybe this is newer than this
@@ -474,6 +496,32 @@ namespace EPBLib.Helpers
                 Console.WriteLine($"Logic ({logicCount})");
                 for (int i = 0; i < logicCount; i++)
                 {
+                    //v21:
+
+                    string name = reader.ReadEpString(ref bytesLeft);
+                    Console.WriteLine($"    Name:           {name}");
+
+                    UInt16 nRules = reader.ReadUInt16();
+                    bytesLeft -= 2;
+                    Console.WriteLine($"    nRules:         {nRules}");
+
+                    for (int r = 0; r < nRules; r++)
+                    {
+                        byte ruleUnknown01 = reader.ReadByte();
+                        bytesLeft -= 1;
+                        Console.WriteLine($"        RuleUnknown01: 0x{ruleUnknown01:x2}");
+
+                        UInt16 nTags = reader.ReadUInt16();
+                        bytesLeft -= 2;
+
+                        for (int t = 0; t < nTags; t++)
+                        {
+                            EpbBlockTag tag = reader.ReadEpbBlockTag(ref bytesLeft);
+                            Console.WriteLine($"            {t}: {tag}");
+                        }
+                    }
+
+                    /*
                     if (i > 0)
                     {
                         byte logicUnknown01 = reader.ReadByte();
@@ -514,12 +562,29 @@ namespace EPBLib.Helpers
                         }
 
                     }
+                    */
                 }
+            }
+            #endregion Logic
 
-                byte unknown08 = reader.ReadByte();
-                bytesLeft -= 1;
-                Console.WriteLine($"Unknown08: 0x{unknown08:x2}");
+            if (version >= 21)
+            {
+                // In v21, this is not present
+            }
+            else if (version >= 20)
+            {
+                //byte unknown08 = reader.ReadByte();
+                //bytesLeft -= 1;
+                //Console.WriteLine($"Unknown08: 0x{unknown08:x2}");
+            }
+            else if (version >= 18)
+            {
+                //TODO: Check this
+            }
 
+            #region LogicOps
+            if (version >= 20)
+            {
                 UInt16 logicOpsCount = reader.ReadUInt16();
                 bytesLeft -= 2;
                 Console.WriteLine($"LogicOps ({logicOpsCount})");
@@ -537,11 +602,23 @@ namespace EPBLib.Helpers
                         Console.WriteLine($"        {tagIndex}: {tag}");
                     }
                 }
+            }
+            #endregion LogicOps
 
-                byte unknown09 = reader.ReadByte(); //In "/PrefabsStock/BA_Prefab_Tier5a/BA_Prefab_Tier5a.epb", this does not exist.
-                bytesLeft -= 1;
-                Console.WriteLine($"Unknown09: 0x{unknown09:x2}");
+            if (version >= 21)
+            {
+            }
+            else if (version >= 20)
+            {
+                //byte unknown09 =
+                //    reader.ReadByte(); //In "/PrefabsStock/BA_Prefab_Tier5a/BA_Prefab_Tier5a.epb", this does not exist.
+                //bytesLeft -= 1;
+                //Console.WriteLine($"Unknown09: 0x{unknown09:x2}");
+            }
 
+            #region Customs
+            if (version >= 20)
+            {
                 UInt16 nCustom = reader.ReadUInt16();
                 Console.WriteLine($"Custom ({nCustom})");
                 for (int i = 0; i < nCustom; i++)
@@ -552,10 +629,10 @@ namespace EPBLib.Helpers
                     Console.WriteLine($"    {i}: \"{s}\"");
                 }
             }
-            #endregion Logic
+            #endregion Customs
 
             byte[] remainingData = reader.ReadBytes((int)(bytesLeft));
-            Console.WriteLine($"Remaining data:\n\r{remainingData.ToHexDump()}");
+            Console.WriteLine($"Remaining data:\n{remainingData.ToHexDump()}");
         }
 
         public static long ReadEpbRawMatrix(this BinaryReader reader, EpBlueprint epb, long bytesLeft, Func<byte[], EpBlueprint, long, long> func)
@@ -634,6 +711,8 @@ namespace EPBLib.Helpers
                     break;
                 case EpbBlockTag.TagType.Bool:
                     EpbBlockTagBool tagBool = new EpbBlockTagBool(name);
+                    tagBool.Value = reader.ReadByte() != 0;
+                    bytesLeft -= 1;
                     tag = tagBool;
                     break;
                 case EpbBlockTag.TagType.Colour:
@@ -642,11 +721,11 @@ namespace EPBLib.Helpers
                     bytesLeft -= 4;
                     tag = tagColour;
                     break;
-                case EpbBlockTag.TagType.x03:
-                    EpbBlockTagx03 tagx03 = new EpbBlockTagx03(name);
-                    tagx03.Value = reader.ReadBytes(4);
+                case EpbBlockTag.TagType.Float:
+                    EpbBlockTagFloat tagFloat = new EpbBlockTagFloat(name);
+                    tagFloat.Value = reader.ReadSingle();
                     bytesLeft -= 4;
-                    tag = tagx03;
+                    tag = tagFloat;
                     break;
                 default:
                     tag = null;
@@ -726,7 +805,7 @@ namespace EPBLib.Helpers
 
         #region EpbDevices
 
-        public static List<EpbDeviceGroup> ReadEpbDeviceGroups(this BinaryReader reader, UInt32 version, ref long bytesLeft)
+        public static List<EpbDeviceGroup> ReadEpbDeviceGroups(this BinaryReader reader, UInt32 version, int build, ref long bytesLeft)
         {
             List<EpbDeviceGroup> groups = new List<EpbDeviceGroup>();
             UInt16 nGroups = reader.ReadUInt16();
@@ -734,17 +813,17 @@ namespace EPBLib.Helpers
             Console.WriteLine($"DeviceGroups ({nGroups}):");
             for (int i = 0; i < nGroups; i++)
             {
-                groups.Add(reader.ReadEpbDeviceGroup(version, ref bytesLeft));
+                groups.Add(reader.ReadEpbDeviceGroup(version, build, ref bytesLeft));
             }
             return groups;
         }
-        public static EpbDeviceGroup ReadEpbDeviceGroup(this BinaryReader reader, UInt32 version, ref long bytesLeft)
+        public static EpbDeviceGroup ReadEpbDeviceGroup(this BinaryReader reader, UInt32 version, int build, ref long bytesLeft)
         {
             EpbDeviceGroup group = new EpbDeviceGroup();
             group.Name = reader.ReadEpString(ref bytesLeft);
             Console.Write($"    {group.Name,-30} (");
 
-            if (version >= 20) //TODO: Some v20 files omit this byte. I don't know how to filter that.
+            if (version >= 20 && build > 1772) //TODO: Some v20 files omit this byte. Filtering with the latest build version that I know creates these files.
             {
                 group.DeviceGroupUnknown03 = reader.ReadByte();
                 bytesLeft -= 1;

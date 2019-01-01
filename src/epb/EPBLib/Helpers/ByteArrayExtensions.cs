@@ -60,7 +60,7 @@ namespace EPBLib.Helpers
                         ascii += Encoding.ASCII.GetString(buf, start + c, 1);
                     }
                 }
-                s += $"{bytes,-48} {ascii,-16}\n\r";
+                s += $"{bytes,-48} {ascii,-16}\n";
                 start += 16;
             }
             return s;
