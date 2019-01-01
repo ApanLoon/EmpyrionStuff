@@ -10,12 +10,12 @@ namespace EPBLib
             Key = key;
         }
 
-        public byte[] Value { get; set; }
+        public DateTime Value { get; set; }
+        public byte Unknown { get; set; }
 
         public override string ToString()
         {
-            System.DateTime dt = DateTime.FromBinary(BitConverter.ToInt64(Value, 0));
-            return $"{base.ToString()} Value={BitConverter.ToString(Value).Replace("-", "")} {dt}";
+            return $"{base.ToString()} Value={Value} Unknown=0x{Unknown:x2}";
         }
     }
 }

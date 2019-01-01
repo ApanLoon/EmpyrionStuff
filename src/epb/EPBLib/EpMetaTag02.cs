@@ -10,12 +10,12 @@ namespace EPBLib
             Key = key;
         }
 
-        public byte[] Value { get; set; }
+        public UInt32 Value { get; set; }
+        public byte Unknown { get; set; }
 
         public override string ToString()
         {
-            return $"{Key,-14}: {BitConverter.ToInt32(Value, 0)} {Value[4]}";
-//            return $"{base.ToString()} Value={BitConverter.ToString(Value).Replace("-", "")}";
+            return $"{base.ToString()} Value={Value} Unknown=0x{Unknown:x2}";
         }
     }
 }

@@ -240,7 +240,8 @@ namespace epb
 
             EpMetaTag02 metaTag04 = new EpMetaTag02(EpMetaTagKey.UnknownMetax04)
             {
-                Value = new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00 }
+                Value = 0,
+                Unknown = 0
             };
             epb.MetaTags.Add(metaTag04.Key, metaTag04);
 
@@ -256,19 +257,17 @@ namespace epb
             };
             epb.MetaTags.Add(metaTag07.Key, metaTag07);
 
-            DateTime creationTime = DateTime.Now;
-            byte[] creationTimeBuffer = new byte[9];
-            Buffer.BlockCopy(BitConverter.GetBytes(creationTime.ToBinary()), 0, creationTimeBuffer, 0, 8);
-            creationTimeBuffer[8] = 0;
             EpMetaTag05 metaTag09 = new EpMetaTag05(EpMetaTagKey.CreationTime)
             {
-                Value = creationTimeBuffer
+                Value = DateTime.Now,
+                Unknown = 0
             };
             epb.MetaTags.Add(metaTag09.Key, metaTag09);
 
             EpMetaTag02 metaTag08 = new EpMetaTag02(EpMetaTagKey.BuildVersion)
             {
-                Value = new byte[] { 0x4a, 0x06, 0x00, 0x00, 0x00 }
+                Value = 0x064a,
+                Unknown = 0
             };
             epb.MetaTags.Add(metaTag08.Key, metaTag08);
 
@@ -301,7 +300,8 @@ namespace epb
 
             EpMetaTag05 metaTag12 = new EpMetaTag05(EpMetaTagKey.UnknownMetax12)
             {
-                Value = new byte[] { 0x00, 0x80, 0x80, 0x80, 0x00, 0x80, 0x00, 0x00, 0x00 }
+                Value = DateTime.MinValue,
+                Unknown = 0
             };
             epb.MetaTags.Add(metaTag12.Key, metaTag12);
 

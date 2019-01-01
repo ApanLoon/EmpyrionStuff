@@ -103,9 +103,8 @@ namespace EPBLib.Helpers
 
             if (version > 4)
             {
-                //TODO: Check if EpMetaTag02 is used for anything other than BuildVersion and if not, rename and make accessors for the build version.
                 EpMetaTag02 buildVersion = (EpMetaTag02)epb.MetaTags[EpMetaTagKey.BuildVersion];
-                int build = BitConverter.ToInt32(buildVersion.Value, 0);
+                UInt32 build = buildVersion.Value;
                 epb.DeviceGroups = reader.ReadEpbDeviceGroups(version, build, ref bytesLeft);
             }
 
@@ -906,7 +905,8 @@ namespace EPBLib.Helpers
                     break;
                 case EpMetaTagType.Unknownx02:
                     EpMetaTag02 tag02 = new EpMetaTag02(key);
-                    tag02.Value = reader.ReadBytes(5);
+                    tag02.Value = reader.ReadUInt32();
+                    tag02.Unknown = reader.ReadByte();
                     bytesLeft -= 5;
                     tag = tag02;
                     break;
@@ -924,7 +924,8 @@ namespace EPBLib.Helpers
                     break;
                 case EpMetaTagType.Unknownx05:
                     EpMetaTag05 tag05 = new EpMetaTag05(key);
-                    tag05.Value = reader.ReadBytes(9);
+                    tag05.Value = DateTime.FromBinary(reader.ReadInt64());
+                    tag05.Unknown = reader.ReadByte();
                     bytesLeft -= 9;
                     tag = tag05;
                     break;
@@ -938,7 +939,7 @@ namespace EPBLib.Helpers
 
         #region EpbDevices
 
-        public static List<EpbDeviceGroup> ReadEpbDeviceGroups(this BinaryReader reader, UInt32 version, int build, ref long bytesLeft)
+        public static List<EpbDeviceGroup> ReadEpbDeviceGroups(this BinaryReader reader, UInt32 version, UInt32 build, ref long bytesLeft)
         {
             List<EpbDeviceGroup> groups = new List<EpbDeviceGroup>();
             UInt16 nGroups = reader.ReadUInt16();
@@ -950,7 +951,7 @@ namespace EPBLib.Helpers
             }
             return groups;
         }
-        public static EpbDeviceGroup ReadEpbDeviceGroup(this BinaryReader reader, UInt32 version, int build, ref long bytesLeft)
+        public static EpbDeviceGroup ReadEpbDeviceGroup(this BinaryReader reader, UInt32 version, UInt32 build, ref long bytesLeft)
         {
             EpbDeviceGroup group = new EpbDeviceGroup();
             group.Name = reader.ReadEpString(ref bytesLeft);
