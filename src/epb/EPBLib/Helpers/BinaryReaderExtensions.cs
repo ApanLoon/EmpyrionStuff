@@ -103,8 +103,12 @@ namespace EPBLib.Helpers
 
             if (version > 4)
             {
-                EpMetaTag02 buildVersion = (EpMetaTag02)epb.MetaTags[EpMetaTagKey.BuildVersion];
-                UInt32 build = buildVersion.Value;
+                UInt32 build = 0;
+                if (epb.MetaTags.ContainsKey(EpMetaTagKey.BuildVersion))
+                {
+                    EpMetaTag02 buildVersion = (EpMetaTag02)epb.MetaTags[EpMetaTagKey.BuildVersion];
+                    build = buildVersion.Value;
+                }
                 epb.DeviceGroups = reader.ReadEpbDeviceGroups(version, build, ref bytesLeft);
             }
 
@@ -173,9 +177,7 @@ namespace EPBLib.Helpers
             bytesLeft = reader.ReadUnknown07(epb, version, bytesLeft);
             bytesLeft = reader.ReadSignals(epb, version, bytesLeft);
             bytesLeft = reader.ReadLogic(epb, version, bytesLeft);
-            bytesLeft = reader.ReadUnknown08(epb, version, bytesLeft);
             bytesLeft = reader.ReadLogicOps(epb, version, bytesLeft);
-            bytesLeft = reader.ReadUnknown09(epb, version, bytesLeft);
             bytesLeft = reader.ReadCustomNames(epb, version, bytesLeft);
 
             byte[] remainingData = reader.ReadBytes((int)(bytesLeft));
@@ -244,7 +246,7 @@ namespace EPBLib.Helpers
         #region DamageStateMatrix
         public static long ReadDamageStates(this BinaryReader reader, EpBlueprint epb, uint version, long length, long bytesLeft)
         {
-            if (version > 4) // TODO: Verify version, maybe this is newer than this
+            if (version > 9)
             {
                 int damageStateCount = 0;
                 Console.WriteLine("Damage state matrix");
@@ -451,66 +453,68 @@ namespace EPBLib.Helpers
         #region SymbolRotationMatrix
         public static long ReadSymbolRotationMatrix(this BinaryReader reader, EpBlueprint epb, uint version, long length, long bytesLeft)
         {
-            if (version > 4) //version >= 20)
+            if (version <= 4)
             {
-                int count = 0;
-                Console.WriteLine("SymbolRotation matrix");
-                if (version >= 20)
+                return bytesLeft;
+            }
+
+            int count = 0;
+            Console.WriteLine("SymbolRotation matrix");
+            if (version >= 20)
+            {
+                bytesLeft = reader.ReadEpbMatrix(epb, length, (r, e, x, y, z, b) =>
                 {
-                    bytesLeft = reader.ReadEpbMatrix(epb, length, (r, e, x, y, z, b) =>
+                    UInt32 bits = r.ReadUInt32();
+                    count++;
+                    EpbBlock block = epb.Blocks[x, y, z];
+                    if (block == null)
                     {
-                        UInt32 bits = r.ReadUInt32();
-                        count++;
-                        EpbBlock block = epb.Blocks[x, y, z];
-                        if (block == null)
+                        Console.WriteLine($"    {count,5} ({x,4}, {y,4}, {z,4}): WARNING: No block");
+                    }
+                    else
+                    {
+                        for (int i = 0; i < 6; i++)
                         {
-                            Console.WriteLine($"    {count,5} ({x,4}, {y,4}, {z,4}): WARNING: No block");
+                            block.SymbolRotations[i] = (EpbBlock.SymbolRotation) (bits & 0x3);
+                            bits = bits >> 2;
                         }
-                        else
-                        {
-                            for (int i = 0; i < 6; i++)
-                            {
-                                block.SymbolRotations[i] = (EpbBlock.SymbolRotation) (bits & 0x3);
-                                bits = bits >> 2;
-                            }
-                            Console.WriteLine($"    {count,5} ({x,4}, {y,4}, {z,4}): {string.Join(", ", block.SymbolRotations)}");
-                        }
-                        return b - 4;
-                    });
-                }
-                else if (version >= 17)
+                        Console.WriteLine($"    {count,5} ({x,4}, {y,4}, {z,4}): {string.Join(", ", block.SymbolRotations)}");
+                    }
+                    return b - 4;
+                });
+            }
+            else if (version >= 17)
+            {
+                //TODO: "BAO_AntarisSpacefarm.epd", v17, has 4 bytes per data point, but since all symbols are on the fifth side this implies that there are five bits per side.
+                bytesLeft = reader.ReadEpbMatrix(epb, length, (r, e, x, y, z, b) =>
                 {
-                    //TODO: "BAO_AntarisSpacefarm.epd", v17, has 4 bytes per data point, but since all symbols are on the fifth side this implies that there are five bits per side.
-                    bytesLeft = reader.ReadEpbMatrix(epb, length, (r, e, x, y, z, b) =>
+                    UInt32 bits = r.ReadUInt32();
+                    count++;
+                    EpbBlock block = epb.Blocks[x, y, z];
+                    if (block == null)
                     {
-                        UInt32 bits = r.ReadUInt32();
-                        count++;
-                        EpbBlock block = epb.Blocks[x, y, z];
-                        if (block == null)
+                        Console.WriteLine($"    {count,5} ({x,4}, {y,4}, {z,4}): WARNING: No block");
+                    }
+                    else
+                    {
+                        for (int i = 0; i < 6; i++)
                         {
-                            Console.WriteLine($"    {count,5} ({x,4}, {y,4}, {z,4}): WARNING: No block");
+                            block.SymbolRotations[i] = (EpbBlock.SymbolRotation) (bits & 0x1f);
+                            bits = bits >> 5;
                         }
-                        else
-                        {
-                            for (int i = 0; i < 6; i++)
-                            {
-                                block.SymbolRotations[i] = (EpbBlock.SymbolRotation) (bits & 0x1f);
-                                bits = bits >> 5;
-                            }
-                            Console.WriteLine($"    {count,5} ({x,4}, {y,4}, {z,4}): {string.Join(", ", block.SymbolRotations)}");
-                        }
-                        return b - 4;
-                    });
-                }
-                else
+                        Console.WriteLine($"    {count,5} ({x,4}, {y,4}, {z,4}): {string.Join(", ", block.SymbolRotations)}");
+                    }
+                    return b - 4;
+                });
+            }
+            else
+            {
+                Console.WriteLine("TODO: Read but not properly parsed!");
+                bytesLeft = reader.ReadEpbRawMatrix(epb, bytesLeft, (b, e, s) =>
                 {
-                    Console.WriteLine("TODO: Read but not properly parsed!");
-                    bytesLeft = reader.ReadEpbRawMatrix(epb, bytesLeft, (b, e, s) =>
-                    {
-                        // TODO: Extract and apply the symbol rotation
-                        return s + 1;
-                    });
-                }
+                    // TODO: Extract and apply the symbol rotation
+                    return s + 1;
+                });
             }
 
             return bytesLeft;
@@ -520,29 +524,30 @@ namespace EPBLib.Helpers
         #region BlockTags
         public static long ReadBlockTags(this BinaryReader reader, EpBlueprint epb, uint version, long bytesLeft)
         {
-            if (version > 4) // TODO: Verify version, maybe this is newer than this
+            if (version <= 9)
             {
-                UInt16 nBlockTags = reader.ReadUInt16();
-                bytesLeft -= 2;
-                Console.WriteLine($"BlockTags ({nBlockTags})");
-                for (int i = 0; i < nBlockTags; i++)
-                {
-                    EpbBlockPos pos = reader.ReadEpbBlockPos(ref bytesLeft);
-                    byte unknown06 = reader.ReadByte();
-                    bytesLeft -= 1;
-                    UInt16 nTags = reader.ReadUInt16();
-                    bytesLeft -= 2;
-
-                    Console.WriteLine($"{pos}, {unknown06:x2}, {nTags}");
-
-                    for (int tagIndex = 0; tagIndex < nTags; tagIndex++)
-                    {
-                        EpbBlockTag tag = reader.ReadEpbBlockTag(ref bytesLeft);
-                        Console.WriteLine($"        {tagIndex}: {tag}");
-                    }
-                }
+                return bytesLeft;
             }
 
+            UInt16 nBlockTags = reader.ReadUInt16();
+            bytesLeft -= 2;
+            Console.WriteLine($"BlockTags ({nBlockTags})");
+            for (int i = 0; i < nBlockTags; i++)
+            {
+                EpbBlockPos pos = reader.ReadEpbBlockPos(ref bytesLeft);
+                byte unknown06 = reader.ReadByte();
+                bytesLeft -= 1;
+                UInt16 nTags = reader.ReadUInt16();
+                bytesLeft -= 2;
+
+                Console.WriteLine($"{pos}, {unknown06:x2}, {nTags}");
+
+                for (int tagIndex = 0; tagIndex < nTags; tagIndex++)
+                {
+                    EpbBlockTag tag = reader.ReadEpbBlockTag(ref bytesLeft);
+                    Console.WriteLine($"        {tagIndex}: {tag}");
+                }
+            }
             return bytesLeft;
         }
         #endregion BlockTags
@@ -550,22 +555,21 @@ namespace EPBLib.Helpers
         #region Unknown07
         public static long ReadUnknown07(this BinaryReader reader, EpBlueprint epb, uint version, long bytesLeft)
         {
-            if (version > 4) // TODO: Verify version, maybe this is newer than this
+            if (version <= 9)
             {
-
-                UInt16 unknown07Count = reader.ReadUInt16();
-                bytesLeft -= 2;
-                byte[] unknown07 = reader.ReadBytes(unknown07Count * 6);
-                bytesLeft -= unknown07Count * 6;
-                Console.WriteLine($"Unknown07: {unknown07.ToHexString()}");
+                return bytesLeft;
             }
 
+            UInt16 unknown07Count = reader.ReadUInt16();
+            bytesLeft -= 2;
+            byte[] unknown07 = reader.ReadBytes(unknown07Count * 6);
+            bytesLeft -= unknown07Count * 6;
+            Console.WriteLine($"Unknown07: {unknown07.ToHexString()}");
             return bytesLeft;
         }
         #endregion Unknown07
 
         #region Signals
-
         public static long ReadSignals(this BinaryReader reader, EpBlueprint epb, uint version, long bytesLeft)
         {
             if (version > 14)
@@ -601,7 +605,7 @@ namespace EPBLib.Helpers
                     Console.WriteLine($"    Name: {name}");
                 }
             }
-                return bytesLeft;
+            return bytesLeft;
         }
         #endregion Signals
 
@@ -609,170 +613,89 @@ namespace EPBLib.Helpers
         public static long ReadLogic(this BinaryReader reader, EpBlueprint epb, uint version, long bytesLeft)
         {
             // Check CV_Prefab_Tier2.epb.hex for v18
-            if (version > 12)
+            if (version <= 12)
             {
-                UInt16 logicCount = reader.ReadUInt16();
-                bytesLeft -= 2;
-                Console.WriteLine($"Logic ({logicCount})");
-                for (int i = 0; i < logicCount; i++)
-                {
-                    //v21:
-
-                    string name = reader.ReadEpString(ref bytesLeft);
-                    Console.WriteLine($"    Name:           {name}");
-
-                    UInt16 nRules = reader.ReadUInt16();
-                    bytesLeft -= 2;
-                    Console.WriteLine($"    nRules:         {nRules}");
-
-                    for (int r = 0; r < nRules; r++)
-                    {
-                        byte ruleUnknown01 = reader.ReadByte();
-                        bytesLeft -= 1;
-                        Console.WriteLine($"        RuleUnknown01: 0x{ruleUnknown01:x2}");
-
-                        UInt16 nTags = reader.ReadUInt16();
-                        bytesLeft -= 2;
-
-                        for (int t = 0; t < nTags; t++)
-                        {
-                            EpbBlockTag tag = reader.ReadEpbBlockTag(ref bytesLeft);
-                            Console.WriteLine($"            {t}: {tag}");
-                        }
-                    }
-
-                    /*
-                    if (i > 0)
-                    {
-                        byte logicUnknown01 = reader.ReadByte();
-                        bytesLeft -= 1;
-                        Console.WriteLine($"    LogicUnknown01: 0x{logicUnknown01:x2}");
-                    }
-
-                    string name = reader.ReadEpString(ref bytesLeft);
-                    UInt16 nRules = reader.ReadUInt16();
-                    bytesLeft -= 2;
-                    byte logicUnknown02 = reader.ReadByte();
-                    bytesLeft -= 1;
-                    UInt16 nTags = reader.ReadByte();
-                    bytesLeft -= 1;
-                    Console.WriteLine($"    Name:           {name}");
-                    Console.WriteLine($"    nRules:         {nRules}");
-                    Console.WriteLine($"    LogicUnknown02: 0x{logicUnknown02:x2}");
-                    Console.WriteLine($"    nTags:          {nTags}");
-                    for (int j = 0; j < nRules; j++)
-                    {
-                        byte ruleUnknown01 = reader.ReadByte();
-                        bytesLeft -= 1;
-                        Console.WriteLine($"        RuleUnknown01: 0x{ruleUnknown01:x2}");
-                        if (j > 0)
-                        {
-                            byte ruleUnknown02 = reader.ReadByte();
-                            bytesLeft -= 1;
-                            nTags = reader.ReadUInt16();
-                            bytesLeft -= 2;
-                            Console.WriteLine($"        RuleUnknown02: 0x{ruleUnknown02:x2}");
-                            Console.WriteLine($"        nTags:         {nTags}");
-                        }
-
-                        for (int tagIndex = 0; tagIndex < nTags; tagIndex++)
-                        {
-                            EpbBlockTag tag = reader.ReadEpbBlockTag(ref bytesLeft);
-                            Console.WriteLine($"            {tagIndex}: {tag}");
-                        }
-
-                    }
-                    */
-                }
+                return bytesLeft;
             }
 
+            UInt16 logicCount = reader.ReadUInt16();
+            bytesLeft -= 2;
+            Console.WriteLine($"Logic ({logicCount})");
+            for (int i = 0; i < logicCount; i++)
+            {
+                string name = reader.ReadEpString(ref bytesLeft);
+                Console.WriteLine($"    Name:           {name}");
+
+                UInt16 nRules = reader.ReadUInt16();
+                bytesLeft -= 2;
+                Console.WriteLine($"    nRules:         {nRules}");
+
+                for (int r = 0; r < nRules; r++)
+                {
+                    byte ruleUnknown01 = reader.ReadByte();
+                    bytesLeft -= 1;
+                    Console.WriteLine($"        RuleUnknown01: 0x{ruleUnknown01:x2}");
+
+                    UInt16 nTags = reader.ReadUInt16();
+                    bytesLeft -= 2;
+
+                    for (int t = 0; t < nTags; t++)
+                    {
+                        EpbBlockTag tag = reader.ReadEpbBlockTag(ref bytesLeft);
+                        Console.WriteLine($"            {t}: {tag}");
+                    }
+                }
+            }
             return bytesLeft;
         }
         #endregion Logic
 
-        #region Unknown08
-        public static long ReadUnknown08(this BinaryReader reader, EpBlueprint epb, uint version, long bytesLeft)
-        {
-            if (version >= 21)
-            {
-                // In v21, this is not present
-            }
-            else if (version >= 20)
-            {
-                //byte unknown08 = reader.ReadByte();
-                //bytesLeft -= 1;
-                //Console.WriteLine($"Unknown08: 0x{unknown08:x2}");
-            }
-            else if (version >= 18)
-            {
-                //TODO: Check this
-            }
-
-            return bytesLeft;
-        }
-        #endregion Unknown08
-
         #region LogicOps
         public static long ReadLogicOps(this BinaryReader reader, EpBlueprint epb, uint version, long bytesLeft)
         {
-            if (version >= 20)
+            if (version < 20)
             {
-                UInt16 logicOpsCount = reader.ReadUInt16();
-                bytesLeft -= 2;
-                Console.WriteLine($"LogicOps ({logicOpsCount})");
-                for (int i = 0; i < logicOpsCount; i++)
-                {
-                    byte logicOpUnknown01 = reader.ReadByte();
-                    bytesLeft -= 1;
-                    UInt16 nTags = reader.ReadUInt16();
-                    bytesLeft -= 2;
-                    Console.WriteLine($"    LogicOpUnknown01: 0x{logicOpUnknown01:x2}");
-                    Console.WriteLine($"    nTags:            {nTags}");
-                    for (int tagIndex = 0; tagIndex < nTags; tagIndex++)
-                    {
-                        EpbBlockTag tag = reader.ReadEpbBlockTag(ref bytesLeft);
-                        Console.WriteLine($"        {tagIndex}: {tag}");
-                    }
-                }
+                return bytesLeft;
             }
 
+            UInt16 logicOpsCount = reader.ReadUInt16();
+            bytesLeft -= 2;
+            Console.WriteLine($"LogicOps ({logicOpsCount})");
+            for (int i = 0; i < logicOpsCount; i++)
+            {
+                byte logicOpUnknown01 = reader.ReadByte();
+                bytesLeft -= 1;
+                UInt16 nTags = reader.ReadUInt16();
+                bytesLeft -= 2;
+                Console.WriteLine($"    LogicOpUnknown01: 0x{logicOpUnknown01:x2}");
+                Console.WriteLine($"    nTags:            {nTags}");
+                for (int tagIndex = 0; tagIndex < nTags; tagIndex++)
+                {
+                    EpbBlockTag tag = reader.ReadEpbBlockTag(ref bytesLeft);
+                    Console.WriteLine($"        {tagIndex}: {tag}");
+                }
+            }
             return bytesLeft;
         }
         #endregion LogicOps
 
-        #region Unknown09
-        public static long ReadUnknown09(this BinaryReader reader, EpBlueprint epb, uint version, long bytesLeft)
-        {
-            if (version >= 21)
-            {
-            }
-            else if (version >= 20)
-            {
-                //byte unknown09 = reader.ReadByte(); //In "/PrefabsStock/BA_Prefab_Tier5a/BA_Prefab_Tier5a.epb", this does not exist.
-                //bytesLeft -= 1;
-                //Console.WriteLine($"Unknown09: 0x{unknown09:x2}");
-            }
-
-            return bytesLeft;
-        }
-        #endregion Unknown09
-
         #region CustomNames
         public static long ReadCustomNames(this BinaryReader reader, EpBlueprint epb, uint version, long bytesLeft)
         {
-            if (version >= 20)
+            if (version < 20)
             {
-                UInt16 nCustom = reader.ReadUInt16();
-                Console.WriteLine($"Custom ({nCustom})");
-                for (int i = 0; i < nCustom; i++)
-                {
-                    string s = ReadEpString(reader, ref bytesLeft);
-                    //UInt16 customUnknown01 = reader.ReadUInt16();
-                    //Console.WriteLine($"    {i}: 0x{customUnknown01:x4} \"{s}\"");
-                    Console.WriteLine($"    {i}: \"{s}\"");
-                }
+                return bytesLeft;
             }
 
+            UInt16 nCustom = reader.ReadUInt16();
+            Console.WriteLine($"Custom ({nCustom})");
+            for (int i = 0; i < nCustom; i++)
+            {
+                string s = ReadEpString(reader, ref bytesLeft);
+                //UInt16 customUnknown01 = reader.ReadUInt16();
+                //Console.WriteLine($"    {i}: 0x{customUnknown01:x4} \"{s}\"");
+                Console.WriteLine($"    {i}: \"{s}\"");
+            }
             return bytesLeft;
         }
         #endregion CustomNames
@@ -990,19 +913,35 @@ namespace EPBLib.Helpers
 
             for (int i = 0; i < nDevices; i++)
             {
-                group.Entries.Add(reader.ReadEpbDeviceGroupEntry(ref bytesLeft));
+                group.Entries.Add(reader.ReadEpbDeviceGroupEntry(version, ref bytesLeft));
             }
             return group;
         }
-        public static EpbDeviceGroupEntry ReadEpbDeviceGroupEntry(this BinaryReader reader, ref long bytesLeft)
+        public static EpbDeviceGroupEntry ReadEpbDeviceGroupEntry(this BinaryReader reader, UInt32 version, ref long bytesLeft)
         {
             EpbDeviceGroupEntry entry = new EpbDeviceGroupEntry();
-            entry.Pos = reader.ReadEpbBlockPos(ref bytesLeft);
-            Console.Write($"        Pos={entry.Pos}");
-
-            entry.Name = reader.ReadEpString(ref bytesLeft);
-            Console.WriteLine($" Name=\"{entry.Name}\"");
-
+            if (version > 9)
+            {
+                entry.Pos = reader.ReadEpbBlockPos(ref bytesLeft);
+                entry.Name = reader.ReadEpString(ref bytesLeft);
+            }
+            else
+            {
+                UInt32 x = reader.ReadUInt32();
+                UInt32 y = reader.ReadUInt32();
+                UInt32 z = reader.ReadUInt32();
+                bytesLeft -= 12;
+                entry.Pos = new EpbBlockPos()
+                {
+                    X = (byte)x,
+                    Y = (byte)y,
+                    Z = (byte)z,
+                    U1 = 8,
+                    U2 = 8
+                };
+                entry.Name = "";
+            }
+            Console.WriteLine($"        Pos={entry.Pos} Name=\"{entry.Name}\"");
             return entry;
         }
 
