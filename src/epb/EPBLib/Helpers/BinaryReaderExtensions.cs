@@ -565,9 +565,10 @@ namespace EPBLib.Helpers
         #endregion Unknown07
 
         #region Signals
+
         public static long ReadSignals(this BinaryReader reader, EpBlueprint epb, uint version, long bytesLeft)
         {
-            if (version > 12) // TODO: Verify version, maybe this is newer than this
+            if (version > 14)
             {
                 UInt16 signalCount = reader.ReadUInt16();
                 bytesLeft -= 2;
@@ -587,19 +588,28 @@ namespace EPBLib.Helpers
                     }
                 }
             }
-
-            return bytesLeft;
+            else if (version > 12)
+            {
+                UInt16 signalCount = reader.ReadUInt16();
+                bytesLeft -= 2;
+                Console.WriteLine($"Signals ({signalCount})");
+                for (int i = 0; i < signalCount; i++)
+                {
+                    EpbBlockPos pos = reader.ReadEpbBlockPos(ref bytesLeft);
+                    Console.WriteLine($"    Pos: {pos}");
+                    string name = reader.ReadEpString(ref bytesLeft);
+                    Console.WriteLine($"    Name: {name}");
+                }
+            }
+                return bytesLeft;
         }
         #endregion Signals
 
         #region Logic
         public static long ReadLogic(this BinaryReader reader, EpBlueprint epb, uint version, long bytesLeft)
         {
-            if (version < 20)
-            {
-                // Check CV_Prefab_Tier2.epb.hex for v18
-            }
-            else
+            // Check CV_Prefab_Tier2.epb.hex for v18
+            if (version > 12)
             {
                 UInt16 logicCount = reader.ReadUInt16();
                 bytesLeft -= 2;
