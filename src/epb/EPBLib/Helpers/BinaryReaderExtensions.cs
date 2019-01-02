@@ -81,13 +81,15 @@ namespace EPBLib.Helpers
             for (int i = 0; i < nBlockCounts; i++)
             {
                 EpbBlock.EpbBlockType blockType = reader.ReadEpbBlockType();
+                bytesLeft -= 2;
                 if (version <= 12)
                 {
                     reader.ReadUInt16(); // Block types were 32 bit in the early versions, but these bytes were probably always zero, so we simply ignore them.
+                    bytesLeft -= 2;
                 }
 
                 UInt32 blockCount = reader.ReadUInt32();
-                bytesLeft -= 6;
+                bytesLeft -= 4;
                 Console.WriteLine($"    BlockType={EpbBlock.GetBlockTypeName(blockType)} Count={blockCount}");
 
                 nBlocksTotal += blockCount;
@@ -175,9 +177,9 @@ namespace EPBLib.Helpers
             bytesLeft = reader.ReadSymbolRotationMatrix(epb, version, length, bytesLeft);
             bytesLeft = reader.ReadBlockTags(epb, version, bytesLeft);
             bytesLeft = reader.ReadUnknown07(epb, version, bytesLeft);
-            bytesLeft = reader.ReadSignals(epb, version, bytesLeft);
-            bytesLeft = reader.ReadLogic(epb, version, bytesLeft);
-            bytesLeft = reader.ReadLogicOps(epb, version, bytesLeft);
+            bytesLeft = reader.ReadSignalSources(epb, version, bytesLeft);
+            bytesLeft = reader.ReadSignalTargetMappings(epb, version, bytesLeft);
+            bytesLeft = reader.ReadSignalOperators(epb, version, bytesLeft);
             bytesLeft = reader.ReadCustomNames(epb, version, bytesLeft);
 
             byte[] remainingData = reader.ReadBytes((int)(bytesLeft));
@@ -573,14 +575,14 @@ namespace EPBLib.Helpers
         }
         #endregion Unknown07
 
-        #region Signals
-        public static long ReadSignals(this BinaryReader reader, EpBlueprint epb, uint version, long bytesLeft)
+        #region SignalSources
+        public static long ReadSignalSources(this BinaryReader reader, EpBlueprint epb, uint version, long bytesLeft)
         {
             if (version > 14)
             {
                 UInt16 signalCount = reader.ReadUInt16();
                 bytesLeft -= 2;
-                Console.WriteLine($"Signals ({signalCount})");
+                Console.WriteLine($"SignalSources ({signalCount})");
                 for (int i = 0; i < signalCount; i++)
                 {
                     byte signalUnknown01 = reader.ReadByte();
@@ -588,7 +590,7 @@ namespace EPBLib.Helpers
                     Console.WriteLine($"    SignalUnknown01: 0x{signalUnknown01:x2}");
                     UInt16 nTags = reader.ReadUInt16();
                     bytesLeft -= 2;
-                    Console.WriteLine($"    BlockTags: {nTags}");
+                    Console.WriteLine($"    Tags:            {nTags}");
                     for (int tagIndex = 0; tagIndex < nTags; tagIndex++)
                     {
                         EpbBlockTag tag = reader.ReadEpbBlockTag(ref bytesLeft);
@@ -600,7 +602,7 @@ namespace EPBLib.Helpers
             {
                 UInt16 signalCount = reader.ReadUInt16();
                 bytesLeft -= 2;
-                Console.WriteLine($"Signals ({signalCount})");
+                Console.WriteLine($"SignalSources ({signalCount})");
                 for (int i = 0; i < signalCount; i++)
                 {
                     EpbBlockPos pos = reader.ReadEpbBlockPos(ref bytesLeft);
@@ -611,10 +613,10 @@ namespace EPBLib.Helpers
             }
             return bytesLeft;
         }
-        #endregion Signals
+        #endregion SignalSources
 
-        #region Logic
-        public static long ReadLogic(this BinaryReader reader, EpBlueprint epb, uint version, long bytesLeft)
+        #region SignalTargetMappings
+        public static long ReadSignalTargetMappings(this BinaryReader reader, EpBlueprint epb, uint version, long bytesLeft)
         {
             // Check CV_Prefab_Tier2.epb.hex for v18
             if (version <= 13)
@@ -622,26 +624,27 @@ namespace EPBLib.Helpers
                 return bytesLeft;
             }
 
-            UInt16 logicCount = reader.ReadUInt16();
+            UInt16 signalCount = reader.ReadUInt16();
             bytesLeft -= 2;
-            Console.WriteLine($"Logic ({logicCount})");
-            for (int i = 0; i < logicCount; i++)
+            Console.WriteLine($"SignalTargetMappings ({signalCount})");
+            for (int i = 0; i < signalCount; i++)
             {
-                string name = reader.ReadEpString(ref bytesLeft);
-                Console.WriteLine($"    Name:           {name}");
+                string signalName = reader.ReadEpString(ref bytesLeft);
+                Console.WriteLine($"    Signal:         {signalName}");
 
-                UInt16 nRules = reader.ReadUInt16();
+                UInt16 nTargets = reader.ReadUInt16();
                 bytesLeft -= 2;
-                Console.WriteLine($"    nRules:         {nRules}");
+                Console.WriteLine($"    Targets:        {nTargets}");
 
-                for (int r = 0; r < nRules; r++)
+                for (int targetIndex = 0; targetIndex < nTargets; targetIndex++)
                 {
-                    byte ruleUnknown01 = reader.ReadByte();
+                    byte targetUnknown01 = reader.ReadByte();
                     bytesLeft -= 1;
-                    Console.WriteLine($"        RuleUnknown01: 0x{ruleUnknown01:x2}");
+                    Console.WriteLine($"        TargetUnknown01: 0x{targetUnknown01:x2}");
 
                     UInt16 nTags = reader.ReadUInt16();
                     bytesLeft -= 2;
+                    Console.WriteLine($"        Tags:          {nTags}");
 
                     for (int t = 0; t < nTags; t++)
                     {
@@ -652,27 +655,29 @@ namespace EPBLib.Helpers
             }
             return bytesLeft;
         }
-        #endregion Logic
+        #endregion SignalTargetMappings
 
-        #region LogicOps
-        public static long ReadLogicOps(this BinaryReader reader, EpBlueprint epb, uint version, long bytesLeft)
+        #region SignalOperators
+        public static long ReadSignalOperators(this BinaryReader reader, EpBlueprint epb, uint version, long bytesLeft)
         {
             if (version < 20)
             {
                 return bytesLeft;
             }
 
-            UInt16 logicOpsCount = reader.ReadUInt16();
+            UInt16 signalOperatorCount = reader.ReadUInt16();
             bytesLeft -= 2;
-            Console.WriteLine($"LogicOps ({logicOpsCount})");
-            for (int i = 0; i < logicOpsCount; i++)
+            Console.WriteLine($"SignalOperators ({signalOperatorCount})");
+            for (int i = 0; i < signalOperatorCount; i++)
             {
-                byte logicOpUnknown01 = reader.ReadByte();
+                byte signalOperatorUnknown01 = reader.ReadByte();
                 bytesLeft -= 1;
+                Console.WriteLine($"    SignalOperatorUnknown01: 0x{signalOperatorUnknown01:x2}");
+
                 UInt16 nTags = reader.ReadUInt16();
                 bytesLeft -= 2;
-                Console.WriteLine($"    LogicOpUnknown01: 0x{logicOpUnknown01:x2}");
-                Console.WriteLine($"    nTags:            {nTags}");
+                Console.WriteLine($"    Tags:             {nTags}");
+
                 for (int tagIndex = 0; tagIndex < nTags; tagIndex++)
                 {
                     EpbBlockTag tag = reader.ReadEpbBlockTag(ref bytesLeft);
@@ -681,7 +686,7 @@ namespace EPBLib.Helpers
             }
             return bytesLeft;
         }
-        #endregion LogicOps
+        #endregion SignalOperators
 
         #region CustomNames
         public static long ReadCustomNames(this BinaryReader reader, EpBlueprint epb, uint version, long bytesLeft)
