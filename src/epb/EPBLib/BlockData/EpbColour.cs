@@ -36,4 +36,41 @@ namespace EPBLib.BlockData
         DarkGreen       = 0x1e,
         Black           = 0x1f
     }
+    /* Closest colour name according to https://www.htmlcsscolor.com 
+    public enum EpbColour
+    {
+        None = 0,
+        Shalimar,          //#ffffa6
+        Red,               //#ff0000
+        LavenderRose,      //#ffa6e9
+        NavyBlue,          //#0040ff
+        Aqua,              //#00ffff
+        MediumSpringGreen, //#00ff99
+        Twine,             //#bb875a
+        Gainsboro,         //#dcdcdc
+        Yellow,            //#fff700
+        FreeSpeechRed,     //#aa0505
+        HollywoodCerise,   //#ff0096
+        CatalinaBlue,      //#1a3259
+        SummerSky,         //#3aa6d7
+        BrightGreen,       //#66ff00
+        CapePalliser,      //#7b492e
+        DarkGray,          //#aaaaaa
+        Orange,            //#ffaa03
+        Cardinal,          //#b0223a
+        MediumRedViolet,   //#ab20a1
+        Sapphire,          //#000f64
+        RoyalBlue,         //#3973d7
+        ForestGreen,       //#1c9524
+        BrownPod,          //#3e1e0a
+        DimGray,           //#6e6e6e
+        SafetyOrange,      //#ff5f03
+        Maroon,            //#660000
+        PurpleHeart,       //#6021ad
+        MardiGras,         //#3a183b
+        PersianBlue,       //#2722b2
+        Myrtle,            //#002800
+        Black              //#0a0a0a
+    }
+     */
 }
