@@ -9,6 +9,11 @@ namespace EPBLib
             Name = "Pos";
         }
 
+        public EpbBlockTagPos(EpbBlockPos value) : this()
+        {
+            Value = value;
+        }
+
         public EpbBlockPos Value { get; set; }
 
         public override string ToString()

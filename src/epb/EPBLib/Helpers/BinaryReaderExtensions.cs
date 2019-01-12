@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using EPBLib.BlockData;
+using EPBLib.Logic;
 using ICSharpCode.SharpZipLib.Zip;
 
 namespace EPBLib.Helpers
@@ -178,7 +179,7 @@ namespace EPBLib.Helpers
             bytesLeft = reader.ReadBlockTags(epb, version, bytesLeft);
             bytesLeft = reader.ReadUnknown07(epb, version, bytesLeft);
             bytesLeft = reader.ReadSignalSources(epb, version, bytesLeft);
-            bytesLeft = reader.ReadSignalTargetMappings(epb, version, bytesLeft);
+            bytesLeft = reader.ReadSignalTargets(epb, version, bytesLeft);
             bytesLeft = reader.ReadSignalOperators(epb, version, bytesLeft);
             bytesLeft = reader.ReadCustomNames(epb, version, bytesLeft);
 
@@ -585,15 +586,21 @@ namespace EPBLib.Helpers
                 Console.WriteLine($"SignalSources ({signalCount})");
                 for (int i = 0; i < signalCount; i++)
                 {
+                    EpbSignalSource source = new EpbSignalSource();
+                    epb.SignalSources.Add(source);
+
                     byte signalUnknown01 = reader.ReadByte();
                     bytesLeft -= 1;
+                    source.Unknown01 = signalUnknown01;
                     Console.WriteLine($"    SignalUnknown01: 0x{signalUnknown01:x2}");
+
                     UInt16 nTags = reader.ReadUInt16();
                     bytesLeft -= 2;
                     Console.WriteLine($"    Tags:            {nTags}");
                     for (int tagIndex = 0; tagIndex < nTags; tagIndex++)
                     {
                         EpbBlockTag tag = reader.ReadEpbBlockTag(ref bytesLeft);
+                        source.Tags.Add(tag.Name, tag);
                         Console.WriteLine($"        {tagIndex}: {tag}");
                     }
                 }
@@ -605,9 +612,17 @@ namespace EPBLib.Helpers
                 Console.WriteLine($"SignalSources ({signalCount})");
                 for (int i = 0; i < signalCount; i++)
                 {
+                    EpbSignalSource source = new EpbSignalSource();
+                    epb.SignalSources.Add(source);
+
+                    source.Unknown01 = 0;
+
                     EpbBlockPos pos = reader.ReadEpbBlockPos(ref bytesLeft);
+                    source.Tags.Add("Pos", new EpbBlockTagPos(pos));
                     Console.WriteLine($"    Pos: {pos}");
+
                     string name = reader.ReadEpString(ref bytesLeft);
+                    source.Tags.Add("Name", new EpbBlockTagString(name));
                     Console.WriteLine($"    Name: {name}");
                 }
             }
@@ -615,8 +630,8 @@ namespace EPBLib.Helpers
         }
         #endregion SignalSources
 
-        #region SignalTargetMappings
-        public static long ReadSignalTargetMappings(this BinaryReader reader, EpBlueprint epb, uint version, long bytesLeft)
+        #region SignalTargets
+        public static long ReadSignalTargets(this BinaryReader reader, EpBlueprint epb, uint version, long bytesLeft)
         {
             // Check CV_Prefab_Tier2.epb.hex for v18
             if (version <= 13)
@@ -626,7 +641,7 @@ namespace EPBLib.Helpers
 
             UInt16 signalCount = reader.ReadUInt16();
             bytesLeft -= 2;
-            Console.WriteLine($"SignalTargetMappings ({signalCount})");
+            Console.WriteLine($"SignalTargets ({signalCount})");
             for (int i = 0; i < signalCount; i++)
             {
                 string signalName = reader.ReadEpString(ref bytesLeft);
@@ -638,8 +653,13 @@ namespace EPBLib.Helpers
 
                 for (int targetIndex = 0; targetIndex < nTargets; targetIndex++)
                 {
+                    EpbSignalTarget target = new EpbSignalTarget();
+                    epb.SignalTargets.Add(target);
+                    target.SignalName = signalName;
+
                     byte targetUnknown01 = reader.ReadByte();
                     bytesLeft -= 1;
+                    target.Unknown01 = targetUnknown01;
                     Console.WriteLine($"        TargetUnknown01: 0x{targetUnknown01:x2}");
 
                     UInt16 nTags = reader.ReadUInt16();
@@ -649,13 +669,14 @@ namespace EPBLib.Helpers
                     for (int t = 0; t < nTags; t++)
                     {
                         EpbBlockTag tag = reader.ReadEpbBlockTag(ref bytesLeft);
+                        target.Tags.Add(tag.Name, tag);
                         Console.WriteLine($"            {t}: {tag}");
                     }
                 }
             }
             return bytesLeft;
         }
-        #endregion SignalTargetMappings
+        #endregion SignalTargets
 
         #region SignalOperators
         public static long ReadSignalOperators(this BinaryReader reader, EpBlueprint epb, uint version, long bytesLeft)
@@ -670,6 +691,7 @@ namespace EPBLib.Helpers
             Console.WriteLine($"SignalOperators ({signalOperatorCount})");
             for (int i = 0; i < signalOperatorCount; i++)
             {
+
                 byte signalOperatorUnknown01 = reader.ReadByte();
                 bytesLeft -= 1;
                 Console.WriteLine($"    SignalOperatorUnknown01: 0x{signalOperatorUnknown01:x2}");
@@ -678,11 +700,87 @@ namespace EPBLib.Helpers
                 bytesLeft -= 2;
                 Console.WriteLine($"    Tags:             {nTags}");
 
+                string opName = "";
+                List<EpbBlockTag> tags = new List<EpbBlockTag>();
                 for (int tagIndex = 0; tagIndex < nTags; tagIndex++)
                 {
                     EpbBlockTag tag = reader.ReadEpbBlockTag(ref bytesLeft);
+                    tags.Add(tag);
+                    if (tag.Name == "OpName" && tag.BlockTagType == EpbBlockTag.TagType.String)
+                    {
+                        opName = ((EpbBlockTagString) tag).Value;
+                    }
                     Console.WriteLine($"        {tagIndex}: {tag}");
                 }
+
+
+                EpbSignalOperator signalOperator;
+                switch (opName)
+                {
+                    case "titleCircuit2xAnd":
+                        signalOperator = new EpbSignalOperatorAnd2();
+                        break;
+
+                    case "titleCircuit4xAnd":
+                        signalOperator = new EpbSignalOperatorAnd4();
+                        break;
+
+                    case "titleCircuit2xNand":
+                        signalOperator = new EpbSignalOperatorNand2();
+                        break;
+
+                    case "titleCircuit4xNand":
+                        signalOperator = new EpbSignalOperatorNand4();
+                        break;
+
+                    case "titleCircuit2xOr":
+                        signalOperator = new EpbSignalOperatorOr2();
+                        break;
+
+                    case "titleCircuit4xOr":
+                        signalOperator = new EpbSignalOperatorOr4();
+                        break;
+
+                    case "titleCircuit2xNor":
+                        signalOperator = new EpbSignalOperatorNor2();
+                        break;
+
+                    case "titleCircuit4xNor":
+                        signalOperator = new EpbSignalOperatorNor4();
+                        break;
+
+                    case "titleCircuitXor":
+                        signalOperator = new EpbSignalOperatorXor();
+                        break;
+
+                    case "titleCircuitXnor":
+                        signalOperator = new EpbSignalOperatorXnor();
+                        break;
+
+                    case "titleCircuitInverter":
+                        signalOperator = new EpbSignalOperatorInverter();
+                        break;
+
+                    case "titleCircuitSRLatch":
+                        signalOperator = new EpbSignalOperatorSRLatch();
+                        break;
+
+                    case "titleCircuitDelay":
+                        signalOperator = new EpbSignalOperatorDelay();
+                        break;
+
+                    default:
+                        signalOperator = new EpbSignalOperator();
+                        break;
+                }
+                epb.SignalOperators.Add(signalOperator);
+                signalOperator.Unknown01 = signalOperatorUnknown01;
+
+                foreach (EpbBlockTag tag in tags)
+                {
+                    signalOperator.Tags.Add(tag.Name, tag);
+                }
+
             }
             return bytesLeft;
         }

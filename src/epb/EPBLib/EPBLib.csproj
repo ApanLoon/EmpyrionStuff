@@ -68,6 +68,22 @@
     <Compile Include="Helpers\ByteArrayExtensions.cs" />
     <Compile Include="EpMetaTag.cs" />
     <Compile Include="EpMetaTagUInt16.cs" />
+    <Compile Include="Logic\EpbSignalOperator.cs" />
+    <Compile Include="Logic\EpbSignalOperatorAnd2.cs" />
+    <Compile Include="Logic\EpbSignalOperatorAnd4.cs" />
+    <Compile Include="Logic\EpbSignalOperatorDelay.cs" />
+    <Compile Include="Logic\EpbSignalOperatorInverter.cs" />
+    <Compile Include="Logic\EpbSignalOperatorSRLatch.cs" />
+    <Compile Include="Logic\EpbSignalOperatorNand2.cs" />
+    <Compile Include="Logic\EpbSignalOperatorNand4.cs" />
+    <Compile Include="Logic\EpbSignalOperatorNor2.cs" />
+    <Compile Include="Logic\EpbSignalOperatorNor4.cs" />
+    <Compile Include="Logic\EpbSignalOperatorOr2.cs" />
+    <Compile Include="Logic\EpbSignalOperatorOr4.cs" />
+    <Compile Include="Logic\EpbSignalOperatorXnor.cs" />
+    <Compile Include="Logic\EpbSignalOperatorXor.cs" />
+    <Compile Include="Logic\EpbSignalSource.cs" />
+    <Compile Include="Logic\EpbSignalTarget.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
