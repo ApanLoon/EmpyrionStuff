@@ -15,25 +15,40 @@ namespace EPBLib.Helpers
         public static readonly UInt32 EpbIdentifier = 0x78945245;
         public static readonly byte[] ZipDataStartPattern = new byte[] { 0x00, 0x00, 0x03, 0x04, 0x14, 0x00, 0x00, 0x00, 0x08, 0x00 };
 
+        [Flags]
+        public enum DataTypeFlags : ushort
+        {
+            Unknown0001 = 0x0001,
+            Zipped      = 0x0100
+        }
 
         public static EpBlueprint ReadEpBlueprint(this BinaryReader reader, ref long bytesLeft)
         {
 
             UInt32 identifier = reader.ReadUInt32();
+            bytesLeft -= 4;
             if (identifier != EpbIdentifier)
             {
                 throw new Exception($"Unknown file identifier. 0x{identifier:x4}");
             }
             UInt32 version = reader.ReadUInt32();
-            EpBlueprint.EpbType type = (EpBlueprint.EpbType)reader.ReadByte();
-            UInt32 width = reader.ReadUInt32();
-            UInt32 height = reader.ReadUInt32();
-            UInt32 depth = reader.ReadUInt32();
-            bytesLeft -= 4 + 4 + 1 + 4 + 4 + 4;
+            bytesLeft -= 4;
             Console.WriteLine($"Version:  {version}");
+
+            EpBlueprint.EpbType type = (EpBlueprint.EpbType)reader.ReadByte();
+            bytesLeft -= 1;
             Console.WriteLine($"Type:     {type}");
+
+            UInt32 width = reader.ReadUInt32();
+            bytesLeft -= 4;
             Console.WriteLine($"Width:    {width}");
+
+            UInt32 height = reader.ReadUInt32();
+            bytesLeft -= 4;
             Console.WriteLine($"Height:   {height}");
+
+            UInt32 depth = reader.ReadUInt32();
+            bytesLeft -= 4;
             Console.WriteLine($"Depth:    {depth}");
 
             EpBlueprint epb = new EpBlueprint(type, width, height, depth);
@@ -51,27 +66,35 @@ namespace EPBLib.Helpers
 
 
             UInt16 unknown02 = reader.ReadUInt16();
+            bytesLeft -= 2;
             Console.WriteLine($"Unknown02: 0x{unknown02:x4}");
 
             UInt32 nLights = reader.ReadUInt32();
+            bytesLeft -= 4;
             Console.WriteLine($"nLights:        {nLights} (0x{nLights:x8})");
             UInt32 unknownCount01 = reader.ReadUInt32();
+            bytesLeft -= 4;
             Console.WriteLine($"unknownCount01: {unknownCount01} (0x{unknownCount01:x8})");
             UInt32 nDevices = reader.ReadUInt32();
+            bytesLeft -= 4;
             Console.WriteLine($"nDevices:       {nDevices} (0x{nDevices:x8})");
             UInt32 unknownCount02 = reader.ReadUInt32();
+            bytesLeft -= 4;
             Console.WriteLine($"unknownCount02: {unknownCount02} (0x{unknownCount02:x8})");
             UInt32 nBlocks = reader.ReadUInt32();
+            bytesLeft -= 4;
             Console.WriteLine($"nBlocks:        {nBlocks} (0x{nBlocks:x8})");
 
             if (version >= 13)
             {
                 UInt32 unknownCount03 = reader.ReadUInt32();
+                bytesLeft -= 4;
                 Console.WriteLine($"unknownCount03: {unknownCount03} (0x{unknownCount03:x8})");
             }
             if (version >= 18)
             {
                 UInt32 nTriangles = reader.ReadUInt32();
+                bytesLeft -= 4;
                 Console.WriteLine($"nTriangles:     {nTriangles} (0x{nTriangles:x8})");
             }
 
@@ -115,44 +138,213 @@ namespace EPBLib.Helpers
                 epb.DeviceGroups = reader.ReadEpbDeviceGroups(version, build, ref bytesLeft);
             }
 
-            /* TODO: We now assume that we reas all the bytes up to the zipped section correctly and don't skip any bytes.
-            byte[] buf = reader.ReadBytes((int)bytesLeft);
-            // There might be a number of unparsed bytes remaining at this point, so read the rest and search for the PKZip header:
-            int dataStart = buf.IndexOf(ZipDataStartPattern);
-            if (dataStart == -1)
+            UInt32 dataLength = (UInt32)bytesLeft;              //Prior to v23, there was nothing after the zipped data
+            DataTypeFlags dataTypeFlags = DataTypeFlags.Zipped; //Prior to v23 all blockdata was zipped
+            if (version >= 23)
             {
-                throw new Exception("ReadHeader: Unable to locate ZipDataStart.");
+                dataLength = reader.ReadUInt32();
+                bytesLeft -= 4;
+                Console.WriteLine($"Data length: {dataLength}(0x{dataLength:x8})");
+                dataTypeFlags = (DataTypeFlags)reader.ReadUInt16();
+                bytesLeft -= 2;
+                Console.WriteLine($"Data type flags: {dataTypeFlags}");
             }
-            byte[] unknown8 = buf.Take(dataStart).ToArray();
-            bytesLeft -= dataStart;
-            Console.WriteLine($"BeforeZIP: {unknown8.ToHexString()}");
-            byte[] zippedData = buf.Skip(dataStart).Take((int)bytesLeft).ToArray();
-            */
-            byte[] zippedData = reader.ReadBytes((int)bytesLeft);
-
-            zippedData[0] = 0x50; // Prior to version 22 this byte was zero, set to 'P'
-            zippedData[1] = 0x4b; // Prior to version 22 this byte was zero, set to 'K'
-            using (ZipFile zf = new ZipFile(new MemoryStream(zippedData)))
+            if ((dataTypeFlags & DataTypeFlags.Zipped) != 0)
             {
-                zf.IsStreamOwner = true;
-                foreach (ZipEntry entry in zf)
+                byte[] zippedData = reader.ReadBytes((int)dataLength);
+                bytesLeft -= dataLength;
+
+                zippedData[0] = 0x50; // Prior to version 22 this byte was zero, set to 'P'
+                zippedData[1] = 0x4b; // Prior to version 22 this byte was zero, set to 'K'
+                using (ZipFile zf = new ZipFile(new MemoryStream(zippedData)))
                 {
-                    if (!entry.IsFile || entry.Name != "0")
+                    zf.IsStreamOwner = true;
+                    foreach (ZipEntry entry in zf)
                     {
-                        Console.WriteLine($"Skipping ZIP entry: {entry.Name} ({entry.Size} bytes)");
-                        continue;
+                        if (!entry.IsFile || entry.Name != "0")
+                        {
+                            Console.WriteLine($"Skipping ZIP entry: {entry.Name} ({entry.Size} bytes)");
+                            continue;
+                        }
+
+                        byte[] zipBuffer = new byte[4096];
+                        Stream zipStream = zf.GetInputStream(entry);
+
+                        using (BinaryReader zipReader = new BinaryReader(zipStream))
+                        {
+                            zipReader.ReadEpbBlocks(epb, version, entry.Size);
+                        }
                     }
+                }
+                //Console.WriteLine($"{zippedData.ToHexDump()}");
+            }
 
-                    byte[] zipBuffer = new byte[4096];
-                    Stream zipStream = zf.GetInputStream(entry);
+            if (version >= 23)
+            {
+                long matricesLength = reader.ReadUInt32();
+                bytesLeft -= 4;
+                Console.WriteLine($"matricesLength: {matricesLength}(0x{matricesLength:x8})");
 
-                    using (BinaryReader zipReader = new BinaryReader(zipStream))
+                UInt16 matrixUnknown01 = reader.ReadUInt16();
+                bytesLeft -= 2;
+                Console.WriteLine($"matrixUnknown01: {matrixUnknown01}");
+
+                if (matricesLength != 0)
+                {
+                    byte[] matrices = reader.ReadBytes((int)matricesLength);
+                    bytesLeft -= matricesLength;
+
+                    BinaryReader matrixReader = new BinaryReader(new MemoryStream(matrices));
+
+                    bool done = false;
+                    while (!done && matricesLength > 0)
                     {
-                        zipReader.ReadEpbBlocks(epb, version, entry.Size);
+                        UInt16 matrixType = matrixReader.ReadUInt16();
+                        matricesLength -= 2;
+                        Console.WriteLine($"MatrixType: 0x{matrixType:x4}");
+
+                        int count;
+                        switch (matrixType) //TODO: Should any of these matrices read actual data?
+                        {
+                            case 0x0000:
+                                Console.WriteLine("Filler Matrix");
+                                count = 0;
+                                matricesLength -= matrixReader.ReadEpbMatrix(reader, epb, ref bytesLeft, (dataReader, e, x, y, z, b) =>
+                                {
+                                    // No data, just true/false
+                                    Console.WriteLine($"    {count,5} ({x,4}, {y,4}, {z,4}): true");
+                                    count++;
+                                    return b;
+                                });
+                                break;
+
+                            case 0x000c:
+                                Console.WriteLine("Unknown12 Matrix");
+                                count = 0;
+                                matricesLength -= matrixReader.ReadEpbMatrix(reader, epb, ref bytesLeft, (dataReader, e, x, y, z, b) =>
+                                {
+                                    Console.WriteLine($"    {count,5} ({x,4}, {y,4}, {z,4}): true");
+                                    count++;
+                                    return b;
+                                });
+                                break;
+
+                            case 0x000d:
+                                Console.WriteLine("Unknown13 Matrix");
+                                count = 0;
+                                matricesLength -= matrixReader.ReadEpbMatrix(reader, epb, ref bytesLeft, (dataReader, e, x, y, z, b) =>
+                                {
+                                    Console.WriteLine($"    {count,5} ({x,4}, {y,4}, {z,4}): true");
+                                    count++;
+                                    return b;
+                                });
+                                break;
+
+                            case 0x000e:
+                                Console.WriteLine("Unknown14 Matrix");
+                                count = 0;
+                                matricesLength -= matrixReader.ReadEpbMatrix(reader, epb, ref bytesLeft, (dataReader, e, x, y, z, b) =>
+                                {
+                                    Console.WriteLine($"    {count,5} ({x,4}, {y,4}, {z,4}): true");
+                                    count++;
+                                    return b;
+                                });
+                                break;
+
+                            case 0x000f:
+                                Console.WriteLine("Unknown15 Matrix");
+                                count = 0;
+                                matricesLength -= matrixReader.ReadEpbMatrix(reader, epb, ref bytesLeft, (dataReader, e, x, y, z, b) =>
+                                {
+                                    Console.WriteLine($"    {count,5} ({x,4}, {y,4}, {z,4}): true");
+                                    count++;
+                                    return b;
+                                });
+                                break;
+
+                            case 0x0010:
+                                Console.WriteLine("Unknown16 Matrix");
+                                count = 0;
+                                matricesLength -= matrixReader.ReadEpbMatrix(reader, epb, ref bytesLeft, (dataReader, e, x, y, z, b) =>
+                                {
+                                    Console.WriteLine($"    {count,5} ({x,4}, {y,4}, {z,4}): true");
+                                    count++;
+                                    return b;
+                                });
+                                break;
+
+                            case 0x0011:
+                                Console.WriteLine("Unknown17 Matrix");
+                                count = 0;
+                                matricesLength -= matrixReader.ReadEpbMatrix(reader, epb, ref bytesLeft, (dataReader, e, x, y, z, b) =>
+                                {
+                                    Console.WriteLine($"    {count,5} ({x,4}, {y,4}, {z,4}): true");
+                                    count++;
+                                    return b;
+                                });
+                                break;
+
+                            case 0x0012:
+                                Console.WriteLine("Unknown17 Matrix");
+                                count = 0;
+                                matricesLength -= matrixReader.ReadEpbMatrix(reader, epb, ref bytesLeft, (dataReader, e, x, y, z, b) =>
+                                {
+                                    Console.WriteLine($"    {count,5} ({x,4}, {y,4}, {z,4}): true");
+                                    count++;
+                                    return b;
+                                });
+                                break;
+
+                            case 0x0013:
+                                Console.WriteLine("Unknown18 Matrix");
+                                count = 0;
+                                matricesLength -= matrixReader.ReadEpbMatrix(reader, epb, ref bytesLeft, (dataReader, e, x, y, z, b) =>
+                                {
+                                    Console.WriteLine($"    {count,5} ({x,4}, {y,4}, {z,4}): true");
+                                    count++;
+                                    return b;
+                                });
+                                break;
+
+                            case 0x0014:
+                                Console.WriteLine("Unknown19 Matrix");
+                                count = 0;
+                                matricesLength -= matrixReader.ReadEpbMatrix(reader, epb, ref bytesLeft, (dataReader, e, x, y, z, b) =>
+                                {
+                                    Console.WriteLine($"    {count,5} ({x,4}, {y,4}, {z,4}): true");
+                                    count++;
+                                    return b;
+                                });
+                                break;
+
+                            case 0x0015:
+                                Console.WriteLine("Unknown20 Matrix");
+                                count = 0;
+                                matricesLength -= matrixReader.ReadEpbMatrix(reader, epb, ref bytesLeft, (dataReader, e, x, y, z, b) =>
+                                {
+                                    Console.WriteLine($"    {count,5} ({x,4}, {y,4}, {z,4}): true");
+                                    count++;
+                                    return b;
+                                });
+                                break;
+
+                            default:
+                                Console.WriteLine($"Unknown matrix type: 0x{matrixType:x4}");
+                                done = true;
+                                break;
+                        }
                     }
                 }
             }
 
+            int n = Math.Min(0x100, (int)bytesLeft);
+            Console.WriteLine($"Remaining data: {bytesLeft} (0x{bytesLeft:x8})");
+            byte[] remainingData = reader.ReadBytes(n);
+            Console.WriteLine(remainingData.ToHexDump());
+            if (bytesLeft != n)
+            {
+                Console.WriteLine("...");
+            }
             return epb;
         }
         #endregion EpBlueprint
@@ -164,18 +356,16 @@ namespace EPBLib.Helpers
             return(EpbBlock.EpbBlockType)reader.ReadUInt16();
         }
 
-        public static void ReadEpbBlocks(this BinaryReader reader, EpBlueprint epb, UInt32 version, long length)
+        public static void ReadEpbBlocks(this BinaryReader reader, EpBlueprint epb, UInt32 version, long bytesLeft)
         {
-            long bytesLeft = length;
-
-            bytesLeft = reader.ReadBlockTypes(epb, version, length, bytesLeft);
-            bytesLeft = reader.ReadDamageStates(epb, version, length, bytesLeft);
+            bytesLeft = reader.ReadBlockTypes(epb, version, bytesLeft);
+            bytesLeft = reader.ReadDamageStates(epb, version, bytesLeft);
             bytesLeft = reader.ReadUnknown02(epb, bytesLeft);
-            bytesLeft = reader.ReadColourMatrix(epb, version, length, bytesLeft);
-            bytesLeft = reader.ReadTextureMatrix(epb, version, length, bytesLeft);
-            bytesLeft = reader.ReadTextureFlipMatrix(epb, version, length, bytesLeft);
-            bytesLeft = reader.ReadSymbolMatrix(epb, version, length, bytesLeft);
-            bytesLeft = reader.ReadSymbolRotationMatrix(epb, version, length, bytesLeft);
+            bytesLeft = reader.ReadColourMatrix(epb, version, bytesLeft);
+            bytesLeft = reader.ReadTextureMatrix(epb, version, bytesLeft);
+            bytesLeft = reader.ReadTextureFlipMatrix(epb, version, bytesLeft);
+            bytesLeft = reader.ReadSymbolMatrix(epb, version, bytesLeft);
+            bytesLeft = reader.ReadSymbolRotationMatrix(epb, version, bytesLeft);
             bytesLeft = reader.ReadBlockTags(epb, version, bytesLeft);
             bytesLeft = reader.ReadUnknown07(epb, version, bytesLeft);
             bytesLeft = reader.ReadSignalSources(epb, version, bytesLeft);
@@ -183,12 +373,13 @@ namespace EPBLib.Helpers
             bytesLeft = reader.ReadSignalOperators(epb, version, bytesLeft);
             bytesLeft = reader.ReadCustomNames(epb, version, bytesLeft);
 
+            Console.WriteLine($"Remaining block data: {bytesLeft}(0x{bytesLeft:x8})");
             byte[] remainingData = reader.ReadBytes((int)(bytesLeft));
-            Console.WriteLine($"Remaining data:\n{remainingData.ToHexDump()}");
+            Console.WriteLine(remainingData.ToHexDump());
         }
 
         #region BlockTypeMatrix
-        public static long ReadBlockTypes(this BinaryReader reader, EpBlueprint epb, uint version, long length, long bytesLeft)
+        public static long ReadBlockTypes(this BinaryReader reader, EpBlueprint epb, uint version, long bytesLeft)
         {
             Console.WriteLine("Block type matrix");
             int blockCount = 0;
@@ -223,7 +414,7 @@ namespace EPBLib.Helpers
             }
             else
             {
-                bytesLeft = reader.ReadEpbMatrix(epb, length, (r, e, x, y, z, b) =>
+                bytesLeft = reader.ReadEpbMatrix(epb, bytesLeft, (r, e, x, y, z, b) =>
                 {
                     UInt32 data = reader.ReadUInt32();
                     blockCount++;
@@ -247,7 +438,7 @@ namespace EPBLib.Helpers
         #endregion BlockTypeMatrix
 
         #region DamageStateMatrix
-        public static long ReadDamageStates(this BinaryReader reader, EpBlueprint epb, uint version, long length, long bytesLeft)
+        public static long ReadDamageStates(this BinaryReader reader, EpBlueprint epb, uint version, long bytesLeft)
         {
             if (version <= 10)
             {
@@ -256,7 +447,7 @@ namespace EPBLib.Helpers
 
             int damageStateCount = 0;
             Console.WriteLine("Damage state matrix");
-            bytesLeft = reader.ReadEpbMatrix(epb, length, (r, e, x, y, z, b) =>
+            bytesLeft = reader.ReadEpbMatrix(epb, bytesLeft, (r, e, x, y, z, b) =>
             {
                 UInt16 damage = r.ReadUInt16();
                 damageStateCount++;
@@ -285,7 +476,7 @@ namespace EPBLib.Helpers
         #endregion Unknown02
 
         #region ColourMatrix
-        public static long ReadColourMatrix(this BinaryReader reader, EpBlueprint epb, uint version, long length, long bytesLeft)
+        public static long ReadColourMatrix(this BinaryReader reader, EpBlueprint epb, uint version, long bytesLeft)
         {
             if (version <= 4)
             {
@@ -294,9 +485,9 @@ namespace EPBLib.Helpers
 
             int count = 0;
             Console.WriteLine("Colour matrix");
-            if (version >= 10)
+            if (version >= 8)
             {
-                bytesLeft = reader.ReadEpbMatrix(epb, length, (r, e, x, y, z, b) =>
+                bytesLeft = reader.ReadEpbMatrix(epb, bytesLeft, (r, e, x, y, z, b) =>
                 {
                     UInt32 bits = r.ReadUInt32();
                     count++;
@@ -331,7 +522,7 @@ namespace EPBLib.Helpers
         #endregion ColourMatrix
 
         #region TextureMatrix
-        public static long ReadTextureMatrix(this BinaryReader reader, EpBlueprint epb, uint version, long length, long bytesLeft)
+        public static long ReadTextureMatrix(this BinaryReader reader, EpBlueprint epb, uint version, long bytesLeft)
         {
             if (version <= 4)
             {
@@ -340,9 +531,9 @@ namespace EPBLib.Helpers
 
             int count = 0;
             Console.WriteLine("Texture matrix");
-            if (version >= 10)
+            if (version >= 8)
             {
-                bytesLeft = reader.ReadEpbMatrix(epb, length, (r, e, x, y, z, b) =>
+                bytesLeft = reader.ReadEpbMatrix(epb, bytesLeft, (r, e, x, y, z, b) =>
                 {
                     UInt64 bits = r.ReadUInt64();
                     count++;
@@ -378,13 +569,13 @@ namespace EPBLib.Helpers
         #endregion TextureMatrix
 
         #region TextureFlipMatrix
-        public static long ReadTextureFlipMatrix(this BinaryReader reader, EpBlueprint epb, uint version, long length, long bytesLeft)
+        public static long ReadTextureFlipMatrix(this BinaryReader reader, EpBlueprint epb, uint version, long bytesLeft)
         {
             if (version >= 20)
             {
                 int count = 0;
                 Console.WriteLine("TextureFlip matrix");
-                bytesLeft = reader.ReadEpbMatrix(epb, length, (r, e, x, y, z, b) =>
+                bytesLeft = reader.ReadEpbMatrix(epb, bytesLeft, (r, e, x, y, z, b) =>
                 {
                     byte bits = r.ReadByte();
                     count++;
@@ -411,18 +602,18 @@ namespace EPBLib.Helpers
         #endregion TextureFlipMatrix
 
         #region SymbolMatrix
-        public static long ReadSymbolMatrix(this BinaryReader reader, EpBlueprint epb, uint version, long length, long bytesLeft)
+        public static long ReadSymbolMatrix(this BinaryReader reader, EpBlueprint epb, uint version, long bytesLeft)
         {
-            if (version <= 9)
+            if (version < 8)
             {
                 return bytesLeft;
             }
 
             int count = 0;
             Console.WriteLine("Symbol matrix");
-            if (version > 12)
+            if (version >= 8)
             {
-                bytesLeft = reader.ReadEpbMatrix(epb, length, (r, e, x, y, z, b) =>
+                bytesLeft = reader.ReadEpbMatrix(epb, bytesLeft, (r, e, x, y, z, b) =>
                 {
                     UInt32 bits = r.ReadUInt32();
                     count++;
@@ -459,9 +650,9 @@ namespace EPBLib.Helpers
         #endregion SymbolMatrix
 
         #region SymbolRotationMatrix
-        public static long ReadSymbolRotationMatrix(this BinaryReader reader, EpBlueprint epb, uint version, long length, long bytesLeft)
+        public static long ReadSymbolRotationMatrix(this BinaryReader reader, EpBlueprint epb, uint version, long bytesLeft)
         {
-            if (version <= 9)
+            if (version < 8)
             {
                 return bytesLeft;
             }
@@ -470,7 +661,7 @@ namespace EPBLib.Helpers
             Console.WriteLine("SymbolRotation matrix");
             if (version >= 20)
             {
-                bytesLeft = reader.ReadEpbMatrix(epb, length, (r, e, x, y, z, b) =>
+                bytesLeft = reader.ReadEpbMatrix(epb, bytesLeft, (r, e, x, y, z, b) =>
                 {
                     UInt32 bits = r.ReadUInt32();
                     count++;
@@ -491,9 +682,9 @@ namespace EPBLib.Helpers
                     return b - 4;
                 });
             }
-            else if (version >= 14)
+            else if (version >= 8) //14
             {
-                bytesLeft = reader.ReadEpbMatrix(epb, length, (r, e, x, y, z, b) =>
+                bytesLeft = reader.ReadEpbMatrix(epb, bytesLeft, (r, e, x, y, z, b) =>
                 {
                     UInt32 bits = r.ReadUInt32();
                     count++;
@@ -789,12 +980,13 @@ namespace EPBLib.Helpers
         #region CustomNames
         public static long ReadCustomNames(this BinaryReader reader, EpBlueprint epb, uint version, long bytesLeft)
         {
-            if (version < 20)
+            if (version < 15)
             {
                 return bytesLeft;
             }
 
             UInt16 nCustom = reader.ReadUInt16();
+            bytesLeft -= 2;
             Console.WriteLine($"Custom ({nCustom})");
             for (int i = 0; i < nCustom; i++)
             {
@@ -810,8 +1002,9 @@ namespace EPBLib.Helpers
         public static long ReadEpbRawMatrix(this BinaryReader reader, EpBlueprint epb, long bytesLeft, Func<byte[], EpBlueprint, long, long> func)
         {
             UInt32 matrixSize = reader.ReadUInt32();
-            byte[] data = reader.ReadBytes((int)matrixSize);
             bytesLeft -= 4;
+            byte[] data = reader.ReadBytes((int)matrixSize);
+            bytesLeft -= matrixSize;
             if (func == null)
             {
                 return bytesLeft;
@@ -828,8 +1021,9 @@ namespace EPBLib.Helpers
         public static long ReadEpbMatrix(this BinaryReader reader, EpBlueprint epb, long bytesLeft, Func<BinaryReader, EpBlueprint, UInt32, UInt32, UInt32, long, long> func)
         {
             UInt32 matrixSize = reader.ReadUInt32();
-            byte[] matrix = reader.ReadBytes((int)matrixSize);
             bytesLeft -= 4;
+            byte[] matrix = reader.ReadBytes((int)matrixSize);
+            bytesLeft -= matrixSize;
             if (func == null)
             {
                 return bytesLeft;
@@ -842,7 +1036,8 @@ namespace EPBLib.Helpers
                 {
                     for (UInt32 x = 0; x < epb.Width; x++)
                     {
-                        if (m[z * epb.Width * epb.Height + y * epb.Width + x])
+                        uint index = z * epb.Width * epb.Height + y * epb.Width + x;
+                        if (index < m.Length && m[index]) //TODO: Why do I have to test against length? v23/BA_FillerTest.epb
                         {
                             bytesLeft = func(reader, epb, x, y, z, bytesLeft);
                         }
@@ -850,6 +1045,36 @@ namespace EPBLib.Helpers
                 }
             }
             return bytesLeft;
+        }
+
+        public static long ReadEpbMatrix(this BinaryReader matrixReader, BinaryReader dataReader, EpBlueprint epb, ref long dataBytesLeft, Func<BinaryReader, EpBlueprint, UInt32, UInt32, UInt32, long, long> func)
+        {
+            long matrixBytesRead = 0;
+            UInt32 matrixSize = matrixReader.ReadUInt32();
+            matrixBytesRead += 4;
+            byte[] matrix = matrixReader.ReadBytes((int)matrixSize);
+            matrixBytesRead += matrixSize;
+            if (func == null)
+            {
+                return matrixBytesRead;
+            }
+
+            bool[] m = matrix.ToBoolArray();
+            for (UInt32 z = 0; z < epb.Depth; z++)
+            {
+                for (UInt32 y = 0; y < epb.Height; y++)
+                {
+                    for (UInt32 x = 0; x < epb.Width; x++)
+                    {
+                        uint index = z * epb.Width * epb.Height + y * epb.Width + x;
+                        if (index < m.Length && m[index]) //TODO: Why do I have to test against length? v23/BA_FillerTest.epb
+                        {
+                            dataBytesLeft = func(dataReader, epb, x, y, z, dataBytesLeft);
+                        }
+                    }
+                }
+            }
+            return matrixBytesRead;
         }
 
         public static EpbBlockTag ReadEpbBlockTag(this BinaryReader reader, ref long bytesLeft)
