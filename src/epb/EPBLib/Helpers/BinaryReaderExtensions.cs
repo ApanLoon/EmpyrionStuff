@@ -372,6 +372,7 @@ namespace EPBLib.Helpers
             bytesLeft = reader.ReadSignalTargets(epb, version, bytesLeft);
             bytesLeft = reader.ReadSignalOperators(epb, version, bytesLeft);
             bytesLeft = reader.ReadCustomNames(epb, version, bytesLeft);
+            bytesLeft = reader.ReadUnknown08(epb, version, bytesLeft);
 
             Console.WriteLine($"Remaining block data: {bytesLeft}(0x{bytesLeft:x8})");
             byte[] remainingData = reader.ReadBytes((int)(bytesLeft));
@@ -998,6 +999,28 @@ namespace EPBLib.Helpers
             return bytesLeft;
         }
         #endregion CustomNames
+
+        #region Unknown08
+        public static long ReadUnknown08(this BinaryReader reader, EpBlueprint epb, uint version, long bytesLeft)
+        {
+            if (version < 20)
+            {
+                return bytesLeft;
+            }
+
+            UInt16 nUnknown08 = reader.ReadUInt16();
+            bytesLeft -= 2;
+            Console.WriteLine($"Unknown08 ({nUnknown08})");
+            for (int i = 0; i < nUnknown08; i++)
+            {
+                string name = ReadEpString(reader, ref bytesLeft);
+                byte[] unknown = reader.ReadBytes(8);
+                bytesLeft -= 8;
+                Console.WriteLine($"    {i}: {unknown.ToHexString()} \"{name}\"");
+            }
+            return bytesLeft;
+        }
+        #endregion Unknown08
 
         public static long ReadEpbRawMatrix(this BinaryReader reader, EpBlueprint epb, long bytesLeft, Func<byte[], EpBlueprint, long, long> func)
         {
