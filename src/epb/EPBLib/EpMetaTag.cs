@@ -21,7 +21,7 @@ namespace EPBLib
         UnknownMetax04 = 0x04,
         UnknownMetax05 = 0x05,
         UnknownMetax06 = 0x06,
-        UnknownMetax07 = 0x07,
+        BlueprintName  = 0x07,
         BuildVersion   = 0x08,
         CreationTime   = 0x09,
         CreatorName    = 0x0a,
@@ -30,7 +30,7 @@ namespace EPBLib
         OwnerId        = 0x0d,
         UnknownMetax0E = 0x0e,
         UnknownMetax0F = 0x0f,
-        UnknownMetax10 = 0x10,
+        DisplayName    = 0x10, // Shown in hover text
         UnknownMetax11 = 0x11,
         UnknownMetax12 = 0x12
     }

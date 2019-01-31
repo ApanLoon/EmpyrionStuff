@@ -251,7 +251,7 @@ namespace epb
             };
             epb.MetaTags.Add(metaTag06.Key, metaTag06);
 
-            EpMetaTagString metaTag07 = new EpMetaTagString(EpMetaTagKey.UnknownMetax07)
+            EpMetaTagString metaTag07 = new EpMetaTagString(EpMetaTagKey.BlueprintName)
             {
                 Value = ""
             };
@@ -295,7 +295,7 @@ namespace epb
             };
             epb.MetaTags.Add(ownerNameTag.Key, ownerNameTag);
 
-            EpMetaTagString metaTag10 = new EpMetaTagString(EpMetaTagKey.UnknownMetax10) { Value = "" };
+            EpMetaTagString metaTag10 = new EpMetaTagString(EpMetaTagKey.DisplayName) { Value = "" };
             epb.MetaTags.Add(metaTag10.Key, metaTag10);
 
             EpMetaTag05 metaTag12 = new EpMetaTag05(EpMetaTagKey.UnknownMetax12)
