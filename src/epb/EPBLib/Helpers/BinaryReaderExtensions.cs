@@ -373,6 +373,7 @@ namespace EPBLib.Helpers
             bytesLeft = reader.ReadSignalOperators(epb, version, bytesLeft);
             bytesLeft = reader.ReadCustomNames(epb, version, bytesLeft);
             bytesLeft = reader.ReadUnknown08(epb, version, bytesLeft);
+            bytesLeft = reader.ReadCustomPalettes(epb, version, bytesLeft);
 
             Console.WriteLine($"Remaining block data: {bytesLeft}(0x{bytesLeft:x8})");
             byte[] remainingData = reader.ReadBytes((int)(bytesLeft));
@@ -873,7 +874,7 @@ namespace EPBLib.Helpers
         #region SignalOperators
         public static long ReadSignalOperators(this BinaryReader reader, EpBlueprint epb, uint version, long bytesLeft)
         {
-            if (version < 20)
+            if (version < 17)
             {
                 return bytesLeft;
             }
@@ -979,6 +980,9 @@ namespace EPBLib.Helpers
         #endregion SignalOperators
 
         #region CustomNames
+        /// <summary>
+        /// Names of the custom buttons in the main control panel screen.
+        /// </summary>
         public static long ReadCustomNames(this BinaryReader reader, EpBlueprint epb, uint version, long bytesLeft)
         {
             if (version < 15)
@@ -988,12 +992,10 @@ namespace EPBLib.Helpers
 
             UInt16 nCustom = reader.ReadUInt16();
             bytesLeft -= 2;
-            Console.WriteLine($"Custom ({nCustom})");
+            Console.WriteLine($"Custom names ({nCustom})");
             for (int i = 0; i < nCustom; i++)
             {
                 string s = ReadEpString(reader, ref bytesLeft);
-                //UInt16 customUnknown01 = reader.ReadUInt16();
-                //Console.WriteLine($"    {i}: 0x{customUnknown01:x4} \"{s}\"");
                 Console.WriteLine($"    {i}: \"{s}\"");
             }
             return bytesLeft;
@@ -1003,7 +1005,7 @@ namespace EPBLib.Helpers
         #region Unknown08
         public static long ReadUnknown08(this BinaryReader reader, EpBlueprint epb, uint version, long bytesLeft)
         {
-            if (version < 20)
+            if (version < 19)
             {
                 return bytesLeft;
             }
@@ -1021,6 +1023,38 @@ namespace EPBLib.Helpers
             return bytesLeft;
         }
         #endregion Unknown08
+
+        #region CustomPalette
+        public static long ReadCustomPalettes(this BinaryReader reader, EpBlueprint epb, uint version, long bytesLeft)
+        {
+            if (version < 21)
+            {
+                return bytesLeft;
+            }
+
+            byte nCustomPalettes = reader.ReadByte();
+            bytesLeft -= 1;
+            Console.WriteLine($"nCustomPalettes: ({nCustomPalettes})");
+
+            for (int p = 0; p < nCustomPalettes; p++)
+            {
+                UInt32 nCustomColours = reader.ReadUInt32();
+                bytesLeft -= 4;
+                Console.WriteLine($"    Palette {p}: ({nCustomColours} - 1)");
+                for (int i = 0; i < nCustomColours - 1; i++) //TODO: Why - 1?
+                {
+                    byte r = reader.ReadByte();
+                    bytesLeft -= 1;
+                    byte g = reader.ReadByte();
+                    bytesLeft -= 1;
+                    byte b = reader.ReadByte();
+                    bytesLeft -= 1;
+                    Console.WriteLine($"        {i}: #{r:X2}{g:X2}{b:X2}");
+                }
+            }
+            return bytesLeft;
+        }
+        #endregion CustomPalette
 
         public static long ReadEpbRawMatrix(this BinaryReader reader, EpBlueprint epb, long bytesLeft, Func<byte[], EpBlueprint, long, long> func)
         {
