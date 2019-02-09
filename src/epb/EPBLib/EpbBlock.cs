@@ -50,9 +50,8 @@ namespace EPBLib
         //    StairsBlocks           = 0x02a0, // Variants 0x00-0x06
         //}
 
-        public enum EpbBlockType
+                public enum EpbBlockType
         {
-
             // BuildingBlocks
             Window_crsd1x1ThickInv          =  1000, // Window_v1x1Thick
             Window_sd1x2V2ThickInv          =  1001, // Window_v1x1Thick
@@ -329,6 +328,26 @@ namespace EPBLib
             ScifiContainer1Small            =  1770, // ContainerMS01
             ScifiContainer2Small            =  1771, // ContainerMS01
             ScifiContainerPowerSmall        =  1772, // ContainerMS01
+            TurretEnemyBallista             =  1773, // TurretIONCannon
+            ThrusterGVRoundNormalT2         =  1774, // ThrusterGVRoundNormal
+            ThrusterGVRoundLarge            =  1775, // ThrusterGVRoundNormal
+            ThrusterGVRoundLargeT2          =  1776, // ThrusterGVRoundNormal
+            CargoPalette01                  =  1777, // ContainerMS01
+            CargoPalette02                  =  1778, // ContainerMS01
+            CargoPalette03                  =  1779, // ContainerMS01
+            CargoPalette04                  =  1780, // ContainerMS01
+            WoodExtended                    =  1782, // WoodFull
+            ConcreteExtended                =  1783, // ConcreteFull
+            ConcreteArmoredExtended         =  1784, // ConcreteArmoredFull
+            PlasticExtendedLarge            =  1785, // PlasticFullLarge
+            HullExtendedLarge               =  1786, // HullFullLarge
+            HullArmoredExtendedLarge        =  1787, // HullArmoredFullLarge
+            HullCombatExtendedLarge         =  1788, // HullCombatFullLarge
+            AlienExtended                   =  1789, // AlienFull
+            PlasticExtendedSmall            =  1790, // PlasticFullSmall
+            HullExtendedSmall               =  1791, // HullFullSmall
+            HullArmoredExtendedSmall        =  1792, // HullArmoredFullSmall
+            HullCombatExtendedSmall         =  1793, // HullCombatFullSmall
             CapacitorMS                     =   256, // 
             ConsoleMS01                     =   261, // 
             Antenna                         =   262, // 
@@ -927,7 +946,7 @@ namespace EPBLib
             TurretBasePlasma                =   701, // 
             TurretMSPlasma                  =   702, // 
             OxygenHydrogenGenerator         =   706, // OxygenGenerator
-            TurretGVArtillery               =   716  // 
+            TurretGVArtillery               =   716, // 
         }
 
 
@@ -956,9 +975,10 @@ namespace EPBLib
             {(EpbBlockType)0x0190, new EpbBlockTypeDefinition() { Type = (EpbBlockType)0x0190, Name = "Concrete Blocks",          VariantNames = new string[] {"Cube", "Cut Corner", "Corner Long A", "Corner Long B", "Corner Long C", "Corner Long D", "Corner Large A", "Corner", "Ramp Bottom", "Ramp Top", "Slope", "Curved Corner", "Round Cut Corner", "Round Corner", "Round Corner Long", "Round Slope", "Cylinder", "Inward Corner", "Inward Round Slope", "Inward Curved Corner", "Round Slope Edge Inward", "Cylinder End A", "Cylinder End B", "Cylinder End C", "Ramp Wedge Top", "Round 4 Way Connector", "Round Slope Edge", "Corner Large B", "Corner Large C", "Corner Large D", "Corner Long E", "Pyramid A" }}},
             {(EpbBlockType)0x0191, new EpbBlockTypeDefinition() { Type = (EpbBlockType)0x0191, Name = "Concrete Blocks",          VariantNames = new string[] {"Wall", "Wall L-shape", "Thin Slope", "Thin Corner", "Sloped Wall", "Sloped Wall Bottom (right)", "Sloped Wall Top (right)", "Sloped Wall Bottom (left)", "Sloped Wall Top (left)", "Round Corner Thin", "Round Slope Thin", "Round Cut Corner Thin", "Round Slope Edge Thin", "Round Corner Long Thin", "Corner Round Thin 2", "Corner Thin 2", "Wall 3 Corner", "Wall Half", "Cube Half", "Ramp Top Double", "Ramp Bottom A", "Ramp Bottom B", "Ramp Bottom C", "Ramp Wedge Bottom", "Beam", "Cylinder Thin", "Cylinder Thin T Joint", "Cylinder Thin Curved", "Cylinder Fence Bottom", "Cylinder Fence Top", "Slope Half" }}},
 
-            {(EpbBlockType)0x0193, new EpbBlockTypeDefinition() { Type = (EpbBlockType)0x0193, Name = "Steel Blocks L",           VariantNames = new string[] {"Cube", "Cut Corner", "Corner Long A", "Corner Long B", "Corner Long C", "Corner Long D", "Corner Large A", "Corner", "Ramp Bottom", "Ramp Top", "Slope", "Curved Corner", "Round Cut Corner", "Round Corner", "Round Corner Long", "Round Slope", "Cylinder", "Inward Corner", "Inward Round Slope", "Inward Curved Corner", "Round Slope Edge Inward", "Cylinder End A", "Cylinder End B", "Cylinder End C", "Ramp Wedge Top", "Round 4 Way Connector", "Round Slope Edge", "Corner Large B", "Corner Large C", "Corner Large D", "Corner Long E", "Pyramid A" }}},
-            {(EpbBlockType)0x0194, new EpbBlockTypeDefinition() { Type = (EpbBlockType)0x0194, Name = "Steel Blocks L",           VariantNames = new string[] {"Wall", "Wall L-shape", "Thin Slope", "Thin Corner", "Sloped Wall", "Sloped Wall Bottom (right)", "Sloped Wall Top (right)", "Sloped Wall Bottom (left)", "Sloped Wall Top (left)", "Round Corner Thin", "Round Slope Thin", "Round Cut Corner Thin", "Round Slope Edge Thin", "Round Corner Long Thin", "Corner Round Thin 2", "Corner Thin 2", "Wall 3 Corner", "Wall Half", "Cube Half", "Ramp Top Double", "Ramp Bottom A", "Ramp Bottom B", "Ramp Bottom C", "Ramp Wedge Bottom", "Beam", "Cylinder Thin", "Cylinder Thin T Joint", "Cylinder Thin Curved", "Cylinder Fence Bottom", "Cylinder Fence Top", "Slope Half" }}},
-
+            {EpbBlockType.HullFullLarge,     new EpbBlockTypeDefinition() { Type = EpbBlockType.HullFullLarge,     Name = "Steel Blocks L",           VariantNames = new string[] {"Cube", "Cut Corner", "Corner Long A", "Corner Long B", "Corner Long C", "Corner Long D", "Corner Large A", "Corner", "Ramp Bottom", "Ramp Top", "Slope", "Curved Corner", "Round Cut Corner", "Round Corner", "Round Corner Long", "Round Slope", "Cylinder", "Inward Corner", "Inward Round Slope", "Inward Curved Corner", "Round Slope Edge Inward", "Cylinder End A", "Cylinder End B", "Cylinder End C", "Ramp Wedge Top", "Round 4 Way Connector", "Round Slope Edge", "Corner Large B", "Corner Large C", "Corner Large D", "Corner Long E", "Pyramid A" }}},
+            {EpbBlockType.HullThinLarge,     new EpbBlockTypeDefinition() { Type = EpbBlockType.HullThinLarge,     Name = "Steel Blocks L",           VariantNames = new string[] {"Wall", "Wall L-shape", "Thin Slope", "Thin Corner", "Sloped Wall", "Sloped Wall Bottom (right)", "Sloped Wall Top (right)", "Sloped Wall Bottom (left)", "Sloped Wall Top (left)", "Round Corner Thin", "Round Slope Thin", "Round Cut Corner Thin", "Round Slope Edge Thin", "Round Corner Long Thin", "Corner Round Thin 2", "Corner Thin 2", "Wall 3 Corner", "Wall Half", "Cube Half", "Ramp Top Double", "Ramp Bottom A", "Ramp Bottom B", "Ramp Bottom C", "Ramp Wedge Bottom", "Beam", "Cylinder Thin", "Cylinder Thin T Joint", "Cylinder Thin Curved", "Cylinder Fence Bottom", "Cylinder Fence Top", "Slope Half" }}},
+            {EpbBlockType.HullExtendedLarge, new EpbBlockTypeDefinition() { Type = EpbBlockType.HullExtendedLarge, Name = "Steel Blocks L",           VariantNames = new string[] {"Corner Small A", "Corner Small C", "CornerLongF", "CornerB", "WallCornerRound", "NotchedA", "NotchedB", "NotchedC", "CubeQuarter", "CylinderThinXJoint", "RampWedgeTopB", "CutCornerB", "DoorFrame1", "DoorFrame2" }}},
+            
             {(EpbBlockType)0x0196, new EpbBlockTypeDefinition() { Type = (EpbBlockType)0x0196, Name = "Hardened Steel Blocks L",  VariantNames = new string[] {"Cube", "Cut Corner", "Corner Long A", "Corner Long B", "Corner Long C", "Corner Long D", "Corner Large A", "Corner", "Ramp Bottom", "Ramp Top", "Slope", "Curved Corner", "Round Cut Corner", "Round Corner", "Round Corner Long", "Round Slope", "Cylinder", "Inward Corner", "Inward Round Slope", "Inward Curved Corner", "Round Slope Edge Inward", "Cylinder End A", "Cylinder End B", "Cylinder End C", "Ramp Wedge Top", "Round 4 Way Connector", "Round Slope Edge", "Corner Large B", "Corner Large C", "Corner Large D", "Corner Long E", "Pyramid A" }}},
             {(EpbBlockType)0x0197, new EpbBlockTypeDefinition() { Type = (EpbBlockType)0x0197, Name = "Hardened Steel Blocks L",  VariantNames = new string[] {"Wall", "Wall L-shape", "Thin Slope", "Thin Corner", "Sloped Wall", "Sloped Wall Bottom (right)", "Sloped Wall Top (right)", "Sloped Wall Bottom (left)", "Sloped Wall Top (left)", "Round Corner Thin", "Round Slope Thin", "Round Cut Corner Thin", "Round Slope Edge Thin", "Round Corner Long Thin", "Corner Round Thin 2", "Corner Thin 2", "Wall 3 Corner", "Wall Half", "Cube Half", "Ramp Top Double", "Ramp Bottom A", "Ramp Bottom B", "Ramp Bottom C", "Ramp Wedge Bottom", "Beam", "Cylinder Thin", "Cylinder Thin T Joint", "Cylinder Thin Curved", "Cylinder Fence Bottom", "Cylinder Fence Top", "Slope Half" }}},
 
