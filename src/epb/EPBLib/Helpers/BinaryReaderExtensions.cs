@@ -502,7 +502,7 @@ namespace EPBLib.Helpers
                     {
                         for (int i = 0; i < 6; i++)
                         {
-                            block.Colours[i] = (EpbColour)(bits & 0x1f);
+                            block.Colours[i] = (EpbColourIndex)(bits & 0x1f);
                             bits = bits >> 5;
                         }
                         Console.WriteLine($"    {count,5} ({x,4}, {y,4}, {z,4}): {string.Join(", ", block.Colours)}");
@@ -1031,7 +1031,8 @@ namespace EPBLib.Helpers
                 UInt32 nCustomColours = reader.ReadUInt32();
                 bytesLeft -= 4;
                 Console.WriteLine($"    Palette {p}: ({nCustomColours} - 1)");
-                for (int i = 0; i < nCustomColours - 1; i++) //TODO: Why - 1?
+                EpbPalette palette = new EpbPalette(nCustomColours);
+                for (int i = 0; i < nCustomColours - 1; i++) // - 1 because 0 is "no colour" or "default".
                 {
                     byte r = reader.ReadByte();
                     bytesLeft -= 1;
@@ -1040,6 +1041,12 @@ namespace EPBLib.Helpers
                     byte b = reader.ReadByte();
                     bytesLeft -= 1;
                     Console.WriteLine($"        {i}: #{r:X2}{g:X2}{b:X2}");
+                    palette[i] = new EpbColour(r, g, b);
+                }
+
+                if (p == 0) // TODO: Store all palettes, not just the first.
+                {
+                    epb.Palette = palette;
                 }
             }
             return bytesLeft;

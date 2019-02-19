@@ -1114,7 +1114,7 @@ namespace EPBLib
             set => Variant = GetVariant(BlockType, value);
         }
 
-        public EpbColour[] Colours = new EpbColour[6];     // 5 bit colour index
+        public EpbColourIndex[] Colours = new EpbColourIndex[6];     // 5 bit colour index
         public byte[] Textures = new byte[6];        // 6 bit texture index
         public bool[] TextureFlips = new bool[6];
         public byte   SymbolPage { get; set; }       // 2 bit page index
@@ -1122,7 +1122,7 @@ namespace EPBLib
         public SymbolRotation[] SymbolRotations = new SymbolRotation[6]; // 2 bit symbol rotation
 
 
-        public void SetColour(EpbColour colour, FaceIndex face = FaceIndex.All)
+        public void SetColour(EpbColourIndex colour, FaceIndex face = FaceIndex.All)
         {
             if ((int)face < -1 || (int)face >= 6 || (byte)colour > 0x1f)
             {

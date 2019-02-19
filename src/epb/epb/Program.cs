@@ -325,7 +325,7 @@ namespace epb
                         if (!isInterior || !hollow)
                         {
                             EpbBlock block = new EpbBlock() {BlockType = BlockType, Variant = BlockVariant};
-                            block.SetColour(isInterior ? EpbColour.Pink : EpbColour.None);
+                            block.SetColour(isInterior ? EpbColourIndex.Pink : EpbColourIndex.None);
                             block.SetTexture(14, (x % 2) == 1);
                             block.SetSymbol(1, (EpbBlock.SymbolRotation)(x % 4), EpbBlock.FaceIndex.Back);
                             block.SetSymbol(2, face: EpbBlock.FaceIndex.Right);
@@ -489,7 +489,7 @@ namespace epb
                         if (!isInterior || !hollow)
                         {
                             EpbBlock block = new EpbBlock() {BlockType = t, Rotation = r, Variant = v};
-                            block.SetColour(isInterior ? EpbColour.Pink : EpbColour.None);
+                            block.SetColour(isInterior ? EpbColourIndex.Pink : EpbColourIndex.None);
                             epb.SetBlock(block, x, y, z);
                         }
                     }

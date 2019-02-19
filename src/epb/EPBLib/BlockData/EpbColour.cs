@@ -1,7 +1,99 @@
 ﻿
+using System;
+
 namespace EPBLib.BlockData
 {
-    public enum EpbColour
+    public struct EpbColour
+    {
+        public byte R;
+        public byte G;
+        public byte B;
+
+        public EpbColour(byte r, byte g, byte b)
+        {
+            R = r;
+            G = g;
+            B = b;
+        }
+
+        public EpbColour(UInt32 c)
+        {
+            B = (byte)(c & 0xff);
+            c >>= 8;
+            G = (byte)(c & 0xff);
+            c >>= 8;
+            R = (byte)(c & 0xff);
+        }
+    }
+
+    public class EpbPalette
+    {
+        protected EpbColour[] Colours;
+
+        public EpbColour this[EpbColourIndex index]
+        {
+            get => Colours[(int)index];
+            set => Colours[(int)index] = value;
+        }
+        public EpbColour this[int index]
+        {
+            get => Colours[index];
+            set => Colours[index] = value;
+        }
+
+        /// <summary>
+        /// Creates a default palette.
+        /// </summary>
+        public EpbPalette()
+        {
+            Colours = new EpbColour[]
+            {
+                new EpbColour(0xffffff),
+                new EpbColour(0xffffa6),
+                new EpbColour(0xff0000),
+                new EpbColour(0xffa6e9),
+                new EpbColour(0x0040ff),
+                new EpbColour(0x00ffff),
+                new EpbColour(0x00ff99),
+                new EpbColour(0xbb875a),
+                new EpbColour(0xdcdcdc),
+                new EpbColour(0xfff700),
+                new EpbColour(0xaa0505),
+                new EpbColour(0xff0096),
+                new EpbColour(0x1a3259),
+                new EpbColour(0x3aa6d7),
+                new EpbColour(0x66ff00),
+                new EpbColour(0x7b492e),
+                new EpbColour(0xaaaaaa),
+                new EpbColour(0xffaa03),
+                new EpbColour(0xb0223a),
+                new EpbColour(0xab20a1),
+                new EpbColour(0x000f64),
+                new EpbColour(0x3973d7),
+                new EpbColour(0x1c9524),
+                new EpbColour(0x3e1e0a),
+                new EpbColour(0x6e6e6e),
+                new EpbColour(0xff5f03),
+                new EpbColour(0x660000),
+                new EpbColour(0x6021ad),
+                new EpbColour(0x3a183b),
+                new EpbColour(0x2722b2),
+                new EpbColour(0x002800),
+                new EpbColour(0x0a0a0a)
+            };
+        }
+
+        /// <summary>
+        /// Create a blank palette with n colours.
+        /// </summary>
+        /// <param name="n"></param>
+        public EpbPalette(UInt32 n)
+        {
+            Colours = new EpbColour[n];
+        }
+    }
+
+    public enum EpbColourIndex
     {
         None            = 0x00,
         LightYellow     = 0x01,
@@ -37,7 +129,7 @@ namespace EPBLib.BlockData
         Black           = 0x1f
     }
     /* Closest colour name according to https://www.htmlcsscolor.com 
-    public enum EpbColour
+    public enum EpbColourIndex
     {
         None = 0,
         Shalimar,          //#ffffa6

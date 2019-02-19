@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using EPBLib.BlockData;
 using EPBLib.Logic;
 using ICSharpCode.SharpZipLib.Core;
 using ICSharpCode.SharpZipLib.Zip;
@@ -36,13 +37,15 @@ namespace EPBLib
 
         public EpbBlock[,,] Blocks { get; set; }
 
+        public EpbPalette Palette = new EpbPalette();
+
         public List<EpbSignalSource> SignalSources = new List<EpbSignalSource>();
         public List<EpbSignalTarget> SignalTargets = new List<EpbSignalTarget>();
         public List<EpbSignalOperator> SignalOperators = new List<EpbSignalOperator>();
 
         #endregion Properties
 
-        public EpBlueprint (EpbType type = EpbType.Base, UInt32 width = 1, UInt32 height = 1, UInt32 depth = 1)
+        public EpBlueprint (EpbType type = EpbType.Base, UInt32 width = 0, UInt32 height = 0, UInt32 depth = 0)
         {
             Version      = 20;
             Type         = type;
