@@ -109,7 +109,7 @@ namespace epb
                             {
                                 BlockType = (EpbBlock.EpbBlockType)(int)new System.ComponentModel.ByteConverter().ConvertFromString(v);
                             }
-                            catch (Exception e)
+                            catch 
                             {
                                 //TODO: This no longer works - the enum is empty:
                                 BlockType = (EpbBlock.EpbBlockType)Enum.Parse(typeof(EpbBlock.EpbBlockType), v);
@@ -128,7 +128,7 @@ namespace epb
                             {
                                 BlockVariant = (byte)new System.ComponentModel.ByteConverter().ConvertFromString(v);
                             }
-                            catch (Exception e)
+                            catch
                             {
                                 BlockVariant = EpbBlock.GetVariant(BlockType, v);
                             }
