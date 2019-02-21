@@ -104,8 +104,7 @@ namespace EPBLib.Helpers
             UInt32 nBlocksTotal = 0;
             for (int i = 0; i < nBlockCounts; i++)
             {
-                EpbBlock.EpbBlockType blockType = reader.ReadEpbBlockType();
-                bytesLeft -= 2;
+                EpbBlock.EpbBlockType blockType = reader.ReadEpbBlockType(ref bytesLeft);
                 if (version <= 12)
                 {
                     reader.ReadUInt16(); // Block types were 32 bit in the early versions, but these bytes were probably always zero, so we simply ignore them.
@@ -114,7 +113,7 @@ namespace EPBLib.Helpers
 
                 UInt32 blockCount = reader.ReadUInt32();
                 bytesLeft -= 4;
-                Console.WriteLine($"    BlockType={EpbBlock.GetBlockTypeName(blockType)} Count={blockCount}");
+                Console.WriteLine($"    BlockType={blockType,-40} Count={blockCount}");
 
                 nBlocksTotal += blockCount;
             }
@@ -351,9 +350,11 @@ namespace EPBLib.Helpers
 
         #region EpbBlocks
 
-        public static EpbBlock.EpbBlockType ReadEpbBlockType(this BinaryReader reader)
+        public static EpbBlock.EpbBlockType ReadEpbBlockType(this BinaryReader reader, ref long bytesLeft)
         {
-            return(EpbBlock.EpbBlockType)reader.ReadUInt16();
+            UInt16 id = reader.ReadUInt16();
+            bytesLeft -= 2;
+            return EpbBlock.GetBlockType(id);
         }
 
         public static void ReadEpbBlocks(this BinaryReader reader, EpBlueprint epb, UInt32 version, long bytesLeft)
@@ -398,17 +399,17 @@ namespace EPBLib.Helpers
                             EpbBlock block = new EpbBlock()
                             {
 
-                                BlockType = (EpbBlock.EpbBlockType)(data & 0x7ff),
+                                BlockType = EpbBlock.GetBlockType((UInt16)(data & 0x7ff)),
                                 Rotation = (EpbBlock.EpbBlockRotation)((data >> 11) & 0x1f),
                                 Unknown00 = (UInt16)((data >> 16) & 0x3ff),
                                 Variant = (byte)((data >> 25) & 0x1f)
                             };
-                            if (block.BlockType != 0)
+                            if (block.BlockType.Id != 0)
                             {
                                 blockCount++;
                                 epb.SetBlock(block, x, y, z);
-                                Console.Write($"{BitConverter.GetBytes(data).ToHexString()} | 0x{data:x08} {Convert.ToString(data, 2).PadLeft(32, '0')} |");
-                                Console.WriteLine($"    {blockCount,5} ({x,4}, {y,4}, {z,4}): Rot={block.Rotation} Unknown2=0x{block.Unknown00:x3} Type={EpbBlock.GetBlockTypeName(block.BlockType)} Variant={block.VariantName}");
+                                Console.WriteLine($"    {blockCount,5} ({x,4}, {y,4}, {z,4}): Rot={block.Rotation} Unknown2=0x{block.Unknown00:x3} Type={block.BlockType,-31} Variant={block.VariantName,-31}");
+                                //Console.WriteLine($"{BitConverter.GetBytes(data).ToHexString()} | 0x{data:x08} {Convert.ToString(data, 2).PadLeft(32, '0')} |");
                             }
                         }
                     }
@@ -423,14 +424,14 @@ namespace EPBLib.Helpers
                     EpbBlock block = new EpbBlock()
                     {
 
-                        BlockType = (EpbBlock.EpbBlockType)(data & 0x7ff),
+                        BlockType = EpbBlock.GetBlockType((UInt16)(data & 0x7ff)),
                         Rotation = (EpbBlock.EpbBlockRotation)((data >> 11) & 0x1f),
                         Unknown00 = (UInt16)((data >> 16) & 0x3ff),
                         Variant = (byte)((data >> 25) & 0x1f)
                     };
                     epb.SetBlock(block, x, y, z);
-                    Console.Write($"{BitConverter.GetBytes(data).ToHexString()} | 0x{data:x08} {Convert.ToString(data, 2).PadLeft(32, '0')} |");
-                    Console.WriteLine($"    {blockCount,5} ({x,4}, {y,4}, {z,4}): Rot={block.Rotation} Unknown2=0x{block.Unknown00:x3} Type={EpbBlock.GetBlockTypeName(block.BlockType)} Variant={block.VariantName}");
+                    Console.WriteLine($"    {blockCount,5} ({x,4}, {y,4}, {z,4}): Rot={block.Rotation} Unknown2=0x{block.Unknown00:x3} Type={block.BlockType,-31} Variant={block.VariantName,-31}");
+                    //Console.WriteLine( $"{BitConverter.GetBytes(data).ToHexString()} | 0x{data:x08} {Convert.ToString(data, 2).PadLeft(32, '0')} |");
                     return b - 4;
                 });
             }

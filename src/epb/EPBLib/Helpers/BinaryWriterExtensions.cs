@@ -73,7 +73,7 @@ namespace EPBLib.Helpers
 
         public static void Write(this BinaryWriter writer, EpbBlock.EpbBlockType type)
         {
-            writer.Write((UInt16) type);
+            writer.Write((UInt16)type.Id);
         }
 
         public static void WriteEpbBlocks(this BinaryWriter writer, EpBlueprint epb)
@@ -90,7 +90,7 @@ namespace EPBLib.Helpers
                     return false;
                 }
 
-                UInt32 data = (UInt32)block.BlockType + (UInt32)((byte)block.Rotation << 11) + (UInt32)(block.Unknown00 << 16) + (UInt32)(block.Variant << 25);
+                UInt32 data = (UInt32)block.BlockType.Id + (UInt32)((byte)block.Rotation << 11) + (UInt32)(block.Unknown00 << 16) + (UInt32)(block.Variant << 25);
                 list.AddRange(BitConverter.GetBytes(data));
                 return true;
             });

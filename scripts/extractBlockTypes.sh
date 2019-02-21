@@ -47,7 +47,7 @@ function printBlock(id, name, ref, category)
 ' | sort -t\| -k1 | gawk -F\| '\
 BEGIN\
 {
-    print "        public enum EpbBlockType";
+    print "        public static readonly Dictionary<UInt16, EpbBlockType> BlockTypes = new Dictionary<UInt16, EpbBlockType>()";
     print "        {"
     category="";
 } \
@@ -58,11 +58,15 @@ BEGIN\
         print "\n            // " $1;
     }
     category=$1;
-    printf "            %-31s = %5d, // %s\n", $3, $2, $4;
+    id=$2;
+    name="\"" $3 "\"";
+    cat="\"" $1 "\""; 
+    ref="\"" $4 "\"";
+    printf "            {%5d, new EpbBlockType(){Id = %5d, Name = %-31s, Category = %-31s, Ref = %-31s}},\n", id, id, name, cat, ref;
 } \
 END\
 {
-    print "        }";
+    print "        };";
 }\
 '
 

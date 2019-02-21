@@ -33,7 +33,7 @@ namespace epb
         public static bool                  Hollow          = false;
         public static string                OutputPath      = "NewBlueprint.epb";
         public static EpBlueprint.EpbType   BlueprintType   = EpBlueprint.EpbType.Base;
-        public static EpbBlock.EpbBlockType BlockType       = EpbBlock.GetBlockType("Steel Blocks L", "Cube");
+        public static EpbBlock.EpbBlockType BlockType       = EpbBlock.GetBlockType("HullFullLarge", "Cube");
         public static byte                  BlockVariant    = 0x00;
         public static UInt32                Width           = 1;
         public static UInt32                Height          = 1;
@@ -107,12 +107,11 @@ namespace epb
                         {
                             try
                             {
-                                BlockType = (EpbBlock.EpbBlockType)(int)new System.ComponentModel.ByteConverter().ConvertFromString(v);
+                                BlockType = EpbBlock.BlockTypes[(UInt16)new System.ComponentModel.ByteConverter().ConvertFromString(v)];
                             }
                             catch 
                             {
-                                //TODO: This no longer works - the enum is empty:
-                                BlockType = (EpbBlock.EpbBlockType)Enum.Parse(typeof(EpbBlock.EpbBlockType), v);
+                                BlockType = EpbBlock.GetBlockType(v, "");
                             }
                         }
                     }
@@ -130,7 +129,7 @@ namespace epb
                             }
                             catch
                             {
-                                BlockVariant = EpbBlock.GetVariant(BlockType, v);
+                                BlockVariant = EpbBlock.GetVariant(BlockType.Id, v);
                             }
                         }
                     }
@@ -439,50 +438,50 @@ namespace epb
 
                         if (isBackEdge && isLeftEdge)
                         {
-                            t = EpbBlock.GetBlockType("Steel Blocks L", "Corner Large A");
-                            v = EpbBlock.GetVariant(t, "Corner Large A");
+                            t = EpbBlock.GetBlockType("HullFullLarge", "Corner Large A");
+                            v = EpbBlock.GetVariant(t.Id, "Corner Large A");
                             r = EpbBlock.EpbBlockRotation.PxPy;
                         }
                         else if (isBackEdge && isRightEdge)
                         {
-                            t = EpbBlock.GetBlockType("Steel Blocks L", "Corner Large A"); 
-                            v = EpbBlock.GetVariant(t, "Corner Large A");
+                            t = EpbBlock.GetBlockType("HullFullLarge", "Corner Large A"); 
+                            v = EpbBlock.GetVariant(t.Id, "Corner Large A");
                             r = EpbBlock.EpbBlockRotation.PzPy;
                         }
                         else if (isFrontEdge && isLeftEdge)
                         {
-                            t = EpbBlock.GetBlockType("Steel Blocks L", "Corner Large A");
-                            v = EpbBlock.GetVariant(t, "Corner Large A");
+                            t = EpbBlock.GetBlockType("HullFullLarge", "Corner Large A");
+                            v = EpbBlock.GetVariant(t.Id, "Corner Large A");
                             r = EpbBlock.EpbBlockRotation.NzPy;
                         }
                         else if (isFrontEdge && isRightEdge)
                         {
-                            t = EpbBlock.GetBlockType("Steel Blocks L", "Corner Large A");
-                            v = EpbBlock.GetVariant(t, "Corner Large A");
+                            t = EpbBlock.GetBlockType("HullFullLarge", "Corner Large A");
+                            v = EpbBlock.GetVariant(t.Id, "Corner Large A");
                             r = EpbBlock.EpbBlockRotation.NxPy;
                         }
                         else if (isBackEdge)
                         {
-                            t = EpbBlock.GetBlockType("Steel Blocks L", "Slope");
-                            v = EpbBlock.GetVariant(t, "Slope");
+                            t = EpbBlock.GetBlockType("HullFullLarge", "Slope");
+                            v = EpbBlock.GetVariant(t.Id, "Slope");
                             r = EpbBlock.EpbBlockRotation.NzPy;
                         }
                         else if (isFrontEdge)
                         {
-                            t = EpbBlock.GetBlockType("Steel Blocks L", "Slope");
-                            v = EpbBlock.GetVariant(t, "Slope");
+                            t = EpbBlock.GetBlockType("HullFullLarge", "Slope");
+                            v = EpbBlock.GetVariant(t.Id, "Slope");
                             r = EpbBlock.EpbBlockRotation.PzPy;
                         }
                         else if (isLeftEdge)
                         {
-                            t = EpbBlock.GetBlockType("Steel Blocks L", "Slope");
-                            v = EpbBlock.GetVariant(t, "Slope");
+                            t = EpbBlock.GetBlockType("HullFullLarge", "Slope");
+                            v = EpbBlock.GetVariant(t.Id, "Slope");
                             r = EpbBlock.EpbBlockRotation.NxPy;
                         }
                         else if (isRightEdge)
                         {
-                            t = EpbBlock.GetBlockType("Steel Blocks L", "Slope");
-                            v = EpbBlock.GetVariant(t, "Slope");
+                            t = EpbBlock.GetBlockType("HullFullLarge", "Slope");
+                            v = EpbBlock.GetVariant(t.Id, "Slope");
                             r = EpbBlock.EpbBlockRotation.PxPy;
                         }
 
@@ -511,7 +510,7 @@ namespace epb
 
         static void CreateBlockTypes(string path)
         {
-            UInt32[] allBlockTypes = new UInt32[] { 1, 1003, 1004, 1005, 1006, 1007, 1011, 1012, 1013, 1027, 1028, 1035, 1073, 1077, 1078, 1080, 1081, 1082, 1083, 1084, 1085, 1086, 1087, 1088, 1096, 1097, 1099, 1101, 1113, 1114, 1115, 1121, 1122, 1125, 114, 1143, 1185, 1189, 1204, 1206, 1232, 1260, 1262, 1264, 1273, 1274, 1275, 1276, 1277, 1279, 1282, 1283, 1284, 1285, 1288, 1289, 1290, 1291, 1292, 1293, 1296, 1298, 1299, 1320, 1335, 1362, 1364, 1365, 1366, 1387, 1388, 1393, 1394, 1405, 1406, 1407, 1408, 1410, 1411, 1412, 1413, 1414, 1415, 1416, 1423, 1425, 1426, 1491, 1493, 1495, 1496, 1501, 1502, 1503, 1515, 256, 260, 261, 262, 263, 265, 270, 273, 274, 275, 278, 280, 281, 285, 286, 289, 291, 333, 334, 388, 389, 390, 397, 398, 400, 401, 406, 407, 409, 410, 411, 412, 413, 416, 437, 442, 443, 444, 446, 461, 462, 468, 492, 498, 520, 541, 543, 544, 555, 560, 564, 565, 566, 57, 583, 584, 612, 613, 615, 617, 620, 621, 623, 635, 636, 637, 638, 651, 653, 658, 672, 673, 674, 676, 677, 679, 681, 682, 685, 686, 691, 692, 704, 705, 714, 717, 727, 732, 770, 771, 79, 795, 796, 797, 798, 80, 801, 802, 805, 807, 81, 816, 82, 83, 84, 85, 884, 885, 90, 91, 95, 950, 951, 952, 953, 954, 960, 962, 965, 966, 967, 968, 969, 977, 983, 984, 988, 989, 992, 994, 0x101, 0x193, 0x194 };
+            UInt16[] allBlockTypes = new UInt16[] { 1, 1003, 1004, 1005, 1006, 1007, 1011, 1012, 1013, 1027, 1028, 1035, 1073, 1077, 1078, 1080, 1081, 1082, 1083, 1084, 1085, 1086, 1087, 1088, 1096, 1097, 1099, 1101, 1113, 1114, 1115, 1121, 1122, 1125, 114, 1143, 1185, 1189, 1204, 1206, 1232, 1260, 1262, 1264, 1273, 1274, 1275, 1276, 1277, 1279, 1282, 1283, 1284, 1285, 1288, 1289, 1290, 1291, 1292, 1293, 1296, 1298, 1299, 1320, 1335, 1362, 1364, 1365, 1366, 1387, 1388, 1393, 1394, 1405, 1406, 1407, 1408, 1410, 1411, 1412, 1413, 1414, 1415, 1416, 1423, 1425, 1426, 1491, 1493, 1495, 1496, 1501, 1502, 1503, 1515, 256, 260, 261, 262, 263, 265, 270, 273, 274, 275, 278, 280, 281, 285, 286, 289, 291, 333, 334, 388, 389, 390, 397, 398, 400, 401, 406, 407, 409, 410, 411, 412, 413, 416, 437, 442, 443, 444, 446, 461, 462, 468, 492, 498, 520, 541, 543, 544, 555, 560, 564, 565, 566, 57, 583, 584, 612, 613, 615, 617, 620, 621, 623, 635, 636, 637, 638, 651, 653, 658, 672, 673, 674, 676, 677, 679, 681, 682, 685, 686, 691, 692, 704, 705, 714, 717, 727, 732, 770, 771, 79, 795, 796, 797, 798, 80, 801, 802, 805, 807, 81, 816, 82, 83, 84, 85, 884, 885, 90, 91, 95, 950, 951, 952, 953, 954, 960, 962, 965, 966, 967, 968, 969, 977, 983, 984, 988, 989, 992, 994, 0x101, 0x193, 0x194 };
             int start = 0;
             int length = 15;
             UInt32[] blockTypes = new UInt32[length];
@@ -522,9 +521,9 @@ namespace epb
 
             EpBlueprint epb = CreateCommon();
             UInt32 i = 0;
-            foreach (UInt32 bt in blockTypes )
+            foreach (UInt16 bt in blockTypes )
             {
-                epb.SetBlock(new EpbBlock() { BlockType = (EpbBlock.EpbBlockType)bt, Variant = BlockVariant }, i, 0, 0);
+                epb.SetBlock(new EpbBlock() { BlockType = EpbBlock.BlockTypes[bt], Variant = BlockVariant }, i, 0, 0);
                 i += 14;
             }
 
