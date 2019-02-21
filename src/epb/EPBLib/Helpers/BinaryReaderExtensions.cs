@@ -733,10 +733,14 @@ namespace EPBLib.Helpers
 
                 Console.WriteLine($"{pos}, {unknown06:x2}, {nTags}");
 
+                EpbBlock block = epb.Blocks[pos.X, pos.Y, pos.Z];
+
                 for (int tagIndex = 0; tagIndex < nTags; tagIndex++)
                 {
                     EpbBlockTag tag = reader.ReadEpbBlockTag(ref bytesLeft);
                     Console.WriteLine($"        {tagIndex}: {tag}");
+
+                    block?.AddTag(tag);
                 }
             }
             return bytesLeft;
