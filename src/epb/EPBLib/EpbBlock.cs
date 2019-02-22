@@ -8,7 +8,7 @@ namespace EPBLib
 {
     public class EpbBlock
     {
-        #region Types
+        #region static
 
         public enum EpbBlockRotation
         {
@@ -28,6 +28,7 @@ namespace EPBLib
                 return $"{Name} (0x{Id:x4}={Id})";
             }
         }
+
         public static readonly Dictionary<UInt16, EpbBlockType> BlockTypes = new Dictionary<UInt16, EpbBlockType>()
         {
 
@@ -1230,8 +1231,6 @@ BlockType=959
         {
             Up, Left, Down, Right
         }
-        #endregion Types
-
 
         public static EpbBlockType GetBlockType(UInt16 id)
         {
@@ -1293,6 +1292,9 @@ BlockType=959
             return $"{s} (0x{variant:x2}={variant})";
         }
 
+        #endregion static
+
+        public EpbBlockPos Position { get; protected set; }
 
         public EpbBlockType BlockType { get; set; }
         public EpbBlockRotation Rotation { get; set; }
@@ -1387,8 +1389,9 @@ BlockType=959
             return Tags.ContainsKey(name) ? Tags[name] : null;
         }
 
-        public EpbBlock()
+        public EpbBlock(EpbBlockPos position)
         {
+            Position = position;
             BlockType = GetBlockType("HullFullLarge", "Cube");
             Variant = GetVariant(BlockType.Id, "Cube");
             Rotation = EpbBlock.EpbBlockRotation.PzPy;

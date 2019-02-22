@@ -396,9 +396,8 @@ namespace EPBLib.Helpers
                         {
                             UInt32 data = reader.ReadUInt32();
                             bytesLeft -= 4;
-                            EpbBlock block = new EpbBlock()
+                            EpbBlock block = new EpbBlock(new EpbBlockPos() { X = (byte)x, Y = (byte)y, Z = (byte)z })
                             {
-
                                 BlockType = EpbBlock.GetBlockType((UInt16)(data & 0x7ff)),
                                 Rotation = (EpbBlock.EpbBlockRotation)((data >> 11) & 0x1f),
                                 Unknown00 = (UInt16)((data >> 16) & 0x3ff),
@@ -421,9 +420,8 @@ namespace EPBLib.Helpers
                 {
                     UInt32 data = reader.ReadUInt32();
                     blockCount++;
-                    EpbBlock block = new EpbBlock()
+                    EpbBlock block = new EpbBlock(new EpbBlockPos() { X = (byte)x, Y = (byte)y, Z = (byte)z })
                     {
-
                         BlockType = EpbBlock.GetBlockType((UInt16)(data & 0x7ff)),
                         Rotation = (EpbBlock.EpbBlockRotation)((data >> 11) & 0x1f),
                         Unknown00 = (UInt16)((data >> 16) & 0x3ff),

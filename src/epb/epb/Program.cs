@@ -323,7 +323,7 @@ namespace epb
 
                         if (!isInterior || !hollow)
                         {
-                            EpbBlock block = new EpbBlock() {BlockType = BlockType, Variant = BlockVariant};
+                            EpbBlock block = new EpbBlock(new EpbBlockPos() { X = (byte)x, Y = (byte)y, Z = (byte)z }) {BlockType = BlockType, Variant = BlockVariant};
                             block.SetColour(isInterior ? EpbColourIndex.Pink : EpbColourIndex.None);
                             block.SetTexture(14, (x % 2) == 1);
                             block.SetSymbol(1, (EpbBlock.SymbolRotation)(x % 4), EpbBlock.FaceIndex.Back);
@@ -395,7 +395,7 @@ namespace epb
                             || (!a && !b && !c)
                            ))
                         {
-                            epb.SetBlock(new EpbBlock() { BlockType = BlockType, Variant = BlockVariant }, x, y, z);
+                            epb.SetBlock(new EpbBlock(new EpbBlockPos() { X = (byte)x, Y = (byte)y, Z = (byte)z }) { BlockType = BlockType, Variant = BlockVariant }, x, y, z);
                         }
                     }
                 }
@@ -487,7 +487,7 @@ namespace epb
 
                         if (!isInterior || !hollow)
                         {
-                            EpbBlock block = new EpbBlock() {BlockType = t, Rotation = r, Variant = v};
+                            EpbBlock block = new EpbBlock(new EpbBlockPos() { X = (byte)x, Y = (byte)y, Z = (byte)z }) {BlockType = t, Rotation = r, Variant = v};
                             block.SetColour(isInterior ? EpbColourIndex.Pink : EpbColourIndex.None);
                             epb.SetBlock(block, x, y, z);
                         }
@@ -523,7 +523,7 @@ namespace epb
             UInt32 i = 0;
             foreach (UInt16 bt in blockTypes )
             {
-                epb.SetBlock(new EpbBlock() { BlockType = EpbBlock.BlockTypes[bt], Variant = BlockVariant }, i, 0, 0);
+                epb.SetBlock(new EpbBlock(new EpbBlockPos() { X = (byte)i, Y = 0, Z = 0 }) { BlockType = EpbBlock.BlockTypes[bt], Variant = BlockVariant }, i, 0, 0);
                 i += 14;
             }
 
