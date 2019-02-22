@@ -931,19 +931,19 @@ namespace EPBLib
             {  1794, new EpbBlockType(){Id =  1794, Name = "AlienExtendedLarge"           , Category = "BuildingBlocks"               , Ref = "AlienFullLarge"               }},
 
             // -------- Manually added: ---------
-            {  53, new EpbBlockType(){Id =   53, Name = "VoxelSathium"                   , Category = "Voxel/Materials"              , Ref = ""                             }},
-            {  57, new EpbBlockType(){Id =   57, Name = "VoxelRock"                      , Category = "Voxel/Materials"              , Ref = ""                             }},
-            {  79, new EpbBlockType(){Id =   79, Name = "VoxelCopper"                    , Category = "Voxel/Materials"              , Ref = ""                             }},
-            {  80, new EpbBlockType(){Id =   80, Name = "VoxelPromethium"                , Category = "Voxel/Materials"              , Ref = ""                             }},
-            {  81, new EpbBlockType(){Id =   81, Name = "VoxelIron"                      , Category = "Voxel/Materials"              , Ref = ""                             }},
-            {  82, new EpbBlockType(){Id =   82, Name = "VoxelSilicon"                   , Category = "Voxel/Materials"              , Ref = ""                             }},
-            {  83, new EpbBlockType(){Id =   83, Name = "VoxelNeodymium"                 , Category = "Voxel/Materials"              , Ref = ""                             }},
-            {  84, new EpbBlockType(){Id =   84, Name = "VoxelMagnesium"                 , Category = "Voxel/Materials"              , Ref = ""                             }},
-            {  85, new EpbBlockType(){Id =   85, Name = "VoxelCobalt"                    , Category = "Voxel/Materials"              , Ref = ""                             }},
-            {  90, new EpbBlockType(){Id =   90, Name = "VoxelErestrum"                  , Category = "Voxel/Materials"              , Ref = ""                             }},
-            {  91, new EpbBlockType(){Id =   91, Name = "VoxelZascosium"                 , Category = "Voxel/Materials"              , Ref = ""                             }},
-            {  95, new EpbBlockType(){Id =   95, Name = "VoxelGold"                      , Category = "Voxel/Materials"              , Ref = ""                             }},
-            { 114, new EpbBlockType(){Id =  114, Name = "VoxelPentaxid"                  , Category = "Voxel/Materials"              , Ref = ""                             }},
+            {    53, new EpbBlockType(){Id =    53, Name = "VoxelSathium"                 , Category = "Voxel/Materials"              , Ref = ""                             }},
+            {    57, new EpbBlockType(){Id =    57, Name = "VoxelRock"                    , Category = "Voxel/Materials"              , Ref = ""                             }},
+            {    79, new EpbBlockType(){Id =    79, Name = "VoxelCopper"                  , Category = "Voxel/Materials"              , Ref = ""                             }},
+            {    80, new EpbBlockType(){Id =    80, Name = "VoxelPromethium"              , Category = "Voxel/Materials"              , Ref = ""                             }},
+            {    81, new EpbBlockType(){Id =    81, Name = "VoxelIron"                    , Category = "Voxel/Materials"              , Ref = ""                             }},
+            {    82, new EpbBlockType(){Id =    82, Name = "VoxelSilicon"                 , Category = "Voxel/Materials"              , Ref = ""                             }},
+            {    83, new EpbBlockType(){Id =    83, Name = "VoxelNeodymium"               , Category = "Voxel/Materials"              , Ref = ""                             }},
+            {    84, new EpbBlockType(){Id =    84, Name = "VoxelMagnesium"               , Category = "Voxel/Materials"              , Ref = ""                             }},
+            {    85, new EpbBlockType(){Id =    85, Name = "VoxelCobalt"                  , Category = "Voxel/Materials"              , Ref = ""                             }},
+            {    90, new EpbBlockType(){Id =    90, Name = "VoxelErestrum"                , Category = "Voxel/Materials"              , Ref = ""                             }},
+            {    91, new EpbBlockType(){Id =    91, Name = "VoxelZascosium"               , Category = "Voxel/Materials"              , Ref = ""                             }},
+            {    95, new EpbBlockType(){Id =    95, Name = "VoxelGold"                    , Category = "Voxel/Materials"              , Ref = ""                             }},
+            {   114, new EpbBlockType(){Id =   114, Name = "VoxelPentaxid"                , Category = "Voxel/Materials"              , Ref = ""                             }},
 
         };
 
