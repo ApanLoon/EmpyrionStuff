@@ -1,0 +1,39 @@
+﻿<vlogic:LogicNodeView x:Class="EPBLab.View.Logic.ConnectionPointView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vlogic="clr-namespace:EPBLab.View.Logic"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style TargetType="{x:Type Border}">
+            <Setter Property="Canvas.Left" Value="{Binding X}" />
+            <Setter Property="Canvas.Top" Value="{Binding Y}" />
+            <Setter Property="Background" Value="Beige"></Setter>
+            <Setter Property="BorderBrush">
+                <Setter.Value>
+                    <SolidColorBrush Color="Red" />
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Type}" Value="Input">
+                    <Setter Property="BorderThickness" Value="1 1 0 0" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Type}" Value="InputLast">
+                    <Setter Property="BorderThickness" Value="1 1 0 1" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Type}" Value="Output">
+                    <Setter Property="BorderThickness" Value="0 1 1 0" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Type}" Value="OutputLast">
+                    <Setter Property="BorderThickness" Value="0 1 1 1" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+    <Border>
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Name}" />
+    </Border>
+</vlogic:LogicNodeView>

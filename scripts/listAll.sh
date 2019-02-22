@@ -7,4 +7,4 @@
 
 EPB=../src/epb/epb/bin/Debug/epb.exe
 
-find "$1" -name "*.epb" -exec sh -c 'echo -e "$1\r" ; "$0" "$1"' "$EPB" {} ';'
+find "$1" -name "*.epb" -exec sh -c 'echo -e "\r\n$1\r" ; "$0" "$1"' "$EPB" {} ';'

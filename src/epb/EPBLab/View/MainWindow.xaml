@@ -1,0 +1,62 @@
+﻿<Window x:Class="EPBLab.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"  
+        xmlns:ignore="http://www.galasoft.ch/ignore"
+        xmlns:b="clr-namespace:EPBLab.Behaviours"
+        xmlns:view="clr-namespace:EPBLab.View"
+        xmlns:prop="clr-namespace:EPBLab.Properties"
+        mc:Ignorable="d ignore"
+        Width="800"
+        Height="600"
+        Title="{Binding MainWindowTitle}"
+        DataContext="{Binding Main, Source={StaticResource Locator}}">
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="24" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="24" />
+        </Grid.RowDefinitions>
+        <ToolBarTray Grid.Row="0">
+            <ToolBar>
+                <Button Command="{Binding CommandNew}" Content="New" />
+                <Button Content="Open">
+                    <i:Interaction.Behaviors>
+                        <b:OpenFileBehaviour MessageIdentifier="OpenBlueprints" Filter="Empyrion blueprints (*.epb)|*.epb|All files (*.*)|*.*" MultiSelect="True" />
+                    </i:Interaction.Behaviors>
+                </Button>
+                <Button Command="{Binding CommandSave}" Content="Save" />
+            </ToolBar>
+        </ToolBarTray>
+
+        <TabControl Grid.Row="1"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    ItemsSource="{Binding Blueprints}"
+                    SelectedIndex="{Binding SelectedBlueprintIndex}">
+            <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding TabName}" />
+                        <Button Margin="5 0 0 0" Command="{Binding CommandClose}" Content="X" />
+                    </StackPanel>
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+            <TabControl.ContentTemplate>
+                <DataTemplate>
+                    <view:BlueprintView />
+                </DataTemplate>
+            </TabControl.ContentTemplate>
+        </TabControl>
+        
+        <StatusBar Grid.Row="2" HorizontalAlignment="Stretch">
+            <StatusBarItem HorizontalAlignment="Right">
+                <TextBlock>Test</TextBlock>
+            </StatusBarItem>
+        </StatusBar>
+
+    </Grid>
+</Window>
