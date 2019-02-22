@@ -9,9 +9,9 @@
   DataContext="{Binding Target={StaticResource Locator}, Path=ViewModelName}"
 */
 
+using CommonServiceLocator;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
-using Microsoft.Practices.ServiceLocation;
 using EPBLab.Model;
 
 namespace EPBLab.ViewModel
