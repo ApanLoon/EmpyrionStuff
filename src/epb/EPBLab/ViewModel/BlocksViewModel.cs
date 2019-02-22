@@ -73,6 +73,11 @@ namespace EPBLab.ViewModel
         {
             Blueprint = blueprint;
 
+            if (Blueprint.Blocks == null)
+            {
+                return;
+            }
+
             // Build block tree:
             foreach (EpbBlock block in Blueprint.Blocks)
             {
