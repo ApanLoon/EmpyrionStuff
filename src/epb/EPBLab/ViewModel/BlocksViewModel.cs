@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
+using EPBLab.Helpers;
 using EPBLab.ViewModel.Tree;
 using EPBLib;
 using EPBLib.BlockData;
@@ -79,6 +80,19 @@ namespace EPBLab.ViewModel
             }
 
             // Build block tree:
+            BuildTree();
+
+
+            // Build 3D view:
+
+            CameraLookDirection = "0,0,-1";
+            CameraPosition = "0,0,3";
+
+            BuildModel(Blueprint);
+        }
+
+        private void BuildTree()
+        {
             foreach (EpbBlock block in Blueprint.Blocks)
             {
                 if (block == null)
@@ -93,7 +107,7 @@ namespace EPBLab.ViewModel
                 if (categoryNode == null)
                 {
                     categoryNode = new GroupNode() {Title = categoryName};
-                    BlockCategories.Add(categoryNode);
+                    BlockCategories.AddSorted(categoryNode);
                 }
 
                 ITreeNode blockNode;
@@ -115,16 +129,14 @@ namespace EPBLab.ViewModel
                         break;
                 }
 
-                categoryNode.Add(blockNode);
+                GroupNode typeNode = (GroupNode)categoryNode.Children.FirstOrDefault(x => x.Title == blockNode.Title);
+                if (typeNode == null)
+                {
+                    typeNode = new GroupNode() { Title = blockNode.Title };
+                    categoryNode.AddSorted(typeNode);
+                }
+                typeNode.AddSorted(blockNode);
             }
-
-
-            // Build 3D view:
-
-            CameraLookDirection = "0,0,-1";
-            CameraPosition = "0,0,3";
-
-            BuildModel(Blueprint);
         }
 
         private void BuildModel(EpBlueprint blueprint)
