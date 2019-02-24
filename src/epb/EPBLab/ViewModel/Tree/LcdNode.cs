@@ -1,21 +1,11 @@
 ﻿
-using System.Collections.ObjectModel;
 using System.Windows.Media;
-using System.Windows.Media.Media3D;
 using EPBLib;
 
 namespace EPBLab.ViewModel.Tree
 {
-    public class BlockLcdViewModel : ITreeNode
+    public class LcdNode : BlockNode
     {
-        protected EpbBlock Block;
-        protected EpBlueprint Blueprint;
-
-        public string Title { get; set; }
-        public ObservableCollection<ITreeNode> Children { get; set; }
-
-        public Point3D Position { get; set; }
-
         public string Text
         {
             get
@@ -53,13 +43,8 @@ namespace EPBLab.ViewModel.Tree
             }
         }
 
-        public BlockLcdViewModel(EpbBlock block, EpBlueprint blueprint)
+        public LcdNode(EpbBlock block, EpBlueprint blueprint):base (block, blueprint)
         {
-            Block = block;
-            Blueprint = blueprint;
-            Title = block.BlockType.ToString();
-            EpbBlockPos pos = block.Position;
-            Position = new Point3D(pos.X - Blueprint.Width / 2.0, pos.Y - Blueprint.Height / 2.0, pos.Z - Blueprint.Depth / 2.0);
         }
     }
 }

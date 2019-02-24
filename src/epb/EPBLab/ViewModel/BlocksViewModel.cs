@@ -17,8 +17,8 @@ namespace EPBLab.ViewModel
         protected EpBlueprint Blueprint;
 
         public const string BlocksPropertyName = "BlockCategories";
-        private ObservableCollection<BlockCategoryViewModel> _blockCategories = new ObservableCollection<BlockCategoryViewModel>();
-        public ObservableCollection<BlockCategoryViewModel> BlockCategories
+        private ObservableCollection<GroupNode> _blockCategories = new ObservableCollection<GroupNode>();
+        public ObservableCollection<GroupNode> BlockCategories
         {
             get => _blockCategories;
             set => Set(ref _blockCategories, value);
@@ -89,10 +89,10 @@ namespace EPBLab.ViewModel
                 EpbBlock.EpbBlockType t = block.BlockType;
 
                 string categoryName = t.Category;
-                BlockCategoryViewModel categoryNode = BlockCategories.FirstOrDefault(x => x.Title == categoryName);
+                GroupNode categoryNode = BlockCategories.FirstOrDefault(x => x.Title == categoryName);
                 if (categoryNode == null)
                 {
-                    categoryNode = new BlockCategoryViewModel() {Title = categoryName};
+                    categoryNode = new GroupNode() {Title = categoryName};
                     BlockCategories.Add(categoryNode);
                 }
 
@@ -108,10 +108,10 @@ namespace EPBLab.ViewModel
                     case 1101:
                     case 1102:
                     case 1103:
-                        blockNode = new BlockLcdViewModel(block, Blueprint);
+                        blockNode = new LcdNode(block, Blueprint);
                         break;
                     default:
-                        blockNode = new BlockDefaultViewModel(block, Blueprint);
+                        blockNode = new BlockNode(block, Blueprint);
                         break;
                 }
 
@@ -157,10 +157,10 @@ namespace EPBLab.ViewModel
             {
                 switch (node)
                 {
-                    case BlockLcdViewModel lcd:
+                    case LcdNode lcd:
                         group.Children.Add(CreateBox(lcd.Position, Color.FromRgb(255, 0, 0)));
                         break;
-                    case BlockDefaultViewModel def:
+                    case BlockNode def:
                         group.Children.Add(CreateBox(def.Position, Color.FromRgb(255, 0, 0)));
                         break;
                 }

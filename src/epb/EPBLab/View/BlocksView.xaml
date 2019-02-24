@@ -27,7 +27,7 @@
                         <tree:BindableSelectedItemBehaviour SelectedItems="{Binding SelectedBlocks, Mode=TwoWay}" />
                     </i:Interaction.Behaviors>
                     <TreeView.Resources>
-                        <HierarchicalDataTemplate DataType="{x:Type tree:BlockCategoryViewModel}" ItemsSource="{Binding Children}">
+                        <HierarchicalDataTemplate DataType="{x:Type tree:GroupNode}" ItemsSource="{Binding Children}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
@@ -37,10 +37,10 @@
                                 <TextBlock Grid.Column="1" Text="{Binding ChildCount}" FontWeight="Bold" />
                             </Grid>
                         </HierarchicalDataTemplate>
-                        <DataTemplate DataType="{x:Type tree:BlockDefaultViewModel}">
+                        <DataTemplate DataType="{x:Type tree:BlockNode}">
                             <TextBlock Text="{Binding Title}" />
                         </DataTemplate>
-                        <DataTemplate DataType="{x:Type tree:BlockLcdViewModel}">
+                        <DataTemplate DataType="{x:Type tree:LcdNode}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
@@ -58,15 +58,15 @@
                 <ScrollViewer Grid.Row="2" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                     <ItemsControl ItemsSource="{Binding SelectedBlocks}" HorizontalAlignment="Left">
                         <ItemsControl.Resources>
-                            <DataTemplate DataType="{x:Type tree:BlockCategoryViewModel}">
+                            <DataTemplate DataType="{x:Type tree:GroupNode}">
                                 <TextBlock Text="{Binding Title}" />
                             </DataTemplate>
 
-                            <DataTemplate DataType="{x:Type tree:BlockDefaultViewModel}">
+                            <DataTemplate DataType="{x:Type tree:BlockNode}">
                                 <TextBlock Text="{Binding Title}" />
                             </DataTemplate>
 
-                            <DataTemplate DataType="{x:Type tree:BlockLcdViewModel}">
+                            <DataTemplate DataType="{x:Type tree:LcdNode}">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />

@@ -95,9 +95,10 @@
     <Compile Include="ViewModel\SummaryViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\Tree\BindableSelectedItemBehaviour.cs" />
-    <Compile Include="ViewModel\Tree\BlockCategoryViewModel.cs" />
-    <Compile Include="ViewModel\Tree\BlockDefaultViewModel.cs" />
-    <Compile Include="ViewModel\Tree\BlockLcdViewModel.cs" />
+    <Compile Include="ViewModel\Tree\TreeNode.cs" />
+    <Compile Include="ViewModel\Tree\GroupNode.cs" />
+    <Compile Include="ViewModel\Tree\BlockNode.cs" />
+    <Compile Include="ViewModel\Tree\LcdNode.cs" />
     <Compile Include="ViewModel\Tree\ITreeNode.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Page Include="View\BlocksView.xaml">
