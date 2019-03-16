@@ -75,6 +75,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Helpers\CollectionExtensions.cs" />
+    <Compile Include="Helpers\EpbColourExtensions.cs" />
     <Compile Include="Messages\CloseBlueprintMessage.cs" />
     <Compile Include="Messages\FilesOpenedMessage.cs" />
     <Compile Include="Behaviours\OpenFileBehaviour.cs" />
@@ -102,6 +103,10 @@
     <Compile Include="ViewModel\Tree\LcdNode.cs" />
     <Compile Include="ViewModel\Tree\ITreeNode.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Page Include="View\BlockInfoCommon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\BlocksView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -145,6 +150,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="View\BlockInfoCommon.xaml.cs">
+      <DependentUpon>BlockInfoCommon.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\BlocksView.xaml.cs">
       <DependentUpon>BlocksView.xaml</DependentUpon>

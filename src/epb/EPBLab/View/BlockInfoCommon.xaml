@@ -1,0 +1,57 @@
+﻿<UserControl x:Class="EPBLab.View.BlockInfoCommon"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:EPBLab.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="0" Margin="0 0 5 0" Text="Type" /><TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding BlockType}" />
+        <TextBlock Grid.Row="1" Grid.Column="0" Margin="0 0 5 0" Text="Variant" /><TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Variant}" />
+        <TextBlock Grid.Row="2" Grid.Column="0" Margin="0 0 5 0" Text="Position" /><TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Position}" />
+        <TextBlock Grid.Row="3" Grid.Column="0" Margin="0 0 5 0" Text="Rotation" /><TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Rotation}" />
+        <TextBlock Grid.Row="4" Grid.Column="0" Margin="0 0 5 0" Text="Colours" />
+        <ItemsControl Grid.Row="4" Grid.Column="1" ItemsSource="{Binding Colours}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Rows="1" Columns="6" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Border BorderBrush="Black" BorderThickness="1" Width="12" Height="12">
+                        <Border.Background>
+                            <SolidColorBrush Color="{Binding}" />
+                        </Border.Background>
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <TextBlock Grid.Row="5" Grid.Column="0" Margin="0 0 5 0" Text="Textures" />
+        <ItemsControl Grid.Row="5" Grid.Column="1" ItemsSource="{Binding Textures}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Rows="1" Columns="6" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding}" HorizontalAlignment="Center" />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
+</UserControl>

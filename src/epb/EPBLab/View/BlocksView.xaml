@@ -63,7 +63,7 @@
                             </DataTemplate>
 
                             <DataTemplate DataType="{x:Type tree:BlockNode}">
-                                <TextBlock Text="{Binding Title}" />
+                                <local:BlockInfoCommon/>
                             </DataTemplate>
 
                             <DataTemplate DataType="{x:Type tree:LcdNode}">
@@ -72,7 +72,7 @@
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition Height="Auto" />
                                     </Grid.RowDefinitions>
-                                    <TextBlock Grid.Row="0" Text="{Binding Title}" />
+                                    <local:BlockInfoCommon Grid.Row="0" />
                                     <Border Grid.Row="1" Margin="20 0 0 0" BorderBrush="CadetBlue" BorderThickness="2">
                                         <Border.Background>
                                             <DrawingBrush TileMode="Tile" Viewport="0,0,32,32" ViewportUnits="Absolute">
