@@ -375,7 +375,7 @@ namespace EPBLib
             {  1091, new EpbBlockType(){Id =  1091, Name = "CockpitMS03"                  , Category = "Devices"                      , Ref = "CockpitMS01"                  }},
             {  1092, new EpbBlockType(){Id =  1092, Name = "CockpitOpen2SV"               , Category = "Devices"                      , Ref = ""                             }},
             {  1093, new EpbBlockType(){Id =  1093, Name = "CockpitBlocksSV"              , Category = "Devices"                      , Ref = ""                             }},
-            {  1094, new EpbBlockType(){Id =  1094, Name = "CockpitSV04"                  , Category = "Devices"                      , Ref = ""                             }},
+            {  1094, new EpbBlockType(){Id =  1094, Name = "CockpitSV04"                  , Category = "Devices"                      , Ref = "CockpitSV02"                  }},
             {  1095, new EpbBlockType(){Id =  1095, Name = "LCDScreenBlocks"              , Category = "Devices"                      , Ref = ""                             }},
             {  1096, new EpbBlockType(){Id =  1096, Name = "LCDNoFrame1x1"                , Category = "Devices"                      , Ref = ""                             }},
             {  1097, new EpbBlockType(){Id =  1097, Name = "LCDFrame1x1"                  , Category = "Devices"                      , Ref = "LCDNoFrame1x1"                }},
@@ -929,6 +929,14 @@ namespace EPBLib
             {  1792, new EpbBlockType(){Id =  1792, Name = "HullArmoredExtendedSmall"     , Category = "BuildingBlocks"               , Ref = "HullArmoredFullSmall"         }},
             {  1793, new EpbBlockType(){Id =  1793, Name = "HullCombatExtendedSmall"      , Category = "BuildingBlocks"               , Ref = "HullCombatFullSmall"          }},
             {  1794, new EpbBlockType(){Id =  1794, Name = "AlienExtendedLarge"           , Category = "BuildingBlocks"               , Ref = "AlienFullLarge"               }},
+            {  1800, new EpbBlockType(){Id =  1800, Name = "CockpitBlocksSVT2"            , Category = "Devices"                      , Ref = ""                             }},
+            {  1801, new EpbBlockType(){Id =  1801, Name = "CockpitSV01T2"                , Category = "Devices"                      , Ref = "CockpitSV01"                  }},
+            {  1802, new EpbBlockType(){Id =  1802, Name = "CockpitSV_ShortRangeT2"       , Category = "Devices"                      , Ref = "CockpitSV_ShortRange"         }},
+            {  1803, new EpbBlockType(){Id =  1803, Name = "CockpitSV02NewT2"             , Category = "Devices"                      , Ref = "CockpitSV02New"               }},
+            {  1804, new EpbBlockType(){Id =  1804, Name = "CockpitSV04T2"                , Category = "Devices"                      , Ref = "CockpitSV04"                  }},
+            {  1805, new EpbBlockType(){Id =  1805, Name = "CockpitSV05NewT2"             , Category = "Devices"                      , Ref = "CockpitSV05New"               }},
+            {  1806, new EpbBlockType(){Id =  1806, Name = "CockpitSV06T2"                , Category = "Devices"                      , Ref = "CockpitSV06"                  }},
+            {  1807, new EpbBlockType(){Id =  1807, Name = "CockpitSV07NewT2"             , Category = "Devices"                      , Ref = "CockpitSV07New"               }},
 
             // -------- Manually added: ---------
             {    53, new EpbBlockType(){Id =    53, Name = "VoxelSathium"                 , Category = "Voxel/Materials"              , Ref = ""                             }},
