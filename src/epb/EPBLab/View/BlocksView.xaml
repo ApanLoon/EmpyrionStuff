@@ -117,8 +117,8 @@
                         <ModelVisual3D.Content>
                             <Model3DGroup>
                                 <Model3DGroup.Children>
-                                    <DirectionalLight Color="#FFFFFFFF" Direction="{Binding CameraLookDirection}" />
-                                    <AmbientLight Color="AntiqueWhite" />
+                                    <PointLight Color="White" Position="{Binding CameraPosition}" />
+                                    <AmbientLight Color="#FF101010" />
                                 </Model3DGroup.Children>
                             </Model3DGroup>
                         </ModelVisual3D.Content>

@@ -9,6 +9,7 @@ using GalaSoft.MvvmLight;
 using EPBLab.Model;
 using GalaSoft.MvvmLight.Command;
 using EPBLib;
+using EPBLib.BlockData;
 using EPBLib.Helpers;
 using GalaSoft.MvvmLight.Messaging;
 
@@ -112,7 +113,11 @@ namespace EPBLab.ViewModel
 
         protected void NewBlueprint()
         {
-            EpBlueprint blueprint = new EpBlueprint();
+            EpBlueprint blueprint = new EpBlueprint(EpBlueprint.EpbType.Base, 1, 1, 1);
+            EpbBlock block = new EpbBlock(new EpbBlockPos() { X = 0, Y = 0, Z = 0 }) { BlockType = EpbBlock.BlockTypes[403], Variant = 6 };
+            block.SetColour(EpbColourIndex.Pink);
+            blueprint.SetBlock(block, 0, 0, 0);
+
             BlueprintViewModel vm = new BlueprintViewModel("New", blueprint);
             Blueprints.Add(vm);
             SelectedBlueprintIndex = Blueprints.Count - 1;

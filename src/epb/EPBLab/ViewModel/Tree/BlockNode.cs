@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Linq;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
@@ -10,7 +11,7 @@ namespace EPBLab.ViewModel.Tree
 {
     public class BlockNode : TreeNode
     {
-        protected EpbBlock Block;
+        public EpbBlock Block;
         protected EpBlueprint Blueprint;
 
         public string BlockType => Block.BlockType.ToString();
@@ -29,7 +30,10 @@ namespace EPBLab.ViewModel.Tree
             Blueprint = blueprint;
             Title = block.BlockType.ToString();
             EpbBlockPos pos = block.Position;
-            Position = new Point3D(pos.X - Blueprint.Width / 2.0, pos.Y - Blueprint.Height / 2.0, pos.Z - Blueprint.Depth / 2.0);
+            Position = new Point3D(Math.Floor(pos.X - Blueprint.Width  / 2.0),
+                                   Math.Floor(pos.Y - Blueprint.Height / 2.0),
+                                   //Math.Floor(pos.Z - Blueprint.Depth  / 2.0));
+                                   Math.Floor(Blueprint.Depth / 2.0 - pos.Z)); //TODO: Is this really correct? It makes Pyramid look right.
             Colours = Block.Colours.Select(index => Blueprint.Palette[(EpbColourIndex)index].ToColor()).ToArray();
         }
     }
