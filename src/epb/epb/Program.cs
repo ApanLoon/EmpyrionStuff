@@ -21,6 +21,7 @@ namespace epb
  
         public enum CreateTemplateType
         {
+            BaseRotations,
             BaseBox,
             BaseBoxFrame,
             BasePyramid,
@@ -170,6 +171,9 @@ namespace epb
             case CommandType.Create:
                 switch (CreateTemplate)
                 {
+                case CreateTemplateType.BaseRotations:
+                    CreateRotations(OutputPath, Hollow);
+                    break;
                 case CreateTemplateType.BaseBox:
                     CreateBox(OutputPath, Hollow);
                     break;
@@ -307,6 +311,33 @@ namespace epb
             return epb;
         }
 
+        static void CreateRotations(string path, bool hollow)
+        {
+            Width = 1;
+            Height = 1;
+            Depth = (uint)Enum.GetValues(typeof(EpbBlock.EpbBlockRotation)).Length;
+            EpBlueprint epb = CreateCommon();
+
+            byte x = 0;
+            foreach (EpbBlock.EpbBlockRotation rot in Enum.GetValues(typeof(EpbBlock.EpbBlockRotation)))
+            {
+                EpbBlock block = new EpbBlock(new EpbBlockPos() { X = (byte)x, Y = (byte)0, Z = (byte)0 }) { BlockType = BlockType, Variant = BlockVariant };
+                block.SetColour(EpbColourIndex.Pink);
+                block.Rotation = rot;
+                epb.SetBlock(block, 0, 0, x);
+                x++;
+            }
+
+            // Write the file:
+            using (FileStream stream = File.Create(path))
+            {
+                using (BinaryWriter writer = new BinaryWriter(stream))
+                {
+                    writer.Write(epb);
+                }
+            }
+        }
+
         static void CreateBox(string path, bool hollow)
         {
             EpBlueprint epb = CreateCommon();
@@ -317,13 +348,13 @@ namespace epb
                 {
                     for (UInt32 x = 0; x < Width; x++)
                     {
-                        bool isInterior =    (x > 0 && x < (Width  - 1))
+                        bool isInterior = (x > 0 && x < (Width - 1))
                                           && (y > 0 && y < (Height - 1))
-                                          && (z > 0 && z < (Depth  - 1));
+                                          && (z > 0 && z < (Depth - 1));
 
                         if (!isInterior || !hollow)
                         {
-                            EpbBlock block = new EpbBlock(new EpbBlockPos() { X = (byte)x, Y = (byte)y, Z = (byte)z }) {BlockType = BlockType, Variant = BlockVariant};
+                            EpbBlock block = new EpbBlock(new EpbBlockPos() { X = (byte)x, Y = (byte)y, Z = (byte)z }) { BlockType = BlockType, Variant = BlockVariant };
                             block.SetColour(isInterior ? EpbColourIndex.Pink : EpbColourIndex.None);
                             block.SetTexture(14, (x % 2) == 1);
                             block.SetSymbol(1, (EpbBlock.SymbolRotation)(x % 4), EpbBlock.FaceIndex.Back);
