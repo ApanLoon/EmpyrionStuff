@@ -113,14 +113,27 @@ namespace EPBLab.ViewModel
 
         protected void NewBlueprint()
         {
-            EpBlueprint blueprint = new EpBlueprint(EpBlueprint.EpbType.Base, 1, 1, 1);
-            EpbBlock block = new EpbBlock(new EpbBlockPos() { X = 0, Y = 0, Z = 0 }) { BlockType = EpbBlock.BlockTypes[403], Variant = 6 };
+            EpBlueprint blueprint = new EpBlueprint(EpBlueprint.EpbType.Base, 4, 1, 1);
+            EpbBlock block;
+            block = CreateBlock(0, 0, 0, "HullFullLarge", "Slope", blueprint);
+            block.SetColour(EpbColourIndex.Red);
+            block = CreateBlock(2, 0, 0, "HullThinLarge", "Sloped Wall Top (left)", blueprint);
             block.SetColour(EpbColourIndex.Pink);
-            blueprint.SetBlock(block, 0, 0, 0);
+            block = CreateBlock(3, 0, 0, "HullThinLarge", "Sloped Wall Bottom (left)", blueprint);
+            block.SetColour(EpbColourIndex.Pink);
 
             BlueprintViewModel vm = new BlueprintViewModel("New", blueprint);
             Blueprints.Add(vm);
             SelectedBlueprintIndex = Blueprints.Count - 1;
+        }
+
+        protected EpbBlock CreateBlock(byte x, byte y, byte z, string typeName, string variantName, EpBlueprint blueprint)
+        {
+            EpbBlock.EpbBlockType t = EpbBlock.GetBlockType(typeName, variantName);
+            byte v = EpbBlock.GetVariant(t.Id, variantName);
+            EpbBlock block = new EpbBlock(new EpbBlockPos() { X = x, Y = y, Z = z }) { BlockType = t, Variant = v };
+            blueprint.SetBlock(block, x, y, z);
+            return block;
         }
 
         protected void OpenBlueprints(FilesOpenedMessage m)
