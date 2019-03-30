@@ -276,20 +276,21 @@ namespace EPBLab.ViewModel
                 case 0: //Cube
                     faceIndex = AddGeometry_Cube(vertices, triangles, normals, faceIndex);
                     break;
-                /*
                 case 1: //CutCorner
+                    faceIndex = AddGeometry_CutCorner(vertices, triangles, normals, faceIndex);
                     break;
                 case 2: //CornerLongA
+                    faceIndex = AddGeometry_CornerLongA(vertices, triangles, normals, faceIndex);
                     break;
                 case 3: //CornerLongB
+                    faceIndex = AddGeometry_CornerLongB(vertices, triangles, normals, faceIndex);
                     break;
                 case 4: //CornerLongC
+                    faceIndex = AddGeometry_CornerLongC(vertices, triangles, normals, faceIndex);
                     break;
-                */
                 case 5: //CornerLongD
                     faceIndex = AddGeometry_CornerLongD(vertices, triangles, normals, faceIndex);
                     break;
-
                 case 6: //CornerLargeA
                     faceIndex = AddGeometry_CornerLargeA(vertices, triangles, normals, faceIndex);
                     break;
@@ -338,15 +339,19 @@ namespace EPBLab.ViewModel
                     break;
                 case 26: //RoundSlopeEdge
                     break;
+                */
                 case 27: //CornerLargeB
+                    faceIndex = AddGeometry_CornerLargeB(vertices, triangles, normals, faceIndex);
                     break;
                 case 28: //CornerLargeC
+                    faceIndex = AddGeometry_CornerLargeC(vertices, triangles, normals, faceIndex);
                     break;
                 case 29: //CornerLargeD
+                    faceIndex = AddGeometry_CornerLargeD(vertices, triangles, normals, faceIndex);
                     break;
                 case 30: //CornerLongE
+                    faceIndex = AddGeometry_CornerLongE(vertices, triangles, normals, faceIndex);
                     break;
-                */
                 case 31: //PyramidA
                     faceIndex = AddGeometry_PyramidA(vertices, triangles, normals, faceIndex);
                     break;
@@ -369,545 +374,6 @@ namespace EPBLab.ViewModel
             model.Material = material;
 
             return model;
-        }
-
-        private int AddGeometry_Cube(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)
-        {
-            // Front face:
-            vertices.Add(new Point3D(-0.5, -0.5, 0.5));
-            vertices.Add(new Point3D( 0.5, -0.5, 0.5));
-            vertices.Add(new Point3D( 0.5,  0.5, 0.5));
-            vertices.Add(new Point3D(-0.5,  0.5, 0.5));
-            normals.Add(new Vector3D(0, 0, 1));
-            normals.Add(new Vector3D(0, 0, 1));
-            normals.Add(new Vector3D(0, 0, 1));
-            normals.Add(new Vector3D(0, 0, 1));
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 3, faceIndex + 0);
-            faceIndex += 4;
-
-            // Back face:
-            vertices.Add(new Point3D(-0.5, -0.5, -0.5));
-            vertices.Add(new Point3D( 0.5, -0.5, -0.5));
-            vertices.Add(new Point3D( 0.5,  0.5, -0.5));
-            vertices.Add(new Point3D(-0.5,  0.5, -0.5));
-            normals.Add(new Vector3D(0, 0, -1));
-            normals.Add(new Vector3D(0, 0, -1));
-            normals.Add(new Vector3D(0, 0, -1));
-            normals.Add(new Vector3D(0, 0, -1));
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 0);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 3, faceIndex + 2);
-            faceIndex += 4;
-
-            // Right face:
-            vertices.Add(new Point3D(-0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(-0.5, -0.5,  0.5));
-            vertices.Add(new Point3D(-0.5,  0.5,  0.5));
-            vertices.Add(new Point3D(-0.5,  0.5, -0.5));
-            normals.Add(new Vector3D(-1, 0, 0));
-            normals.Add(new Vector3D(-1, 0, 0));
-            normals.Add(new Vector3D(-1, 0, 0));
-            normals.Add(new Vector3D(-1, 0, 0));
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 3, faceIndex + 0);
-            faceIndex += 4;
-
-            // Left face:
-            vertices.Add(new Point3D(0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(0.5, -0.5,  0.5));
-            vertices.Add(new Point3D(0.5,  0.5,  0.5));
-            vertices.Add(new Point3D(0.5,  0.5, -0.5));
-            normals.Add(new Vector3D(1, 0, 0));
-            normals.Add(new Vector3D(1, 0, 0));
-            normals.Add(new Vector3D(1, 0, 0));
-            normals.Add(new Vector3D(1, 0, 0));
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 0);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 3, faceIndex + 2);
-            faceIndex += 4;
-
-            // Top face:
-            vertices.Add(new Point3D(-0.5, 0.5, -0.5));
-            vertices.Add(new Point3D(-0.5, 0.5,  0.5));
-            vertices.Add(new Point3D( 0.5, 0.5,  0.5));
-            vertices.Add(new Point3D( 0.5, 0.5, -0.5));
-            normals.Add(new Vector3D(0, 1, 0));
-            normals.Add(new Vector3D(0, 1, 0));
-            normals.Add(new Vector3D(0, 1, 0));
-            normals.Add(new Vector3D(0, 1, 0));
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 3, faceIndex + 0);
-            faceIndex += 4;
-
-            // Bottom face:
-            vertices.Add(new Point3D(-0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(-0.5, -0.5,  0.5));
-            vertices.Add(new Point3D( 0.5, -0.5,  0.5));
-            vertices.Add(new Point3D( 0.5, -0.5, -0.5));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 0);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 3, faceIndex + 2);
-            faceIndex += 4;
-            return faceIndex;
-        }
-        private int AddGeometry_CornerLongD(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)
-        {
-            Vector3D v1;
-            Vector3D v2;
-            Vector3D normal;
-
-            // Inside face:
-            vertices.Add(new Point3D(0.5, -0.5, 0.0));
-            vertices.Add(new Point3D(0.0, -0.5, 0.5));
-            vertices.Add(new Point3D(0.5, 0.5, 0.5));
-            v1 = new Vector3D(vertices[faceIndex + 0].X, vertices[faceIndex + 0].Y, vertices[faceIndex + 0].Z);
-            v2 = new Vector3D(vertices[faceIndex + 1].X, vertices[faceIndex + 1].Y, vertices[faceIndex + 1].Z);
-            normal = Vector3D.CrossProduct(v1, v2);
-            normals.Add(normal);
-            normals.Add(normal);
-            normals.Add(normal);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            faceIndex += 3;
-
-            // Left face:
-            vertices.Add(new Point3D(0.5, -0.5, 0.5));
-            vertices.Add(new Point3D(0.5, -0.5, 0.0));
-            vertices.Add(new Point3D(0.5, 0.5, 0.5));
-            normals.Add(new Vector3D(1, 0, 0));
-            normals.Add(new Vector3D(1, 0, 0));
-            normals.Add(new Vector3D(1, 0, 0));
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            faceIndex += 3;
-
-            // Front face:
-            vertices.Add(new Point3D(0.0, -0.5, 0.5));
-            vertices.Add(new Point3D(0.5, -0.5, 0.5));
-            vertices.Add(new Point3D(0.5, 0.5, 0.5));
-            normals.Add(new Vector3D(0, 0, 1));
-            normals.Add(new Vector3D(0, 0, 1));
-            normals.Add(new Vector3D(0, 0, 1));
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            faceIndex += 3;
-
-            // Bottom face:
-            vertices.Add(new Point3D(0.0, -0.5, 0.5));
-            vertices.Add(new Point3D(0.5, -0.5, 0.0));
-            vertices.Add(new Point3D(0.5, -0.5, 0.5));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            faceIndex += 3;
-            return faceIndex;
-        }
-        private int AddGeometry_CornerLargeA(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)
-        {
-            Vector3D v1;
-            Vector3D v2;
-            Vector3D normal;
-
-            // Left face:
-            vertices.Add(new Point3D(0.5, -0.5, 0.5));
-            vertices.Add(new Point3D(0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(-0.5, 0.5, -0.5));
-            v1 = new Vector3D(vertices[faceIndex + 0].X, vertices[faceIndex + 0].Y, vertices[faceIndex + 0].Z);
-            v2 = new Vector3D(vertices[faceIndex + 1].X, vertices[faceIndex + 1].Y, vertices[faceIndex + 1].Z);
-            normal = Vector3D.CrossProduct(v1, v2);
-            normals.Add(normal);
-            normals.Add(normal);
-            normals.Add(normal);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            faceIndex += 3;
-
-            // Right face:
-            vertices.Add(new Point3D(-0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(-0.5, -0.5, 0.5));
-            vertices.Add(new Point3D(-0.5, 0.5, -0.5));
-            normals.Add(new Vector3D(-1, 0, 0));
-            normals.Add(new Vector3D(-1, 0, 0));
-            normals.Add(new Vector3D(-1, 0, 0));
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            faceIndex += 3;
-
-            // Front face:
-            vertices.Add(new Point3D(-0.5, -0.5, 0.5));
-            vertices.Add(new Point3D(0.5, -0.5, 0.5));
-            vertices.Add(new Point3D(-0.5, 0.5, -0.5));
-            v1 = new Vector3D(vertices[faceIndex + 0].X, vertices[faceIndex + 0].Y, vertices[faceIndex + 0].Z);
-            v2 = new Vector3D(vertices[faceIndex + 1].X, vertices[faceIndex + 1].Y, vertices[faceIndex + 1].Z);
-            normal = Vector3D.CrossProduct(v1, v2);
-            normals.Add(normal);
-            normals.Add(normal);
-            normals.Add(normal);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            faceIndex += 3;
-
-            // Back face:
-            vertices.Add(new Point3D(0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(-0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(-0.5, 0.5, -0.5));
-            normals.Add(new Vector3D(0, 0, -1));
-            normals.Add(new Vector3D(0, 0, -1));
-            normals.Add(new Vector3D(0, 0, -1));
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            faceIndex += 3;
-
-            // Bottom face:
-            vertices.Add(new Point3D(-0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(-0.5, -0.5, 0.5));
-            vertices.Add(new Point3D(0.5, -0.5, 0.5));
-            vertices.Add(new Point3D(0.5, -0.5, -0.5));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 0);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 3, faceIndex + 2);
-            faceIndex += 4;
-            return faceIndex;
-        }
-        private int AddGeometry_Corner(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)
-        {
-            Vector3D v1;
-            Vector3D v2;
-            Vector3D normal;
-
-            // Inside face:
-            vertices.Add(new Point3D(0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(-0.5, -0.5, 0.5));
-            vertices.Add(new Point3D(0.5, 0.5, 0.5));
-            v1 = new Vector3D(vertices[faceIndex + 0].X, vertices[faceIndex + 0].Y, vertices[faceIndex + 0].Z);
-            v2 = new Vector3D(vertices[faceIndex + 1].X, vertices[faceIndex + 1].Y, vertices[faceIndex + 1].Z);
-            normal = Vector3D.CrossProduct(v1, v2);
-            normals.Add(normal);
-            normals.Add(normal);
-            normals.Add(normal);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            faceIndex += 3;
-
-            // Leftt face:
-            vertices.Add(new Point3D(0.5, -0.5, 0.5));
-            vertices.Add(new Point3D(0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(0.5, 0.5, 0.5));
-            normals.Add(new Vector3D(-1, 0, 0));
-            normals.Add(new Vector3D(-1, 0, 0));
-            normals.Add(new Vector3D(-1, 0, 0));
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            faceIndex += 3;
-
-            // Front face:
-            vertices.Add(new Point3D(-0.5, -0.5, 0.5));
-            vertices.Add(new Point3D(0.5, -0.5, 0.5));
-            vertices.Add(new Point3D(0.5, 0.5, 0.5));
-            normals.Add(new Vector3D(0, 0, -1));
-            normals.Add(new Vector3D(0, 0, -1));
-            normals.Add(new Vector3D(0, 0, -1));
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            faceIndex += 3;
-
-            // Bottom face:
-            vertices.Add(new Point3D(-0.5, -0.5, 0.5));
-            vertices.Add(new Point3D(0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(0.5, -0.5, 0.5));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            faceIndex += 3;
-            return faceIndex;
-        }
-        private int AddGeometry_RampBottom(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)
-        {
-            Vector3D v1;
-            Vector3D v2;
-            Vector3D normal;
-
-            // Inside face:
-            vertices.Add(new Point3D(0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(-0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(-0.5, 0.0, 0.5));
-            vertices.Add(new Point3D(0.5, 0.0, 0.5));
-            v1 = new Vector3D(vertices[faceIndex + 0].X, vertices[faceIndex + 0].Y, vertices[faceIndex + 0].Z);
-            v2 = new Vector3D(vertices[faceIndex + 1].X, vertices[faceIndex + 1].Y, vertices[faceIndex + 1].Z);
-            normal = Vector3D.CrossProduct(v1, v2);
-            normals.Add(normal);
-            normals.Add(normal);
-            normals.Add(normal);
-            normals.Add(normal);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 3, faceIndex + 0);
-            faceIndex += 4;
-
-            // Front face:
-            vertices.Add(new Point3D(0.5, -0.5, 0.5));
-            vertices.Add(new Point3D(-0.5, -0.5, 0.5));
-            vertices.Add(new Point3D(-0.5, 0.0, 0.5));
-            vertices.Add(new Point3D(0.5, 0.0, 0.5));
-            normals.Add(new Vector3D(0, 0, 1));
-            normals.Add(new Vector3D(0, 0, 1));
-            normals.Add(new Vector3D(0, 0, 1));
-            normals.Add(new Vector3D(0, 0, 1));
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 0);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 3, faceIndex + 2);
-            faceIndex += 4;
-
-            // Right face:
-            vertices.Add(new Point3D(-0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(-0.5, -0.5, 0.5));
-            vertices.Add(new Point3D(-0.5, 0.0, 0.5));
-            normals.Add(new Vector3D(-1, 0, 0));
-            normals.Add(new Vector3D(-1, 0, 0));
-            normals.Add(new Vector3D(-1, 0, 0));
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            faceIndex += 3;
-
-            // Left face:
-            vertices.Add(new Point3D(0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(0.5, -0.5, 0.5));
-            vertices.Add(new Point3D(0.5, 0.0, 0.5));
-            normals.Add(new Vector3D(1, 0, 0));
-            normals.Add(new Vector3D(1, 0, 0));
-            normals.Add(new Vector3D(1, 0, 0));
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 0);
-            faceIndex += 3;
-
-            // Bottom face:
-            vertices.Add(new Point3D(-0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(-0.5, -0.5, 0.5));
-            vertices.Add(new Point3D(0.5, -0.5, 0.5));
-            vertices.Add(new Point3D(0.5, -0.5, -0.5));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 0);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 3, faceIndex + 2);
-            faceIndex += 4;
-            return faceIndex;
-        }
-        private int AddGeometry_RampTop(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)
-        {
-            // Front face:
-            vertices.Add(new Point3D(-0.5, -0.5, 0.5));
-            vertices.Add(new Point3D( 0.5, -0.5, 0.5));
-            vertices.Add(new Point3D( 0.5,  0.5, 0.5));
-            vertices.Add(new Point3D(-0.5,  0.5, 0.5));
-            normals.Add(new Vector3D(0, 0, 1));
-            normals.Add(new Vector3D(0, 0, 1));
-            normals.Add(new Vector3D(0, 0, 1));
-            normals.Add(new Vector3D(0, 0, 1));
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 3, faceIndex + 0);
-            faceIndex += 4;
-
-            // Back face:
-            vertices.Add(new Point3D(-0.5, -0.5, -0.5));
-            vertices.Add(new Point3D( 0.5, -0.5, -0.5));
-            vertices.Add(new Point3D( 0.5,  0.0, -0.5));
-            vertices.Add(new Point3D(-0.5,  0.0, -0.5));
-            normals.Add(new Vector3D(0, 0, -1));
-            normals.Add(new Vector3D(0, 0, -1));
-            normals.Add(new Vector3D(0, 0, -1));
-            normals.Add(new Vector3D(0, 0, -1));
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 0);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 3, faceIndex + 2);
-            faceIndex += 4;
-
-            // Right face:
-            vertices.Add(new Point3D(-0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(-0.5, -0.5,  0.5));
-            vertices.Add(new Point3D(-0.5,  0.5,  0.5));
-            vertices.Add(new Point3D(-0.5,  0.0, -0.5));
-            normals.Add(new Vector3D(-1, 0, 0));
-            normals.Add(new Vector3D(-1, 0, 0));
-            normals.Add(new Vector3D(-1, 0, 0));
-            normals.Add(new Vector3D(-1, 0, 0));
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 3, faceIndex + 0);
-            faceIndex += 4;
-
-            // Left face:
-            vertices.Add(new Point3D(0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(0.5, -0.5,  0.5));
-            vertices.Add(new Point3D(0.5,  0.5,  0.5));
-            vertices.Add(new Point3D(0.5,  0.0, -0.5));
-            normals.Add(new Vector3D(1, 0, 0));
-            normals.Add(new Vector3D(1, 0, 0));
-            normals.Add(new Vector3D(1, 0, 0));
-            normals.Add(new Vector3D(1, 0, 0));
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 0);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 3, faceIndex + 2);
-            faceIndex += 4;
-
-            // Top face:
-            vertices.Add(new Point3D(-0.5, 0.0, -0.5));
-            vertices.Add(new Point3D(-0.5, 0.5,  0.5));
-            vertices.Add(new Point3D( 0.5, 0.5,  0.5));
-            vertices.Add(new Point3D( 0.5, 0.0, -0.5));
-            normals.Add(new Vector3D(0, 1, 0));
-            normals.Add(new Vector3D(0, 1, 0));
-            normals.Add(new Vector3D(0, 1, 0));
-            normals.Add(new Vector3D(0, 1, 0));
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 3, faceIndex + 0);
-            faceIndex += 4;
-
-            // Bottom face:
-            vertices.Add(new Point3D(-0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(-0.5, -0.5,  0.5));
-            vertices.Add(new Point3D( 0.5, -0.5,  0.5));
-            vertices.Add(new Point3D( 0.5, -0.5, -0.5));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 0);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 3, faceIndex + 2);
-            faceIndex += 4;
-            return faceIndex;
-        }
-        private int AddGeometry_Slope(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)
-        {
-            Vector3D v1;
-            Vector3D v2;
-            Vector3D normal;
-
-            // Inside face:
-            vertices.Add(new Point3D(0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(-0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(-0.5, 0.5, 0.5));
-            vertices.Add(new Point3D(0.5, 0.5, 0.5));
-            v1 = new Vector3D(vertices[faceIndex + 0].X, vertices[faceIndex + 0].Y, vertices[faceIndex + 0].Z);
-            v2 = new Vector3D(vertices[faceIndex + 1].X, vertices[faceIndex + 1].Y, vertices[faceIndex + 1].Z);
-            normal = Vector3D.CrossProduct(v1, v2);
-            normals.Add(normal);
-            normals.Add(normal);
-            normals.Add(normal);
-            normals.Add(normal);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 3, faceIndex + 0);
-            faceIndex += 4;
-
-            // Front face:
-            vertices.Add(new Point3D(0.5, -0.5, 0.5));
-            vertices.Add(new Point3D(-0.5, -0.5, 0.5));
-            vertices.Add(new Point3D(-0.5, 0.5, 0.5));
-            vertices.Add(new Point3D(0.5, 0.5, 0.5));
-            normals.Add(new Vector3D(0, 0, 1));
-            normals.Add(new Vector3D(0, 0, 1));
-            normals.Add(new Vector3D(0, 0, 1));
-            normals.Add(new Vector3D(0, 0, 1));
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 0);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 3, faceIndex + 2);
-            faceIndex += 4;
-
-            // Right face:
-            vertices.Add(new Point3D(-0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(-0.5, -0.5, 0.5));
-            vertices.Add(new Point3D(-0.5, 0.5, 0.5));
-            normals.Add(new Vector3D(-1, 0, 0));
-            normals.Add(new Vector3D(-1, 0, 0));
-            normals.Add(new Vector3D(-1, 0, 0));
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            faceIndex += 3;
-
-            // Left face:
-            vertices.Add(new Point3D(0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(0.5, -0.5, 0.5));
-            vertices.Add(new Point3D(0.5, 0.5, 0.5));
-            normals.Add(new Vector3D(1, 0, 0));
-            normals.Add(new Vector3D(1, 0, 0));
-            normals.Add(new Vector3D(1, 0, 0));
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 0);
-            faceIndex += 3;
-
-            // Bottom face:
-            vertices.Add(new Point3D(-0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(-0.5, -0.5, 0.5));
-            vertices.Add(new Point3D(0.5, -0.5, 0.5));
-            vertices.Add(new Point3D(0.5, -0.5, -0.5));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 0);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 3, faceIndex + 2);
-            faceIndex += 4;
-            return faceIndex;
-        }
-        private int AddGeometry_PyramidA(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)
-        {
-            Vector3D v1;
-            Vector3D v2;
-            Vector3D normal;
-
-            // Left face:
-            vertices.Add(new Point3D(0.5, -0.5,  0.5));
-            vertices.Add(new Point3D(0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(0.0,  0.5,  0.0));
-            v1 = new Vector3D(vertices[faceIndex + 0].X, vertices[faceIndex + 0].Y, vertices[faceIndex + 0].Z);
-            v2 = new Vector3D(vertices[faceIndex + 1].X, vertices[faceIndex + 1].Y, vertices[faceIndex + 1].Z);
-            normal = Vector3D.CrossProduct(v1, v2);
-            normals.Add(normal);
-            normals.Add(normal);
-            normals.Add(normal);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            faceIndex += 3;
-
-            // Right face:
-            vertices.Add(new Point3D(-0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(-0.5, -0.5,  0.5));
-            vertices.Add(new Point3D( 0.0,  0.5,  0.0));
-            v1 = new Vector3D(vertices[faceIndex + 0].X, vertices[faceIndex + 0].Y, vertices[faceIndex + 0].Z);
-            v2 = new Vector3D(vertices[faceIndex + 1].X, vertices[faceIndex + 1].Y, vertices[faceIndex + 1].Z);
-            normal = Vector3D.CrossProduct(v1, v2);
-            normals.Add(normal);
-            normals.Add(normal);
-            normals.Add(normal);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            faceIndex += 3;
-
-            // Front face:
-            vertices.Add(new Point3D(-0.5, -0.5, 0.5));
-            vertices.Add(new Point3D( 0.5, -0.5, 0.5));
-            vertices.Add(new Point3D( 0.0,  0.5, 0.0));
-            v1 = new Vector3D(vertices[faceIndex + 0].X, vertices[faceIndex + 0].Y, vertices[faceIndex + 0].Z);
-            v2 = new Vector3D(vertices[faceIndex + 1].X, vertices[faceIndex + 1].Y, vertices[faceIndex + 1].Z);
-            normal = Vector3D.CrossProduct(v1, v2);
-            normals.Add(normal);
-            normals.Add(normal);
-            normals.Add(normal);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            faceIndex += 3;
-
-            // Back face:
-            vertices.Add(new Point3D( 0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(-0.5, -0.5, -0.5));
-            vertices.Add(new Point3D( 0.0,  0.5,  0.0));
-            v1 = new Vector3D(vertices[faceIndex + 0].X, vertices[faceIndex + 0].Y, vertices[faceIndex + 0].Z);
-            v2 = new Vector3D(vertices[faceIndex + 1].X, vertices[faceIndex + 1].Y, vertices[faceIndex + 1].Z);
-            normal = Vector3D.CrossProduct(v1, v2);
-            normals.Add(normal);
-            normals.Add(normal);
-            normals.Add(normal);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            faceIndex += 3;
-
-            // Bottom face:
-            vertices.Add(new Point3D(-0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(-0.5, -0.5,  0.5));
-            vertices.Add(new Point3D( 0.5, -0.5,  0.5));
-            vertices.Add(new Point3D( 0.5, -0.5, -0.5));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 0);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 3, faceIndex + 2);
-            faceIndex += 4;
-            return faceIndex;
         }
 
         private GeometryModel3D CreateBuildingBlockThin(Point3D pos, EpbBlock block, EpBlueprint blueprint)
@@ -933,9 +399,10 @@ namespace EPBLab.ViewModel
                 case 0: //Wall
                     faceIndex = AddGeometry_Wall(vertices, triangles, normals, faceIndex);
                     break;
-                /*
                 case 1: //Wall L-shape
+                    faceIndex = AddGeometry_WallLShape(vertices, triangles, normals, faceIndex);
                     break;
+                /*
                 case 2: //Thin Slope
                     break;
                 case 3: //Thin Corner
@@ -971,19 +438,19 @@ namespace EPBLab.ViewModel
                     break;
                 case 15: //Corner Thin 2
                     break;
-                case 16: //Wall 3 Corner
-                    break;
                 */
+                case 16: //Wall 3 Corner
+                    faceIndex = AddGeometry_Wall3Corner(vertices, triangles, normals, faceIndex);
+                    break;
                 case 17: //Wall Half
                     faceIndex = AddGeometry_WallHalf(vertices, triangles, normals, faceIndex);
                     break;
                 case 18: //Cube Half
                     faceIndex = AddGeometry_CubeHalf(vertices, triangles, normals, faceIndex);
                     break;
-                /*
                 case 19: //Ramp Top Double
+                    faceIndex = AddGeometry_RampTopDouble(vertices, triangles, normals, faceIndex);
                     break;
-                */
                 case 20: //Ramp Bottom A
                     faceIndex = AddGeometry_RampBottomA(vertices, triangles, normals, faceIndex);
                     break;
@@ -993,11 +460,13 @@ namespace EPBLab.ViewModel
                 case 22: //Ramp Bottom C
                     faceIndex = AddGeometry_RampBottomC(vertices, triangles, normals, faceIndex);
                     break;
-                /*
                 case 23: //Ramp Wedge Bottom
+                    faceIndex = AddGeometry_RampWedgeBottom(vertices, triangles, normals, faceIndex);
                     break;
                 case 24: //Beam
+                    faceIndex = AddGeometry_Beam(vertices, triangles, normals, faceIndex);
                     break;
+                /*
                 case 25: //Cylinder Thin
                     break;
                 case 26: //Cylinder Thin T Joint
@@ -1033,922 +502,6 @@ namespace EPBLab.ViewModel
             return model;
         }
 
-        private int AddGeometry_Wall(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)
-        {
-            // Front face:
-            vertices.Add(new Point3D(-0.5, -0.5, -0.25));
-            vertices.Add(new Point3D( 0.5, -0.5, -0.25));
-            vertices.Add(new Point3D( 0.5,  0.5, -0.25));
-            vertices.Add(new Point3D(-0.5,  0.5, -0.25));
-            normals.Add(new Vector3D(0, 0, 1));
-            normals.Add(new Vector3D(0, 0, 1));
-            normals.Add(new Vector3D(0, 0, 1));
-            normals.Add(new Vector3D(0, 0, 1));
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 3, faceIndex + 0);
-            faceIndex += 4;
-
-            // Back face:
-            vertices.Add(new Point3D(-0.5, -0.5, -0.5));
-            vertices.Add(new Point3D( 0.5, -0.5, -0.5));
-            vertices.Add(new Point3D( 0.5,  0.5, -0.5));
-            vertices.Add(new Point3D(-0.5,  0.5, -0.5));
-            normals.Add(new Vector3D(0, 0, -1));
-            normals.Add(new Vector3D(0, 0, -1));
-            normals.Add(new Vector3D(0, 0, -1));
-            normals.Add(new Vector3D(0, 0, -1));
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 0);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 3, faceIndex + 2);
-            faceIndex += 4;
-
-            // Right face:
-            vertices.Add(new Point3D(-0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(-0.5, -0.5, -0.25));
-            vertices.Add(new Point3D(-0.5,  0.5, -0.25));
-            vertices.Add(new Point3D(-0.5,  0.5, -0.5));
-            normals.Add(new Vector3D(-1, 0, 0));
-            normals.Add(new Vector3D(-1, 0, 0));
-            normals.Add(new Vector3D(-1, 0, 0));
-            normals.Add(new Vector3D(-1, 0, 0));
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 3, faceIndex + 0);
-            faceIndex += 4;
-
-            // Left face:
-            vertices.Add(new Point3D(0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(0.5, -0.5, -0.25));
-            vertices.Add(new Point3D(0.5,  0.5, -0.25));
-            vertices.Add(new Point3D(0.5,  0.5, -0.5));
-            normals.Add(new Vector3D(1, 0, 0));
-            normals.Add(new Vector3D(1, 0, 0));
-            normals.Add(new Vector3D(1, 0, 0));
-            normals.Add(new Vector3D(1, 0, 0));
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 0);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 3, faceIndex + 2);
-            faceIndex += 4;
-
-            // Top face:
-            vertices.Add(new Point3D(-0.5, 0.5, -0.5));
-            vertices.Add(new Point3D(-0.5, 0.5, -0.25));
-            vertices.Add(new Point3D( 0.5, 0.5, -0.25));
-            vertices.Add(new Point3D( 0.5, 0.5, -0.5));
-            normals.Add(new Vector3D(0, 1, 0));
-            normals.Add(new Vector3D(0, 1, 0));
-            normals.Add(new Vector3D(0, 1, 0));
-            normals.Add(new Vector3D(0, 1, 0));
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 3, faceIndex + 0);
-            faceIndex += 4;
-
-            // Bottom face:
-            vertices.Add(new Point3D(-0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(-0.5, -0.5, -0.25));
-            vertices.Add(new Point3D( 0.5, -0.5, -0.25));
-            vertices.Add(new Point3D( 0.5, -0.5, -0.5));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 0);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 3, faceIndex + 2);
-            faceIndex += 4;
-            return faceIndex;
-        }
-        private int AddGeometry_SlopedWall(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)
-        {
-            Vector3D v1;
-            Vector3D v2;
-            Vector3D normal;
-
-            // Inside face:
-            vertices.Add(new Point3D(-0.25, -0.5, -0.5));
-            vertices.Add(new Point3D(-0.5,  -0.5, -0.5));
-            vertices.Add(new Point3D(-0.5,   0.5,  0.5));
-            vertices.Add(new Point3D(-0.25,  0.5,  0.5));
-            v1 = new Vector3D(vertices[faceIndex + 0].X, vertices[faceIndex + 0].Y, vertices[faceIndex + 0].Z);
-            v2 = new Vector3D(vertices[faceIndex + 1].X, vertices[faceIndex + 1].Y, vertices[faceIndex + 1].Z);
-            normal = Vector3D.CrossProduct(v1, v2);
-            normals.Add(normal);
-            normals.Add(normal);
-            normals.Add(normal);
-            normals.Add(normal);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 3, faceIndex + 0);
-            faceIndex += 4;
-
-            // Front face:
-            vertices.Add(new Point3D(-0.25, -0.5, 0.5));
-            vertices.Add(new Point3D(-0.5,  -0.5, 0.5));
-            vertices.Add(new Point3D(-0.5,   0.5, 0.5));
-            vertices.Add(new Point3D(-0.25,  0.5, 0.5));
-            normals.Add(new Vector3D(0, 0, 1));
-            normals.Add(new Vector3D(0, 0, 1));
-            normals.Add(new Vector3D(0, 0, 1));
-            normals.Add(new Vector3D(0, 0, 1));
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 0);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 3, faceIndex + 2);
-            faceIndex += 4;
-
-            // Right face:
-            vertices.Add(new Point3D(-0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(-0.5, -0.5,  0.5));
-            vertices.Add(new Point3D(-0.5,  0.5,  0.5));
-            normals.Add(new Vector3D(-1, 0, 0));
-            normals.Add(new Vector3D(-1, 0, 0));
-            normals.Add(new Vector3D(-1, 0, 0));
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            faceIndex += 3;
-
-            // Left face:
-            vertices.Add(new Point3D(-0.25, -0.5, -0.5));
-            vertices.Add(new Point3D(-0.25, -0.5,  0.5));
-            vertices.Add(new Point3D(-0.25,  0.5,  0.5));
-            normals.Add(new Vector3D(1, 0, 0));
-            normals.Add(new Vector3D(1, 0, 0));
-            normals.Add(new Vector3D(1, 0, 0));
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 0);
-            faceIndex += 3;
-
-            // Bottom face:
-            vertices.Add(new Point3D(-0.5,  -0.5, -0.5));
-            vertices.Add(new Point3D(-0.5,  -0.5,  0.5));
-            vertices.Add(new Point3D(-0.25, -0.5,  0.5));
-            vertices.Add(new Point3D(-0.25, -0.5, -0.5));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 0);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 3, faceIndex + 2);
-            faceIndex += 4;
-            return faceIndex;
-        }
-        private int AddGeometry_SlopedWallBottomRight(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)
-        {
-            Vector3D v1;
-            Vector3D v2;
-            Vector3D normal;
-
-            // Inside face:
-            vertices.Add(new Point3D(-0.25, -0.5, -0.5));
-            vertices.Add(new Point3D(-0.5,  -0.5, -0.5));
-            vertices.Add(new Point3D(-0.5,   0.0,  0.5));
-            vertices.Add(new Point3D(-0.25,  0.0,  0.5));
-            v1 = new Vector3D(vertices[faceIndex + 0].X, vertices[faceIndex + 0].Y, vertices[faceIndex + 0].Z);
-            v2 = new Vector3D(vertices[faceIndex + 1].X, vertices[faceIndex + 1].Y, vertices[faceIndex + 1].Z);
-            normal = Vector3D.CrossProduct(v1, v2);
-            normals.Add(normal);
-            normals.Add(normal);
-            normals.Add(normal);
-            normals.Add(normal);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 3, faceIndex + 0);
-            faceIndex += 4;
-
-            // Front face:
-            vertices.Add(new Point3D(-0.25, -0.5, 0.5));
-            vertices.Add(new Point3D(-0.5,  -0.5, 0.5));
-            vertices.Add(new Point3D(-0.5,   0.0, 0.5));
-            vertices.Add(new Point3D(-0.25,  0.0, 0.5));
-            normals.Add(new Vector3D(0, 0, 1));
-            normals.Add(new Vector3D(0, 0, 1));
-            normals.Add(new Vector3D(0, 0, 1));
-            normals.Add(new Vector3D(0, 0, 1));
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 0);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 3, faceIndex + 2);
-            faceIndex += 4;
-
-            // Right face:
-            vertices.Add(new Point3D(-0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(-0.5, -0.5,  0.5));
-            vertices.Add(new Point3D(-0.5,  0.0,  0.5));
-            normals.Add(new Vector3D(-1, 0, 0));
-            normals.Add(new Vector3D(-1, 0, 0));
-            normals.Add(new Vector3D(-1, 0, 0));
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            faceIndex += 3;
-
-            // Left face:
-            vertices.Add(new Point3D(-0.25, -0.5, -0.5));
-            vertices.Add(new Point3D(-0.25, -0.5,  0.5));
-            vertices.Add(new Point3D(-0.25,  0.0,  0.5));
-            normals.Add(new Vector3D(1, 0, 0));
-            normals.Add(new Vector3D(1, 0, 0));
-            normals.Add(new Vector3D(1, 0, 0));
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 0);
-            faceIndex += 3;
-
-            // Bottom face:
-            vertices.Add(new Point3D(-0.5,  -0.5, -0.5));
-            vertices.Add(new Point3D(-0.5,  -0.5,  0.5));
-            vertices.Add(new Point3D(-0.25, -0.5,  0.5));
-            vertices.Add(new Point3D(-0.25, -0.5, -0.5));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 0);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 3, faceIndex + 2);
-            faceIndex += 4;
-            return faceIndex;
-        }
-        private int AddGeometry_SlopedWallTopRight(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)
-        {
-            Vector3D v1;
-            Vector3D v2;
-            Vector3D normal;
-
-            // Front face:
-            vertices.Add(new Point3D(-0.5,  -0.5, 0.5));
-            vertices.Add(new Point3D(-0.25, -0.5, 0.5));
-            vertices.Add(new Point3D(-0.25,  0.5, 0.5));
-            vertices.Add(new Point3D(-0.5, 0.5, 0.5));
-            normals.Add(new Vector3D(0, 0, 1));
-            normals.Add(new Vector3D(0, 0, 1));
-            normals.Add(new Vector3D(0, 0, 1));
-            normals.Add(new Vector3D(0, 0, 1));
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 3, faceIndex + 0);
-            faceIndex += 4;
-
-            // Back face:
-            vertices.Add(new Point3D(-0.5,  -0.5, -0.5));
-            vertices.Add(new Point3D(-0.25, -0.5, -0.5));
-            vertices.Add(new Point3D(-0.25,  0.0, -0.5));
-            vertices.Add(new Point3D(-0.5, 0.0, -0.5));
-            normals.Add(new Vector3D(0, 0, -1));
-            normals.Add(new Vector3D(0, 0, -1));
-            normals.Add(new Vector3D(0, 0, -1));
-            normals.Add(new Vector3D(0, 0, -1));
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 0);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 3, faceIndex + 2);
-            faceIndex += 4;
-
-            // Right face:
-            vertices.Add(new Point3D(-0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(-0.5, -0.5,  0.5));
-            vertices.Add(new Point3D(-0.5,  0.5,  0.5));
-            vertices.Add(new Point3D(-0.5,  0.0, -0.5));
-            normals.Add(new Vector3D(-1, 0, 0));
-            normals.Add(new Vector3D(-1, 0, 0));
-            normals.Add(new Vector3D(-1, 0, 0));
-            normals.Add(new Vector3D(-1, 0, 0));
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 3, faceIndex + 0);
-            faceIndex += 4;
-
-            // Left face:
-            vertices.Add(new Point3D(-0.25, -0.5, -0.5));
-            vertices.Add(new Point3D(-0.25, -0.5,  0.5));
-            vertices.Add(new Point3D(-0.25,  0.5,  0.5));
-            vertices.Add(new Point3D(-0.25,  0.0, -0.5));
-            normals.Add(new Vector3D(1, 0, 0));
-            normals.Add(new Vector3D(1, 0, 0));
-            normals.Add(new Vector3D(1, 0, 0));
-            normals.Add(new Vector3D(1, 0, 0));
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 0);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 3, faceIndex + 2);
-            faceIndex += 4;
-
-            // Top face:
-            vertices.Add(new Point3D(-0.5,  0.0, -0.5));
-            vertices.Add(new Point3D(-0.5,  0.5,  0.5));
-            vertices.Add(new Point3D(-0.25, 0.5,  0.5));
-            vertices.Add(new Point3D(-0.25, 0.0, -0.5));
-            v1 = new Vector3D(vertices[faceIndex + 0].X, vertices[faceIndex + 0].Y, vertices[faceIndex + 0].Z);
-            v2 = new Vector3D(vertices[faceIndex + 1].X, vertices[faceIndex + 1].Y, vertices[faceIndex + 1].Z);
-            normal = Vector3D.CrossProduct(v1, v2);
-            normals.Add(normal);
-            normals.Add(normal);
-            normals.Add(normal);
-            normals.Add(normal);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 3, faceIndex + 0);
-            faceIndex += 4;
-
-            // Bottom face:
-            vertices.Add(new Point3D(-0.5,  -0.5, -0.5));
-            vertices.Add(new Point3D(-0.5,  -0.5,  0.5));
-            vertices.Add(new Point3D(-0.25, -0.5,  0.5));
-            vertices.Add(new Point3D(-0.25, -0.5, -0.5));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 0);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 3, faceIndex + 2);
-            faceIndex += 4;
-            return faceIndex;
-        }
-        private int AddGeometry_SlopedWallBottomLeft(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)
-        {
-            Vector3D v1;
-            Vector3D v2;
-            Vector3D normal;
-
-            // Inside face:
-            vertices.Add(new Point3D(0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(0.25, -0.5, -0.5));
-            vertices.Add(new Point3D(0.25, 0.0, 0.5));
-            vertices.Add(new Point3D(0.5, 0.0, 0.5));
-            v1 = new Vector3D(vertices[faceIndex + 0].X, vertices[faceIndex + 0].Y, vertices[faceIndex + 0].Z);
-            v2 = new Vector3D(vertices[faceIndex + 1].X, vertices[faceIndex + 1].Y, vertices[faceIndex + 1].Z);
-            normal = Vector3D.CrossProduct(v1, v2);
-            normals.Add(normal);
-            normals.Add(normal);
-            normals.Add(normal);
-            normals.Add(normal);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 3, faceIndex + 0);
-            faceIndex += 4;
-
-            // Front face:
-            vertices.Add(new Point3D(0.5,  -0.5, 0.5));
-            vertices.Add(new Point3D(0.25, -0.5, 0.5));
-            vertices.Add(new Point3D(0.25,  0.0, 0.5));
-            vertices.Add(new Point3D(0.5,   0.0, 0.5));
-            normals.Add(new Vector3D(0, 0, 1));
-            normals.Add(new Vector3D(0, 0, 1));
-            normals.Add(new Vector3D(0, 0, 1));
-            normals.Add(new Vector3D(0, 0, 1));
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 0);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 3, faceIndex + 2);
-            faceIndex += 4;
-
-            // Right face:
-            vertices.Add(new Point3D(0.5, -0.5,  0.5));
-            vertices.Add(new Point3D(0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(0.5,  0.0,  0.5));
-            normals.Add(new Vector3D(1, 0, 0));
-            normals.Add(new Vector3D(1, 0, 0));
-            normals.Add(new Vector3D(1, 0, 0));
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            faceIndex += 3;
-
-            // Left face:
-            vertices.Add(new Point3D(0.25, -0.5,  0.5));
-            vertices.Add(new Point3D(0.25, -0.5, -0.5));
-            vertices.Add(new Point3D(0.25,  0.0,  0.5));
-            normals.Add(new Vector3D(-1, 0, 0));
-            normals.Add(new Vector3D(-1, 0, 0));
-            normals.Add(new Vector3D(-1, 0, 0));
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 0);
-            faceIndex += 3;
-
-            // Bottom face:
-            vertices.Add(new Point3D(0.5,  -0.5,  0.5));
-            vertices.Add(new Point3D(0.5,  -0.5, -0.5));
-            vertices.Add(new Point3D(0.25, -0.5, -0.5));
-            vertices.Add(new Point3D(0.25, -0.5,  0.5));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 0);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 3, faceIndex + 2);
-            faceIndex += 4;
-            return faceIndex;
-        }
-        private int AddGeometry_SlopedWallTopLeft(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)
-        {
-            Vector3D v1;
-            Vector3D v2;
-            Vector3D normal;
-
-            // Front face:
-            vertices.Add(new Point3D(0.25, -0.5, 0.5));
-            vertices.Add(new Point3D(0.5,  -0.5, 0.5));
-            vertices.Add(new Point3D(0.5,   0.5, 0.5));
-            vertices.Add(new Point3D(0.25,  0.5, 0.5));
-            normals.Add(new Vector3D(0, 0, 1));
-            normals.Add(new Vector3D(0, 0, 1));
-            normals.Add(new Vector3D(0, 0, 1));
-            normals.Add(new Vector3D(0, 0, 1));
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 3, faceIndex + 0);
-            faceIndex += 4;
-
-            // Back face:
-            vertices.Add(new Point3D(0.25, -0.5, -0.5));
-            vertices.Add(new Point3D(0.5,  -0.5, -0.5));
-            vertices.Add(new Point3D(0.5,   0.0, -0.5));
-            vertices.Add(new Point3D(0.25,  0.0, -0.5));
-            normals.Add(new Vector3D(0, 0, -1));
-            normals.Add(new Vector3D(0, 0, -1));
-            normals.Add(new Vector3D(0, 0, -1));
-            normals.Add(new Vector3D(0, 0, -1));
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 0);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 3, faceIndex + 2);
-            faceIndex += 4;
-
-            // Right face:
-            vertices.Add(new Point3D(0.5, -0.5,  0.5));
-            vertices.Add(new Point3D(0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(0.5,  0.0, -0.5));
-            vertices.Add(new Point3D(0.5,  0.5,  0.5));
-            normals.Add(new Vector3D(1, 0, 0));
-            normals.Add(new Vector3D(1, 0, 0));
-            normals.Add(new Vector3D(1, 0, 0));
-            normals.Add(new Vector3D(1, 0, 0));
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 3, faceIndex + 0);
-            faceIndex += 4;
-
-            // Left face:
-            vertices.Add(new Point3D(0.25, -0.5,  0.5));
-            vertices.Add(new Point3D(0.25, -0.5, -0.5));
-            vertices.Add(new Point3D(0.25,  0.0, -0.5));
-            vertices.Add(new Point3D(0.25,  0.5,  0.5));
-            normals.Add(new Vector3D(-1, 0, 0));
-            normals.Add(new Vector3D(-1, 0, 0));
-            normals.Add(new Vector3D(-1, 0, 0));
-            normals.Add(new Vector3D(-1, 0, 0));
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 0);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 3, faceIndex + 2);
-            faceIndex += 4;
-
-            // Top face:
-            vertices.Add(new Point3D(0.5,  0.5,  0.5));
-            vertices.Add(new Point3D(0.5,  0.0, -0.5));
-            vertices.Add(new Point3D(0.25, 0.0, -0.5));
-            vertices.Add(new Point3D(0.25, 0.5,  0.5));
-            v1 = new Vector3D(vertices[faceIndex + 0].X, vertices[faceIndex + 0].Y, vertices[faceIndex + 0].Z);
-            v2 = new Vector3D(vertices[faceIndex + 1].X, vertices[faceIndex + 1].Y, vertices[faceIndex + 1].Z);
-            normal = Vector3D.CrossProduct(v1, v2);
-            normals.Add(normal);
-            normals.Add(normal);
-            normals.Add(normal);
-            normals.Add(normal);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 3, faceIndex + 0);
-            faceIndex += 4;
-
-            // Bottom face:
-            vertices.Add(new Point3D(0.5, -0.5, 0.5));
-            vertices.Add(new Point3D(0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(0.25, -0.5, -0.5));
-            vertices.Add(new Point3D(0.25, -0.5, 0.5));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 0);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 3, faceIndex + 2);
-            faceIndex += 4;
-            return faceIndex;
-        }
-        private int AddGeometry_WallHalf(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)
-        {
-            // Front face:
-            vertices.Add(new Point3D(-0.5, -0.5, -0.25));
-            vertices.Add(new Point3D( 0.5, -0.5, -0.25));
-            vertices.Add(new Point3D( 0.5,  0.0, -0.25));
-            vertices.Add(new Point3D(-0.5,  0.0, -0.25));
-            normals.Add(new Vector3D(0, 0, 1));
-            normals.Add(new Vector3D(0, 0, 1));
-            normals.Add(new Vector3D(0, 0, 1));
-            normals.Add(new Vector3D(0, 0, 1));
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 3, faceIndex + 0);
-            faceIndex += 4;
-
-            // Back face:
-            vertices.Add(new Point3D(-0.5, -0.5, -0.5));
-            vertices.Add(new Point3D( 0.5, -0.5, -0.5));
-            vertices.Add(new Point3D( 0.5,  0.0, -0.5));
-            vertices.Add(new Point3D(-0.5,  0.0, -0.5));
-            normals.Add(new Vector3D(0, 0, -1));
-            normals.Add(new Vector3D(0, 0, -1));
-            normals.Add(new Vector3D(0, 0, -1));
-            normals.Add(new Vector3D(0, 0, -1));
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 0);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 3, faceIndex + 2);
-            faceIndex += 4;
-
-            // Right face:
-            vertices.Add(new Point3D(-0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(-0.5, -0.5, -0.25));
-            vertices.Add(new Point3D(-0.5,  0.0, -0.25));
-            vertices.Add(new Point3D(-0.5,  0.0, -0.5));
-            normals.Add(new Vector3D(-1, 0, 0));
-            normals.Add(new Vector3D(-1, 0, 0));
-            normals.Add(new Vector3D(-1, 0, 0));
-            normals.Add(new Vector3D(-1, 0, 0));
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 3, faceIndex + 0);
-            faceIndex += 4;
-
-            // Left face:
-            vertices.Add(new Point3D(0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(0.5, -0.5, -0.25));
-            vertices.Add(new Point3D(0.5,  0.0, -0.25));
-            vertices.Add(new Point3D(0.5,  0.0, -0.5));
-            normals.Add(new Vector3D(1, 0, 0));
-            normals.Add(new Vector3D(1, 0, 0));
-            normals.Add(new Vector3D(1, 0, 0));
-            normals.Add(new Vector3D(1, 0, 0));
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 0);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 3, faceIndex + 2);
-            faceIndex += 4;
-
-            // Top face:
-            vertices.Add(new Point3D(-0.5, 0.0, -0.5));
-            vertices.Add(new Point3D(-0.5, 0.0, -0.25));
-            vertices.Add(new Point3D( 0.5, 0.0, -0.25));
-            vertices.Add(new Point3D( 0.5, 0.0, -0.5));
-            normals.Add(new Vector3D(0, 1, 0));
-            normals.Add(new Vector3D(0, 1, 0));
-            normals.Add(new Vector3D(0, 1, 0));
-            normals.Add(new Vector3D(0, 1, 0));
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 3, faceIndex + 0);
-            faceIndex += 4;
-
-            // Bottom face:
-            vertices.Add(new Point3D(-0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(-0.5, -0.5, -0.25));
-            vertices.Add(new Point3D( 0.5, -0.5, -0.25));
-            vertices.Add(new Point3D( 0.5, -0.5, -0.5));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 0);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 3, faceIndex + 2);
-            faceIndex += 4;
-            return faceIndex;
-        }
-        private int AddGeometry_CubeHalf(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)
-        {
-            // Front face:
-            vertices.Add(new Point3D(-0.5, -0.5, 0.5));
-            vertices.Add(new Point3D( 0.5, -0.5, 0.5));
-            vertices.Add(new Point3D( 0.5,  0.0, 0.5));
-            vertices.Add(new Point3D(-0.5,  0.0, 0.5));
-            normals.Add(new Vector3D(0, 0, 1));
-            normals.Add(new Vector3D(0, 0, 1));
-            normals.Add(new Vector3D(0, 0, 1));
-            normals.Add(new Vector3D(0, 0, 1));
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 3, faceIndex + 0);
-            faceIndex += 4;
-
-            // Back face:
-            vertices.Add(new Point3D(-0.5, -0.5, -0.5));
-            vertices.Add(new Point3D( 0.5, -0.5, -0.5));
-            vertices.Add(new Point3D( 0.5,  0.0, -0.5));
-            vertices.Add(new Point3D(-0.5,  0.0, -0.5));
-            normals.Add(new Vector3D(0, 0, -1));
-            normals.Add(new Vector3D(0, 0, -1));
-            normals.Add(new Vector3D(0, 0, -1));
-            normals.Add(new Vector3D(0, 0, -1));
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 0);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 3, faceIndex + 2);
-            faceIndex += 4;
-
-            // Right face:
-            vertices.Add(new Point3D(-0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(-0.5, -0.5,  0.5));
-            vertices.Add(new Point3D(-0.5,  0.0,  0.5));
-            vertices.Add(new Point3D(-0.5,  0.0, -0.5));
-            normals.Add(new Vector3D(-1, 0, 0));
-            normals.Add(new Vector3D(-1, 0, 0));
-            normals.Add(new Vector3D(-1, 0, 0));
-            normals.Add(new Vector3D(-1, 0, 0));
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 3, faceIndex + 0);
-            faceIndex += 4;
-
-            // Left face:
-            vertices.Add(new Point3D(0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(0.5, -0.5,  0.5));
-            vertices.Add(new Point3D(0.5,  0.0,  0.5));
-            vertices.Add(new Point3D(0.5,  0.0, -0.5));
-            normals.Add(new Vector3D(1, 0, 0));
-            normals.Add(new Vector3D(1, 0, 0));
-            normals.Add(new Vector3D(1, 0, 0));
-            normals.Add(new Vector3D(1, 0, 0));
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 0);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 3, faceIndex + 2);
-            faceIndex += 4;
-
-            // Top face:
-            vertices.Add(new Point3D(-0.5, 0.0, -0.5));
-            vertices.Add(new Point3D(-0.5, 0.0,  0.5));
-            vertices.Add(new Point3D( 0.5, 0.0,  0.5));
-            vertices.Add(new Point3D( 0.5, 0.0, -0.5));
-            normals.Add(new Vector3D(0, 1, 0));
-            normals.Add(new Vector3D(0, 1, 0));
-            normals.Add(new Vector3D(0, 1, 0));
-            normals.Add(new Vector3D(0, 1, 0));
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 3, faceIndex + 0);
-            faceIndex += 4;
-
-            // Bottom face:
-            vertices.Add(new Point3D(-0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(-0.5, -0.5,  0.5));
-            vertices.Add(new Point3D( 0.5, -0.5,  0.5));
-            vertices.Add(new Point3D( 0.5, -0.5, -0.5));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 0);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 3, faceIndex + 2);
-            faceIndex += 4;
-            return faceIndex;
-        }
-        private int AddGeometry_RampBottomA(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)
-        {
-            Vector3D v1;
-            Vector3D v2;
-            Vector3D normal;
-
-            // Inside face:
-            vertices.Add(new Point3D( 0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(-0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(-0.5, -0.25, 0.5));
-            vertices.Add(new Point3D( 0.5, -0.25, 0.5));
-            v1 = new Vector3D(vertices[faceIndex + 0].X, vertices[faceIndex + 0].Y, vertices[faceIndex + 0].Z);
-            v2 = new Vector3D(vertices[faceIndex + 1].X, vertices[faceIndex + 1].Y, vertices[faceIndex + 1].Z);
-            normal = Vector3D.CrossProduct(v1, v2);
-            normals.Add(normal);
-            normals.Add(normal);
-            normals.Add(normal);
-            normals.Add(normal);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 3, faceIndex + 0);
-            faceIndex += 4;
-
-            // Front face:
-            vertices.Add(new Point3D( 0.5, -0.5,  0.5));
-            vertices.Add(new Point3D(-0.5, -0.5,  0.5));
-            vertices.Add(new Point3D(-0.5, -0.25, 0.5));
-            vertices.Add(new Point3D( 0.5, -0.25, 0.5));
-            normals.Add(new Vector3D(0, 0, 1));
-            normals.Add(new Vector3D(0, 0, 1));
-            normals.Add(new Vector3D(0, 0, 1));
-            normals.Add(new Vector3D(0, 0, 1));
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 0);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 3, faceIndex + 2);
-            faceIndex += 4;
-
-            // Right face:
-            vertices.Add(new Point3D(-0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(-0.5, -0.5,  0.5));
-            vertices.Add(new Point3D(-0.5, -0.25, 0.5));
-            normals.Add(new Vector3D(-1, 0, 0));
-            normals.Add(new Vector3D(-1, 0, 0));
-            normals.Add(new Vector3D(-1, 0, 0));
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            faceIndex += 3;
-
-            // Left face:
-            vertices.Add(new Point3D(0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(0.5, -0.5,  0.5));
-            vertices.Add(new Point3D(0.5, -0.25, 0.5));
-            normals.Add(new Vector3D(1, 0, 0));
-            normals.Add(new Vector3D(1, 0, 0));
-            normals.Add(new Vector3D(1, 0, 0));
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 0);
-            faceIndex += 3;
-
-            // Bottom face:
-            vertices.Add(new Point3D(-0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(-0.5, -0.5,  0.5));
-            vertices.Add(new Point3D( 0.5, -0.5,  0.5));
-            vertices.Add(new Point3D( 0.5, -0.5, -0.5));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 0);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 3, faceIndex + 2);
-            faceIndex += 4;
-            return faceIndex;
-        }
-        private int AddGeometry_RampBottomB(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)
-        {
-            // Front face:
-            vertices.Add(new Point3D(-0.5, -0.5, 0.5));
-            vertices.Add(new Point3D( 0.5, -0.5, 0.5));
-            vertices.Add(new Point3D( 0.5,  0.0, 0.5));
-            vertices.Add(new Point3D(-0.5,  0.0, 0.5));
-            normals.Add(new Vector3D(0, 0, 1));
-            normals.Add(new Vector3D(0, 0, 1));
-            normals.Add(new Vector3D(0, 0, 1));
-            normals.Add(new Vector3D(0, 0, 1));
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 3, faceIndex + 0);
-            faceIndex += 4;
-
-            // Back face:
-            vertices.Add(new Point3D(-0.5, -0.5,  -0.5));
-            vertices.Add(new Point3D( 0.5, -0.5,  -0.5));
-            vertices.Add(new Point3D( 0.5, -0.25, -0.5));
-            vertices.Add(new Point3D(-0.5, -0.25, -0.5));
-            normals.Add(new Vector3D(0, 0, -1));
-            normals.Add(new Vector3D(0, 0, -1));
-            normals.Add(new Vector3D(0, 0, -1));
-            normals.Add(new Vector3D(0, 0, -1));
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 0);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 3, faceIndex + 2);
-            faceIndex += 4;
-
-            // Right face:
-            vertices.Add(new Point3D(-0.5, -0.5,  -0.5));
-            vertices.Add(new Point3D(-0.5, -0.5,   0.5));
-            vertices.Add(new Point3D(-0.5,  0.0,   0.5));
-            vertices.Add(new Point3D(-0.5, -0.25, -0.5));
-            normals.Add(new Vector3D(-1, 0, 0));
-            normals.Add(new Vector3D(-1, 0, 0));
-            normals.Add(new Vector3D(-1, 0, 0));
-            normals.Add(new Vector3D(-1, 0, 0));
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 3, faceIndex + 0);
-            faceIndex += 4;
-
-            // Left face:
-            vertices.Add(new Point3D(0.5, -0.5,  -0.5));
-            vertices.Add(new Point3D(0.5, -0.5,   0.5));
-            vertices.Add(new Point3D(0.5,  0.0,   0.5));
-            vertices.Add(new Point3D(0.5, -0.25, -0.5));
-            normals.Add(new Vector3D(1, 0, 0));
-            normals.Add(new Vector3D(1, 0, 0));
-            normals.Add(new Vector3D(1, 0, 0));
-            normals.Add(new Vector3D(1, 0, 0));
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 0);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 3, faceIndex + 2);
-            faceIndex += 4;
-
-            // Top face:
-            vertices.Add(new Point3D(-0.5, -0.25, -0.5));
-            vertices.Add(new Point3D(-0.5,  0.0,   0.5));
-            vertices.Add(new Point3D( 0.5,  0.0,   0.5));
-            vertices.Add(new Point3D( 0.5, -0.25, -0.5));
-            normals.Add(new Vector3D(0, 1, 0));
-            normals.Add(new Vector3D(0, 1, 0));
-            normals.Add(new Vector3D(0, 1, 0));
-            normals.Add(new Vector3D(0, 1, 0));
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 3, faceIndex + 0);
-            faceIndex += 4;
-
-            // Bottom face:
-            vertices.Add(new Point3D(-0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(-0.5, -0.5,  0.5));
-            vertices.Add(new Point3D( 0.5, -0.5,  0.5));
-            vertices.Add(new Point3D( 0.5, -0.5, -0.5));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 0);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 3, faceIndex + 2);
-            faceIndex += 4;
-            return faceIndex;
-        }
-        private int AddGeometry_RampBottomC(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)
-        {
-            Vector3D v1;
-            Vector3D v2;
-            Vector3D normal;
-
-            // Inside face:
-            vertices.Add(new Point3D( 0.5, -0.5, 0.0));
-            vertices.Add(new Point3D(-0.5, -0.5, 0.0));
-            vertices.Add(new Point3D(-0.5,  0.0, 0.5));
-            vertices.Add(new Point3D( 0.5,  0.0, 0.5));
-            v1 = new Vector3D(vertices[faceIndex + 0].X, vertices[faceIndex + 0].Y, vertices[faceIndex + 0].Z);
-            v2 = new Vector3D(vertices[faceIndex + 1].X, vertices[faceIndex + 1].Y, vertices[faceIndex + 1].Z);
-            normal = Vector3D.CrossProduct(v1, v2);
-            normals.Add(normal);
-            normals.Add(normal);
-            normals.Add(normal);
-            normals.Add(normal);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 3, faceIndex + 0);
-            faceIndex += 4;
-
-            // Front face:
-            vertices.Add(new Point3D(0.5, -0.5, 0.5));
-            vertices.Add(new Point3D(-0.5, -0.5, 0.5));
-            vertices.Add(new Point3D(-0.5, 0.0, 0.5));
-            vertices.Add(new Point3D(0.5, 0.0, 0.5));
-            normals.Add(new Vector3D(0, 0, 1));
-            normals.Add(new Vector3D(0, 0, 1));
-            normals.Add(new Vector3D(0, 0, 1));
-            normals.Add(new Vector3D(0, 0, 1));
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 0);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 3, faceIndex + 2);
-            faceIndex += 4;
-
-            // Right face:
-            vertices.Add(new Point3D(-0.5, -0.5, 0.0));
-            vertices.Add(new Point3D(-0.5, -0.5, 0.5));
-            vertices.Add(new Point3D(-0.5, 0.0, 0.5));
-            normals.Add(new Vector3D(-1, 0, 0));
-            normals.Add(new Vector3D(-1, 0, 0));
-            normals.Add(new Vector3D(-1, 0, 0));
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            faceIndex += 3;
-
-            // Left face:
-            vertices.Add(new Point3D(0.5, -0.5, 0.0));
-            vertices.Add(new Point3D(0.5, -0.5, 0.5));
-            vertices.Add(new Point3D(0.5, 0.0, 0.5));
-            normals.Add(new Vector3D(1, 0, 0));
-            normals.Add(new Vector3D(1, 0, 0));
-            normals.Add(new Vector3D(1, 0, 0));
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 0);
-            faceIndex += 3;
-
-            // Bottom face:
-            vertices.Add(new Point3D(-0.5, -0.5, 0.0));
-            vertices.Add(new Point3D(-0.5, -0.5, 0.5));
-            vertices.Add(new Point3D(0.5, -0.5, 0.5));
-            vertices.Add(new Point3D(0.5, -0.5, 0.0));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 0);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 3, faceIndex + 2);
-            faceIndex += 4;
-            return faceIndex;
-        }
-        private int AddGeometry_SlopeHalf(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)
-        {
-            Vector3D v1;
-            Vector3D v2;
-            Vector3D normal;
-
-            // Inside face:
-            vertices.Add(new Point3D( 0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(-0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(-0.5,  0.0,  0.5));
-            vertices.Add(new Point3D( 0.5,  0.0,  0.5));
-            v1 = new Vector3D(vertices[faceIndex + 0].X, vertices[faceIndex + 0].Y, vertices[faceIndex + 0].Z);
-            v2 = new Vector3D(vertices[faceIndex + 1].X, vertices[faceIndex + 1].Y, vertices[faceIndex + 1].Z);
-            normal = Vector3D.CrossProduct(v1, v2);
-            normals.Add(normal);
-            normals.Add(normal);
-            normals.Add(normal);
-            normals.Add(normal);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 3, faceIndex + 0);
-            faceIndex += 4;
-
-            // Front face:
-            vertices.Add(new Point3D( 0.5, -0.5, 0.5));
-            vertices.Add(new Point3D(-0.5, -0.5, 0.5));
-            vertices.Add(new Point3D(-0.5,  0.0, 0.5));
-            vertices.Add(new Point3D( 0.5,  0.0, 0.5));
-            normals.Add(new Vector3D(0, 0, 1));
-            normals.Add(new Vector3D(0, 0, 1));
-            normals.Add(new Vector3D(0, 0, 1));
-            normals.Add(new Vector3D(0, 0, 1));
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 0);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 3, faceIndex + 2);
-            faceIndex += 4;
-
-            // Right face:
-            vertices.Add(new Point3D(-0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(-0.5, -0.5,  0.5));
-            vertices.Add(new Point3D(-0.5,  0.0,  0.5));
-            normals.Add(new Vector3D(-1, 0, 0));
-            normals.Add(new Vector3D(-1, 0, 0));
-            normals.Add(new Vector3D(-1, 0, 0));
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            faceIndex += 3;
-
-            // Left face:
-            vertices.Add(new Point3D(0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(0.5, -0.5,  0.5));
-            vertices.Add(new Point3D(0.5,  0.0,  0.5));
-            normals.Add(new Vector3D(1, 0, 0));
-            normals.Add(new Vector3D(1, 0, 0));
-            normals.Add(new Vector3D(1, 0, 0));
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 0);
-            faceIndex += 3;
-
-            // Bottom face:
-            vertices.Add(new Point3D(-0.5, -0.5, -0.5));
-            vertices.Add(new Point3D(-0.5, -0.5,  0.5));
-            vertices.Add(new Point3D( 0.5, -0.5,  0.5));
-            vertices.Add(new Point3D( 0.5, -0.5, -0.5));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            normals.Add(new Vector3D(0, -1, 0));
-            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 0);
-            AddTriangle(triangles, faceIndex + 0, faceIndex + 3, faceIndex + 2);
-            faceIndex += 4;
-            return faceIndex;
-        }
-
-
         private GeometryModel3D CreateBox(Point3D pos, Color colour)
         {
             GeometryModel3D model = new GeometryModel3D();
@@ -1981,5 +534,2280 @@ namespace EPBLab.ViewModel
             triangles.Add(b);
             triangles.Add(c);
         }
+        #region AddGeometry
+
+        //BuildingBlockFull
+        private int AddGeometry_Cube(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)
+        {
+            // Frontface
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 0, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 3);
+            faceIndex += 4;
+            // Backface
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            faceIndex += 4;
+            // Rightface
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 0, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 3);
+            faceIndex += 4;
+            // Leftface
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            faceIndex += 4;
+            // Topface
+            vertices.Add(new Point3D(-0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, -0.500000));
+            normals.Add(new Vector3D(0.000000, 1.000000, 0.000000));
+            normals.Add(new Vector3D(0.000000, 1.000000, -0.000000));
+            normals.Add(new Vector3D(0.000000, 1.000000, -0.000000));
+            normals.Add(new Vector3D(0.000000, 1.000000, -0.000000));
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 0, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 3);
+            faceIndex += 4;
+            // Bottomface
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            return faceIndex;
+        }
+        private int AddGeometry_CutCorner(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)
+        {
+            // Insideface
+            vertices.Add(new Point3D(0.500000, 0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, 0.500000));
+            normals.Add(new Vector3D(-0.577350, 0.577350, -0.577350));
+            normals.Add(new Vector3D(-0.577350, 0.577350, -0.577350));
+            normals.Add(new Vector3D(-0.577350, 0.577350, -0.577350));
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
+            faceIndex += 3;
+            // Frontface
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 0, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 3);
+            faceIndex += 4;
+            // Backface
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            AddTriangle(triangles, faceIndex + 1, faceIndex + 0, faceIndex + 2);
+            faceIndex += 3;
+            // Rightface
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 1);
+            faceIndex += 3;
+            // Leftface
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            faceIndex += 4;
+            // Topface
+            vertices.Add(new Point3D(-0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, 0.500000));
+            normals.Add(new Vector3D(0.000000, 1.000000, -0.000000));
+            normals.Add(new Vector3D(0.000000, 1.000000, -0.000000));
+            normals.Add(new Vector3D(0.000000, 1.000000, -0.000000));
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 2, faceIndex + 1);
+            faceIndex += 3;
+            // Bottomface
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            return faceIndex;
+        }
+        private int AddGeometry_CornerLongA(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)
+        {
+            // Frontface
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 0, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 3);
+            faceIndex += 4;
+            // Backface
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.000000, 0.500000, -0.500000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            AddTriangle(triangles, faceIndex + 1, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 2, faceIndex + 3);
+            faceIndex += 4;
+            // Rightface
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            faceIndex += 4;
+            // Leftface
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            faceIndex += 4;
+            // Topface
+            vertices.Add(new Point3D(-0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, 0.000000));
+            vertices.Add(new Point3D(-0.000000, 0.500000, -0.500000));
+            normals.Add(new Vector3D(0.000000, 1.000000, 0.000000));
+            normals.Add(new Vector3D(0.000000, 1.000000, -0.000000));
+            normals.Add(new Vector3D(0.000000, 1.000000, -0.000000));
+            normals.Add(new Vector3D(0.000000, 1.000000, 0.000000));
+            normals.Add(new Vector3D(0.000000, 1.000000, -0.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 4);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 0, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 2, faceIndex + 4);
+            faceIndex += 5;
+            // Bottomface
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            faceIndex += 4;
+            // Insideface
+            vertices.Add(new Point3D(-0.000000, 0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, 0.000000));
+            normals.Add(new Vector3D(-0.666667, 0.333333, -0.666667));
+            normals.Add(new Vector3D(-0.666667, 0.333333, -0.666667));
+            normals.Add(new Vector3D(-0.666667, 0.333333, -0.666667));
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
+            return faceIndex;
+        }
+        private int AddGeometry_CornerLongB(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)
+        {
+            // Frontface
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 0, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 3);
+            faceIndex += 4;
+            // Backface
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.000000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            AddTriangle(triangles, faceIndex + 1, faceIndex + 0, faceIndex + 2);
+            faceIndex += 3;
+            // Rightface
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 1);
+            faceIndex += 3;
+            // Leftface
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            faceIndex += 4;
+            // Topface
+            vertices.Add(new Point3D(-0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, 0.500000));
+            normals.Add(new Vector3D(0.000000, 1.000000, -0.000000));
+            normals.Add(new Vector3D(0.000000, 1.000000, -0.000000));
+            normals.Add(new Vector3D(0.000000, 1.000000, -0.000000));
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 2, faceIndex + 1);
+            faceIndex += 3;
+            // Bottomface
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.000000));
+            vertices.Add(new Point3D(-0.000000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
+            normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            AddTriangle(triangles, faceIndex + 4, faceIndex + 1, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 3, faceIndex + 4);
+            faceIndex += 5;
+            // Insideface
+            vertices.Add(new Point3D(0.500000, 0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.000000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.000000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.000000));
+            normals.Add(new Vector3D(-0.666667, 0.333333, -0.666667));
+            normals.Add(new Vector3D(-0.666667, 0.333333, -0.666667));
+            normals.Add(new Vector3D(-0.666667, 0.333333, -0.666667));
+            normals.Add(new Vector3D(-0.666667, 0.333333, -0.666667));
+            normals.Add(new Vector3D(-0.666667, 0.333333, -0.666667));
+            normals.Add(new Vector3D(-0.666667, 0.333333, -0.666667));
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 4, faceIndex + 5);
+            return faceIndex;
+        }
+        private int AddGeometry_CornerLongC(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)
+        {
+            // Frontface
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.000000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 0, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 3);
+            faceIndex += 4;
+            // Leftface
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, -0.000000));
+            vertices.Add(new Point3D(0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            faceIndex += 4;
+            // Topface
+            vertices.Add(new Point3D(0.000000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, -0.000000));
+            vertices.Add(new Point3D(0.500000, 0.500000, 0.500000));
+            normals.Add(new Vector3D(0.000000, 1.000000, -0.000000));
+            normals.Add(new Vector3D(0.000000, 1.000000, -0.000000));
+            normals.Add(new Vector3D(0.000000, 1.000000, -0.000000));
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 2, faceIndex + 1);
+            faceIndex += 3;
+            // Bottomface
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 1);
+            faceIndex += 3;
+            // Insideface
+            vertices.Add(new Point3D(0.500000, 0.500000, -0.000000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.000000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(0.000000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            normals.Add(new Vector3D(-0.666667, 0.333333, -0.666667));
+            normals.Add(new Vector3D(-0.666667, 0.333333, -0.666667));
+            normals.Add(new Vector3D(-0.666667, 0.333333, -0.666667));
+            normals.Add(new Vector3D(-0.666667, 0.333333, -0.666667));
+            normals.Add(new Vector3D(-0.666667, 0.333333, -0.666667));
+            normals.Add(new Vector3D(-0.666667, 0.333333, -0.666667));
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 4, faceIndex + 5);
+            return faceIndex;
+        }
+        private int AddGeometry_CornerLongD(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)
+        {
+            // Insideface
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.000000));
+            vertices.Add(new Point3D(0.000000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, 0.500000));
+            normals.Add(new Vector3D(-0.666667, 0.333333, -0.666667));
+            normals.Add(new Vector3D(-0.666667, 0.333333, -0.666667));
+            normals.Add(new Vector3D(-0.666667, 0.333333, -0.666667));
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
+            faceIndex += 3;
+            // Leftface
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.000000));
+            vertices.Add(new Point3D(0.500000, 0.500000, 0.500000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
+            faceIndex += 3;
+            // Frontface
+            vertices.Add(new Point3D(0.000000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, 0.500000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
+            faceIndex += 3;
+            // Bottomface
+            vertices.Add(new Point3D(0.000000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.000000));
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            normals.Add(new Vector3D(0.000000, -1.000000, 0.000000));
+            normals.Add(new Vector3D(0.000000, -1.000000, 0.000000));
+            normals.Add(new Vector3D(0.000000, -1.000000, 0.000000));
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
+            return faceIndex;
+        }
+        private int AddGeometry_CornerLargeA(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)
+        {
+            // Leftface
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, -0.500000));
+            normals.Add(new Vector3D(0.707107, 0.707107, -0.000000));
+            normals.Add(new Vector3D(0.707107, 0.707107, -0.000000));
+            normals.Add(new Vector3D(0.707107, 0.707107, -0.000000));
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
+            faceIndex += 3;
+            // Rightface
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, -0.500000));
+            normals.Add(new Vector3D(-1.000000, 0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, 0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, 0.000000, 0.000000));
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
+            faceIndex += 3;
+            // Frontface
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, -0.500000));
+            normals.Add(new Vector3D(0.000000, 0.707107, 0.707107));
+            normals.Add(new Vector3D(0.000000, 0.707107, 0.707107));
+            normals.Add(new Vector3D(0.000000, 0.707107, 0.707107));
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
+            faceIndex += 3;
+            // Backface
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, -0.500000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
+            faceIndex += 3;
+            // Bottomface
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            return faceIndex;
+        }
+        private int AddGeometry_Corner(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)
+        {
+            // Insideface
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, 0.500000));
+            normals.Add(new Vector3D(-0.577350, 0.577350, -0.577350));
+            normals.Add(new Vector3D(-0.577350, 0.577350, -0.577350));
+            normals.Add(new Vector3D(-0.577350, 0.577350, -0.577350));
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
+            faceIndex += 3;
+            // Leftface
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, 0.500000));
+            normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
+            faceIndex += 3;
+            // Frontface
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, 0.500000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
+            faceIndex += 3;
+            // Bottomface
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            normals.Add(new Vector3D(0.000000, -1.000000, 0.000000));
+            normals.Add(new Vector3D(0.000000, -1.000000, 0.000000));
+            normals.Add(new Vector3D(0.000000, -1.000000, 0.000000));
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
+            return faceIndex;
+        }
+        private int AddGeometry_RampBottom(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)
+        {
+            // Insideface
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, -0.000000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.000000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(-0.000000, 0.894427, -0.447214));
+            normals.Add(new Vector3D(-0.000000, 0.894427, -0.447214));
+            normals.Add(new Vector3D(-0.000000, 0.894427, -0.447214));
+            normals.Add(new Vector3D(-0.000000, 0.894427, -0.447214));
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 0, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 3);
+            faceIndex += 4;
+            // Frontface
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.000000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.000000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, 0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            faceIndex += 4;
+            // Rightface
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.000000, 0.500000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
+            faceIndex += 3;
+            // Leftface
+            vertices.Add(new Point3D(0.500000, -0.000000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
+            faceIndex += 3;
+            // Bottomface
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
+            normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
+            normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            return faceIndex;
+        }
+        private int AddGeometry_RampTop(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)
+        {
+            // Frontface
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 0, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 3);
+            faceIndex += 4;
+            // Backface
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.000000, -0.500000));
+            vertices.Add(new Point3D(0.500000, -0.000000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 1, faceIndex + 2, faceIndex + 3);
+            faceIndex += 4;
+            // Rightface
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.000000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(-1.000000, 0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, 0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, 0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, 0.000000, 0.000000));
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 0, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 3);
+            faceIndex += 4;
+            // Leftface
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.000000, -0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            faceIndex += 4;
+            // Bottomface
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
+            normals.Add(new Vector3D(0.000000, -1.000000, 0.000000));
+            normals.Add(new Vector3D(0.000000, -1.000000, 0.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            faceIndex += 4;
+            // Topface
+            vertices.Add(new Point3D(0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.000000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.000000, -0.500000));
+            vertices.Add(new Point3D(0.500000, -0.000000, -0.500000));
+            normals.Add(new Vector3D(-0.000000, 0.894427, -0.447214));
+            normals.Add(new Vector3D(-0.000000, 0.894427, -0.447214));
+            normals.Add(new Vector3D(-0.000000, 0.894427, -0.447214));
+            normals.Add(new Vector3D(-0.000000, 0.894427, -0.447214));
+            normals.Add(new Vector3D(-0.000000, 0.894427, -0.447214));
+            normals.Add(new Vector3D(-0.000000, 0.894427, -0.447214));
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 5, faceIndex + 4, faceIndex + 3);
+            return faceIndex;
+        }
+        private int AddGeometry_Slope(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)
+        {
+            // Insideface
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(-0.000000, 0.707107, -0.707107));
+            normals.Add(new Vector3D(-0.000000, 0.707107, -0.707107));
+            normals.Add(new Vector3D(-0.000000, 0.707107, -0.707107));
+            normals.Add(new Vector3D(-0.000000, 0.707107, -0.707107));
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 0, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 3);
+            faceIndex += 4;
+            // Frontface
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            faceIndex += 4;
+            // Rightface
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, 0.500000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
+            faceIndex += 3;
+            // Leftface
+            vertices.Add(new Point3D(0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
+            faceIndex += 3;
+            // Bottomface
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
+            normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            return faceIndex;
+        }
+        private int AddGeometry_CornerLargeB(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)
+        {
+            // Frontface
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, 0.000000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.000000, 0.500000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, 0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 3, faceIndex + 4);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 4);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            faceIndex += 5;
+            // Backface
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, 0.000000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, 0.000000, -0.500000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            normals.Add(new Vector3D(-0.000000, 0.894427, -0.447214));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            normals.Add(new Vector3D(-0.000000, 0.525731, -0.850651));
+            normals.Add(new Vector3D(-0.000000, 0.343279, -0.939234));
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 0, faceIndex + 4);
+            AddTriangle(triangles, faceIndex + 1, faceIndex + 3, faceIndex + 4);
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 2, faceIndex + 4);
+            faceIndex += 5;
+            // Rightface
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.000000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, 0.000000, -0.500000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            normals.Add(new Vector3D(-0.447214, 0.894427, 0.000000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            normals.Add(new Vector3D(-0.850651, 0.525731, 0.000000));
+            normals.Add(new Vector3D(-0.939234, 0.343279, 0.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 4);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 4);
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 3, faceIndex + 4);
+            faceIndex += 5;
+            // Leftface
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, -0.000000, 0.500000));
+            vertices.Add(new Point3D(0.500000, 0.000000, -0.500000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 2, faceIndex + 4);
+            AddTriangle(triangles, faceIndex + 1, faceIndex + 3, faceIndex + 4);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 0, faceIndex + 2);
+            faceIndex += 5;
+            // Bottomface
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            return faceIndex;
+        }
+        private int AddGeometry_CornerLargeC(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)
+        {
+            // Frontface
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.000000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.000000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 0, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 3);
+            faceIndex += 4;
+            // Leftface
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.000000, -0.500000));
+            vertices.Add(new Point3D(0.500000, -0.000000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            faceIndex += 4;
+            // Topface
+            vertices.Add(new Point3D(-0.500000, -0.000000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.000000, -0.500000));
+            vertices.Add(new Point3D(0.500000, -0.000000, 0.500000));
+            normals.Add(new Vector3D(0.000000, 1.000000, -0.000000));
+            normals.Add(new Vector3D(0.000000, 1.000000, -0.000000));
+            normals.Add(new Vector3D(0.000000, 1.000000, -0.000000));
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 2, faceIndex + 1);
+            faceIndex += 3;
+            // Bottomface
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 1);
+            faceIndex += 3;
+            // Insideface
+            vertices.Add(new Point3D(0.500000, -0.000000, -0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.000000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.000000, -0.500000));
+            normals.Add(new Vector3D(-0.707107, 0.000000, -0.707107));
+            normals.Add(new Vector3D(-0.707107, 0.000000, -0.707107));
+            normals.Add(new Vector3D(-0.707107, 0.000000, -0.707107));
+            normals.Add(new Vector3D(-0.707107, 0.000000, -0.707107));
+            normals.Add(new Vector3D(-0.707107, 0.000000, -0.707107));
+            normals.Add(new Vector3D(-0.707107, 0.000000, -0.707107));
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 4, faceIndex + 5);
+            return faceIndex;
+        }
+        private int AddGeometry_CornerLargeD(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)
+        {
+            // Frontface
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.000000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 0, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 3);
+            faceIndex += 4;
+            // Backface
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.000000, 0.500000, 0.000000));
+            vertices.Add(new Point3D(0.500000, 0.500000, -0.000000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(-0.000000, 0.447214, -0.894427));
+            normals.Add(new Vector3D(-0.000000, 0.447214, -0.894427));
+            normals.Add(new Vector3D(-0.000000, 0.447214, -0.894427));
+            normals.Add(new Vector3D(-0.000000, 0.447214, -0.894427));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            faceIndex += 4;
+            // Rightface
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.000000, 0.500000, 0.000000));
+            vertices.Add(new Point3D(0.000000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(-0.894427, 0.447214, 0.000000));
+            normals.Add(new Vector3D(-0.894427, 0.447214, 0.000000));
+            normals.Add(new Vector3D(-0.894427, 0.447214, 0.000000));
+            normals.Add(new Vector3D(-0.894427, 0.447214, 0.000000));
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 0, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 3);
+            faceIndex += 4;
+            // Leftface
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, -0.000000));
+            vertices.Add(new Point3D(0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            faceIndex += 4;
+            // Topface
+            vertices.Add(new Point3D(0.000000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, -0.000000));
+            vertices.Add(new Point3D(0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(0.000000, 0.500000, 0.000000));
+            normals.Add(new Vector3D(0.000000, 1.000000, 0.000000));
+            normals.Add(new Vector3D(0.000000, 1.000000, -0.000000));
+            normals.Add(new Vector3D(0.000000, 1.000000, 0.000000));
+            normals.Add(new Vector3D(0.000000, 1.000000, 0.000000));
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 0, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 3);
+            faceIndex += 4;
+            // Bottomface
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            return faceIndex;
+        }
+        private int AddGeometry_CornerLongE(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)
+        {
+            // Frontface
+            vertices.Add(new Point3D(-0.499994, -0.500000, -0.500006));
+            vertices.Add(new Point3D(-0.500007, 0.500000, -0.499993));
+            vertices.Add(new Point3D(0.000006, -0.499994, -0.500006));
+            normals.Add(new Vector3D(-0.000000, 0.000013, -1.000000));
+            normals.Add(new Vector3D(-0.000000, 0.000013, -1.000000));
+            normals.Add(new Vector3D(-0.000000, 0.000013, -1.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 1);
+            faceIndex += 3;
+            // Backface
+            vertices.Add(new Point3D(-0.499994, -0.500006, -0.000006));
+            vertices.Add(new Point3D(-0.500007, 0.500000, -0.499993));
+            vertices.Add(new Point3D(0.000006, -0.500000, -0.000006));
+            normals.Add(new Vector3D(-0.000006, 0.447202, 0.894433));
+            normals.Add(new Vector3D(-0.000006, 0.447202, 0.894433));
+            normals.Add(new Vector3D(-0.000006, 0.447202, 0.894433));
+            AddTriangle(triangles, faceIndex + 1, faceIndex + 0, faceIndex + 2);
+            faceIndex += 3;
+            // Rightface
+            vertices.Add(new Point3D(0.000006, -0.499994, -0.500006));
+            vertices.Add(new Point3D(-0.500007, 0.500000, -0.499993));
+            vertices.Add(new Point3D(0.000006, -0.500000, -0.000006));
+            normals.Add(new Vector3D(0.894422, 0.447225, 0.000006));
+            normals.Add(new Vector3D(0.894422, 0.447225, 0.000006));
+            normals.Add(new Vector3D(0.894422, 0.447225, 0.000006));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 1);
+            faceIndex += 3;
+            // Leftface
+            vertices.Add(new Point3D(-0.499994, -0.500000, -0.500006));
+            vertices.Add(new Point3D(-0.500007, 0.500000, -0.499993));
+            vertices.Add(new Point3D(-0.499994, -0.500006, -0.000006));
+            normals.Add(new Vector3D(-1.000000, -0.000013, -0.000000));
+            normals.Add(new Vector3D(-1.000000, -0.000013, -0.000000));
+            normals.Add(new Vector3D(-1.000000, -0.000013, -0.000000));
+            AddTriangle(triangles, faceIndex + 1, faceIndex + 0, faceIndex + 2);
+            faceIndex += 3;
+            // Bottomface
+            vertices.Add(new Point3D(0.000006, -0.499994, -0.500006));
+            vertices.Add(new Point3D(-0.499994, -0.500006, -0.000006));
+            vertices.Add(new Point3D(-0.499994, -0.500000, -0.500006));
+            vertices.Add(new Point3D(0.000006, -0.500000, -0.000006));
+            normals.Add(new Vector3D(0.000013, -1.000000, -0.000013));
+            normals.Add(new Vector3D(0.000013, -1.000000, -0.000013));
+            normals.Add(new Vector3D(0.000013, -1.000000, -0.000013));
+            normals.Add(new Vector3D(0.000013, -1.000000, -0.000013));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            return faceIndex;
+        }
+        private int AddGeometry_PyramidA(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)
+        {
+            // Leftface
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.000000, 0.500000, 0.000000));
+            normals.Add(new Vector3D(0.894427, 0.447214, -0.000000));
+            normals.Add(new Vector3D(0.894427, 0.447214, -0.000000));
+            normals.Add(new Vector3D(0.894427, 0.447214, -0.000000));
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
+            faceIndex += 3;
+            // Rightface
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.000000, 0.500000, -0.000000));
+            normals.Add(new Vector3D(-0.894427, 0.447214, 0.000000));
+            normals.Add(new Vector3D(-0.894427, 0.447214, 0.000000));
+            normals.Add(new Vector3D(-0.894427, 0.447214, 0.000000));
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
+            faceIndex += 3;
+            // Frontface
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.000000, 0.500000, -0.000000));
+            normals.Add(new Vector3D(0.000000, 0.447214, 0.894427));
+            normals.Add(new Vector3D(0.000000, 0.447214, 0.894427));
+            normals.Add(new Vector3D(0.000000, 0.447214, 0.894427));
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
+            faceIndex += 3;
+            // Backface
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.000000, 0.500000, -0.000000));
+            normals.Add(new Vector3D(-0.000000, 0.447214, -0.894427));
+            normals.Add(new Vector3D(-0.000000, 0.447214, -0.894427));
+            normals.Add(new Vector3D(-0.000000, 0.447214, -0.894427));
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
+            faceIndex += 3;
+            // Bottomface
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
+            normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
+            normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
+            normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+
+            //BuildingBlockThin
+            return faceIndex;
+        }
+        private int AddGeometry_Wall(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)
+        {
+            // Frontface
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.250000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, -0.250000));
+            vertices.Add(new Point3D(0.500000, 0.500000, -0.250000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.250000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 0, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 3);
+            faceIndex += 4;
+            // Backface
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            faceIndex += 4;
+            // Rightface
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.250000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, -0.250000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, 0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, 0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, 0.000000, 0.000000));
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 0, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 3);
+            faceIndex += 4;
+            // Leftface
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.250000));
+            vertices.Add(new Point3D(0.500000, 0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, -0.250000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            faceIndex += 4;
+            // Topface
+            vertices.Add(new Point3D(-0.500000, 0.500000, -0.250000));
+            vertices.Add(new Point3D(0.500000, 0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, -0.250000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, -0.500000));
+            normals.Add(new Vector3D(-0.000000, 1.000000, -0.000000));
+            normals.Add(new Vector3D(-0.000000, 1.000000, 0.000000));
+            normals.Add(new Vector3D(-0.000000, 1.000000, -0.000000));
+            normals.Add(new Vector3D(-0.000000, 1.000000, -0.000000));
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 0, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 3);
+            faceIndex += 4;
+            // Bottomface
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.250000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.250000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
+            normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            return faceIndex;
+        }
+        private int AddGeometry_WallLShape(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)
+        {
+            // Insideface
+            vertices.Add(new Point3D(0.250000, -0.500000, 0.250000));
+            vertices.Add(new Point3D(0.250000, 0.500000, 0.250000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.250000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, 0.250000));
+            vertices.Add(new Point3D(0.250000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.250000, 0.500000, -0.500000));
+            normals.Add(new Vector3D(-0.707107, 0.000000, -0.707107));
+            normals.Add(new Vector3D(-0.707107, 0.000000, -0.707107));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            normals.Add(new Vector3D(-1.000000, 0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, 0.000000, 0.000000));
+            AddTriangle(triangles, faceIndex + 4, faceIndex + 1, faceIndex + 5);
+            AddTriangle(triangles, faceIndex + 1, faceIndex + 2, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 4, faceIndex + 0, faceIndex + 1);
+            AddTriangle(triangles, faceIndex + 1, faceIndex + 0, faceIndex + 2);
+            faceIndex += 6;
+            // Frontface
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            AddTriangle(triangles, faceIndex + 1, faceIndex + 0, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 3, faceIndex + 2);
+            faceIndex += 4;
+            // Leftface
+            vertices.Add(new Point3D(0.500000, 0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 3, faceIndex + 1);
+            AddTriangle(triangles, faceIndex + 1, faceIndex + 0, faceIndex + 2);
+            faceIndex += 4;
+            // Rightface
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.250000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, 0.250000));
+            normals.Add(new Vector3D(-1.000000, 0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, 0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, 0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, 0.000000, 0.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 3);
+            faceIndex += 4;
+            // Bottomface
+            vertices.Add(new Point3D(0.250000, -0.500000, 0.250000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.250000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.250000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, -0.000000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, -0.000000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, -0.000000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, -0.000000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, -0.000000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, -0.000000));
+            AddTriangle(triangles, faceIndex + 5, faceIndex + 1, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 5, faceIndex + 2, faceIndex + 0);
+            AddTriangle(triangles, faceIndex + 5, faceIndex + 0, faceIndex + 4);
+            AddTriangle(triangles, faceIndex + 5, faceIndex + 4, faceIndex + 3);
+            faceIndex += 6;
+            // Backface
+            vertices.Add(new Point3D(0.500000, 0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.250000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.250000, 0.500000, -0.500000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            AddTriangle(triangles, faceIndex + 1, faceIndex + 2, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 0, faceIndex + 1);
+            faceIndex += 4;
+            // Topface
+            vertices.Add(new Point3D(0.500000, 0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, 0.250000));
+            vertices.Add(new Point3D(0.250000, 0.500000, -0.500000));
+            vertices.Add(new Point3D(0.250000, 0.500000, 0.250000));
+            vertices.Add(new Point3D(0.500000, 0.500000, 0.500000));
+            normals.Add(new Vector3D(0.000000, 1.000000, 0.000000));
+            normals.Add(new Vector3D(0.000000, 1.000000, 0.000000));
+            normals.Add(new Vector3D(0.000000, 1.000000, 0.000000));
+            normals.Add(new Vector3D(0.000000, 1.000000, 0.000000));
+            normals.Add(new Vector3D(0.000000, 1.000000, 0.000000));
+            normals.Add(new Vector3D(0.000000, 1.000000, 0.000000));
+            AddTriangle(triangles, faceIndex + 5, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 5, faceIndex + 3, faceIndex + 4);
+            AddTriangle(triangles, faceIndex + 5, faceIndex + 4, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 5, faceIndex + 2, faceIndex + 1);
+            return faceIndex;
+        }
+        private int AddGeometry_SlopedWall(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)
+        {
+            // Insideface
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.250000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.250000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(-0.000000, 0.707107, -0.707107));
+            normals.Add(new Vector3D(-0.000000, 0.707107, -0.707107));
+            normals.Add(new Vector3D(-0.000000, 0.707107, -0.707107));
+            normals.Add(new Vector3D(-0.000000, 0.707107, -0.707107));
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 0, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 3);
+            faceIndex += 4;
+            // Frontface
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.250000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.250000, -0.500000, 0.500000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, 0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, 0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, 0.000000, 1.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            faceIndex += 4;
+            // Rightface
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, 0.500000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
+            faceIndex += 3;
+            // Leftface
+            vertices.Add(new Point3D(-0.250000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.250000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.250000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
+            faceIndex += 3;
+            // Bottomface
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.250000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.250000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            return faceIndex;
+        }
+        private int AddGeometry_SlopedWallBottomRight(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)
+        {
+            // Insideface
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.250000, -0.000000, 0.500000));
+            vertices.Add(new Point3D(-0.250000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.000000, 0.500000));
+            normals.Add(new Vector3D(-0.000000, 0.894427, -0.447214));
+            normals.Add(new Vector3D(-0.000000, 0.894427, -0.447214));
+            normals.Add(new Vector3D(-0.000000, 0.894427, -0.447214));
+            normals.Add(new Vector3D(-0.000000, 0.894427, -0.447214));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            faceIndex += 4;
+            // Frontface
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.250000, -0.000000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.000000, 0.500000));
+            vertices.Add(new Point3D(-0.250000, -0.500000, 0.500000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, 0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, 0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, 0.000000, 1.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            faceIndex += 4;
+            // Rightface
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.000000, 0.500000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
+            faceIndex += 3;
+            // Leftface
+            vertices.Add(new Point3D(-0.250000, -0.000000, 0.500000));
+            vertices.Add(new Point3D(-0.250000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.250000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
+            faceIndex += 3;
+            // Bottomface
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.250000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.250000, -0.500000, 0.500000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, -0.000000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 0, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 3);
+            return faceIndex;
+        }
+        private int AddGeometry_SlopedWallTopRight(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)
+        {
+            // Frontface
+            vertices.Add(new Point3D(-0.250000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.250000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            normals.Add(new Vector3D(0.000000, 0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, 0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, 0.000000, 1.000000));
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 0, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 3);
+            faceIndex += 4;
+            // Backface
+            vertices.Add(new Point3D(-0.250000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.000000, -0.500000));
+            vertices.Add(new Point3D(-0.250000, -0.000000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            faceIndex += 4;
+            // Rightface
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.000000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, 0.500000));
+            normals.Add(new Vector3D(-1.000000, 0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, 0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, 0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, 0.000000, 0.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            faceIndex += 4;
+            // Leftface
+            vertices.Add(new Point3D(-0.250000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.250000, -0.000000, -0.500000));
+            vertices.Add(new Point3D(-0.250000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.250000, 0.500000, 0.500000));
+            normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 0, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 3);
+            faceIndex += 4;
+            // Topface
+            vertices.Add(new Point3D(-0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.250000, -0.000000, -0.500000));
+            vertices.Add(new Point3D(-0.250000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.000000, -0.500000));
+            normals.Add(new Vector3D(-0.000000, 0.894427, -0.447214));
+            normals.Add(new Vector3D(-0.000000, 0.894427, -0.447214));
+            normals.Add(new Vector3D(-0.000000, 0.894427, -0.447214));
+            normals.Add(new Vector3D(-0.000000, 0.894427, -0.447214));
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 0, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 3);
+            faceIndex += 4;
+            // Bottomface
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.250000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.250000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            return faceIndex;
+        }
+        private int AddGeometry_SlopedWallBottomLeft(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)
+        {
+            // Insideface
+            vertices.Add(new Point3D(0.250000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, -0.000000, 0.500000));
+            vertices.Add(new Point3D(0.250000, -0.000000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(-0.000000, 0.894427, -0.447214));
+            normals.Add(new Vector3D(-0.000000, 0.894427, -0.447214));
+            normals.Add(new Vector3D(-0.000000, 0.894427, -0.447214));
+            normals.Add(new Vector3D(-0.000000, 0.894427, -0.447214));
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 0, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 3);
+            faceIndex += 4;
+            // Frontface
+            vertices.Add(new Point3D(0.250000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.000000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.250000, -0.000000, 0.500000));
+            normals.Add(new Vector3D(0.000000, 0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, 0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, 0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, 0.000000, 1.000000));
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 0, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 3);
+            faceIndex += 4;
+            // Leftface
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, -0.000000, 0.500000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
+            faceIndex += 3;
+            // Rightface
+            vertices.Add(new Point3D(0.250000, -0.000000, 0.500000));
+            vertices.Add(new Point3D(0.250000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.250000, -0.500000, 0.500000));
+            normals.Add(new Vector3D(-1.000000, 0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, 0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, 0.000000, 0.000000));
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
+            faceIndex += 3;
+            // Bottomface
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.250000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.250000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 0, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 3);
+            return faceIndex;
+        }
+        private int AddGeometry_SlopedWallTopLeft(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)
+        {
+            // Frontface
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.250000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(0.250000, -0.500000, 0.500000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 0, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 3);
+            faceIndex += 4;
+            // Backface
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.250000, -0.000000, -0.500000));
+            vertices.Add(new Point3D(0.500000, -0.000000, -0.500000));
+            vertices.Add(new Point3D(0.250000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            normals.Add(new Vector3D(-0.000000, -0.000000, -1.000000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            faceIndex += 4;
+            // Leftface
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.000000, -0.500000));
+            normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            faceIndex += 4;
+            // Rightface
+            vertices.Add(new Point3D(0.250000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.250000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(0.250000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.250000, -0.000000, -0.500000));
+            normals.Add(new Vector3D(-1.000000, 0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 0, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 3);
+            faceIndex += 4;
+            // Topface
+            vertices.Add(new Point3D(0.500000, -0.000000, -0.500000));
+            vertices.Add(new Point3D(0.250000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(0.250000, -0.000000, -0.500000));
+            normals.Add(new Vector3D(-0.000000, 0.894427, -0.447214));
+            normals.Add(new Vector3D(-0.000000, 0.894427, -0.447214));
+            normals.Add(new Vector3D(-0.000000, 0.894427, -0.447214));
+            normals.Add(new Vector3D(-0.000000, 0.894427, -0.447214));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            faceIndex += 4;
+            // Bottomface
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.250000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.250000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 0, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 3);
+            return faceIndex;
+        }
+        private int AddGeometry_Wall3Corner(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)
+        {
+            // Insideface
+            vertices.Add(new Point3D(0.250000, -0.500000, 0.250000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.250000));
+            vertices.Add(new Point3D(0.250000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.250000, 0.250000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, 0.250000, 0.250000));
+            vertices.Add(new Point3D(0.250000, 0.250000, 0.250000));
+            vertices.Add(new Point3D(-0.500000, 0.250000, -0.500000));
+            normals.Add(new Vector3D(-0.707107, 0.000000, -0.707107));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            normals.Add(new Vector3D(-1.000000, 0.000000, 0.000000));
+            normals.Add(new Vector3D(-0.707107, -0.707107, 0.000000));
+            normals.Add(new Vector3D(-0.000000, -0.707107, -0.707107));
+            normals.Add(new Vector3D(-0.577350, -0.577350, -0.577350));
+            normals.Add(new Vector3D(-0.000000, -1.000000, -0.000000));
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 5);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 2, faceIndex + 5);
+            AddTriangle(triangles, faceIndex + 5, faceIndex + 4, faceIndex + 6);
+            AddTriangle(triangles, faceIndex + 6, faceIndex + 3, faceIndex + 5);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 5);
+            AddTriangle(triangles, faceIndex + 1, faceIndex + 4, faceIndex + 5);
+            faceIndex += 7;
+            // Frontface
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            AddTriangle(triangles, faceIndex + 1, faceIndex + 0, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 3, faceIndex + 2);
+            faceIndex += 4;
+            // Leftface
+            vertices.Add(new Point3D(0.500000, 0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 3, faceIndex + 1);
+            AddTriangle(triangles, faceIndex + 1, faceIndex + 0, faceIndex + 2);
+            faceIndex += 4;
+            // Topface
+            vertices.Add(new Point3D(-0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, -0.500000));
+            normals.Add(new Vector3D(0.000000, 1.000000, 0.000000));
+            normals.Add(new Vector3D(-0.000000, 1.000000, 0.000000));
+            normals.Add(new Vector3D(0.000000, 1.000000, 0.000000));
+            normals.Add(new Vector3D(0.000000, 1.000000, 0.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 0, faceIndex + 2);
+            faceIndex += 4;
+            // Backface
+            vertices.Add(new Point3D(0.500000, 0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.250000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.250000, 0.250000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, 0.250000, -0.500000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            normals.Add(new Vector3D(-0.000000, -0.000000, -1.000000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            AddTriangle(triangles, faceIndex + 1, faceIndex + 2, faceIndex + 0);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 5, faceIndex + 0);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 3, faceIndex + 0);
+            AddTriangle(triangles, faceIndex + 5, faceIndex + 4, faceIndex + 0);
+            faceIndex += 6;
+            // Rightface
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.250000));
+            vertices.Add(new Point3D(-0.500000, 0.250000, 0.250000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, 0.250000, -0.500000));
+            normals.Add(new Vector3D(-1.000000, 0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, 0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, 0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 5);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 2, faceIndex + 1);
+            AddTriangle(triangles, faceIndex + 1, faceIndex + 4, faceIndex + 5);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 1);
+            faceIndex += 6;
+            // Bottomface
+            vertices.Add(new Point3D(0.250000, -0.500000, 0.250000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.250000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.250000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, -0.000000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, -0.000000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, -0.000000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, -0.000000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, -0.000000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, -0.000000));
+            AddTriangle(triangles, faceIndex + 1, faceIndex + 2, faceIndex + 5);
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 4, faceIndex + 5);
+            AddTriangle(triangles, faceIndex + 4, faceIndex + 3, faceIndex + 5);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 5);
+            return faceIndex;
+        }
+        private int AddGeometry_WallHalf(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)
+        {
+            // Frontface
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.250000));
+            vertices.Add(new Point3D(-0.500000, -0.000000, -0.250000));
+            vertices.Add(new Point3D(0.500000, -0.000000, -0.250000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.250000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 0, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 3);
+            faceIndex += 4;
+            // Backface
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.000000, -0.500000));
+            vertices.Add(new Point3D(0.500000, -0.000000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            faceIndex += 4;
+            // Rightface
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.250000));
+            vertices.Add(new Point3D(-0.500000, -0.000000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.000000, -0.250000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, 0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 0, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 3);
+            faceIndex += 4;
+            // Leftface
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.250000));
+            vertices.Add(new Point3D(0.500000, -0.000000, -0.500000));
+            vertices.Add(new Point3D(0.500000, -0.000000, -0.250000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            faceIndex += 4;
+            // Topface
+            vertices.Add(new Point3D(-0.500000, -0.000000, -0.250000));
+            vertices.Add(new Point3D(0.500000, -0.000000, -0.500000));
+            vertices.Add(new Point3D(0.500000, -0.000000, -0.250000));
+            vertices.Add(new Point3D(-0.500000, -0.000000, -0.500000));
+            normals.Add(new Vector3D(-0.000000, 1.000000, 0.000000));
+            normals.Add(new Vector3D(-0.000000, 1.000000, 0.000000));
+            normals.Add(new Vector3D(-0.000000, 1.000000, 0.000000));
+            normals.Add(new Vector3D(-0.000000, 1.000000, 0.000000));
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 0, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 3);
+            faceIndex += 4;
+            // Bottomface
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.250000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.250000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(0.000000, -1.000000, 0.000000));
+            normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
+            normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
+            normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            return faceIndex;
+        }
+        private int AddGeometry_CubeHalf(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)
+        {
+            // Frontface
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.000000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.000000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 0, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 3);
+            faceIndex += 4;
+            // Backface
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.000000, -0.500000));
+            vertices.Add(new Point3D(0.500000, -0.000000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            faceIndex += 4;
+            // Rightface
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.000000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.000000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(-1.000000, 0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, 0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, 0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, 0.000000, 0.000000));
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 0, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 3);
+            faceIndex += 4;
+            // Leftface
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.000000, -0.500000));
+            vertices.Add(new Point3D(0.500000, -0.000000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            faceIndex += 4;
+            // Topface
+            vertices.Add(new Point3D(-0.500000, -0.000000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.000000, -0.500000));
+            vertices.Add(new Point3D(0.500000, -0.000000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.000000, -0.500000));
+            normals.Add(new Vector3D(-0.000000, 1.000000, 0.000000));
+            normals.Add(new Vector3D(-0.000000, 1.000000, 0.000000));
+            normals.Add(new Vector3D(-0.000000, 1.000000, 0.000000));
+            normals.Add(new Vector3D(-0.000000, 1.000000, 0.000000));
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 0, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 3);
+            faceIndex += 4;
+            // Bottomface
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
+            normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
+            normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            return faceIndex;
+        }
+        private int AddGeometry_RampTopDouble(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)
+        {
+            // Frontface
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 0, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 3);
+            faceIndex += 4;
+            // Backface
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, -0.000000));
+            vertices.Add(new Point3D(0.500000, 0.500000, -0.000000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, 0.000000));
+            vertices.Add(new Point3D(0.500000, 0.000000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.000000, -0.500000));
+            normals.Add(new Vector3D(-0.000000, -0.000000, -1.000000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            normals.Add(new Vector3D(-0.000000, 0.707107, -0.707107));
+            normals.Add(new Vector3D(-0.000000, 0.707107, -0.707107));
+            normals.Add(new Vector3D(-0.000000, 0.707107, -0.707107));
+            normals.Add(new Vector3D(-0.000000, 0.382683, -0.923880));
+            normals.Add(new Vector3D(-0.000000, 0.382683, -0.923880));
+            AddTriangle(triangles, faceIndex + 5, faceIndex + 0, faceIndex + 6);
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 6);
+            AddTriangle(triangles, faceIndex + 5, faceIndex + 6, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 6, faceIndex + 4);
+            faceIndex += 7;
+            // Rightface
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, 0.000000));
+            vertices.Add(new Point3D(-0.500000, 0.000000, -0.500000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 4);
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 3, faceIndex + 4);
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 3);
+            faceIndex += 5;
+            // Leftface
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, 0.000000, -0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, -0.000000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            AddTriangle(triangles, faceIndex + 1, faceIndex + 0, faceIndex + 4);
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 2, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 3, faceIndex + 4);
+            faceIndex += 5;
+            // Topface
+            vertices.Add(new Point3D(-0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, 0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, 0.500000, 0.000000));
+            vertices.Add(new Point3D(0.500000, 0.500000, -0.000000));
+            normals.Add(new Vector3D(0.000000, 1.000000, 0.000000));
+            normals.Add(new Vector3D(0.000000, 1.000000, 0.000000));
+            normals.Add(new Vector3D(0.000000, 1.000000, 0.000000));
+            normals.Add(new Vector3D(0.000000, 1.000000, -0.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 1);
+            faceIndex += 4;
+            // Bottomface
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            return faceIndex;
+        }
+        private int AddGeometry_RampBottomA(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)
+        {
+            // Insideface
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, -0.250000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.250000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(-0.000000, 0.970143, -0.242536));
+            normals.Add(new Vector3D(-0.000000, 0.970143, -0.242536));
+            normals.Add(new Vector3D(-0.000000, 0.970143, -0.242536));
+            normals.Add(new Vector3D(-0.000000, 0.970143, -0.242536));
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 0, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 3);
+            faceIndex += 4;
+            // Frontface
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.250000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.250000, 0.500000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 0, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 3);
+            faceIndex += 4;
+            // Rightface
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.250000, 0.500000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
+            faceIndex += 3;
+            // Leftface
+            vertices.Add(new Point3D(0.500000, -0.250000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
+            faceIndex += 3;
+            // Bottomface
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
+            normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
+            normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
+            normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            return faceIndex;
+        }
+        private int AddGeometry_RampBottomB(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)
+        {
+            // Frontface
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.000000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.000000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 0, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 3);
+            faceIndex += 4;
+            // Backface
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.250000, -0.500000));
+            vertices.Add(new Point3D(0.500000, -0.250000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            faceIndex += 4;
+            // Rightface
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.250000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.000000, 0.500000));
+            normals.Add(new Vector3D(-1.000000, 0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, 0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, 0.000000, 0.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            faceIndex += 4;
+            // Leftface
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.250000, -0.500000));
+            vertices.Add(new Point3D(0.500000, -0.000000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            faceIndex += 4;
+            // Topface
+            vertices.Add(new Point3D(-0.500000, -0.000000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.250000, -0.500000));
+            vertices.Add(new Point3D(0.500000, -0.000000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.250000, -0.500000));
+            normals.Add(new Vector3D(-0.000000, 0.970143, -0.242536));
+            normals.Add(new Vector3D(-0.000000, 0.970143, -0.242536));
+            normals.Add(new Vector3D(-0.000000, 0.970143, -0.242536));
+            normals.Add(new Vector3D(-0.000000, 0.970143, -0.242536));
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 0, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 3);
+            faceIndex += 4;
+            // Bottomface
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
+            normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
+            normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            return faceIndex;
+        }
+        private int AddGeometry_RampBottomC(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)
+        {
+            // Insideface
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.000000));
+            vertices.Add(new Point3D(0.500000, -0.000000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.000000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.000000));
+            normals.Add(new Vector3D(-0.000000, 0.707107, -0.707107));
+            normals.Add(new Vector3D(-0.000000, 0.707107, -0.707107));
+            normals.Add(new Vector3D(-0.000000, 0.707107, -0.707107));
+            normals.Add(new Vector3D(-0.000000, 0.707107, -0.707107));
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 0, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 3);
+            faceIndex += 4;
+            // Frontface
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.000000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.000000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            faceIndex += 4;
+            // Rightface
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.000000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.000000, 0.500000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
+            faceIndex += 3;
+            // Leftface
+            vertices.Add(new Point3D(0.500000, -0.000000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.000000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
+            faceIndex += 3;
+            // Bottomface
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.000000));
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.000000));
+            normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            return faceIndex;
+        }
+        private int AddGeometry_RampWedgeBottom(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)
+        {
+            // Insideface
+            vertices.Add(new Point3D(0.500000, -0.000000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.000000, 0.500000));
+            normals.Add(new Vector3D(-0.408248, 0.816497, -0.408248));
+            normals.Add(new Vector3D(-0.408248, 0.816497, -0.408248));
+            normals.Add(new Vector3D(-0.408248, 0.816497, -0.408248));
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
+            faceIndex += 3;
+            // Frontface
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.000000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.000000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 0, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 3);
+            faceIndex += 4;
+            // Backface
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, -0.000000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            AddTriangle(triangles, faceIndex + 1, faceIndex + 0, faceIndex + 2);
+            faceIndex += 3;
+            // Rightface
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.000000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(-1.000000, 0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, 0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, 0.000000, 0.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 1);
+            faceIndex += 3;
+            // Leftface
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.000000, -0.500000));
+            vertices.Add(new Point3D(0.500000, -0.000000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            faceIndex += 4;
+            // Topface
+            vertices.Add(new Point3D(-0.500000, -0.000000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.000000, -0.500000));
+            vertices.Add(new Point3D(0.500000, -0.000000, 0.500000));
+            normals.Add(new Vector3D(0.000000, 1.000000, -0.000000));
+            normals.Add(new Vector3D(0.000000, 1.000000, -0.000000));
+            normals.Add(new Vector3D(0.000000, 1.000000, -0.000000));
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 2, faceIndex + 1);
+            faceIndex += 3;
+            // Bottomface
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            return faceIndex;
+        }
+        private int AddGeometry_Beam(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)
+        {
+            // Frontface
+            vertices.Add(new Point3D(0.227273, -0.500000, 0.227273));
+            vertices.Add(new Point3D(-0.272727, 0.500000, 0.227273));
+            vertices.Add(new Point3D(0.227273, 0.500000, 0.227273));
+            vertices.Add(new Point3D(-0.272727, -0.500000, 0.227273));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 0, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 3);
+            faceIndex += 4;
+            // Backface
+            vertices.Add(new Point3D(0.227273, -0.500000, -0.272727));
+            vertices.Add(new Point3D(-0.272727, 0.500000, -0.272727));
+            vertices.Add(new Point3D(0.227273, 0.500000, -0.272727));
+            vertices.Add(new Point3D(-0.272727, -0.500000, -0.272727));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            faceIndex += 4;
+            // Rightface
+            vertices.Add(new Point3D(-0.272727, -0.500000, 0.227273));
+            vertices.Add(new Point3D(-0.272727, 0.500000, -0.272727));
+            vertices.Add(new Point3D(-0.272727, 0.500000, 0.227273));
+            vertices.Add(new Point3D(-0.272727, -0.500000, -0.272727));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 0, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 3);
+            faceIndex += 4;
+            // Leftface
+            vertices.Add(new Point3D(0.227273, -0.500000, 0.227273));
+            vertices.Add(new Point3D(0.227273, 0.500000, -0.272727));
+            vertices.Add(new Point3D(0.227273, 0.500000, 0.227273));
+            vertices.Add(new Point3D(0.227273, -0.500000, -0.272727));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            faceIndex += 4;
+            // Topface
+            vertices.Add(new Point3D(-0.272727, 0.500000, 0.227273));
+            vertices.Add(new Point3D(0.227273, 0.500000, -0.272727));
+            vertices.Add(new Point3D(0.227273, 0.500000, 0.227273));
+            vertices.Add(new Point3D(-0.272727, 0.500000, -0.272727));
+            normals.Add(new Vector3D(0.000000, 1.000000, 0.000000));
+            normals.Add(new Vector3D(0.000000, 1.000000, -0.000000));
+            normals.Add(new Vector3D(0.000000, 1.000000, -0.000000));
+            normals.Add(new Vector3D(0.000000, 1.000000, -0.000000));
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 0, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 3);
+            faceIndex += 4;
+            // Bottomface
+            vertices.Add(new Point3D(-0.272727, -0.500000, 0.227273));
+            vertices.Add(new Point3D(0.227273, -0.500000, -0.272727));
+            vertices.Add(new Point3D(0.227273, -0.500000, 0.227273));
+            vertices.Add(new Point3D(-0.272727, -0.500000, -0.272727));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, -0.000000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            return faceIndex;
+        }
+        private int AddGeometry_SlopeHalf(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)
+        {
+            // Insideface
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, -0.000000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.000000, 0.500000));
+            normals.Add(new Vector3D(-0.000000, 0.894427, -0.447214));
+            normals.Add(new Vector3D(-0.000000, 0.894427, -0.447214));
+            normals.Add(new Vector3D(-0.000000, 0.894427, -0.447214));
+            normals.Add(new Vector3D(-0.000000, 0.894427, -0.447214));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            faceIndex += 4;
+            // Frontface
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.000000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.000000, 0.500000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, 0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 0, faceIndex + 2);
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 1, faceIndex + 3);
+            faceIndex += 4;
+            // Rightface
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.000000, 0.500000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
+            faceIndex += 3;
+            // Leftface
+            vertices.Add(new Point3D(0.500000, -0.000000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            AddTriangle(triangles, faceIndex + 0, faceIndex + 1, faceIndex + 2);
+            faceIndex += 3;
+            // Bottomface
+            vertices.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            vertices.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            vertices.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
+            normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
+            normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
+            AddTriangle(triangles, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(triangles, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            return faceIndex;
+        }
+        #endregion AddGeometry
     }
 }

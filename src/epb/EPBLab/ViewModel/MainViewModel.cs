@@ -113,14 +113,146 @@ namespace EPBLab.ViewModel
 
         protected void NewBlueprint()
         {
-            EpBlueprint blueprint = new EpBlueprint(EpBlueprint.EpbType.Base, 4, 1, 1);
+            EpBlueprint blueprint = new EpBlueprint(EpBlueprint.EpbType.Base, 64, 1, 4);
             EpbBlock block;
-            block = CreateBlock(0, 0, 0, "HullFullLarge", "Slope", blueprint);
+
+            byte x = 0;
+            byte z = 0;
+
+            block = CreateBlock(x, 0, z, "HullFullLarge", "Cube", blueprint);
             block.SetColour(EpbColourIndex.Red);
-            block = CreateBlock(2, 0, 0, "HullThinLarge", "Sloped Wall Top (left)", blueprint);
+            x += 2;
+
+            block = CreateBlock(x, 0, z, "HullFullLarge", "Cut Corner", blueprint);
             block.SetColour(EpbColourIndex.Pink);
-            block = CreateBlock(3, 0, 0, "HullThinLarge", "Sloped Wall Bottom (left)", blueprint);
+            x += 2;
+
+            block = CreateBlock(x, 0, z, "HullFullLarge", "Corner Long A", blueprint);
             block.SetColour(EpbColourIndex.Pink);
+            x += 2;
+
+            block = CreateBlock(x, 0, z, "HullFullLarge", "Corner Long B", blueprint);
+            block.SetColour(EpbColourIndex.Pink);
+            x += 2;
+
+            block = CreateBlock(x, 0, z, "HullFullLarge", "Corner Long C", blueprint);
+            block.SetColour(EpbColourIndex.Pink);
+            x += 2;
+
+            block = CreateBlock(x, 0, z, "HullFullLarge", "Corner Long D", blueprint);
+            block.SetColour(EpbColourIndex.Pink);
+            x += 2;
+
+            block = CreateBlock(x, 0, z, "HullFullLarge", "Corner Large A", blueprint);
+            block.SetColour(EpbColourIndex.Pink);
+            x += 2;
+
+            block = CreateBlock(x, 0, z, "HullFullLarge", "Corner", blueprint);
+            block.SetColour(EpbColourIndex.Pink);
+            x += 2;
+
+            block = CreateBlock(x, 0, z, "HullFullLarge", "Ramp Bottom", blueprint);
+            block.SetColour(EpbColourIndex.Pink);
+            x += 2;
+
+            block = CreateBlock(x, 0, z, "HullFullLarge", "Ramp Top", blueprint);
+            block.SetColour(EpbColourIndex.Pink);
+            x += 2;
+
+            block = CreateBlock(x, 0, z, "HullFullLarge", "Slope", blueprint);
+            block.SetColour(EpbColourIndex.Pink);
+            x += 2;
+
+            block = CreateBlock(x, 0, z, "HullFullLarge", "Corner Large B", blueprint);
+            block.SetColour(EpbColourIndex.Pink);
+            x += 2;
+
+            block = CreateBlock(x, 0, z, "HullFullLarge", "Corner Large C", blueprint);
+            block.SetColour(EpbColourIndex.Pink);
+            x += 2;
+
+            block = CreateBlock(x, 0, z, "HullFullLarge", "Corner Large D", blueprint);
+            block.SetColour(EpbColourIndex.Pink);
+            x += 2;
+
+            block = CreateBlock(x, 0, z, "HullFullLarge", "Corner Long E", blueprint);
+            block.SetColour(EpbColourIndex.Pink);
+            x += 2;
+
+            block = CreateBlock(x, 0, z, "HullFullLarge", "Pyramid A", blueprint);
+            block.SetColour(EpbColourIndex.Pink);
+            x += 2;
+
+            x = 0;
+            z += 2;
+
+            block = CreateBlock(x, 0, z, "HullThinLarge", "Wall", blueprint);
+            block.SetColour(EpbColourIndex.Pink);
+            x += 2;
+
+            block = CreateBlock(x, 0, z, "HullThinLarge", "Wall L-shape", blueprint);
+            block.SetColour(EpbColourIndex.Pink);
+            x += 2;
+
+            block = CreateBlock(x, 0, z, "HullThinLarge", "Sloped Wall", blueprint);
+            block.SetColour(EpbColourIndex.Pink);
+            x += 2;
+
+            block = CreateBlock(x, 0, z, "HullThinLarge", "Sloped Wall Bottom (right)", blueprint);
+            block.SetColour(EpbColourIndex.Pink);
+            x += 2;
+
+            block = CreateBlock(x, 0, z, "HullThinLarge", "Sloped Wall Top (right)", blueprint);
+            block.SetColour(EpbColourIndex.Pink);
+            x += 2;
+
+            block = CreateBlock(x, 0, z, "HullThinLarge", "Sloped Wall Bottom (left)", blueprint);
+            block.SetColour(EpbColourIndex.Pink);
+            x += 2;
+
+            block = CreateBlock(x, 0, z, "HullThinLarge", "Sloped Wall Top (left)", blueprint);
+            block.SetColour(EpbColourIndex.Pink);
+            x += 2;
+
+            block = CreateBlock(x, 0, z, "HullThinLarge", "Wall 3 Corner", blueprint);
+            block.SetColour(EpbColourIndex.Pink);
+            x += 2;
+
+            block = CreateBlock(x, 0, z, "HullThinLarge", "Wall Half", blueprint);
+            block.SetColour(EpbColourIndex.Pink);
+            x += 2;
+
+            block = CreateBlock(x, 0, z, "HullThinLarge", "Cube Half", blueprint);
+            block.SetColour(EpbColourIndex.Pink);
+            x += 2;
+
+            block = CreateBlock(x, 0, z, "HullThinLarge", "Ramp Top Double", blueprint);
+            block.SetColour(EpbColourIndex.Pink);
+            x += 2;
+
+            block = CreateBlock(x, 0, z, "HullThinLarge", "Ramp Bottom A", blueprint);
+            block.SetColour(EpbColourIndex.Pink);
+            x += 2;
+
+            block = CreateBlock(x, 0, z, "HullThinLarge", "Ramp Bottom B", blueprint);
+            block.SetColour(EpbColourIndex.Pink);
+            x += 2;
+
+            block = CreateBlock(x, 0, z, "HullThinLarge", "Ramp Bottom C", blueprint);
+            block.SetColour(EpbColourIndex.Pink);
+            x += 2;
+
+            block = CreateBlock(x, 0, z, "HullThinLarge", "Ramp Wedge Bottom", blueprint);
+            block.SetColour(EpbColourIndex.Pink);
+            x += 2;
+
+            block = CreateBlock(x, 0, z, "HullThinLarge", "Beam", blueprint);
+            block.SetColour(EpbColourIndex.Pink);
+            x += 2;
+
+            block = CreateBlock(x, 0, z, "HullThinLarge", "Slope Half", blueprint);
+            block.SetColour(EpbColourIndex.Pink);
+            x += 2;
 
             BlueprintViewModel vm = new BlueprintViewModel("New", blueprint);
             Blueprints.Add(vm);
