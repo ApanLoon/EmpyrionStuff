@@ -407,7 +407,7 @@ namespace EPBLib.Helpers
                             {
                                 blockCount++;
                                 epb.SetBlock(block, x, y, z);
-                                Console.WriteLine($"    {blockCount,5} ({x,4}, {y,4}, {z,4}): Rot={block.Rotation} Unknown2=0x{block.Unknown00:x3} Type={block.BlockType,-31} Variant={block.VariantName,-31}");
+                                Console.WriteLine($"    {blockCount,5} ({x,4}, {y,4}, {z,4}): Rot={block.Rotation} Unknown2=0x{block.Unknown00:x3} Type={block.BlockType,-31} Variant=\"{block.VariantName + "\" (0x" + block.Variant.ToString("x2") + "=" + block.Variant + ")",-31}");
                                 //Console.WriteLine($"{BitConverter.GetBytes(data).ToHexString()} | 0x{data:x08} {Convert.ToString(data, 2).PadLeft(32, '0')} |");
                             }
                         }
@@ -428,7 +428,7 @@ namespace EPBLib.Helpers
                         Variant = (byte)((data >> 25) & 0x1f)
                     };
                     epb.SetBlock(block, x, y, z);
-                    Console.WriteLine($"    {blockCount,5} ({x,4}, {y,4}, {z,4}): Rot={block.Rotation} Unknown2=0x{block.Unknown00:x3} Type={block.BlockType,-31} Variant={block.VariantName,-31}");
+                    Console.WriteLine($"    {blockCount,5} ({x,4}, {y,4}, {z,4}): Rot={block.Rotation} Unknown2=0x{block.Unknown00:x3} Type={block.BlockType,-31} Variant=\"{block.VariantName + "\" (0x" + block.Variant.ToString("x2") + "=" + block.Variant + ")",-31}");
                     //Console.WriteLine( $"{BitConverter.GetBytes(data).ToHexString()} | 0x{data:x08} {Convert.ToString(data, 2).PadLeft(32, '0')} |");
                     return b - 4;
                 });

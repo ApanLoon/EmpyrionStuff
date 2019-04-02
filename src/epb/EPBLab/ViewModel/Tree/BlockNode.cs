@@ -15,7 +15,8 @@ namespace EPBLab.ViewModel.Tree
         protected EpBlueprint Blueprint;
 
         public string BlockType => Block.BlockType.ToString();
-        public string Variant => Block.VariantName;
+        public string VariantName => Block.VariantName;
+        public string Variant => $"(0x{Block.Variant:x2}={Block.Variant})";
 
         public Point3D Position { get; set; }
 
@@ -28,7 +29,11 @@ namespace EPBLab.ViewModel.Tree
         {
             Block = block;
             Blueprint = blueprint;
-            Title = block.BlockType.ToString();
+            Title = block.BlockType.Name;
+            if (block.VariantName != "")
+            {
+                Title += "/" + block.VariantName;
+            }
             EpbBlockPos pos = block.Position;
             Position = new Point3D(Math.Floor(pos.X - Blueprint.Width  / 2.0),
                                    Math.Floor(pos.Y - Blueprint.Height / 2.0),

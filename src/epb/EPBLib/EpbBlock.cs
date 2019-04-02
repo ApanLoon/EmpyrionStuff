@@ -1141,11 +1141,11 @@ BlockType=959
             {462, new string[] {"Growing Plot Steel"}},
 
             // WindowVertShutterArmored, WindowSlopedShutterArmored, WindowSloped2ShutterArmored, WindowVertShutterTransArmored, WindowSlopedShutterTransArmored
-            {969, new string[] {"Unkown", "Vertical (non-transparent)"}},
-            {970, new string[] {"Unkown", "Slope (non-transparent)"}},
-            {971, new string[] {"Unkown", "Slope Inv (non-transparent)"}},
-            {972, new string[] {"Unkown", "Vertical (transparent)"}},
-            {973, new string[] {"Unkown", "Slope (transparent)" }},
+            {969, new string[] {"Vertical (non-transparent)"}},
+            {970, new string[] {"Slope (non-transparent)"}},
+            {971, new string[] {"Slope Inv (non-transparent)"}},
+            {972, new string[] {"Vertical (transparent)"}},
+            {973, new string[] {"Slope (transparent)" }},
 
             // "Walkway & Railing Blocks": WalkwayVertNew, WalkwaySlopeNew, WalkwaySlope, ...
             {884,  new string[] {"Walkway" }},
@@ -1189,7 +1189,7 @@ BlockType=959
             {1416, new string[] {"Corner Round Thin" }},
 
             // "Window Blocks L":
-            // In the block count list "Window Blocks L" variants all count as block type 0x468!
+            // TODO: In the block count list "Window Blocks L" variants all count as block type 0x468!
             {770,  new string[] {"Unknown", "Vertical 1x1" }},
             {796,  new string[] {"Unknown", "Vertical 1x2" }},
             {798,  new string[] {"Unknown", "Vertical 2x2" }},
@@ -1300,9 +1300,9 @@ BlockType=959
             string s = "";
             if (BlockVariants.ContainsKey(id) && variant < BlockVariants[id].Length)
             {
-                s = $"\"{BlockVariants[id][variant]}\"";
+                s = $"{BlockVariants[id][variant]}";
             }
-            return $"{s} (0x{variant:x2}={variant})";
+            return s;
         }
 
         #endregion static
