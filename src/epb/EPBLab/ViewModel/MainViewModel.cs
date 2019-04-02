@@ -175,6 +175,10 @@ namespace EPBLab.ViewModel
             block.SetColour(EpbColourIndex.Pink);
             x += 2;
 
+            block = CreateBlock(x, 0, z, "HullFullLarge", "Round Corner Long", blueprint);
+            block.SetColour(EpbColourIndex.Pink);
+            x += 2;
+
             block = CreateBlock(x, 0, z, "HullFullLarge", "Round Slope", blueprint);
             block.SetColour(EpbColourIndex.Pink);
             x += 2;
@@ -184,6 +188,14 @@ namespace EPBLab.ViewModel
             x += 2;
 
             block = CreateBlock(x, 0, z, "HullFullLarge", "Cylinder End A", blueprint);
+            block.SetColour(EpbColourIndex.Pink);
+            x += 2;
+
+            block = CreateBlock(x, 0, z, "HullFullLarge", "Cylinder End B", blueprint);
+            block.SetColour(EpbColourIndex.Pink);
+            x += 2;
+
+            block = CreateBlock(x, 0, z, "HullFullLarge", "Cylinder End C", blueprint);
             block.SetColour(EpbColourIndex.Pink);
             x += 2;
 
