@@ -25,7 +25,8 @@ namespace epb
             BaseBox,
             BaseBoxFrame,
             BasePyramid,
-            BaseBlockTypes
+            BaseBlockTypes,
+            SVHullVariants
         }
 
         public static CommandType Command = CommandType.Open;
@@ -186,9 +187,12 @@ namespace epb
                 case CreateTemplateType.BaseBlockTypes:
                     CreateBlockTypes(OutputPath);
                     break;
+                case CreateTemplateType.SVHullVariants:
+                    CreateHullVariants(OutputPath);
+                    break;
                 }
 
-                break;
+                    break;
             case CommandType.Open:
                 foreach (string inPath in InputPaths)
                 {
@@ -556,6 +560,54 @@ namespace epb
             {
                 epb.SetBlock(new EpbBlock(new EpbBlockPos() { X = (byte)i, Y = 0, Z = 0 }) { BlockType = EpbBlock.BlockTypes[bt], Variant = BlockVariant }, i, 0, 0);
                 i += 14;
+            }
+
+            // Write the file:
+            using (FileStream stream = File.Create(path))
+            {
+                using (BinaryWriter writer = new BinaryWriter(stream))
+                {
+                    writer.Write(epb);
+                }
+            }
+        }
+
+        static void CreateHullVariants(string path)
+        {
+            Width = 8;
+            Height = 1;
+            Depth = 8;
+            EpBlueprint epb = CreateCommon();
+            epb.Type = EpBlueprint.EpbType.SmallVessel;
+
+            UInt16[] types = new UInt16[] { 381, 382, 1791}; // HullFullSmall, HullThinSmall, HullExtendedSmall
+            int i = 0;
+            foreach (UInt16 t in types)
+            {
+                foreach (string variantName in EpbBlock.BlockVariants[t])
+                {
+                    byte x = (byte)(i % 8);
+                    byte z = (byte)(i / 8);
+                    EpbBlock.EpbBlockType bt = EpbBlock.BlockTypes[t];
+                    byte v = EpbBlock.GetVariant(t, variantName);
+                    EpbBlock block =
+                        new EpbBlock(new EpbBlockPos() {X = x, Y = 0, Z = z})
+                        {
+                            BlockType = bt,
+                            Variant = v,
+                            Colours =
+                            {
+                                [0] = EpbColourIndex.Red,
+                                [1] = EpbColourIndex.BrightGreen,
+                                [2] = EpbColourIndex.Blue,
+                                [3] = EpbColourIndex.Cyan,
+                                [4] = EpbColourIndex.Purple,
+                                [5] = EpbColourIndex.Yellow
+                            }
+                        };
+                    epb.SetBlock(block, x, 0, z);
+                    i++;
+                }
             }
 
             // Write the file:
