@@ -41,6 +41,8 @@ namespace EPBLib.BlockData
             set => Colours[index] = value;
         }
 
+        public int Length => Colours.Length;
+
         /// <summary>
         /// Creates a default palette.
         /// </summary>

@@ -23,7 +23,8 @@
 ## SDS objects as triangles:     Yes
 ## Export vertex normals:        Yes
 ## Export material definitions:  No
-## Export uv coords:             No
+## Export uv coords:             Yes
+## UV coords as:                 Pointwise uv coords
 
 gawk '\
 BEGIN \
@@ -39,7 +40,7 @@ BEGIN \
 {
     newBlock = $4;
     newVariant = $5;
-    newFace = $6;
+    newFace = convertFace($6);
 
     if (newBlock != block)
     {
@@ -55,7 +56,7 @@ BEGIN \
         }
         variant = newVariant;
         face = "";               # Prevent close face
-        printf ("        private int AddGeometry_%s(Point3DCollection vertices, Int32Collection triangles, Vector3DCollection normals, int faceIndex)\n        {\n", strip(variant));
+        printf ("        private int AddGeometry_%s(MeshGeometry3D mesh, EpbColourIndex[] colours, int faceIndex)\n        {\n", strip(variant));
     }
 
     if (newFace != face)
@@ -73,18 +74,22 @@ BEGIN \
 {
     totalVCount = totalVCount + 1;
     faceVCount = faceVCount + 1;
-    printf ("            vertices.Add(new Point3D(%f, %f, %f));\n", $2, $3, $4);
+    printf ("            mesh.Positions.Add(new Point3D(%f, %f, %f));\n", $2, $3, $4);
+}
+/^vt /\
+{
+    printf ("            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.%s], %f, %f));\n", face, $2, $3);
 }
 /^vn /\
 {
-    printf ("            normals.Add(new Vector3D(%f, %f, %f));\n", $2, $3, $4);
+    printf ("            mesh.Normals.Add(new Vector3D(%f, %f, %f));\n", $2, $3, $4);
 }
 /^f /\
 {
     i = vertexIndex($2) - (totalVCount - faceVCount + 1);
     j = vertexIndex($3) - (totalVCount - faceVCount + 1);
     k = vertexIndex($4) - (totalVCount - faceVCount + 1);
-    printf ("            AddTriangle(triangles, faceIndex + %d, faceIndex + %d, faceIndex + %d);\n", i, j, k);
+    printf ("            AddTriangle(mesh.TriangleIndices, faceIndex + %d, faceIndex + %d, faceIndex + %d);\n", i, j, k);
 }
 END \
 {
@@ -104,12 +109,37 @@ function closeVariant()
 }
 function vertexIndex(s)
 {
-    ## "vertex/normal/texture"
+    ## "vertex/texture/normal"
     split(s, a, "/");
     return a[1];
 }
+function convertFace(f) ## Needed because of lefthanded/right handed weirdness
+{
+    gsub(/\s/, "", f);
+    if (f == "Front")
+    {
+        return "Back";
+    }
+    else if (f == "Back")
+    {
+        return "Front";
+    }
+    else if (f == "Left")
+    {
+        return "Right";
+    }
+    else if (f == "Right")
+    {
+        return "Left";
+    }
+    else
+    {
+        return f;
+    }
+}
 function strip(s)
 {
+    gsub(/\s/, "", s);
     gsub(/_/, "", s);
     return s;
 }
