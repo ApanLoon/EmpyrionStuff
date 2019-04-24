@@ -4070,98 +4070,112 @@ namespace EPBLab.ViewModel
         private int AddGeometry_CornerLargeB(MeshGeometry3D mesh, EpbColourIndex[] colours, int faceIndex)
         {
             // Back
-            mesh.Positions.Add(new Point3D(0.500000, -0.500000, 0.500000));
-            mesh.Positions.Add(new Point3D(0.500000, 0.500000, 0.500000));
             mesh.Positions.Add(new Point3D(-0.500000, -0.500000, 0.500000));
-            mesh.Positions.Add(new Point3D(0.500000, 0.000000, 0.500000));
+            mesh.Positions.Add(new Point3D(0.500000, -0.500000, 0.500000));
             mesh.Positions.Add(new Point3D(-0.500000, -0.000000, 0.500000));
-            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Back], 0.000000, 0.000000));
+            mesh.Positions.Add(new Point3D(0.500000, -0.000000, 0.500000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Back], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Back], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Back], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Back], 0.000000, 0.000000));
             mesh.Normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
-            mesh.Normals.Add(new Vector3D(0.000000, 0.000000, 1.000000));
             mesh.Normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
             mesh.Normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
             mesh.Normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            AddTriangle(mesh.TriangleIndices, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(mesh.TriangleIndices, faceIndex + 0, faceIndex + 1, faceIndex + 3);
+            faceIndex += 4;
+            // Front
+            mesh.Positions.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            mesh.Positions.Add(new Point3D(-0.500000, 0.500000, -0.500000));
+            mesh.Positions.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            mesh.Positions.Add(new Point3D(-0.500000, 0.000000, -0.500000));
+            mesh.Positions.Add(new Point3D(0.500000, 0.000000, -0.500000));
+            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Front], 0.000000, 0.000000));
+            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Front], 0.000000, 0.000000));
+            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Front], 0.000000, 0.000000));
+            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Front], 0.000000, 0.000000));
+            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Front], 0.000000, 0.000000));
+            mesh.Normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            mesh.Normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            mesh.Normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            mesh.Normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            mesh.Normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
             AddTriangle(mesh.TriangleIndices, faceIndex + 2, faceIndex + 3, faceIndex + 4);
             AddTriangle(mesh.TriangleIndices, faceIndex + 3, faceIndex + 1, faceIndex + 4);
             AddTriangle(mesh.TriangleIndices, faceIndex + 2, faceIndex + 0, faceIndex + 3);
             faceIndex += 5;
-            // Front
-            mesh.Positions.Add(new Point3D(0.500000, -0.500000, -0.500000));
-            mesh.Positions.Add(new Point3D(0.500000, 0.500000, 0.500000));
-            mesh.Positions.Add(new Point3D(-0.500000, -0.500000, -0.500000));
-            mesh.Positions.Add(new Point3D(0.500000, 0.000000, -0.500000));
-            mesh.Positions.Add(new Point3D(-0.500000, 0.000000, -0.500000));
-            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Front], 0.000000, 0.000000));
-            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Front], 0.000000, 0.000000));
-            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Front], 0.000000, 0.000000));
-            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Front], 0.000000, 0.000000));
-            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Front], 0.000000, 0.000000));
-            mesh.Normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
-            mesh.Normals.Add(new Vector3D(-0.000000, 0.894427, -0.447214));
-            mesh.Normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
-            mesh.Normals.Add(new Vector3D(-0.000000, 0.525731, -0.850651));
-            mesh.Normals.Add(new Vector3D(-0.000000, 0.343279, -0.939234));
-            AddTriangle(mesh.TriangleIndices, faceIndex + 3, faceIndex + 0, faceIndex + 4);
-            AddTriangle(mesh.TriangleIndices, faceIndex + 1, faceIndex + 3, faceIndex + 4);
-            AddTriangle(mesh.TriangleIndices, faceIndex + 0, faceIndex + 2, faceIndex + 4);
-            faceIndex += 5;
             // Right
-            mesh.Positions.Add(new Point3D(0.500000, -0.500000, 0.500000));
-            mesh.Positions.Add(new Point3D(0.500000, 0.500000, 0.500000));
-            mesh.Positions.Add(new Point3D(0.500000, -0.500000, -0.500000));
-            mesh.Positions.Add(new Point3D(0.500000, -0.000000, 0.500000));
-            mesh.Positions.Add(new Point3D(0.500000, 0.000000, -0.500000));
+            mesh.Positions.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            mesh.Positions.Add(new Point3D(-0.500000, 0.500000, -0.500000));
+            mesh.Positions.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            mesh.Positions.Add(new Point3D(-0.500000, 0.000000, -0.500000));
+            mesh.Positions.Add(new Point3D(-0.500000, -0.000000, 0.500000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Right], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Right], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Right], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Right], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Right], 0.000000, 0.000000));
-            mesh.Normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
-            mesh.Normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
-            mesh.Normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
-            mesh.Normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
-            mesh.Normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            mesh.Normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            mesh.Normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            mesh.Normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            mesh.Normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            mesh.Normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
             AddTriangle(mesh.TriangleIndices, faceIndex + 3, faceIndex + 2, faceIndex + 4);
             AddTriangle(mesh.TriangleIndices, faceIndex + 1, faceIndex + 3, faceIndex + 4);
             AddTriangle(mesh.TriangleIndices, faceIndex + 3, faceIndex + 0, faceIndex + 2);
             faceIndex += 5;
             // Left
-            mesh.Positions.Add(new Point3D(-0.500000, -0.500000, 0.500000));
-            mesh.Positions.Add(new Point3D(0.500000, 0.500000, 0.500000));
-            mesh.Positions.Add(new Point3D(-0.500000, -0.500000, -0.500000));
-            mesh.Positions.Add(new Point3D(-0.500000, -0.000000, 0.500000));
-            mesh.Positions.Add(new Point3D(-0.500000, 0.000000, -0.500000));
-            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Left], 0.000000, 0.000000));
-            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Left], 0.000000, 0.000000));
-            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Left], 0.000000, 0.000000));
-            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Left], 0.000000, 0.000000));
-            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Left], 0.000000, 0.000000));
-            mesh.Normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
-            mesh.Normals.Add(new Vector3D(-0.447214, 0.894427, 0.000000));
-            mesh.Normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
-            mesh.Normals.Add(new Vector3D(-0.850651, 0.525731, 0.000000));
-            mesh.Normals.Add(new Vector3D(-0.939234, 0.343279, 0.000000));
-            AddTriangle(mesh.TriangleIndices, faceIndex + 2, faceIndex + 0, faceIndex + 4);
-            AddTriangle(mesh.TriangleIndices, faceIndex + 3, faceIndex + 1, faceIndex + 4);
-            AddTriangle(mesh.TriangleIndices, faceIndex + 0, faceIndex + 3, faceIndex + 4);
-            faceIndex += 5;
-            // Bottom
-            mesh.Positions.Add(new Point3D(-0.500000, -0.500000, 0.500000));
             mesh.Positions.Add(new Point3D(0.500000, -0.500000, -0.500000));
             mesh.Positions.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            mesh.Positions.Add(new Point3D(0.500000, 0.000000, -0.500000));
+            mesh.Positions.Add(new Point3D(0.500000, -0.000000, 0.500000));
+            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Left], 0.000000, 0.000000));
+            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Left], 0.000000, 0.000000));
+            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Left], 0.000000, 0.000000));
+            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Left], 0.000000, 0.000000));
+            mesh.Normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            mesh.Normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            mesh.Normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            mesh.Normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            AddTriangle(mesh.TriangleIndices, faceIndex + 1, faceIndex + 0, faceIndex + 3);
+            AddTriangle(mesh.TriangleIndices, faceIndex + 0, faceIndex + 2, faceIndex + 3);
+            faceIndex += 4;
+            // Top
+            mesh.Positions.Add(new Point3D(-0.500000, 0.500000, -0.500000));
+            mesh.Positions.Add(new Point3D(-0.500000, -0.000000, 0.500000));
+            mesh.Positions.Add(new Point3D(0.500000, -0.000000, 0.500000));
+            mesh.Positions.Add(new Point3D(-0.500000, 0.500000, -0.500000));
+            mesh.Positions.Add(new Point3D(0.500000, 0.000000, -0.500000));
+            mesh.Positions.Add(new Point3D(0.500000, -0.000000, 0.500000));
+            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Top], 0.000000, 0.000000));
+            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Top], 0.000000, 0.000000));
+            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Top], 0.000000, 0.000000));
+            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Top], 0.000000, 0.000000));
+            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Top], 0.000000, 0.000000));
+            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Top], 0.000000, 0.000000));
+            mesh.Normals.Add(new Vector3D(0.000000, 0.894427, 0.447214));
+            mesh.Normals.Add(new Vector3D(0.000000, 0.894427, 0.447214));
+            mesh.Normals.Add(new Vector3D(0.000000, 0.894427, 0.447214));
+            mesh.Normals.Add(new Vector3D(0.447214, 0.894427, -0.000000));
+            mesh.Normals.Add(new Vector3D(0.447214, 0.894427, -0.000000));
+            mesh.Normals.Add(new Vector3D(0.447214, 0.894427, -0.000000));
+            AddTriangle(mesh.TriangleIndices, faceIndex + 0, faceIndex + 1, faceIndex + 2);
+            AddTriangle(mesh.TriangleIndices, faceIndex + 4, faceIndex + 3, faceIndex + 5);
+            faceIndex += 6;
+            // Bottom
+            mesh.Positions.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            mesh.Positions.Add(new Point3D(-0.500000, -0.500000, 0.500000));
             mesh.Positions.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            mesh.Positions.Add(new Point3D(0.500000, -0.500000, 0.500000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Bottom], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Bottom], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Bottom], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Bottom], 0.000000, 0.000000));
-            mesh.Normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
             mesh.Normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
-            mesh.Normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
-            mesh.Normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            mesh.Normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
+            mesh.Normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
+            mesh.Normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
             AddTriangle(mesh.TriangleIndices, faceIndex + 2, faceIndex + 0, faceIndex + 3);
             AddTriangle(mesh.TriangleIndices, faceIndex + 3, faceIndex + 1, faceIndex + 2);
             return faceIndex;
@@ -4249,99 +4263,99 @@ namespace EPBLab.ViewModel
         }
         private int AddGeometry_CornerLargeD(MeshGeometry3D mesh, EpbColourIndex[] colours, int faceIndex)
         {
-            // Back
-            mesh.Positions.Add(new Point3D(0.500000, -0.500000, 0.500000));
-            mesh.Positions.Add(new Point3D(0.000000, 0.500000, 0.500000));
-            mesh.Positions.Add(new Point3D(0.500000, 0.500000, 0.500000));
-            mesh.Positions.Add(new Point3D(-0.500000, -0.500000, 0.500000));
-            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Back], 0.000000, 0.000000));
-            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Back], 0.000000, 0.000000));
-            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Back], 0.000000, 0.000000));
-            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Back], 0.000000, 0.000000));
-            mesh.Normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
-            mesh.Normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
-            mesh.Normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
-            mesh.Normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            // Front
+            mesh.Positions.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            mesh.Positions.Add(new Point3D(-0.000000, 0.500000, -0.500000));
+            mesh.Positions.Add(new Point3D(-0.500000, 0.500000, -0.500000));
+            mesh.Positions.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Front], 0.000000, 0.000000));
+            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Front], 0.000000, 0.000000));
+            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Front], 0.000000, 0.000000));
+            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Front], 0.000000, 0.000000));
+            mesh.Normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            mesh.Normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            mesh.Normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
+            mesh.Normals.Add(new Vector3D(-0.000000, 0.000000, -1.000000));
             AddTriangle(mesh.TriangleIndices, faceIndex + 3, faceIndex + 0, faceIndex + 2);
             AddTriangle(mesh.TriangleIndices, faceIndex + 2, faceIndex + 1, faceIndex + 3);
             faceIndex += 4;
-            // Front
-            mesh.Positions.Add(new Point3D(0.500000, -0.500000, -0.500000));
-            mesh.Positions.Add(new Point3D(0.000000, 0.500000, 0.000000));
-            mesh.Positions.Add(new Point3D(0.500000, 0.500000, -0.000000));
-            mesh.Positions.Add(new Point3D(-0.500000, -0.500000, -0.500000));
-            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Front], 0.000000, 0.000000));
-            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Front], 0.000000, 0.000000));
-            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Front], 0.000000, 0.000000));
-            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Front], 0.000000, 0.000000));
-            mesh.Normals.Add(new Vector3D(-0.000000, 0.447214, -0.894427));
-            mesh.Normals.Add(new Vector3D(-0.000000, 0.447214, -0.894427));
-            mesh.Normals.Add(new Vector3D(-0.000000, 0.447214, -0.894427));
-            mesh.Normals.Add(new Vector3D(-0.000000, 0.447214, -0.894427));
-            AddTriangle(mesh.TriangleIndices, faceIndex + 2, faceIndex + 0, faceIndex + 3);
-            AddTriangle(mesh.TriangleIndices, faceIndex + 3, faceIndex + 1, faceIndex + 2);
-            faceIndex += 4;
-            // Right
+            // Back
+            mesh.Positions.Add(new Point3D(-0.500000, -0.500000, 0.500000));
+            mesh.Positions.Add(new Point3D(-0.000000, 0.500000, 0.000000));
+            mesh.Positions.Add(new Point3D(-0.500000, 0.500000, 0.000000));
             mesh.Positions.Add(new Point3D(0.500000, -0.500000, 0.500000));
-            mesh.Positions.Add(new Point3D(0.500000, 0.500000, -0.000000));
-            mesh.Positions.Add(new Point3D(0.500000, 0.500000, 0.500000));
-            mesh.Positions.Add(new Point3D(0.500000, -0.500000, -0.500000));
-            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Right], 0.000000, 0.000000));
-            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Right], 0.000000, 0.000000));
-            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Right], 0.000000, 0.000000));
-            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Right], 0.000000, 0.000000));
-            mesh.Normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
-            mesh.Normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
-            mesh.Normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
-            mesh.Normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Back], 0.000000, 0.000000));
+            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Back], 0.000000, 0.000000));
+            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Back], 0.000000, 0.000000));
+            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Back], 0.000000, 0.000000));
+            mesh.Normals.Add(new Vector3D(0.000000, 0.447214, 0.894427));
+            mesh.Normals.Add(new Vector3D(0.000000, 0.447214, 0.894427));
+            mesh.Normals.Add(new Vector3D(0.000000, 0.447214, 0.894427));
+            mesh.Normals.Add(new Vector3D(0.000000, 0.447214, 0.894427));
             AddTriangle(mesh.TriangleIndices, faceIndex + 2, faceIndex + 0, faceIndex + 3);
             AddTriangle(mesh.TriangleIndices, faceIndex + 3, faceIndex + 1, faceIndex + 2);
             faceIndex += 4;
             // Left
-            mesh.Positions.Add(new Point3D(-0.500000, -0.500000, 0.500000));
-            mesh.Positions.Add(new Point3D(0.000000, 0.500000, 0.000000));
-            mesh.Positions.Add(new Point3D(0.000000, 0.500000, 0.500000));
             mesh.Positions.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            mesh.Positions.Add(new Point3D(-0.500000, 0.500000, 0.000000));
+            mesh.Positions.Add(new Point3D(-0.500000, 0.500000, -0.500000));
+            mesh.Positions.Add(new Point3D(-0.500000, -0.500000, 0.500000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Left], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Left], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Left], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Left], 0.000000, 0.000000));
-            mesh.Normals.Add(new Vector3D(-0.894427, 0.447214, 0.000000));
-            mesh.Normals.Add(new Vector3D(-0.894427, 0.447214, 0.000000));
-            mesh.Normals.Add(new Vector3D(-0.894427, 0.447214, 0.000000));
-            mesh.Normals.Add(new Vector3D(-0.894427, 0.447214, 0.000000));
+            mesh.Normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            mesh.Normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            mesh.Normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            mesh.Normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            AddTriangle(mesh.TriangleIndices, faceIndex + 2, faceIndex + 0, faceIndex + 3);
+            AddTriangle(mesh.TriangleIndices, faceIndex + 3, faceIndex + 1, faceIndex + 2);
+            faceIndex += 4;
+            // Right
+            mesh.Positions.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            mesh.Positions.Add(new Point3D(-0.000000, 0.500000, 0.000000));
+            mesh.Positions.Add(new Point3D(-0.000000, 0.500000, -0.500000));
+            mesh.Positions.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Right], 0.000000, 0.000000));
+            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Right], 0.000000, 0.000000));
+            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Right], 0.000000, 0.000000));
+            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Right], 0.000000, 0.000000));
+            mesh.Normals.Add(new Vector3D(0.894427, 0.447214, -0.000000));
+            mesh.Normals.Add(new Vector3D(0.894427, 0.447214, -0.000000));
+            mesh.Normals.Add(new Vector3D(0.894427, 0.447214, -0.000000));
+            mesh.Normals.Add(new Vector3D(0.894427, 0.447214, -0.000000));
             AddTriangle(mesh.TriangleIndices, faceIndex + 3, faceIndex + 0, faceIndex + 2);
             AddTriangle(mesh.TriangleIndices, faceIndex + 2, faceIndex + 1, faceIndex + 3);
             faceIndex += 4;
             // Top
-            mesh.Positions.Add(new Point3D(0.000000, 0.500000, 0.500000));
-            mesh.Positions.Add(new Point3D(0.500000, 0.500000, -0.000000));
-            mesh.Positions.Add(new Point3D(0.500000, 0.500000, 0.500000));
-            mesh.Positions.Add(new Point3D(0.000000, 0.500000, 0.000000));
+            mesh.Positions.Add(new Point3D(-0.000000, 0.500000, -0.500000));
+            mesh.Positions.Add(new Point3D(-0.500000, 0.500000, 0.000000));
+            mesh.Positions.Add(new Point3D(-0.500000, 0.500000, -0.500000));
+            mesh.Positions.Add(new Point3D(-0.000000, 0.500000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Top], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Top], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Top], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Top], 0.000000, 0.000000));
-            mesh.Normals.Add(new Vector3D(0.000000, 1.000000, 0.000000));
-            mesh.Normals.Add(new Vector3D(0.000000, 1.000000, -0.000000));
-            mesh.Normals.Add(new Vector3D(0.000000, 1.000000, 0.000000));
-            mesh.Normals.Add(new Vector3D(0.000000, 1.000000, 0.000000));
+            mesh.Normals.Add(new Vector3D(-0.000000, 1.000000, 0.000000));
+            mesh.Normals.Add(new Vector3D(-0.000000, 1.000000, 0.000000));
+            mesh.Normals.Add(new Vector3D(-0.000000, 1.000000, 0.000000));
+            mesh.Normals.Add(new Vector3D(-0.000000, 1.000000, 0.000000));
             AddTriangle(mesh.TriangleIndices, faceIndex + 3, faceIndex + 0, faceIndex + 2);
             AddTriangle(mesh.TriangleIndices, faceIndex + 2, faceIndex + 1, faceIndex + 3);
             faceIndex += 4;
             // Bottom
-            mesh.Positions.Add(new Point3D(-0.500000, -0.500000, 0.500000));
             mesh.Positions.Add(new Point3D(0.500000, -0.500000, -0.500000));
-            mesh.Positions.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            mesh.Positions.Add(new Point3D(-0.500000, -0.500000, 0.500000));
             mesh.Positions.Add(new Point3D(-0.500000, -0.500000, -0.500000));
+            mesh.Positions.Add(new Point3D(0.500000, -0.500000, 0.500000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Bottom], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Bottom], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Bottom], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Bottom], 0.000000, 0.000000));
-            mesh.Normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
             mesh.Normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
-            mesh.Normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
-            mesh.Normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            mesh.Normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
+            mesh.Normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
+            mesh.Normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
             AddTriangle(mesh.TriangleIndices, faceIndex + 2, faceIndex + 0, faceIndex + 3);
             AddTriangle(mesh.TriangleIndices, faceIndex + 3, faceIndex + 1, faceIndex + 2);
             return faceIndex;
@@ -4349,52 +4363,52 @@ namespace EPBLab.ViewModel
         private int AddGeometry_CornerLongE(MeshGeometry3D mesh, EpbColourIndex[] colours, int faceIndex)
         {
             // Back
-            mesh.Positions.Add(new Point3D(-0.499994, -0.500000, -0.500006));
+            mesh.Positions.Add(new Point3D(-0.499994, -0.500006, -0.000006));
             mesh.Positions.Add(new Point3D(-0.500007, 0.500000, -0.499993));
-            mesh.Positions.Add(new Point3D(0.000006, -0.499994, -0.500006));
+            mesh.Positions.Add(new Point3D(0.000006, -0.500000, -0.000006));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Back], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Back], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Back], 0.000000, 0.000000));
-            mesh.Normals.Add(new Vector3D(-0.000000, 0.000013, -1.000000));
-            mesh.Normals.Add(new Vector3D(-0.000000, 0.000013, -1.000000));
-            mesh.Normals.Add(new Vector3D(-0.000000, 0.000013, -1.000000));
-            AddTriangle(mesh.TriangleIndices, faceIndex + 2, faceIndex + 0, faceIndex + 1);
+            mesh.Normals.Add(new Vector3D(-0.000006, 0.447202, 0.894433));
+            mesh.Normals.Add(new Vector3D(-0.000006, 0.447202, 0.894433));
+            mesh.Normals.Add(new Vector3D(-0.000006, 0.447202, 0.894433));
+            AddTriangle(mesh.TriangleIndices, faceIndex + 1, faceIndex + 0, faceIndex + 2);
             faceIndex += 3;
             // Front
-            mesh.Positions.Add(new Point3D(-0.499994, -0.500006, -0.000006));
-            mesh.Positions.Add(new Point3D(-0.500007, 0.500000, -0.499993));
-            mesh.Positions.Add(new Point3D(0.000006, -0.500000, -0.000006));
-            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Front], 0.000000, 0.000000));
-            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Front], 0.000000, 0.000000));
-            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Front], 0.000000, 0.000000));
-            mesh.Normals.Add(new Vector3D(-0.000006, 0.447202, 0.894433));
-            mesh.Normals.Add(new Vector3D(-0.000006, 0.447202, 0.894433));
-            mesh.Normals.Add(new Vector3D(-0.000006, 0.447202, 0.894433));
-            AddTriangle(mesh.TriangleIndices, faceIndex + 1, faceIndex + 0, faceIndex + 2);
-            faceIndex += 3;
-            // Right
             mesh.Positions.Add(new Point3D(-0.499994, -0.500000, -0.500006));
             mesh.Positions.Add(new Point3D(-0.500007, 0.500000, -0.499993));
-            mesh.Positions.Add(new Point3D(-0.499994, -0.500006, -0.000006));
-            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Right], 0.000000, 0.000000));
-            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Right], 0.000000, 0.000000));
-            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Right], 0.000000, 0.000000));
-            mesh.Normals.Add(new Vector3D(-1.000000, -0.000013, -0.000000));
-            mesh.Normals.Add(new Vector3D(-1.000000, -0.000013, -0.000000));
-            mesh.Normals.Add(new Vector3D(-1.000000, -0.000013, -0.000000));
-            AddTriangle(mesh.TriangleIndices, faceIndex + 1, faceIndex + 0, faceIndex + 2);
+            mesh.Positions.Add(new Point3D(0.000006, -0.499994, -0.500006));
+            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Front], 0.000000, 0.000000));
+            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Front], 0.000000, 0.000000));
+            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Front], 0.000000, 0.000000));
+            mesh.Normals.Add(new Vector3D(-0.000000, 0.000013, -1.000000));
+            mesh.Normals.Add(new Vector3D(-0.000000, 0.000013, -1.000000));
+            mesh.Normals.Add(new Vector3D(-0.000000, 0.000013, -1.000000));
+            AddTriangle(mesh.TriangleIndices, faceIndex + 2, faceIndex + 0, faceIndex + 1);
             faceIndex += 3;
-            // Left
+            // Right
             mesh.Positions.Add(new Point3D(0.000006, -0.499994, -0.500006));
             mesh.Positions.Add(new Point3D(-0.500007, 0.500000, -0.499993));
             mesh.Positions.Add(new Point3D(0.000006, -0.500000, -0.000006));
-            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Left], 0.000000, 0.000000));
-            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Left], 0.000000, 0.000000));
-            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Left], 0.000000, 0.000000));
+            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Right], 0.000000, 0.000000));
+            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Right], 0.000000, 0.000000));
+            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Right], 0.000000, 0.000000));
             mesh.Normals.Add(new Vector3D(0.894422, 0.447225, 0.000006));
             mesh.Normals.Add(new Vector3D(0.894422, 0.447225, 0.000006));
             mesh.Normals.Add(new Vector3D(0.894422, 0.447225, 0.000006));
             AddTriangle(mesh.TriangleIndices, faceIndex + 2, faceIndex + 0, faceIndex + 1);
+            faceIndex += 3;
+            // Left
+            mesh.Positions.Add(new Point3D(-0.499994, -0.500000, -0.500006));
+            mesh.Positions.Add(new Point3D(-0.500007, 0.500000, -0.499993));
+            mesh.Positions.Add(new Point3D(-0.499994, -0.500006, -0.000006));
+            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Left], 0.000000, 0.000000));
+            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Left], 0.000000, 0.000000));
+            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Left], 0.000000, 0.000000));
+            mesh.Normals.Add(new Vector3D(-1.000000, -0.000013, -0.000000));
+            mesh.Normals.Add(new Vector3D(-1.000000, -0.000013, -0.000000));
+            mesh.Normals.Add(new Vector3D(-1.000000, -0.000013, -0.000000));
+            AddTriangle(mesh.TriangleIndices, faceIndex + 1, faceIndex + 0, faceIndex + 2);
             faceIndex += 3;
             // Bottom
             mesh.Positions.Add(new Point3D(0.000006, -0.499994, -0.500006));
@@ -4485,18 +4499,18 @@ namespace EPBLab.ViewModel
         private int AddGeometry_Wall(MeshGeometry3D mesh, EpbColourIndex[] colours, int faceIndex)
         {
             // Back
-            mesh.Positions.Add(new Point3D(0.500000, -0.500000, -0.250000));
-            mesh.Positions.Add(new Point3D(-0.500000, 0.500000, -0.250000));
-            mesh.Positions.Add(new Point3D(0.500000, 0.500000, -0.250000));
-            mesh.Positions.Add(new Point3D(-0.500000, -0.500000, -0.250000));
+            mesh.Positions.Add(new Point3D(0.500000, -0.500000, -0.354331));
+            mesh.Positions.Add(new Point3D(-0.500000, 0.500000, -0.354331));
+            mesh.Positions.Add(new Point3D(0.500000, 0.500000, -0.354331));
+            mesh.Positions.Add(new Point3D(-0.500000, -0.500000, -0.354331));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Back], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Back], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Back], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Back], 0.000000, 0.000000));
-            mesh.Normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
-            mesh.Normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
-            mesh.Normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
-            mesh.Normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            mesh.Normals.Add(new Vector3D(0.000000, 0.000000, 1.000000));
+            mesh.Normals.Add(new Vector3D(0.000000, 0.000000, 1.000000));
+            mesh.Normals.Add(new Vector3D(0.000000, 0.000000, 1.000000));
+            mesh.Normals.Add(new Vector3D(0.000000, 0.000000, 1.000000));
             AddTriangle(mesh.TriangleIndices, faceIndex + 3, faceIndex + 0, faceIndex + 2);
             AddTriangle(mesh.TriangleIndices, faceIndex + 2, faceIndex + 1, faceIndex + 3);
             faceIndex += 4;
@@ -4517,9 +4531,9 @@ namespace EPBLab.ViewModel
             AddTriangle(mesh.TriangleIndices, faceIndex + 3, faceIndex + 1, faceIndex + 2);
             faceIndex += 4;
             // Right
-            mesh.Positions.Add(new Point3D(0.500000, -0.500000, -0.250000));
+            mesh.Positions.Add(new Point3D(0.500000, -0.500000, -0.354331));
             mesh.Positions.Add(new Point3D(0.500000, 0.500000, -0.500000));
-            mesh.Positions.Add(new Point3D(0.500000, 0.500000, -0.250000));
+            mesh.Positions.Add(new Point3D(0.500000, 0.500000, -0.354331));
             mesh.Positions.Add(new Point3D(0.500000, -0.500000, -0.500000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Right], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Right], 0.000000, 0.000000));
@@ -4533,9 +4547,9 @@ namespace EPBLab.ViewModel
             AddTriangle(mesh.TriangleIndices, faceIndex + 3, faceIndex + 1, faceIndex + 2);
             faceIndex += 4;
             // Left
-            mesh.Positions.Add(new Point3D(-0.500000, -0.500000, -0.250000));
+            mesh.Positions.Add(new Point3D(-0.500000, -0.500000, -0.354331));
             mesh.Positions.Add(new Point3D(-0.500000, 0.500000, -0.500000));
-            mesh.Positions.Add(new Point3D(-0.500000, 0.500000, -0.250000));
+            mesh.Positions.Add(new Point3D(-0.500000, 0.500000, -0.354331));
             mesh.Positions.Add(new Point3D(-0.500000, -0.500000, -0.500000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Left], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Left], 0.000000, 0.000000));
@@ -4543,40 +4557,40 @@ namespace EPBLab.ViewModel
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Left], 0.000000, 0.000000));
             mesh.Normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
             mesh.Normals.Add(new Vector3D(-1.000000, 0.000000, 0.000000));
-            mesh.Normals.Add(new Vector3D(-1.000000, 0.000000, 0.000000));
-            mesh.Normals.Add(new Vector3D(-1.000000, 0.000000, 0.000000));
+            mesh.Normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            mesh.Normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
             AddTriangle(mesh.TriangleIndices, faceIndex + 3, faceIndex + 0, faceIndex + 2);
             AddTriangle(mesh.TriangleIndices, faceIndex + 2, faceIndex + 1, faceIndex + 3);
             faceIndex += 4;
             // Top
-            mesh.Positions.Add(new Point3D(-0.500000, 0.500000, -0.250000));
+            mesh.Positions.Add(new Point3D(-0.500000, 0.500000, -0.354331));
             mesh.Positions.Add(new Point3D(0.500000, 0.500000, -0.500000));
-            mesh.Positions.Add(new Point3D(0.500000, 0.500000, -0.250000));
+            mesh.Positions.Add(new Point3D(0.500000, 0.500000, -0.354331));
             mesh.Positions.Add(new Point3D(-0.500000, 0.500000, -0.500000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Top], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Top], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Top], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Top], 0.000000, 0.000000));
             mesh.Normals.Add(new Vector3D(-0.000000, 1.000000, -0.000000));
-            mesh.Normals.Add(new Vector3D(-0.000000, 1.000000, 0.000000));
+            mesh.Normals.Add(new Vector3D(-0.000000, 1.000000, -0.000000));
             mesh.Normals.Add(new Vector3D(-0.000000, 1.000000, -0.000000));
             mesh.Normals.Add(new Vector3D(-0.000000, 1.000000, -0.000000));
             AddTriangle(mesh.TriangleIndices, faceIndex + 3, faceIndex + 0, faceIndex + 2);
             AddTriangle(mesh.TriangleIndices, faceIndex + 2, faceIndex + 1, faceIndex + 3);
             faceIndex += 4;
             // Bottom
-            mesh.Positions.Add(new Point3D(-0.500000, -0.500000, -0.250000));
+            mesh.Positions.Add(new Point3D(-0.500000, -0.500000, -0.354331));
             mesh.Positions.Add(new Point3D(0.500000, -0.500000, -0.500000));
-            mesh.Positions.Add(new Point3D(0.500000, -0.500000, -0.250000));
+            mesh.Positions.Add(new Point3D(0.500000, -0.500000, -0.354331));
             mesh.Positions.Add(new Point3D(-0.500000, -0.500000, -0.500000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Bottom], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Bottom], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Bottom], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Bottom], 0.000000, 0.000000));
-            mesh.Normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
-            mesh.Normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
-            mesh.Normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
-            mesh.Normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
+            mesh.Normals.Add(new Vector3D(0.000000, -1.000000, 0.000000));
+            mesh.Normals.Add(new Vector3D(0.000000, -1.000000, 0.000000));
+            mesh.Normals.Add(new Vector3D(0.000000, -1.000000, 0.000000));
+            mesh.Normals.Add(new Vector3D(0.000000, -1.000000, 0.000000));
             AddTriangle(mesh.TriangleIndices, faceIndex + 2, faceIndex + 0, faceIndex + 3);
             AddTriangle(mesh.TriangleIndices, faceIndex + 3, faceIndex + 1, faceIndex + 2);
             return faceIndex;
@@ -4600,12 +4614,12 @@ namespace EPBLab.ViewModel
             AddTriangle(mesh.TriangleIndices, faceIndex + 0, faceIndex + 3, faceIndex + 2);
             faceIndex += 4;
             // Front
-            mesh.Positions.Add(new Point3D(0.250000, -0.500000, 0.250000));
-            mesh.Positions.Add(new Point3D(0.250000, 0.500000, 0.250000));
-            mesh.Positions.Add(new Point3D(-0.500000, -0.500000, 0.250000));
-            mesh.Positions.Add(new Point3D(-0.500000, 0.500000, 0.250000));
-            mesh.Positions.Add(new Point3D(0.250000, -0.500000, -0.500000));
-            mesh.Positions.Add(new Point3D(0.250000, 0.500000, -0.500000));
+            mesh.Positions.Add(new Point3D(0.354331, -0.500000, 0.354331));
+            mesh.Positions.Add(new Point3D(0.354331, 0.500000, 0.354331));
+            mesh.Positions.Add(new Point3D(-0.500000, -0.500000, 0.354331));
+            mesh.Positions.Add(new Point3D(-0.500000, 0.500000, 0.354331));
+            mesh.Positions.Add(new Point3D(0.354331, -0.500000, -0.500000));
+            mesh.Positions.Add(new Point3D(0.354331, 0.500000, -0.500000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Front], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Front], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Front], 0.000000, 0.000000));
@@ -4642,12 +4656,12 @@ namespace EPBLab.ViewModel
             // Left
             mesh.Positions.Add(new Point3D(-0.500000, -0.500000, 0.500000));
             mesh.Positions.Add(new Point3D(-0.500000, 0.500000, 0.500000));
-            mesh.Positions.Add(new Point3D(-0.500000, -0.500000, 0.250000));
-            mesh.Positions.Add(new Point3D(-0.500000, 0.500000, 0.250000));
+            mesh.Positions.Add(new Point3D(-0.500000, -0.500000, 0.354331));
+            mesh.Positions.Add(new Point3D(-0.500000, 0.500000, 0.354331));
             mesh.Positions.Add(new Point3D(0.500000, 0.500000, -0.500000));
             mesh.Positions.Add(new Point3D(0.500000, -0.500000, -0.500000));
-            mesh.Positions.Add(new Point3D(0.250000, -0.500000, -0.500000));
-            mesh.Positions.Add(new Point3D(0.250000, 0.500000, -0.500000));
+            mesh.Positions.Add(new Point3D(0.354331, -0.500000, -0.500000));
+            mesh.Positions.Add(new Point3D(0.354331, 0.500000, -0.500000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Left], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Left], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Left], 0.000000, 0.000000));
@@ -4672,9 +4686,9 @@ namespace EPBLab.ViewModel
             // Top
             mesh.Positions.Add(new Point3D(0.500000, 0.500000, -0.500000));
             mesh.Positions.Add(new Point3D(-0.500000, 0.500000, 0.500000));
-            mesh.Positions.Add(new Point3D(-0.500000, 0.500000, 0.250000));
-            mesh.Positions.Add(new Point3D(0.250000, 0.500000, -0.500000));
-            mesh.Positions.Add(new Point3D(0.250000, 0.500000, 0.250000));
+            mesh.Positions.Add(new Point3D(-0.500000, 0.500000, 0.354331));
+            mesh.Positions.Add(new Point3D(0.354331, 0.500000, -0.500000));
+            mesh.Positions.Add(new Point3D(0.354331, 0.500000, 0.354331));
             mesh.Positions.Add(new Point3D(0.500000, 0.500000, 0.500000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Top], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Top], 0.000000, 0.000000));
@@ -4694,11 +4708,11 @@ namespace EPBLab.ViewModel
             AddTriangle(mesh.TriangleIndices, faceIndex + 5, faceIndex + 2, faceIndex + 1);
             faceIndex += 6;
             // Bottom
-            mesh.Positions.Add(new Point3D(0.250000, -0.500000, 0.250000));
+            mesh.Positions.Add(new Point3D(0.354331, -0.500000, 0.354331));
             mesh.Positions.Add(new Point3D(-0.500000, -0.500000, 0.500000));
-            mesh.Positions.Add(new Point3D(-0.500000, -0.500000, 0.250000));
+            mesh.Positions.Add(new Point3D(-0.500000, -0.500000, 0.354331));
             mesh.Positions.Add(new Point3D(0.500000, -0.500000, -0.500000));
-            mesh.Positions.Add(new Point3D(0.250000, -0.500000, -0.500000));
+            mesh.Positions.Add(new Point3D(0.354331, -0.500000, -0.500000));
             mesh.Positions.Add(new Point3D(0.500000, -0.500000, 0.500000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Bottom], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Bottom], 0.000000, 0.000000));
@@ -4722,9 +4736,9 @@ namespace EPBLab.ViewModel
         {
             // Back
             mesh.Positions.Add(new Point3D(-0.500000, -0.500000, 0.500000));
-            mesh.Positions.Add(new Point3D(-0.250000, 0.500000, 0.500000));
+            mesh.Positions.Add(new Point3D(-0.354331, 0.500000, 0.500000));
             mesh.Positions.Add(new Point3D(-0.500000, 0.500000, 0.500000));
-            mesh.Positions.Add(new Point3D(-0.250000, -0.500000, 0.500000));
+            mesh.Positions.Add(new Point3D(-0.354331, -0.500000, 0.500000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Back], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Back], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Back], 0.000000, 0.000000));
@@ -4737,9 +4751,9 @@ namespace EPBLab.ViewModel
             AddTriangle(mesh.TriangleIndices, faceIndex + 3, faceIndex + 1, faceIndex + 2);
             faceIndex += 4;
             // Right
-            mesh.Positions.Add(new Point3D(-0.250000, 0.500000, 0.500000));
-            mesh.Positions.Add(new Point3D(-0.250000, -0.500000, 0.500000));
-            mesh.Positions.Add(new Point3D(-0.250000, -0.500000, -0.500000));
+            mesh.Positions.Add(new Point3D(-0.354331, 0.500000, 0.500000));
+            mesh.Positions.Add(new Point3D(-0.354331, -0.500000, 0.500000));
+            mesh.Positions.Add(new Point3D(-0.354331, -0.500000, -0.500000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Right], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Right], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Right], 0.000000, 0.000000));
@@ -4762,9 +4776,9 @@ namespace EPBLab.ViewModel
             faceIndex += 3;
             // Top
             mesh.Positions.Add(new Point3D(-0.500000, -0.500000, -0.500000));
-            mesh.Positions.Add(new Point3D(-0.250000, 0.500000, 0.500000));
+            mesh.Positions.Add(new Point3D(-0.354331, 0.500000, 0.500000));
             mesh.Positions.Add(new Point3D(-0.500000, 0.500000, 0.500000));
-            mesh.Positions.Add(new Point3D(-0.250000, -0.500000, -0.500000));
+            mesh.Positions.Add(new Point3D(-0.354331, -0.500000, -0.500000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Top], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Top], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Top], 0.000000, 0.000000));
@@ -4778,8 +4792,8 @@ namespace EPBLab.ViewModel
             faceIndex += 4;
             // Bottom
             mesh.Positions.Add(new Point3D(-0.500000, -0.500000, 0.500000));
-            mesh.Positions.Add(new Point3D(-0.250000, -0.500000, -0.500000));
-            mesh.Positions.Add(new Point3D(-0.250000, -0.500000, 0.500000));
+            mesh.Positions.Add(new Point3D(-0.354331, -0.500000, -0.500000));
+            mesh.Positions.Add(new Point3D(-0.354331, -0.500000, 0.500000));
             mesh.Positions.Add(new Point3D(-0.500000, -0.500000, -0.500000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Bottom], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Bottom], 0.000000, 0.000000));
@@ -4797,9 +4811,9 @@ namespace EPBLab.ViewModel
         {
             // Back
             mesh.Positions.Add(new Point3D(-0.500000, -0.500000, 0.500000));
-            mesh.Positions.Add(new Point3D(-0.250000, -0.000000, 0.500000));
+            mesh.Positions.Add(new Point3D(-0.354331, -0.000000, 0.500000));
             mesh.Positions.Add(new Point3D(-0.500000, -0.000000, 0.500000));
-            mesh.Positions.Add(new Point3D(-0.250000, -0.500000, 0.500000));
+            mesh.Positions.Add(new Point3D(-0.354331, -0.500000, 0.500000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Back], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Back], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Back], 0.000000, 0.000000));
@@ -4812,9 +4826,9 @@ namespace EPBLab.ViewModel
             AddTriangle(mesh.TriangleIndices, faceIndex + 3, faceIndex + 1, faceIndex + 2);
             faceIndex += 4;
             // Right
-            mesh.Positions.Add(new Point3D(-0.250000, -0.000000, 0.500000));
-            mesh.Positions.Add(new Point3D(-0.250000, -0.500000, 0.500000));
-            mesh.Positions.Add(new Point3D(-0.250000, -0.500000, -0.500000));
+            mesh.Positions.Add(new Point3D(-0.354331, -0.000000, 0.500000));
+            mesh.Positions.Add(new Point3D(-0.354331, -0.500000, 0.500000));
+            mesh.Positions.Add(new Point3D(-0.354331, -0.500000, -0.500000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Right], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Right], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Right], 0.000000, 0.000000));
@@ -4837,8 +4851,8 @@ namespace EPBLab.ViewModel
             faceIndex += 3;
             // Top
             mesh.Positions.Add(new Point3D(-0.500000, -0.500000, -0.500000));
-            mesh.Positions.Add(new Point3D(-0.250000, -0.000000, 0.500000));
-            mesh.Positions.Add(new Point3D(-0.250000, -0.500000, -0.500000));
+            mesh.Positions.Add(new Point3D(-0.354331, -0.000000, 0.500000));
+            mesh.Positions.Add(new Point3D(-0.354331, -0.500000, -0.500000));
             mesh.Positions.Add(new Point3D(-0.500000, -0.000000, 0.500000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Top], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Top], 0.000000, 0.000000));
@@ -4853,17 +4867,17 @@ namespace EPBLab.ViewModel
             faceIndex += 4;
             // Bottom
             mesh.Positions.Add(new Point3D(-0.500000, -0.500000, 0.500000));
-            mesh.Positions.Add(new Point3D(-0.250000, -0.500000, -0.500000));
+            mesh.Positions.Add(new Point3D(-0.354331, -0.500000, -0.500000));
             mesh.Positions.Add(new Point3D(-0.500000, -0.500000, -0.500000));
-            mesh.Positions.Add(new Point3D(-0.250000, -0.500000, 0.500000));
+            mesh.Positions.Add(new Point3D(-0.354331, -0.500000, 0.500000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Bottom], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Bottom], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Bottom], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Bottom], 0.000000, 0.000000));
             mesh.Normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
             mesh.Normals.Add(new Vector3D(-0.000000, -1.000000, -0.000000));
-            mesh.Normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
-            mesh.Normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            mesh.Normals.Add(new Vector3D(-0.000000, -1.000000, -0.000000));
+            mesh.Normals.Add(new Vector3D(-0.000000, -1.000000, -0.000000));
             AddTriangle(mesh.TriangleIndices, faceIndex + 3, faceIndex + 0, faceIndex + 2);
             AddTriangle(mesh.TriangleIndices, faceIndex + 2, faceIndex + 1, faceIndex + 3);
             return faceIndex;
@@ -4871,9 +4885,9 @@ namespace EPBLab.ViewModel
         private int AddGeometry_SlopedWallTopRight(MeshGeometry3D mesh, EpbColourIndex[] colours, int faceIndex)
         {
             // Back
-            mesh.Positions.Add(new Point3D(-0.250000, -0.500000, 0.500000));
+            mesh.Positions.Add(new Point3D(-0.354331, -0.500000, 0.500000));
             mesh.Positions.Add(new Point3D(-0.500000, 0.500000, 0.500000));
-            mesh.Positions.Add(new Point3D(-0.250000, 0.500000, 0.500000));
+            mesh.Positions.Add(new Point3D(-0.354331, 0.500000, 0.500000));
             mesh.Positions.Add(new Point3D(-0.500000, -0.500000, 0.500000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Back], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Back], 0.000000, 0.000000));
@@ -4887,9 +4901,9 @@ namespace EPBLab.ViewModel
             AddTriangle(mesh.TriangleIndices, faceIndex + 2, faceIndex + 1, faceIndex + 3);
             faceIndex += 4;
             // Front
-            mesh.Positions.Add(new Point3D(-0.250000, -0.500000, -0.500000));
+            mesh.Positions.Add(new Point3D(-0.354331, -0.500000, -0.500000));
             mesh.Positions.Add(new Point3D(-0.500000, -0.000000, -0.500000));
-            mesh.Positions.Add(new Point3D(-0.250000, -0.000000, -0.500000));
+            mesh.Positions.Add(new Point3D(-0.354331, -0.000000, -0.500000));
             mesh.Positions.Add(new Point3D(-0.500000, -0.500000, -0.500000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Front], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Front], 0.000000, 0.000000));
@@ -4903,10 +4917,10 @@ namespace EPBLab.ViewModel
             AddTriangle(mesh.TriangleIndices, faceIndex + 3, faceIndex + 1, faceIndex + 2);
             faceIndex += 4;
             // Right
-            mesh.Positions.Add(new Point3D(-0.250000, -0.500000, 0.500000));
-            mesh.Positions.Add(new Point3D(-0.250000, -0.000000, -0.500000));
-            mesh.Positions.Add(new Point3D(-0.250000, -0.500000, -0.500000));
-            mesh.Positions.Add(new Point3D(-0.250000, 0.500000, 0.500000));
+            mesh.Positions.Add(new Point3D(-0.354331, -0.500000, 0.500000));
+            mesh.Positions.Add(new Point3D(-0.354331, -0.000000, -0.500000));
+            mesh.Positions.Add(new Point3D(-0.354331, -0.500000, -0.500000));
+            mesh.Positions.Add(new Point3D(-0.354331, 0.500000, 0.500000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Right], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Right], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Right], 0.000000, 0.000000));
@@ -4936,8 +4950,8 @@ namespace EPBLab.ViewModel
             faceIndex += 4;
             // Top
             mesh.Positions.Add(new Point3D(-0.500000, 0.500000, 0.500000));
-            mesh.Positions.Add(new Point3D(-0.250000, -0.000000, -0.500000));
-            mesh.Positions.Add(new Point3D(-0.250000, 0.500000, 0.500000));
+            mesh.Positions.Add(new Point3D(-0.354331, -0.000000, -0.500000));
+            mesh.Positions.Add(new Point3D(-0.354331, 0.500000, 0.500000));
             mesh.Positions.Add(new Point3D(-0.500000, -0.000000, -0.500000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Top], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Top], 0.000000, 0.000000));
@@ -4952,15 +4966,15 @@ namespace EPBLab.ViewModel
             faceIndex += 4;
             // Bottom
             mesh.Positions.Add(new Point3D(-0.500000, -0.500000, 0.500000));
-            mesh.Positions.Add(new Point3D(-0.250000, -0.500000, -0.500000));
-            mesh.Positions.Add(new Point3D(-0.250000, -0.500000, 0.500000));
+            mesh.Positions.Add(new Point3D(-0.354331, -0.500000, -0.500000));
+            mesh.Positions.Add(new Point3D(-0.354331, -0.500000, 0.500000));
             mesh.Positions.Add(new Point3D(-0.500000, -0.500000, -0.500000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Bottom], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Bottom], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Bottom], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Bottom], 0.000000, 0.000000));
             mesh.Normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
-            mesh.Normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            mesh.Normals.Add(new Vector3D(-0.000000, -1.000000, -0.000000));
             mesh.Normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
             mesh.Normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
             AddTriangle(mesh.TriangleIndices, faceIndex + 2, faceIndex + 0, faceIndex + 3);
@@ -4970,10 +4984,10 @@ namespace EPBLab.ViewModel
         private int AddGeometry_SlopedWallBottomLeft(MeshGeometry3D mesh, EpbColourIndex[] colours, int faceIndex)
         {
             // Back
-            mesh.Positions.Add(new Point3D(0.250000, -0.500000, 0.500000));
+            mesh.Positions.Add(new Point3D(0.354331, -0.500000, 0.500000));
             mesh.Positions.Add(new Point3D(0.500000, -0.000000, 0.500000));
             mesh.Positions.Add(new Point3D(0.500000, -0.500000, 0.500000));
-            mesh.Positions.Add(new Point3D(0.250000, -0.000000, 0.500000));
+            mesh.Positions.Add(new Point3D(0.354331, -0.000000, 0.500000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Back], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Back], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Back], 0.000000, 0.000000));
@@ -4998,9 +5012,9 @@ namespace EPBLab.ViewModel
             AddTriangle(mesh.TriangleIndices, faceIndex + 0, faceIndex + 1, faceIndex + 2);
             faceIndex += 3;
             // Left
-            mesh.Positions.Add(new Point3D(0.250000, -0.000000, 0.500000));
-            mesh.Positions.Add(new Point3D(0.250000, -0.500000, -0.500000));
-            mesh.Positions.Add(new Point3D(0.250000, -0.500000, 0.500000));
+            mesh.Positions.Add(new Point3D(0.354331, -0.000000, 0.500000));
+            mesh.Positions.Add(new Point3D(0.354331, -0.500000, -0.500000));
+            mesh.Positions.Add(new Point3D(0.354331, -0.500000, 0.500000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Left], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Left], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Left], 0.000000, 0.000000));
@@ -5010,9 +5024,9 @@ namespace EPBLab.ViewModel
             AddTriangle(mesh.TriangleIndices, faceIndex + 0, faceIndex + 1, faceIndex + 2);
             faceIndex += 3;
             // Top
-            mesh.Positions.Add(new Point3D(0.250000, -0.500000, -0.500000));
+            mesh.Positions.Add(new Point3D(0.354331, -0.500000, -0.500000));
             mesh.Positions.Add(new Point3D(0.500000, -0.000000, 0.500000));
-            mesh.Positions.Add(new Point3D(0.250000, -0.000000, 0.500000));
+            mesh.Positions.Add(new Point3D(0.354331, -0.000000, 0.500000));
             mesh.Positions.Add(new Point3D(0.500000, -0.500000, -0.500000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Top], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Top], 0.000000, 0.000000));
@@ -5027,17 +5041,17 @@ namespace EPBLab.ViewModel
             faceIndex += 4;
             // Bottom
             mesh.Positions.Add(new Point3D(0.500000, -0.500000, -0.500000));
-            mesh.Positions.Add(new Point3D(0.250000, -0.500000, 0.500000));
+            mesh.Positions.Add(new Point3D(0.354331, -0.500000, 0.500000));
             mesh.Positions.Add(new Point3D(0.500000, -0.500000, 0.500000));
-            mesh.Positions.Add(new Point3D(0.250000, -0.500000, -0.500000));
+            mesh.Positions.Add(new Point3D(0.354331, -0.500000, -0.500000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Bottom], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Bottom], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Bottom], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Bottom], 0.000000, 0.000000));
             mesh.Normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
-            mesh.Normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
-            mesh.Normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
-            mesh.Normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            mesh.Normals.Add(new Vector3D(0.000000, -1.000000, 0.000000));
+            mesh.Normals.Add(new Vector3D(0.000000, -1.000000, 0.000000));
+            mesh.Normals.Add(new Vector3D(0.000000, -1.000000, 0.000000));
             AddTriangle(mesh.TriangleIndices, faceIndex + 3, faceIndex + 0, faceIndex + 2);
             AddTriangle(mesh.TriangleIndices, faceIndex + 2, faceIndex + 1, faceIndex + 3);
             return faceIndex;
@@ -5046,9 +5060,9 @@ namespace EPBLab.ViewModel
         {
             // Back
             mesh.Positions.Add(new Point3D(0.500000, -0.500000, 0.500000));
-            mesh.Positions.Add(new Point3D(0.250000, 0.500000, 0.500000));
+            mesh.Positions.Add(new Point3D(0.354331, 0.500000, 0.500000));
             mesh.Positions.Add(new Point3D(0.500000, 0.500000, 0.500000));
-            mesh.Positions.Add(new Point3D(0.250000, -0.500000, 0.500000));
+            mesh.Positions.Add(new Point3D(0.354331, -0.500000, 0.500000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Back], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Back], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Back], 0.000000, 0.000000));
@@ -5062,9 +5076,9 @@ namespace EPBLab.ViewModel
             faceIndex += 4;
             // Front
             mesh.Positions.Add(new Point3D(0.500000, -0.500000, -0.500000));
-            mesh.Positions.Add(new Point3D(0.250000, -0.000000, -0.500000));
+            mesh.Positions.Add(new Point3D(0.354331, -0.000000, -0.500000));
             mesh.Positions.Add(new Point3D(0.500000, -0.000000, -0.500000));
-            mesh.Positions.Add(new Point3D(0.250000, -0.500000, -0.500000));
+            mesh.Positions.Add(new Point3D(0.354331, -0.500000, -0.500000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Front], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Front], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Front], 0.000000, 0.000000));
@@ -5093,26 +5107,26 @@ namespace EPBLab.ViewModel
             AddTriangle(mesh.TriangleIndices, faceIndex + 3, faceIndex + 1, faceIndex + 2);
             faceIndex += 4;
             // Left
-            mesh.Positions.Add(new Point3D(0.250000, -0.500000, -0.500000));
-            mesh.Positions.Add(new Point3D(0.250000, 0.500000, 0.500000));
-            mesh.Positions.Add(new Point3D(0.250000, -0.500000, 0.500000));
-            mesh.Positions.Add(new Point3D(0.250000, -0.000000, -0.500000));
+            mesh.Positions.Add(new Point3D(0.354331, -0.500000, -0.500000));
+            mesh.Positions.Add(new Point3D(0.354331, 0.500000, 0.500000));
+            mesh.Positions.Add(new Point3D(0.354331, -0.500000, 0.500000));
+            mesh.Positions.Add(new Point3D(0.354331, -0.000000, -0.500000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Left], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Left], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Left], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Left], 0.000000, 0.000000));
             mesh.Normals.Add(new Vector3D(-1.000000, 0.000000, 0.000000));
             mesh.Normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
-            mesh.Normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
-            mesh.Normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            mesh.Normals.Add(new Vector3D(-1.000000, 0.000000, 0.000000));
+            mesh.Normals.Add(new Vector3D(-1.000000, 0.000000, 0.000000));
             AddTriangle(mesh.TriangleIndices, faceIndex + 3, faceIndex + 0, faceIndex + 2);
             AddTriangle(mesh.TriangleIndices, faceIndex + 2, faceIndex + 1, faceIndex + 3);
             faceIndex += 4;
             // Top
             mesh.Positions.Add(new Point3D(0.500000, -0.000000, -0.500000));
-            mesh.Positions.Add(new Point3D(0.250000, 0.500000, 0.500000));
+            mesh.Positions.Add(new Point3D(0.354331, 0.500000, 0.500000));
             mesh.Positions.Add(new Point3D(0.500000, 0.500000, 0.500000));
-            mesh.Positions.Add(new Point3D(0.250000, -0.000000, -0.500000));
+            mesh.Positions.Add(new Point3D(0.354331, -0.000000, -0.500000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Top], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Top], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Top], 0.000000, 0.000000));
@@ -5126,17 +5140,17 @@ namespace EPBLab.ViewModel
             faceIndex += 4;
             // Bottom
             mesh.Positions.Add(new Point3D(0.500000, -0.500000, -0.500000));
-            mesh.Positions.Add(new Point3D(0.250000, -0.500000, 0.500000));
+            mesh.Positions.Add(new Point3D(0.354331, -0.500000, 0.500000));
             mesh.Positions.Add(new Point3D(0.500000, -0.500000, 0.500000));
-            mesh.Positions.Add(new Point3D(0.250000, -0.500000, -0.500000));
+            mesh.Positions.Add(new Point3D(0.354331, -0.500000, -0.500000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Bottom], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Bottom], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Bottom], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Bottom], 0.000000, 0.000000));
-            mesh.Normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
-            mesh.Normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
-            mesh.Normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
-            mesh.Normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
+            mesh.Normals.Add(new Vector3D(0.000000, -1.000000, 0.000000));
+            mesh.Normals.Add(new Vector3D(0.000000, -1.000000, 0.000000));
+            mesh.Normals.Add(new Vector3D(0.000000, -1.000000, 0.000000));
+            mesh.Normals.Add(new Vector3D(0.000000, -1.000000, 0.000000));
             AddTriangle(mesh.TriangleIndices, faceIndex + 3, faceIndex + 0, faceIndex + 2);
             AddTriangle(mesh.TriangleIndices, faceIndex + 2, faceIndex + 1, faceIndex + 3);
             return faceIndex;
@@ -5162,16 +5176,16 @@ namespace EPBLab.ViewModel
             // Front
             mesh.Positions.Add(new Point3D(0.500000, 0.500000, -0.500000));
             mesh.Positions.Add(new Point3D(0.500000, -0.500000, -0.500000));
-            mesh.Positions.Add(new Point3D(0.250000, -0.500000, -0.500000));
-            mesh.Positions.Add(new Point3D(0.250000, 0.250000, -0.500000));
+            mesh.Positions.Add(new Point3D(0.354331, -0.500000, -0.500000));
+            mesh.Positions.Add(new Point3D(0.354331, 0.250000, -0.500000));
             mesh.Positions.Add(new Point3D(-0.500000, 0.500000, -0.500000));
             mesh.Positions.Add(new Point3D(-0.500000, 0.250000, -0.500000));
-            mesh.Positions.Add(new Point3D(0.250000, -0.500000, 0.250000));
-            mesh.Positions.Add(new Point3D(-0.500000, -0.500000, 0.250000));
-            mesh.Positions.Add(new Point3D(0.250000, -0.500000, -0.500000));
-            mesh.Positions.Add(new Point3D(0.250000, 0.250000, -0.500000));
-            mesh.Positions.Add(new Point3D(-0.500000, 0.250000, 0.250000));
-            mesh.Positions.Add(new Point3D(0.250000, 0.250000, 0.250000));
+            mesh.Positions.Add(new Point3D(0.354331, -0.500000, 0.354331));
+            mesh.Positions.Add(new Point3D(-0.500000, -0.500000, 0.354331));
+            mesh.Positions.Add(new Point3D(0.354331, -0.500000, -0.500000));
+            mesh.Positions.Add(new Point3D(0.354331, 0.250000, -0.500000));
+            mesh.Positions.Add(new Point3D(-0.500000, 0.250000, 0.354331));
+            mesh.Positions.Add(new Point3D(0.354331, 0.250000, 0.354331));
             mesh.Positions.Add(new Point3D(-0.500000, 0.250000, -0.500000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Front], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Front], 0.000000, 0.000000));
@@ -5229,8 +5243,8 @@ namespace EPBLab.ViewModel
             // Left
             mesh.Positions.Add(new Point3D(-0.500000, -0.500000, 0.500000));
             mesh.Positions.Add(new Point3D(-0.500000, 0.500000, 0.500000));
-            mesh.Positions.Add(new Point3D(-0.500000, -0.500000, 0.250000));
-            mesh.Positions.Add(new Point3D(-0.500000, 0.250000, 0.250000));
+            mesh.Positions.Add(new Point3D(-0.500000, -0.500000, 0.354331));
+            mesh.Positions.Add(new Point3D(-0.500000, 0.250000, 0.354331));
             mesh.Positions.Add(new Point3D(-0.500000, 0.500000, -0.500000));
             mesh.Positions.Add(new Point3D(-0.500000, 0.250000, -0.500000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Left], 0.000000, 0.000000));
@@ -5240,7 +5254,7 @@ namespace EPBLab.ViewModel
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Left], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Left], 0.000000, 0.000000));
             mesh.Normals.Add(new Vector3D(-1.000000, 0.000000, 0.000000));
-            mesh.Normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            mesh.Normals.Add(new Vector3D(-1.000000, 0.000000, 0.000000));
             mesh.Normals.Add(new Vector3D(-1.000000, 0.000000, 0.000000));
             mesh.Normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
             mesh.Normals.Add(new Vector3D(-1.000000, 0.000000, 0.000000));
@@ -5267,11 +5281,11 @@ namespace EPBLab.ViewModel
             AddTriangle(mesh.TriangleIndices, faceIndex + 3, faceIndex + 0, faceIndex + 2);
             faceIndex += 4;
             // Bottom
-            mesh.Positions.Add(new Point3D(0.250000, -0.500000, 0.250000));
+            mesh.Positions.Add(new Point3D(0.354331, -0.500000, 0.354331));
             mesh.Positions.Add(new Point3D(-0.500000, -0.500000, 0.500000));
-            mesh.Positions.Add(new Point3D(-0.500000, -0.500000, 0.250000));
+            mesh.Positions.Add(new Point3D(-0.500000, -0.500000, 0.354331));
             mesh.Positions.Add(new Point3D(0.500000, -0.500000, -0.500000));
-            mesh.Positions.Add(new Point3D(0.250000, -0.500000, -0.500000));
+            mesh.Positions.Add(new Point3D(0.354331, -0.500000, -0.500000));
             mesh.Positions.Add(new Point3D(0.500000, -0.500000, 0.500000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Bottom], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Bottom], 0.000000, 0.000000));
@@ -5294,15 +5308,15 @@ namespace EPBLab.ViewModel
         private int AddGeometry_WallHalf(MeshGeometry3D mesh, EpbColourIndex[] colours, int faceIndex)
         {
             // Back
-            mesh.Positions.Add(new Point3D(0.500000, -0.500000, -0.250000));
-            mesh.Positions.Add(new Point3D(-0.500000, -0.000000, -0.250000));
-            mesh.Positions.Add(new Point3D(0.500000, -0.000000, -0.250000));
-            mesh.Positions.Add(new Point3D(-0.500000, -0.500000, -0.250000));
+            mesh.Positions.Add(new Point3D(0.500000, -0.500000, -0.354331));
+            mesh.Positions.Add(new Point3D(-0.500000, 0.000000, -0.354331));
+            mesh.Positions.Add(new Point3D(0.500000, 0.000000, -0.354331));
+            mesh.Positions.Add(new Point3D(-0.500000, -0.500000, -0.354331));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Back], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Back], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Back], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Back], 0.000000, 0.000000));
-            mesh.Normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
+            mesh.Normals.Add(new Vector3D(0.000000, 0.000000, 1.000000));
             mesh.Normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
             mesh.Normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
             mesh.Normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
@@ -5326,9 +5340,9 @@ namespace EPBLab.ViewModel
             AddTriangle(mesh.TriangleIndices, faceIndex + 3, faceIndex + 1, faceIndex + 2);
             faceIndex += 4;
             // Right
-            mesh.Positions.Add(new Point3D(0.500000, -0.500000, -0.250000));
+            mesh.Positions.Add(new Point3D(0.500000, -0.500000, -0.354331));
             mesh.Positions.Add(new Point3D(0.500000, -0.000000, -0.500000));
-            mesh.Positions.Add(new Point3D(0.500000, -0.000000, -0.250000));
+            mesh.Positions.Add(new Point3D(0.500000, 0.000000, -0.354331));
             mesh.Positions.Add(new Point3D(0.500000, -0.500000, -0.500000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Right], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Right], 0.000000, 0.000000));
@@ -5336,15 +5350,15 @@ namespace EPBLab.ViewModel
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Right], 0.000000, 0.000000));
             mesh.Normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
             mesh.Normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
-            mesh.Normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
-            mesh.Normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
+            mesh.Normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
+            mesh.Normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
             AddTriangle(mesh.TriangleIndices, faceIndex + 2, faceIndex + 0, faceIndex + 3);
             AddTriangle(mesh.TriangleIndices, faceIndex + 3, faceIndex + 1, faceIndex + 2);
             faceIndex += 4;
             // Left
-            mesh.Positions.Add(new Point3D(-0.500000, -0.500000, -0.250000));
+            mesh.Positions.Add(new Point3D(-0.500000, -0.500000, -0.354331));
             mesh.Positions.Add(new Point3D(-0.500000, -0.000000, -0.500000));
-            mesh.Positions.Add(new Point3D(-0.500000, -0.000000, -0.250000));
+            mesh.Positions.Add(new Point3D(-0.500000, 0.000000, -0.354331));
             mesh.Positions.Add(new Point3D(-0.500000, -0.500000, -0.500000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Left], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Left], 0.000000, 0.000000));
@@ -5358,34 +5372,34 @@ namespace EPBLab.ViewModel
             AddTriangle(mesh.TriangleIndices, faceIndex + 2, faceIndex + 1, faceIndex + 3);
             faceIndex += 4;
             // Top
-            mesh.Positions.Add(new Point3D(-0.500000, -0.000000, -0.250000));
+            mesh.Positions.Add(new Point3D(-0.500000, 0.000000, -0.354331));
             mesh.Positions.Add(new Point3D(0.500000, -0.000000, -0.500000));
-            mesh.Positions.Add(new Point3D(0.500000, -0.000000, -0.250000));
+            mesh.Positions.Add(new Point3D(0.500000, 0.000000, -0.354331));
             mesh.Positions.Add(new Point3D(-0.500000, -0.000000, -0.500000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Top], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Top], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Top], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Top], 0.000000, 0.000000));
-            mesh.Normals.Add(new Vector3D(-0.000000, 1.000000, 0.000000));
-            mesh.Normals.Add(new Vector3D(-0.000000, 1.000000, 0.000000));
-            mesh.Normals.Add(new Vector3D(-0.000000, 1.000000, 0.000000));
-            mesh.Normals.Add(new Vector3D(-0.000000, 1.000000, 0.000000));
+            mesh.Normals.Add(new Vector3D(-0.000000, 1.000000, -0.000000));
+            mesh.Normals.Add(new Vector3D(0.000000, 1.000000, -0.000000));
+            mesh.Normals.Add(new Vector3D(-0.000000, 1.000000, -0.000000));
+            mesh.Normals.Add(new Vector3D(-0.000000, 1.000000, -0.000000));
             AddTriangle(mesh.TriangleIndices, faceIndex + 3, faceIndex + 0, faceIndex + 2);
             AddTriangle(mesh.TriangleIndices, faceIndex + 2, faceIndex + 1, faceIndex + 3);
             faceIndex += 4;
             // Bottom
-            mesh.Positions.Add(new Point3D(-0.500000, -0.500000, -0.250000));
+            mesh.Positions.Add(new Point3D(-0.500000, -0.500000, -0.354331));
             mesh.Positions.Add(new Point3D(0.500000, -0.500000, -0.500000));
-            mesh.Positions.Add(new Point3D(0.500000, -0.500000, -0.250000));
+            mesh.Positions.Add(new Point3D(0.500000, -0.500000, -0.354331));
             mesh.Positions.Add(new Point3D(-0.500000, -0.500000, -0.500000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Bottom], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Bottom], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Bottom], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Bottom], 0.000000, 0.000000));
             mesh.Normals.Add(new Vector3D(0.000000, -1.000000, 0.000000));
-            mesh.Normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
-            mesh.Normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
-            mesh.Normals.Add(new Vector3D(0.000000, -1.000000, -0.000000));
+            mesh.Normals.Add(new Vector3D(0.000000, -1.000000, 0.000000));
+            mesh.Normals.Add(new Vector3D(0.000000, -1.000000, 0.000000));
+            mesh.Normals.Add(new Vector3D(0.000000, -1.000000, 0.000000));
             AddTriangle(mesh.TriangleIndices, faceIndex + 2, faceIndex + 0, faceIndex + 3);
             AddTriangle(mesh.TriangleIndices, faceIndex + 3, faceIndex + 1, faceIndex + 2);
             return faceIndex;
@@ -5956,10 +5970,10 @@ namespace EPBLab.ViewModel
         private int AddGeometry_Beam(MeshGeometry3D mesh, EpbColourIndex[] colours, int faceIndex)
         {
             // Back
-            mesh.Positions.Add(new Point3D(0.227273, -0.500000, 0.227273));
-            mesh.Positions.Add(new Point3D(-0.272727, 0.500000, 0.227273));
-            mesh.Positions.Add(new Point3D(0.227273, 0.500000, 0.227273));
-            mesh.Positions.Add(new Point3D(-0.272727, -0.500000, 0.227273));
+            mesh.Positions.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            mesh.Positions.Add(new Point3D(0.391336, 0.500000, 0.500000));
+            mesh.Positions.Add(new Point3D(0.500000, 0.500000, 0.500000));
+            mesh.Positions.Add(new Point3D(0.391336, -0.500000, 0.500000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Back], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Back], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Back], 0.000000, 0.000000));
@@ -5972,10 +5986,10 @@ namespace EPBLab.ViewModel
             AddTriangle(mesh.TriangleIndices, faceIndex + 2, faceIndex + 1, faceIndex + 3);
             faceIndex += 4;
             // Front
-            mesh.Positions.Add(new Point3D(0.227273, -0.500000, -0.272727));
-            mesh.Positions.Add(new Point3D(-0.272727, 0.500000, -0.272727));
-            mesh.Positions.Add(new Point3D(0.227273, 0.500000, -0.272727));
-            mesh.Positions.Add(new Point3D(-0.272727, -0.500000, -0.272727));
+            mesh.Positions.Add(new Point3D(0.500000, -0.500000, 0.354331));
+            mesh.Positions.Add(new Point3D(0.391336, 0.500000, 0.354331));
+            mesh.Positions.Add(new Point3D(0.500000, 0.500000, 0.354331));
+            mesh.Positions.Add(new Point3D(0.391336, -0.500000, 0.354331));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Front], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Front], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Front], 0.000000, 0.000000));
@@ -5988,10 +6002,10 @@ namespace EPBLab.ViewModel
             AddTriangle(mesh.TriangleIndices, faceIndex + 3, faceIndex + 1, faceIndex + 2);
             faceIndex += 4;
             // Right
-            mesh.Positions.Add(new Point3D(0.227273, -0.500000, 0.227273));
-            mesh.Positions.Add(new Point3D(0.227273, 0.500000, -0.272727));
-            mesh.Positions.Add(new Point3D(0.227273, 0.500000, 0.227273));
-            mesh.Positions.Add(new Point3D(0.227273, -0.500000, -0.272727));
+            mesh.Positions.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            mesh.Positions.Add(new Point3D(0.500000, 0.500000, 0.354331));
+            mesh.Positions.Add(new Point3D(0.500000, 0.500000, 0.500000));
+            mesh.Positions.Add(new Point3D(0.500000, -0.500000, 0.354331));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Right], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Right], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Right], 0.000000, 0.000000));
@@ -6004,31 +6018,31 @@ namespace EPBLab.ViewModel
             AddTriangle(mesh.TriangleIndices, faceIndex + 3, faceIndex + 1, faceIndex + 2);
             faceIndex += 4;
             // Left
-            mesh.Positions.Add(new Point3D(-0.272727, -0.500000, 0.227273));
-            mesh.Positions.Add(new Point3D(-0.272727, 0.500000, -0.272727));
-            mesh.Positions.Add(new Point3D(-0.272727, 0.500000, 0.227273));
-            mesh.Positions.Add(new Point3D(-0.272727, -0.500000, -0.272727));
+            mesh.Positions.Add(new Point3D(0.391336, -0.500000, 0.500000));
+            mesh.Positions.Add(new Point3D(0.391336, 0.500000, 0.354331));
+            mesh.Positions.Add(new Point3D(0.391336, 0.500000, 0.500000));
+            mesh.Positions.Add(new Point3D(0.391336, -0.500000, 0.354331));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Left], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Left], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Left], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Left], 0.000000, 0.000000));
-            mesh.Normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
-            mesh.Normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
-            mesh.Normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
-            mesh.Normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
+            mesh.Normals.Add(new Vector3D(-1.000000, -0.000000, -0.000000));
+            mesh.Normals.Add(new Vector3D(-1.000000, 0.000000, -0.000000));
+            mesh.Normals.Add(new Vector3D(-1.000000, 0.000000, -0.000000));
+            mesh.Normals.Add(new Vector3D(-1.000000, 0.000000, -0.000000));
             AddTriangle(mesh.TriangleIndices, faceIndex + 3, faceIndex + 0, faceIndex + 2);
             AddTriangle(mesh.TriangleIndices, faceIndex + 2, faceIndex + 1, faceIndex + 3);
             faceIndex += 4;
             // Top
-            mesh.Positions.Add(new Point3D(-0.272727, 0.500000, 0.227273));
-            mesh.Positions.Add(new Point3D(0.227273, 0.500000, -0.272727));
-            mesh.Positions.Add(new Point3D(0.227273, 0.500000, 0.227273));
-            mesh.Positions.Add(new Point3D(-0.272727, 0.500000, -0.272727));
+            mesh.Positions.Add(new Point3D(0.391336, 0.500000, 0.500000));
+            mesh.Positions.Add(new Point3D(0.500000, 0.500000, 0.354331));
+            mesh.Positions.Add(new Point3D(0.500000, 0.500000, 0.500000));
+            mesh.Positions.Add(new Point3D(0.391336, 0.500000, 0.354331));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Top], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Top], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Top], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Top], 0.000000, 0.000000));
-            mesh.Normals.Add(new Vector3D(0.000000, 1.000000, 0.000000));
+            mesh.Normals.Add(new Vector3D(0.000000, 1.000000, -0.000000));
             mesh.Normals.Add(new Vector3D(0.000000, 1.000000, -0.000000));
             mesh.Normals.Add(new Vector3D(0.000000, 1.000000, -0.000000));
             mesh.Normals.Add(new Vector3D(0.000000, 1.000000, -0.000000));
@@ -6036,16 +6050,16 @@ namespace EPBLab.ViewModel
             AddTriangle(mesh.TriangleIndices, faceIndex + 2, faceIndex + 1, faceIndex + 3);
             faceIndex += 4;
             // Bottom
-            mesh.Positions.Add(new Point3D(-0.272727, -0.500000, 0.227273));
-            mesh.Positions.Add(new Point3D(0.227273, -0.500000, -0.272727));
-            mesh.Positions.Add(new Point3D(0.227273, -0.500000, 0.227273));
-            mesh.Positions.Add(new Point3D(-0.272727, -0.500000, -0.272727));
+            mesh.Positions.Add(new Point3D(0.391336, -0.500000, 0.500000));
+            mesh.Positions.Add(new Point3D(0.500000, -0.500000, 0.354331));
+            mesh.Positions.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            mesh.Positions.Add(new Point3D(0.391336, -0.500000, 0.354331));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Bottom], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Bottom], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Bottom], 0.000000, 0.000000));
             mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Bottom], 0.000000, 0.000000));
             mesh.Normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
-            mesh.Normals.Add(new Vector3D(-0.000000, -1.000000, -0.000000));
+            mesh.Normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
             mesh.Normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
             mesh.Normals.Add(new Vector3D(-0.000000, -1.000000, 0.000000));
             AddTriangle(mesh.TriangleIndices, faceIndex + 2, faceIndex + 0, faceIndex + 3);
