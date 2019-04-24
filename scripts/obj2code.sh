@@ -13,7 +13,7 @@
 ## Format: OBJ
 ## Collect External Files:       No
 ## Save all frames:              No
-## Scale:                        39.37007874015748
+## Scale:                        3.280839895013123
 ## Resolution:                   10
 ## Export objects as:            group names
 ## Export selected objects only: No
