@@ -26,6 +26,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <RunCodeAnalysis>true</RunCodeAnalysis>
+    <LangVersion>default</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -76,6 +77,8 @@
     </ApplicationDefinition>
     <Compile Include="Helpers\CollectionExtensions.cs" />
     <Compile Include="Helpers\EpbColourExtensions.cs" />
+    <Compile Include="Helpers\Point3DExtensions.cs" />
+    <Compile Include="Helpers\Vector3DExtensions.cs" />
     <Compile Include="Messages\CloseBlueprintMessage.cs" />
     <Compile Include="Messages\FilesOpenedMessage.cs" />
     <Compile Include="Behaviours\OpenFileBehaviour.cs" />
@@ -179,6 +182,7 @@
     <Compile Include="View\Logic\SignalTargetView.xaml.cs">
       <DependentUpon>SignalTargetView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\PositionAimPoint2LookDirectionConverter.cs" />
     <Compile Include="View\SummaryView.xaml.cs">
       <DependentUpon>SummaryView.xaml</DependentUpon>
     </Compile>

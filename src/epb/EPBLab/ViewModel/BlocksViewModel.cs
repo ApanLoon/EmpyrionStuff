@@ -85,21 +85,39 @@ namespace EPBLab.ViewModel
             } 
         }
 
-        public const string CameraLookDirectionPropertyName = "CameraLookDirection";
-        private string _cameraLookDirection;
-        public string CameraLookDirection
-        {
-            get => _cameraLookDirection;
-            set => Set(ref _cameraLookDirection, value);
-        }
+        //public const string CameraLookDirectionPropertyName = "CameraLookDirection";
+        //private string _cameraLookDirection;
+        //public string CameraLookDirection
+        //{
+        //    get => _cameraLookDirection;
+        //    set => Set(ref _cameraLookDirection, value);
+        //}
+
+        //public const string CameraPositionPropertyName = "CameraPosition";
+        //private string _cameraPosition;
+        //public string CameraPosition
+        //{
+        //    get => _cameraPosition;
+        //    set => Set(ref _cameraPosition, value);
+        //}
 
         public const string CameraPositionPropertyName = "CameraPosition";
-        private string _cameraPosition;
-        public string CameraPosition
+        private Point3D _cameraPosition;
+        public Point3D CameraPosition
         {
             get => _cameraPosition;
             set => Set(ref _cameraPosition, value);
         }
+
+        public const string CameraAimPointPropertyName = "CameraAimPoint";
+        private Point3D _cameraAimPoint;
+        public Point3D CameraAimPoint
+        {
+            get => _cameraAimPoint;
+            set => Set(ref _cameraAimPoint, value);
+        }
+
+
 
         public const string ModelPropertyName = "Model";
         private Model3DGroup _model;
@@ -132,8 +150,10 @@ namespace EPBLab.ViewModel
 
 
             // Build 3D view:
-            CameraLookDirection = "0,0,-1";
-            CameraPosition = "0,0,3";
+            //CameraLookDirection = "0,0,-1";
+            //CameraPosition = "0,0,3";
+            CameraPosition = new Point3D(0, 0,  3);
+            CameraAimPoint = new Point3D(0, 0, -1);
             PaletteImageSource = CreateBitmapSource(blueprint.Palette);
 
             BuildModel(Blueprint);
@@ -240,6 +260,8 @@ namespace EPBLab.ViewModel
 
         private void BuildSelectionModel()
         {
+            Point3D aimPoint = new Point3D(0, 0, 0);
+            int count = 0;
             Model3DGroup group = new Model3DGroup();
             foreach (ITreeNode node in SelectedBlocks)
             {
@@ -247,15 +269,47 @@ namespace EPBLab.ViewModel
                 {
                     case LcdNode lcd:
                         group.Children.Add(CreateBox(lcd.Position, Color.FromRgb(255, 0, 0)));
+                        aimPoint.Add(lcd.Position);
+                        count++;
                         break;
                     case BlockNode def:
                         group.Children.Add(CreateBox(def.Position, Color.FromRgb(255, 0, 0)));
+                        aimPoint.Add(def.Position);
+                        count++;
                         break;
                 }
+            }
+
+            if (count > 0)
+            {
+                aimPoint.Scale(count);
+                CameraAimPoint = aimPoint;
+                Console.WriteLine($"New aim point: {aimPoint}");
             }
             SelectionModel = group;
         }
 
+        public void FocusOnSelection() //TODO: Create a command for this
+        {
+            Point3D aimPoint = new Point3D(0, 0, 0);
+            int count = 0;
+            foreach (ITreeNode node in SelectedBlocks)
+            {
+                switch (node)
+                {
+                    case BlockNode def:
+                        aimPoint = aimPoint.Add(def.Position);
+                        count++;
+                        break;
+                }
+            }
+
+            if (count > 0)
+            {
+                aimPoint = aimPoint.Scale(count);
+                CameraAimPoint = aimPoint;
+            }
+        }
 
         private GeometryModel3D CreateBuildingBlockFull(Point3D pos, EpbBlock block, EpBlueprint blueprint)
         {

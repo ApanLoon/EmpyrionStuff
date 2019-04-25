@@ -9,6 +9,9 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <local:PositionAimPoint2LookDirectionConverter x:Key="PositionAimPoint2LookDirectionConverter" />
+    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -104,12 +107,25 @@
             <Viewport3D Name="Viewport" >
                 <Viewport3D.Camera>
                     <PerspectiveCamera 
+                        UpDirection="0,1,0" 
+                        NearPlaneDistance="0.1" 
+                        FarPlaneDistance="512" 
+                        Position="{Binding CameraPosition, Mode=TwoWay}" 
+                        FieldOfView="45">
+                        <PerspectiveCamera.LookDirection>
+                            <MultiBinding Converter="{StaticResource PositionAimPoint2LookDirectionConverter}">
+                                <Binding Path="CameraPosition" />
+                                <Binding Path="CameraAimPoint" />
+                            </MultiBinding>
+                        </PerspectiveCamera.LookDirection>
+                    </PerspectiveCamera>
+                    <!-- PerspectiveCamera 
                         LookDirection="{Binding CameraLookDirection, Mode=TwoWay}" 
                         UpDirection="0,1,0" 
                         NearPlaneDistance="0.1" 
                         FarPlaneDistance="512" 
                         Position="{Binding CameraPosition, Mode=TwoWay}" 
-                        FieldOfView="45" />
+                        FieldOfView="45" /-->
                 </Viewport3D.Camera>
 
                 <Viewport3D.Children>

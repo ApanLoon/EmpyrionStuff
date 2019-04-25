@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using EPBLab.Helpers;
+using EPBLab.ViewModel;
 
 namespace EPBLab.View
 {
@@ -58,8 +60,9 @@ namespace EPBLab.View
 
         private void OnMouseMove(object sender, MouseEventArgs e)
         {
-            ProjectionCamera camera = (ProjectionCamera) Viewport.Camera;
             Vector delta = (e.GetPosition(Viewport) - oldMousePos);
+            BlocksViewModel vm = (BlocksViewModel)((FrameworkElement)sender).DataContext; // TODO: Ugly dependency on the model here!
+            ProjectionCamera camera = (ProjectionCamera) Viewport.Camera;
             Vector3D left = Vector3D.CrossProduct(camera.LookDirection, camera.UpDirection);
             left.Normalize();
             switch (cameraDragMode)
@@ -67,18 +70,17 @@ namespace EPBLab.View
                 case CameraDragMode.Pan:
                     delta *= 0.01;
                     Vector3D deltaMove = Vector3D.Add(left * -delta.X, camera.UpDirection * delta.Y);
-                    Point3D newPos = new Point3D(camera.Position.X + deltaMove.X, camera.Position.Y + deltaMove.Y, camera.Position.Z + deltaMove.Z);
-                    camera.Position = newPos;
+                    Point3D newCameraPosition = camera.Position.Add(deltaMove);
+                    camera.Position = newCameraPosition;
+                    Point3D newCameraAimPoint = vm.CameraAimPoint.Add(deltaMove);
+                    vm.CameraAimPoint = newCameraAimPoint;
                     break;
                 case CameraDragMode.Rotate:
-                    delta *= 0.5;
-                    rotation.X += delta.X;
-                    rotation.Y += delta.Y;
-                    Transform3DGroup t = new Transform3DGroup();
-                    t.Children.Add(new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 1, 0), rotation.X)));
-                    t.Children.Add(new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(1, 0, 0), rotation.Y)));
-                    Model.Transform = t;
-                    SelectionModel.Transform = t;
+                    delta *= 0.01;
+                    Vector3D v = vm.CameraAimPoint.VectorTo(vm.CameraPosition).Cartesian2Spherical();
+                    v.Y -= delta.X;
+                    v.Z -= delta.Y;
+                    vm.CameraPosition = vm.CameraAimPoint.Add(v.Spherical2Cartesian());
                     break;
             }
             oldMousePos = e.GetPosition(Viewport);
@@ -87,10 +89,13 @@ namespace EPBLab.View
         private void OnMouseWheel(object sender, MouseWheelEventArgs e)
         {
             double delta = e.Delta * 0.01;
+            BlocksViewModel vm = (BlocksViewModel)((FrameworkElement)sender).DataContext; // TODO: Ugly dependency on the model here!
             ProjectionCamera camera = (ProjectionCamera)Viewport.Camera;
             Vector3D deltaMove = camera.LookDirection * delta;
-            Point3D newPos = new Point3D(camera.Position.X + deltaMove.X, camera.Position.Y + deltaMove.Y, camera.Position.Z + deltaMove.Z);
-            camera.Position = newPos;
+            Point3D newCameraPosition = camera.Position.Add(deltaMove);
+            camera.Position = newCameraPosition;
+            Point3D newCameraAimPoint = vm.CameraAimPoint.Add(deltaMove);
+            vm.CameraAimPoint = newCameraAimPoint;
         }
 
         private void OnMouseLeave(object sender, MouseEventArgs e)
