@@ -12,6 +12,7 @@ using EPBLab.ViewModel.Tree;
 using EPBLib;
 using EPBLib.BlockData;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 
 namespace EPBLab.ViewModel
 {
@@ -85,22 +86,6 @@ namespace EPBLab.ViewModel
             } 
         }
 
-        //public const string CameraLookDirectionPropertyName = "CameraLookDirection";
-        //private string _cameraLookDirection;
-        //public string CameraLookDirection
-        //{
-        //    get => _cameraLookDirection;
-        //    set => Set(ref _cameraLookDirection, value);
-        //}
-
-        //public const string CameraPositionPropertyName = "CameraPosition";
-        //private string _cameraPosition;
-        //public string CameraPosition
-        //{
-        //    get => _cameraPosition;
-        //    set => Set(ref _cameraPosition, value);
-        //}
-
         public const string CameraPositionPropertyName = "CameraPosition";
         private Point3D _cameraPosition;
         public Point3D CameraPosition
@@ -136,6 +121,19 @@ namespace EPBLab.ViewModel
         }
         #endregion Properties
 
+        #region Commands
+        #region Command_FocusSelected
+
+        public RelayCommand CommandFocusSelected
+        {
+            get { return _commandFocusSelected ?? (_commandFocusSelected = new RelayCommand(() => { FocusSelected(); })); }
+        }
+
+        private RelayCommand _commandFocusSelected;
+
+        #endregion Command_FocusSelected
+        #endregion Commands
+
         public BlocksViewModel(EpBlueprint blueprint)
         {
             Blueprint = blueprint;
@@ -148,10 +146,7 @@ namespace EPBLab.ViewModel
             // Build block tree:
             BuildTree();
 
-
             // Build 3D view:
-            //CameraLookDirection = "0,0,-1";
-            //CameraPosition = "0,0,3";
             CameraPosition = new Point3D(0, 0,  3);
             CameraAimPoint = new Point3D(0, 0, -1);
             PaletteImageSource = CreateBitmapSource(blueprint.Palette);
@@ -210,7 +205,6 @@ namespace EPBLab.ViewModel
             }
         }
 
-
         private void BuildModel(EpBlueprint blueprint)
         {
             Model3DGroup group = new Model3DGroup();
@@ -250,7 +244,7 @@ namespace EPBLab.ViewModel
                         EpbColour colour = blueprint.Palette[colourIndex];
                         Color c = Color.FromArgb(128, colour.R, colour.G, colour.B);
 
-                        model = CreateBox(pos, c);
+                        model = CreateSelectionBox(pos, 1.0, c);
                         break;
                 }
                 group.Children.Add(model);
@@ -260,36 +254,23 @@ namespace EPBLab.ViewModel
 
         private void BuildSelectionModel()
         {
-            Point3D aimPoint = new Point3D(0, 0, 0);
-            int count = 0;
             Model3DGroup group = new Model3DGroup();
             foreach (ITreeNode node in SelectedBlocks)
             {
                 switch (node)
                 {
                     case LcdNode lcd:
-                        group.Children.Add(CreateBox(lcd.Position, Color.FromRgb(255, 0, 0)));
-                        aimPoint.Add(lcd.Position);
-                        count++;
+                        group.Children.Add(CreateSelectionBox(lcd.Position, 1.1, Color.FromArgb(128, 255, 0, 0)));
                         break;
                     case BlockNode def:
-                        group.Children.Add(CreateBox(def.Position, Color.FromRgb(255, 0, 0)));
-                        aimPoint.Add(def.Position);
-                        count++;
+                        group.Children.Add(CreateSelectionBox(def.Position, 1.1, Color.FromArgb(128, 255, 0, 0)));
                         break;
                 }
-            }
-
-            if (count > 0)
-            {
-                aimPoint.Scale(count);
-                CameraAimPoint = aimPoint;
-                Console.WriteLine($"New aim point: {aimPoint}");
             }
             SelectionModel = group;
         }
 
-        public void FocusOnSelection() //TODO: Create a command for this
+        public void FocusSelected()
         {
             Point3D aimPoint = new Point3D(0, 0, 0);
             int count = 0;
@@ -591,7 +572,7 @@ namespace EPBLab.ViewModel
             return image;
         }
 
-        private GeometryModel3D CreateBox(Point3D pos, Color colour)
+        private GeometryModel3D CreateSelectionBox(Point3D pos, double scale, Color colour)
         {
             GeometryModel3D model = new GeometryModel3D();
             MeshGeometry3D mesh = new MeshGeometry3D();
@@ -601,7 +582,11 @@ namespace EPBLab.ViewModel
             faceIndex = AddGeometry_Cube(mesh, colours, faceIndex);
 
             model.Geometry = mesh;
-            model.Transform = new TranslateTransform3D(pos.X, pos.Y, pos.Z);
+
+            Transform3DGroup t = new Transform3DGroup();
+            t.Children.Add(new ScaleTransform3D(scale, scale, scale));
+            t.Children.Add(new TranslateTransform3D(pos.X, pos.Y, pos.Z));
+            model.Transform = t;
 
             SolidColorBrush brush = new SolidColorBrush(colour);
             DiffuseMaterial material = new DiffuseMaterial(brush);

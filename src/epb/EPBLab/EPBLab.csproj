@@ -183,6 +183,7 @@
       <DependentUpon>SignalTargetView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\PositionAimPoint2LookDirectionConverter.cs" />
+    <Compile Include="View\PositionAimPoint2UpDirectionConverter.cs" />
     <Compile Include="View\SummaryView.xaml.cs">
       <DependentUpon>SummaryView.xaml</DependentUpon>
     </Compile>

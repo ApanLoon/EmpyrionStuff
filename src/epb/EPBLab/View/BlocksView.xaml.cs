@@ -1,18 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using EPBLab.Helpers;
 using EPBLab.ViewModel;
 
@@ -37,7 +27,6 @@ namespace EPBLab.View
 
         private CameraDragMode cameraDragMode = CameraDragMode.None;
         private Point oldMousePos;
-        private Vector3D rotation = new Vector3D();
 
         private void OnMouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -70,8 +59,8 @@ namespace EPBLab.View
                 case CameraDragMode.Pan:
                     delta *= 0.01;
                     Vector3D deltaMove = Vector3D.Add(left * -delta.X, camera.UpDirection * delta.Y);
-                    Point3D newCameraPosition = camera.Position.Add(deltaMove);
-                    camera.Position = newCameraPosition;
+                    Point3D newCameraPosition = vm.CameraPosition.Add(deltaMove);
+                    vm.CameraPosition = newCameraPosition;
                     Point3D newCameraAimPoint = vm.CameraAimPoint.Add(deltaMove);
                     vm.CameraAimPoint = newCameraAimPoint;
                     break;
@@ -81,6 +70,7 @@ namespace EPBLab.View
                     v.Y -= delta.X;
                     v.Z -= delta.Y;
                     vm.CameraPosition = vm.CameraAimPoint.Add(v.Spherical2Cartesian());
+                    Console.WriteLine($"{camera.UpDirection}");
                     break;
             }
             oldMousePos = e.GetPosition(Viewport);

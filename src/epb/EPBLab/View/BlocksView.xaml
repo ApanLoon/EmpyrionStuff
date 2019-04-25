@@ -11,7 +11,11 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <local:PositionAimPoint2LookDirectionConverter x:Key="PositionAimPoint2LookDirectionConverter" />
+        <local:PositionAimPoint2UpDirectionConverter x:Key="PositionAimPoint2UpDirectionConverter" />
     </UserControl.Resources>
+    <UserControl.InputBindings>
+        <KeyBinding Command="{Binding CommandFocusSelected}" Key="F" />
+    </UserControl.InputBindings>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -107,7 +111,6 @@
             <Viewport3D Name="Viewport" >
                 <Viewport3D.Camera>
                     <PerspectiveCamera 
-                        UpDirection="0,1,0" 
                         NearPlaneDistance="0.1" 
                         FarPlaneDistance="512" 
                         Position="{Binding CameraPosition, Mode=TwoWay}" 
@@ -118,14 +121,13 @@
                                 <Binding Path="CameraAimPoint" />
                             </MultiBinding>
                         </PerspectiveCamera.LookDirection>
+                        <PerspectiveCamera.UpDirection>
+                            <MultiBinding Converter="{StaticResource PositionAimPoint2UpDirectionConverter}">
+                                <Binding Path="CameraPosition" />
+                                <Binding Path="CameraAimPoint" />
+                            </MultiBinding>
+                        </PerspectiveCamera.UpDirection>
                     </PerspectiveCamera>
-                    <!-- PerspectiveCamera 
-                        LookDirection="{Binding CameraLookDirection, Mode=TwoWay}" 
-                        UpDirection="0,1,0" 
-                        NearPlaneDistance="0.1" 
-                        FarPlaneDistance="512" 
-                        Position="{Binding CameraPosition, Mode=TwoWay}" 
-                        FieldOfView="45" /-->
                 </Viewport3D.Camera>
 
                 <Viewport3D.Children>
@@ -139,8 +141,8 @@
                             </Model3DGroup>
                         </ModelVisual3D.Content>
                     </ModelVisual3D>
-                    <ModelVisual3D x:Name="SelectionModel" Content="{Binding SelectionModel}" />
                     <ModelVisual3D x:Name="Model" Content="{Binding Model}" />
+                    <ModelVisual3D x:Name="SelectionModel" Content="{Binding SelectionModel}" />
                 </Viewport3D.Children>
             </Viewport3D>
         </Grid>
