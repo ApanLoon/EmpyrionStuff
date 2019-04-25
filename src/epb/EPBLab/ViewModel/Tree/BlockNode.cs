@@ -22,7 +22,7 @@ namespace EPBLab.ViewModel.Tree
 
         public EpbBlock.EpbBlockRotation Rotation => Block.Rotation;
 
-        public Color[] Colours { get; set; }
+        public ColourInfo[] Colours { get; set; }
         public byte[] Textures => Block.Textures;
 
         public BlockNode(EpbBlock block, EpBlueprint blueprint)
@@ -34,12 +34,26 @@ namespace EPBLab.ViewModel.Tree
             {
                 Title += "/" + block.VariantName;
             }
+
             EpbBlockPos pos = block.Position;
-            Position = new Point3D(Math.Floor(pos.X - Blueprint.Width  / 2.0),
-                                   Math.Floor(pos.Y - Blueprint.Height / 2.0),
-                                   //Math.Floor(pos.Z - Blueprint.Depth  / 2.0));
-                                   Math.Floor(Blueprint.Depth / 2.0 - pos.Z)); //TODO: Is this really correct? It makes Pyramid look right.
-            Colours = Block.Colours.Select(index => Blueprint.Palette[(EpbColourIndex)index].ToColor()).ToArray();
+            Position = new Point3D(Math.Floor(pos.X - Blueprint.Width / 2.0),
+                Math.Floor(pos.Y - Blueprint.Height / 2.0),
+                //Math.Floor(pos.Z - Blueprint.Depth  / 2.0));
+                Math.Floor(Blueprint.Depth / 2.0 - pos.Z)); //TODO: Is this really correct? It makes Pyramid look right.
+            //Position = new Point3D(pos.X, pos.Y + 128, pos.Z); // This matches with coordintaes in game (Using DI)
+            Colours = Block.Colours.Select((colourIndex, faceIndex) => new ColourInfo()
+            {
+                Face = ((EpbBlock.FaceIndex)faceIndex).ToString(),
+                Index = (byte)colourIndex,
+                Colour = Blueprint.Palette[colourIndex].ToColor()
+            } ).ToArray();
         }
+    }
+
+    public class ColourInfo
+    {
+        public string Face { get; set; }
+        public byte Index { get; set; }
+        public Color Colour { get; set; }
     }
 }

@@ -132,7 +132,6 @@ namespace EPBLab.ViewModel
 
 
             // Build 3D view:
-
             CameraLookDirection = "0,0,-1";
             CameraPosition = "0,0,3";
             PaletteImageSource = CreateBitmapSource(blueprint.Palette);
