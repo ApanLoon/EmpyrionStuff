@@ -1035,7 +1035,8 @@ namespace EPBLib.Helpers
                 bytesLeft -= 4;
                 Console.WriteLine($"    Palette {p}: ({nCustomColours} - 1)");
                 EpbPalette palette = new EpbPalette(nCustomColours);
-                for (int i = 0; i < nCustomColours - 1; i++) // - 1 because 0 is "no colour" or "default".
+                palette[0] = new EpbColour(255, 255, 255); // Custom palettes do not contain the "default" unpainted colour.
+                for (int i = 1; i < nCustomColours; i++)
                 {
                     byte r = reader.ReadByte();
                     bytesLeft -= 1;
