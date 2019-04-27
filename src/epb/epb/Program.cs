@@ -317,20 +317,34 @@ namespace epb
 
         static void CreateRotations(string path, bool hollow)
         {
-            Width = 1;
-            Height = 1;
-            Depth = (uint)Enum.GetValues(typeof(EpbBlock.EpbBlockRotation)).Length;
+            Width = 3;
+            Height = 3;
+            Depth = (uint)Enum.GetValues(typeof(EpbBlock.EpbBlockRotation)).Length * 2;
             EpBlueprint epb = CreateCommon();
+
+            EpbBlock block;
 
             byte x = 0;
             foreach (EpbBlock.EpbBlockRotation rot in Enum.GetValues(typeof(EpbBlock.EpbBlockRotation)))
             {
-                EpbBlock block = new EpbBlock(new EpbBlockPos() { X = (byte)x, Y = (byte)0, Z = (byte)0 }) { BlockType = BlockType, Variant = BlockVariant };
-                block.SetColour(EpbColourIndex.Pink);
+                block = new EpbBlock(new EpbBlockPos() { X = (byte)x, Y = (byte)0, Z = (byte)0 }) { BlockType = BlockType, Variant = BlockVariant };
+                block.SetColour(EpbColourIndex.Red, EpbBlock.FaceIndex.Right);
+                block.SetColour(EpbColourIndex.BrightGreen, EpbBlock.FaceIndex.Top);
+                block.SetColour(EpbColourIndex.Blue, EpbBlock.FaceIndex.Front);
+                block.SetColour(EpbColourIndex.Cyan, EpbBlock.FaceIndex.Left);
+                block.SetColour(EpbColourIndex.Pink, EpbBlock.FaceIndex.Bottom);
+                block.SetColour(EpbColourIndex.Yellow, EpbBlock.FaceIndex.Back);
                 block.Rotation = rot;
                 epb.SetBlock(block, 0, 0, x);
-                x++;
+                x += 2;
             }
+
+            block = new EpbBlock(new EpbBlockPos() { X = 2, Y = 0, Z = 0 }) { BlockType = BlockType, Variant = BlockVariant };
+            block.SetColour(EpbColourIndex.Red);
+            epb.SetBlock(block, 2, 0, 0);
+            block = new EpbBlock(new EpbBlockPos() { X = 0, Y = 2, Z = 0 }) { BlockType = BlockType, Variant = BlockVariant };
+            block.SetColour(EpbColourIndex.BrightGreen);
+            epb.SetBlock(block, 0, 2, 0);
 
             // Write the file:
             using (FileStream stream = File.Create(path))
@@ -574,9 +588,9 @@ namespace epb
 
         static void CreateHullVariants(string path)
         {
-            Width = 8;
+            Width = 16;
             Height = 1;
-            Depth = 8;
+            Depth = 20;
             EpBlueprint epb = CreateCommon();
             epb.Type = EpBlueprint.EpbType.SmallVessel;
 
@@ -586,8 +600,8 @@ namespace epb
             {
                 foreach (string variantName in EpbBlock.BlockVariants[t])
                 {
-                    byte x = (byte)(i % 8);
-                    byte z = (byte)(i / 8);
+                    byte x = (byte)((i % 8) * 2);
+                    byte z = (byte)((i / 8) * 2);
                     EpbBlock.EpbBlockType bt = EpbBlock.BlockTypes[t];
                     byte v = EpbBlock.GetVariant(t, variantName);
                     EpbBlock block =
