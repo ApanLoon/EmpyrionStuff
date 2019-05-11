@@ -147,8 +147,8 @@ namespace EPBLab.ViewModel
             BuildTree();
 
             // Build 3D view:
-            CameraPosition = new Point3D(0, 0,  3);
-            CameraAimPoint = new Point3D(0, 0, -1);
+            CameraAimPoint = new Point3D(blueprint.Width / 2, blueprint.Height / 2, blueprint.Depth / 2);
+            CameraPosition = new Point3D(blueprint.Width / 2, blueprint.Height / 2, blueprint.Depth);
             PaletteImageSource = CreateBitmapSource(blueprint.Palette);
 
             BuildModel(Blueprint);
@@ -288,6 +288,7 @@ namespace EPBLab.ViewModel
             if (count > 0)
             {
                 aimPoint = aimPoint.Scale(count);
+                aimPoint.Z *= -1;
                 CameraAimPoint = aimPoint;
             }
         }
@@ -409,7 +410,7 @@ namespace EPBLab.ViewModel
             model.Geometry = mesh;
             Transform3DGroup tg = new Transform3DGroup();
             tg.Children.Add(new RotateTransform3D(new QuaternionRotation3D(Rotation[block.Rotation])));
-            tg.Children.Add(new TranslateTransform3D(pos.X, pos.Y, pos.Z));
+            tg.Children.Add(new TranslateTransform3D(pos.X, pos.Y, -pos.Z));
             model.Transform = tg;
             ImageBrush brush = new ImageBrush(PaletteImageSource) {AlignmentX = AlignmentX.Left, AlignmentY = AlignmentY.Top, Stretch = Stretch.Fill, ViewportUnits = BrushMappingMode.Absolute};
             var material = new DiffuseMaterial(brush);
@@ -527,7 +528,7 @@ namespace EPBLab.ViewModel
             model.Geometry = mesh;
             Transform3DGroup tg = new Transform3DGroup();
             tg.Children.Add(new RotateTransform3D(new QuaternionRotation3D(Rotation[block.Rotation])));
-            tg.Children.Add(new TranslateTransform3D(pos.X, pos.Y, pos.Z));
+            tg.Children.Add(new TranslateTransform3D(pos.X, pos.Y, -pos.Z));
             model.Transform = tg;
 
             ImageBrush brush = new ImageBrush(PaletteImageSource) { AlignmentX = AlignmentX.Left, AlignmentY = AlignmentY.Top, Stretch = Stretch.Fill, ViewportUnits = BrushMappingMode.Absolute };
@@ -591,7 +592,7 @@ namespace EPBLab.ViewModel
 
             Transform3DGroup t = new Transform3DGroup();
             t.Children.Add(new ScaleTransform3D(scale, scale, scale));
-            t.Children.Add(new TranslateTransform3D(pos.X, pos.Y, pos.Z));
+            t.Children.Add(new TranslateTransform3D(pos.X, pos.Y, -pos.Z));
             model.Transform = t;
 
             SolidColorBrush brush = new SolidColorBrush(colour);
@@ -7306,18 +7307,6 @@ namespace EPBLab.ViewModel
             mesh.Normals.Add(new Vector3D(-0.000000, 0.447214, -0.894427));
             AddTriangle(mesh.TriangleIndices, faceIndex + 0, faceIndex + 1, faceIndex + 2);
             faceIndex += 3;
-            // Right
-            mesh.Positions.Add(new Point3D(0.500000, -0.500000, 0.500000));
-            mesh.Positions.Add(new Point3D(0.500000, -0.500000, -0.500000));
-            mesh.Positions.Add(new Point3D(-0.000000, 0.500000, 0.000000));
-            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Right], 0.000000, 0.000000));
-            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Right], 0.000000, 0.000000));
-            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Right], 0.000000, 0.000000));
-            mesh.Normals.Add(new Vector3D(0.894427, 0.447214, -0.000000));
-            mesh.Normals.Add(new Vector3D(0.894427, 0.447214, -0.000000));
-            mesh.Normals.Add(new Vector3D(0.894427, 0.447214, -0.000000));
-            AddTriangle(mesh.TriangleIndices, faceIndex + 0, faceIndex + 1, faceIndex + 2);
-            faceIndex += 3;
             // Left
             mesh.Positions.Add(new Point3D(-0.500000, -0.500000, -0.500000));
             mesh.Positions.Add(new Point3D(-0.500000, -0.500000, 0.500000));
@@ -7328,6 +7317,18 @@ namespace EPBLab.ViewModel
             mesh.Normals.Add(new Vector3D(-0.894427, 0.447214, 0.000000));
             mesh.Normals.Add(new Vector3D(-0.894427, 0.447214, 0.000000));
             mesh.Normals.Add(new Vector3D(-0.894427, 0.447214, 0.000000));
+            AddTriangle(mesh.TriangleIndices, faceIndex + 0, faceIndex + 1, faceIndex + 2);
+            faceIndex += 3;
+            // Top
+            mesh.Positions.Add(new Point3D(0.500000, -0.500000, 0.500000));
+            mesh.Positions.Add(new Point3D(0.500000, -0.500000, -0.500000));
+            mesh.Positions.Add(new Point3D(-0.000000, 0.500000, 0.000000));
+            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Top], 0.000000, 0.000000));
+            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Top], 0.000000, 0.000000));
+            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.Top], 0.000000, 0.000000));
+            mesh.Normals.Add(new Vector3D(0.894427, 0.447214, -0.000000));
+            mesh.Normals.Add(new Vector3D(0.894427, 0.447214, -0.000000));
+            mesh.Normals.Add(new Vector3D(0.894427, 0.447214, -0.000000));
             AddTriangle(mesh.TriangleIndices, faceIndex + 0, faceIndex + 1, faceIndex + 2);
             faceIndex += 3;
             // Bottom

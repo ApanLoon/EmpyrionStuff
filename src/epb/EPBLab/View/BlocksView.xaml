@@ -110,7 +110,7 @@
         <Grid Grid.Column="2" Margin="10" Background="Black" MouseDown="OnMouseDown" MouseUp="OnMouseUp" MouseMove="OnMouseMove" MouseWheel="OnMouseWheel" MouseLeave="OnMouseLeave">
             <Viewport3D Name="Viewport" >
                 <Viewport3D.Camera>
-                    <PerspectiveCamera 
+                    <PerspectiveCamera
                         NearPlaneDistance="0.1" 
                         FarPlaneDistance="512" 
                         Position="{Binding CameraPosition, Mode=TwoWay}" 
@@ -141,8 +141,9 @@
                             </Model3DGroup>
                         </ModelVisual3D.Content>
                     </ModelVisual3D>
-                    <ModelVisual3D x:Name="Model" Content="{Binding Model}" />
-                    <ModelVisual3D x:Name="SelectionModel" Content="{Binding SelectionModel}" />
+
+                    <ModelVisual3D x:Name="Model" Content="{Binding Model}"/>
+                    <ModelVisual3D x:Name="SelectionModel" Content="{Binding SelectionModel}"/>
                 </Viewport3D.Children>
             </Viewport3D>
         </Grid>

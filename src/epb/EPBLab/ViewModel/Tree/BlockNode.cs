@@ -36,11 +36,8 @@ namespace EPBLab.ViewModel.Tree
             }
 
             EpbBlockPos pos = block.Position;
-            Position = new Point3D(Math.Floor(pos.X - Blueprint.Width / 2.0),
-                Math.Floor(pos.Y - Blueprint.Height / 2.0),
-                //Math.Floor(pos.Z - Blueprint.Depth  / 2.0));
-                Math.Floor(Blueprint.Depth / 2.0 - pos.Z)); //TODO: Is this really correct? It makes Pyramid look right.
-            //Position = new Point3D(pos.X, pos.Y + 128, pos.Z); // This matches with coordintaes in game (Using DI)
+            Position = new Point3D(pos.X, pos.Y, pos.Z);
+
             Colours = Block.Colours.Select((colourIndex, faceIndex) => new ColourInfo()
             {
                 Face = ((EpbBlock.FaceIndex)faceIndex).ToString(),

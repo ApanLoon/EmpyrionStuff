@@ -70,7 +70,6 @@ namespace EPBLab.View
                     v.Y -= delta.X;
                     v.Z -= delta.Y;
                     vm.CameraPosition = vm.CameraAimPoint.Add(v.Spherical2Cartesian());
-                    Console.WriteLine($"{camera.UpDirection}");
                     break;
             }
             oldMousePos = e.GetPosition(Viewport);
