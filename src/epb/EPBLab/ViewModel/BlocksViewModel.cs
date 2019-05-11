@@ -132,6 +132,23 @@ namespace EPBLab.ViewModel
         private RelayCommand _commandFocusSelected;
 
         #endregion Command_FocusSelected
+
+        public void GeometryModelClicked(GeometryModel3D model) //TODO: This should probably be a command with a dependency property or something
+        {
+            Point3D modelOrigin = model.Transform.Transform(new Point3D(0, 0, 0));
+            BlockNode node = (from bn in BlockNodes
+                where bn.Position.X == modelOrigin.X && bn.Position.Y == modelOrigin.Y && bn.Position.Z == -modelOrigin.Z
+                select bn).FirstOrDefault();
+            if (node == null)
+            {
+                return;
+            }
+            ObservableCollection<ITreeNode> newSelection = new ObservableCollection<ITreeNode>();
+            newSelection.Add(node);
+            SelectedBlocks = newSelection;
+        }
+
+
         #endregion Commands
 
         public BlocksViewModel(EpBlueprint blueprint)

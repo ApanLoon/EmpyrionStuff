@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using EPBLab.Helpers;
 using EPBLab.ViewModel;
@@ -30,21 +31,55 @@ namespace EPBLab.View
 
         private void OnMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Middle)
+            if (e == null)
             {
-                cameraDragMode = CameraDragMode.Pan;
+                return;
             }
-            else if (e.ChangedButton == MouseButton.Right)
+            switch (e.ChangedButton)
             {
-                cameraDragMode = CameraDragMode.Rotate;
+                case MouseButton.Middle:
+                    cameraDragMode = CameraDragMode.Pan;
+                    break;
+                case MouseButton.Right:
+                    cameraDragMode = CameraDragMode.Rotate;
+                    break;
             }
-
             oldMousePos = e.GetPosition(Viewport);
         }
 
         private void OnMouseUp(object sender, MouseButtonEventArgs e)
         {
-            cameraDragMode = CameraDragMode.None;
+            if (e == null)
+            {
+                return;
+            }
+            switch (e.ChangedButton)
+            {
+                case MouseButton.Left:
+                    TestHit(e.GetPosition(Viewport));
+                    break;
+                case MouseButton.Middle:
+                case MouseButton.Right:
+                    cameraDragMode = CameraDragMode.None;
+                    break;
+            }
+        }
+
+        private void TestHit(Point screenPos)
+        {
+            VisualTreeHelper.HitTest(Viewport, null, result =>
+            {
+                if (result is RayMeshGeometry3DHitTestResult rayHitResult)
+                {
+                    if (rayHitResult.ModelHit is GeometryModel3D model)
+                    {
+                        BlocksViewModel vm = (BlocksViewModel)DataContext; // TODO: Ugly dependency on the model here!
+                        vm.GeometryModelClicked(model);
+                    }
+                    return HitTestResultBehavior.Stop;
+                }
+                return HitTestResultBehavior.Continue;
+            }, new PointHitTestParameters(screenPos));
         }
 
         private void OnMouseMove(object sender, MouseEventArgs e)

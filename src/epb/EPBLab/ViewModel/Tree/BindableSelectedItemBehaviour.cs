@@ -1,5 +1,7 @@
 ﻿
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interactivity;
@@ -22,10 +24,42 @@ namespace EPBLab.ViewModel.Tree
 
         private static void OnSelectedItemsChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            if (e.NewValue is TreeViewItem item)
+            if (!(sender is BindableSelectedItemBehaviour behaviour))
             {
-                item.SetValue(TreeViewItem.IsSelectedProperty, true);
+                return;
             }
+            ObservableCollection<ITreeNode> newSelection = e.NewValue as ObservableCollection<ITreeNode>;
+            ITreeNode first = newSelection?.FirstOrDefault();
+            if (first == null)
+            {
+                return;
+            }
+            TreeView treeView = behaviour.AssociatedObject;
+            TreeViewItem item = FindTreeViewItem(treeView, first);
+            if (item != null)
+            {
+                item.IsSelected = true;
+            }
+        }
+
+        protected static TreeViewItem FindTreeViewItem(ItemsControl ic, object o)
+        {
+            if (ic.ItemContainerGenerator.ContainerFromItem(o) is TreeViewItem tvi)
+            {
+                return tvi;
+            }
+            foreach (var i in ic.Items)
+            {
+                if (ic.ItemContainerGenerator.ContainerFromItem(i) is TreeViewItem tvi2)
+                {
+                    tvi = FindTreeViewItem(tvi2, o);
+                    if (tvi != null)
+                    {
+                        return tvi;
+                    }
+                }
+            }
+            return null;
         }
 
         #endregion
