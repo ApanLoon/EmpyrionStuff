@@ -85,29 +85,6 @@ namespace EPBLab.ViewModel
 
         #endregion Command_New
 
-        #region Command_Save
-
-        public RelayCommand CommandSave
-        {
-            get
-            {
-                return _commandSave ?? (_commandSave = new RelayCommand(() =>
-                {
-                    //if (!BlueprintIsLoaded)
-                    //{
-                    //    return;
-                    //}
-                    SaveBlueprint();
-                }//,
-//                () => BlueprintIsLoaded
-                ));
-            }
-        }
-
-        private RelayCommand _commandSave;
-
-        #endregion Command_Save
-
         #endregion Commands
 
 
@@ -193,9 +170,28 @@ namespace EPBLab.ViewModel
             return blueprint;
         }
 
-        protected void SaveBlueprint()
+        protected void SaveBlueprint(SaveFileSelectedMessage m)
         {
+            if (m.Identifier != "SaveBlueprint")
+            {
+                return;
+            }
 
+            FileStream stream = null;
+            try
+            {
+                stream = File.Create(m.Content);
+                using (BinaryWriter writer = new BinaryWriter(stream))
+                {
+                    stream = null; // The stream will be closed when the writer is closed so set to null so that we don't try to close it twice.
+                    writer.Write(Blueprints[SelectedBlueprintIndex].Blueprint);
+                    Blueprints[SelectedBlueprintIndex].FileName = m.Content;
+                }
+            }
+            finally
+            {
+                stream?.Dispose();
+            }
         }
 
 
@@ -230,6 +226,7 @@ namespace EPBLab.ViewModel
                 });
             */
             Messenger.Default.Register<FilesOpenedMessage>(this, OpenBlueprints);
+            Messenger.Default.Register<SaveFileSelectedMessage>(this, SaveBlueprint);
             Messenger.Default.Register<CloseBlueprintMessage>(this, CloseBlueprint);
 
             if (IsInDesignMode)

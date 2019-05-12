@@ -28,7 +28,11 @@
                         <b:OpenFileBehaviour MessageIdentifier="OpenBlueprints" Filter="Empyrion blueprints (*.epb)|*.epb|All files (*.*)|*.*" MultiSelect="True" />
                     </i:Interaction.Behaviors>
                 </Button>
-                <Button Command="{Binding CommandSave}" Content="Save" />
+                <Button Content="Save As">
+                    <i:Interaction.Behaviors>
+                        <b:SaveFileBehaviour MessageIdentifier="SaveBlueprint" Filter="Empyrion blueprints (*.epb)|*.epb|All files (*.*)|*.*"/>
+                    </i:Interaction.Behaviors>
+                </Button>
             </ToolBar>
         </ToolBarTray>
 

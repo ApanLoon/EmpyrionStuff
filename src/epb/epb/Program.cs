@@ -625,12 +625,19 @@ namespace epb
             }
 
             // Write the file:
-            using (FileStream stream = File.Create(path))
+            FileStream stream = null;
+            try
             {
+                stream = File.Create(path);
                 using (BinaryWriter writer = new BinaryWriter(stream))
                 {
+                    stream = null; // The stream will be closed when the writer is closed so set to null so that we don't try to close it twice.
                     writer.Write(epb);
                 }
+            }
+            finally
+            {
+                stream?.Dispose();
             }
         }
 

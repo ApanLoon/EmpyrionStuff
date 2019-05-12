@@ -317,10 +317,6 @@ namespace EPBLab.ViewModel
 
             int faceIndex = 0;
 
-            Vector3D v1;
-            Vector3D v2;
-            Vector3D normal;
-
             switch (block.Variant)
             {
                 case 0: //Cube
@@ -441,10 +437,6 @@ namespace EPBLab.ViewModel
             MeshGeometry3D mesh = new MeshGeometry3D();
 
             int faceIndex = 0;
-
-            Vector3D v1;
-            Vector3D v2;
-            Vector3D normal;
 
             switch (block.Variant)
             {

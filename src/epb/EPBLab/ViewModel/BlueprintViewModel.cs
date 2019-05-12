@@ -1,5 +1,6 @@
 ﻿
 using System.IO;
+using System.Security.Cryptography.X509Certificates;
 using EPBLab.Messages;
 using EPBLab.ViewModel.Logic;
 using EPBLib;
@@ -11,7 +12,7 @@ namespace EPBLab.ViewModel
 {
     public class BlueprintViewModel : ViewModelBase
     {
-        private EpBlueprint _blueprint;
+        public EpBlueprint Blueprint { get; set; }
 
         public const string TabNamePropertyName = "TabName";
         private string _tabName;
@@ -26,7 +27,11 @@ namespace EPBLab.ViewModel
         public string FileName
         {
             get => _fileName;
-            set => Set(ref _fileName, value);
+            set
+            {
+                TabName = Path.GetFileNameWithoutExtension(value);
+                Set(ref _fileName, value);
+            }
         }
 
         public const string SummaryPropertyName = "Summary";
@@ -70,8 +75,7 @@ namespace EPBLab.ViewModel
         public BlueprintViewModel(string fileName, EpBlueprint blueprint)
         {
             FileName = fileName;
-            TabName = Path.GetFileNameWithoutExtension(fileName);
-            _blueprint = blueprint;
+            Blueprint = blueprint;
 
             Summary = new SummaryViewModel(blueprint);
             Blocks = new BlocksViewModel(blueprint);

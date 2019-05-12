@@ -12,11 +12,10 @@ namespace EPBLab.Behaviours
              cd C:\Program Files (x86)\Microsoft SDKs\Expression\Blend\.NETFramework\v4.5\Libraries\
              Register DLL: gacutil -i System.Windows.Interactivity.dll
      */
-    public class OpenFileBehaviour : Behavior<Button>
+    public class SaveFileBehaviour : Behavior<Button>
     {
         public string MessageIdentifier { get; set; }
         public string Filter { get; set; }
-        public bool MultiSelect { get; set; }
 
         protected override void OnAttached()
         {
@@ -27,12 +26,11 @@ namespace EPBLab.Behaviours
         void AssociatedObject_Click(object sender, RoutedEventArgs e)
         {
             // Open the dialog and send the message
-            var dialog = new OpenFileDialog();
+            var dialog = new SaveFileDialog();
             dialog.Filter = "Empyrion blueprints (*.epb)|*.epb|All files (*.*)|*.*";//Filter;
-            dialog.Multiselect = MultiSelect;
             if (dialog.ShowDialog() == true)
             {
-                Messenger.Default.Send(new FilesOpenedMessage(dialog.FileNames) { Identifier = MessageIdentifier });
+                Messenger.Default.Send(new SaveFileSelectedMessage(dialog.FileNames[0]) { Identifier = MessageIdentifier });
             }
         }
 

@@ -75,6 +75,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Behaviours\SaveFileBehaviour.cs" />
     <Compile Include="Helpers\CollectionExtensions.cs" />
     <Compile Include="Helpers\EpbColourExtensions.cs" />
     <Compile Include="Helpers\Point3DExtensions.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="Messages\FilesOpenedMessage.cs" />
     <Compile Include="Behaviours\OpenFileBehaviour.cs" />
     <Compile Include="Design\DesignDataService.cs" />
+    <Compile Include="Messages\SaveFileSelectedMessage.cs" />
     <Compile Include="Model\DataItem.cs" />
     <Compile Include="Model\DataService.cs" />
     <Compile Include="Model\IDataService.cs" />
