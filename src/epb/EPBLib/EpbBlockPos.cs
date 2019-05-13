@@ -3,6 +3,14 @@ namespace EPBLib
 {
     public class EpbBlockPos
     {
+        public EpbBlockPos(byte x, byte y, byte z, byte u1 = 0, byte u2 = 0)
+        {
+            X = x;
+            Y = y;
+            Z = z;
+            U1 = u1;
+            U2 = u2;
+        }
         public byte U1 { get; set; } // Four bit unknown value
         public byte U2 { get; set; } // Four bit unknown value
 

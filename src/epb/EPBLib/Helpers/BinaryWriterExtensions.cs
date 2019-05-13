@@ -31,30 +31,19 @@ namespace EPBLib.Helpers
             writer.Write((UInt32)0); // UnknownCount01
             writer.Write((UInt32)0); // TODO: Count the number of devices in the model
             writer.Write((UInt32)0); // UnknownCount02
-            writer.Write((UInt32)epb.Blocks.Length);
+            writer.Write((UInt32)epb.Blocks.Count);
             writer.Write((UInt32)0); // UnknownCount03
             writer.Write((UInt32)0); // TODO: Count the number of triangles in the model
 
             Dictionary<EpbBlock.EpbBlockType, UInt32> blockCounts = new Dictionary<EpbBlock.EpbBlockType, uint>();
-            for (UInt32 z = 0; z < epb.Depth; z++)
+            foreach (EpbBlock block in epb.Blocks)
             {
-                for (UInt32 y = 0; y < epb.Height; y++)
+                if (!blockCounts.ContainsKey(block.BlockType))
                 {
-                    for (UInt32 x = 0; x < epb.Width; x++)
-                    {
-                        EpbBlock block = epb.Blocks[x, y, z];
-                        if (block != null)
-                        {
-                            if (!blockCounts.ContainsKey(block.BlockType))
-                            {
-                                blockCounts.Add(block.BlockType, 0);
-                            }
-                            blockCounts[block.BlockType]++;
-                        }
-                    }
+                    blockCounts.Add(block.BlockType, 0);
                 }
+                blockCounts[block.BlockType]++;
             }
-
             writer.Write((UInt16)blockCounts.Count);
             foreach (EpbBlock.EpbBlockType type in blockCounts.Keys)
             {
@@ -82,9 +71,8 @@ namespace EPBLib.Helpers
             List<byte> byteList = new List<byte>();
 
             // Blocks:
-            byteCount += AddEpbMatrixToList(epb, byteList, (blueprint, x, y, z, list) =>
+            byteCount += AddEpbMatrixToList(epb, byteList, (blueprint, block, list) =>
             {
-                EpbBlock block = epb.Blocks[x, y, z];
                 if (block == null)
                 {
                     return false;
@@ -96,7 +84,7 @@ namespace EPBLib.Helpers
             });
 
             // Unknown3:
-            byteCount += AddEpbMatrixToList(epb, byteList, (blueprint, x, y, z, list) =>
+            byteCount += AddEpbMatrixToList(epb, byteList, (blueprint, block, list) =>
             {
                 return false;
             });
@@ -109,9 +97,8 @@ namespace EPBLib.Helpers
             byteCount += 1;
 
             // Colours:
-            byteCount += AddEpbMatrixToList(epb, byteList, (blueprint, x, y, z, list) =>
+            byteCount += AddEpbMatrixToList(epb, byteList, (blueprint, block, list) =>
             {
-                EpbBlock block = epb.Blocks[x, y, z];
                 if (block == null)
                 {
                     return false;
@@ -135,9 +122,8 @@ namespace EPBLib.Helpers
             });
 
             // Textures:
-            byteCount += AddEpbMatrixToList(epb, byteList, (blueprint, x, y, z, list) =>
+            byteCount += AddEpbMatrixToList(epb, byteList, (blueprint, block, list) =>
             {
-                EpbBlock block = epb.Blocks[x, y, z];
                 if (block == null)
                 {
                     return false;
@@ -161,9 +147,8 @@ namespace EPBLib.Helpers
             });
 
             // TextureFlip:
-            byteCount += AddEpbMatrixToList(epb, byteList, (blueprint, x, y, z, list) =>
+            byteCount += AddEpbMatrixToList(epb, byteList, (blueprint, block, list) =>
             {
-                EpbBlock block = epb.Blocks[x, y, z];
                 if (block == null)
                 {
                     return false;
@@ -187,9 +172,8 @@ namespace EPBLib.Helpers
             });
 
             // Symbols:
-            byteCount += AddEpbMatrixToList(epb, byteList, (blueprint, x, y, z, list) =>
+            byteCount += AddEpbMatrixToList(epb, byteList, (blueprint, block, list) =>
             {
-                EpbBlock block = epb.Blocks[x, y, z];
                 if (block == null)
                 {
                     return false;
@@ -214,9 +198,8 @@ namespace EPBLib.Helpers
             });
 
             // SymbolRotations:
-            byteCount += AddEpbMatrixToList(epb, byteList, (blueprint, x, y, z, list) =>
+            byteCount += AddEpbMatrixToList(epb, byteList, (blueprint, block, list) =>
             {
-                EpbBlock block = epb.Blocks[x, y, z];
                 if (block == null)
                 {
                     return false;
@@ -271,22 +254,17 @@ namespace EPBLib.Helpers
         }
 
 
-        public static long AddEpbMatrixToList(EpBlueprint epb, List<byte> list, Func<EpBlueprint, UInt32, UInt32, UInt32, List<byte>, bool> func)
+        public static long AddEpbMatrixToList(EpBlueprint epb, List<byte> list, Func<EpBlueprint, EpbBlock, List<byte>, bool> func)
         {
             bool[] m = new bool[epb.Width * epb.Height * epb.Depth];
             List<byte> tmpList = new List<byte>();
 
-            for (UInt32 z = 0; z < epb.Depth; z++)
+            foreach (EpbBlock block in epb.Blocks)
             {
-                for (UInt32 y = 0; y < epb.Height; y++)
+                if (func(epb, block, tmpList))
                 {
-                    for (UInt32 x = 0; x < epb.Width; x++)
-                    {
-                        if (func(epb, x, y, z, tmpList))
-                        {
-                            m[z * epb.Width * epb.Height + y * epb.Width + x] = true;
-                        }
-                    }
+                    EpbBlockPos pos = block.Position;
+                    m[pos.Z * epb.Width * epb.Height + pos.Y * epb.Width + pos.X] = true;
                 }
             }
 

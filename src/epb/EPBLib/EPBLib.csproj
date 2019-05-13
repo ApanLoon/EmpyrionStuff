@@ -55,6 +55,7 @@
     <Compile Include="BlockData\BlockTags\EpbBlockTagBool.cs" />
     <Compile Include="BlockData\BlockTags\EpbBlockTagString.cs" />
     <Compile Include="BlockData\BlockTags\EpbBlockTagUInt32.cs" />
+    <Compile Include="EpbBlockList.cs" />
     <Compile Include="EpbBlockPos.cs" />
     <Compile Include="EpbDeviceGroupEntry.cs" />
     <Compile Include="EpbDeviceGroup.cs" />

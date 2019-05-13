@@ -35,7 +35,8 @@ namespace EPBLib
 
         public List<EpbDeviceGroup> DeviceGroups;
 
-        public EpbBlock[,,] Blocks { get; set; }
+        //public EpbBlock[,,] Blocks { get; set; }
+        public EpbBlockList Blocks { get; set; }
 
         public EpbPalette Palette = new EpbPalette();
 
@@ -56,20 +57,15 @@ namespace EPBLib
             DeviceGroups = new List<EpbDeviceGroup>();
         }
 
-        public void SetBlock(EpbBlock block, UInt32 x, UInt32 y, UInt32 z)
+        public void SetBlock(EpbBlock block)
         {
-            if (x >= Width || y >= Height || z >= Depth)
-            {
-                return;
-            }
-
             if (Blocks == null)
             {
-                Blocks = new EpbBlock[Width, Height, Depth];
+                Blocks = new EpbBlockList();
             }
 
             // TODO: Update blockCounts
-            Blocks[x, y, z] = block;
+            Blocks[block.Position] = block;
         }
     }
 }

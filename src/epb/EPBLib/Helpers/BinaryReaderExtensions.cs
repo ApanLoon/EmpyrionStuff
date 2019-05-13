@@ -396,7 +396,7 @@ namespace EPBLib.Helpers
                         {
                             UInt32 data = reader.ReadUInt32();
                             bytesLeft -= 4;
-                            EpbBlock block = new EpbBlock(new EpbBlockPos() { X = (byte)x, Y = (byte)y, Z = (byte)z })
+                            EpbBlock block = new EpbBlock(new EpbBlockPos((byte)x, (byte)y, (byte)z))
                             {
                                 BlockType = EpbBlock.GetBlockType((UInt16)(data & 0x7ff)),
                                 Rotation = (EpbBlock.EpbBlockRotation)((data >> 11) & 0x1f),
@@ -406,7 +406,7 @@ namespace EPBLib.Helpers
                             if (block.BlockType.Id != 0)
                             {
                                 blockCount++;
-                                epb.SetBlock(block, x, y, z);
+                                epb.SetBlock(block);
                                 Console.WriteLine($"    {blockCount,5} ({x,4}, {y,4}, {z,4}): Rot={block.Rotation} Unknown2=0x{block.Unknown00:x3} Type={block.BlockType,-31} Variant=\"{block.VariantName + "\" (0x" + block.Variant.ToString("x2") + "=" + block.Variant + ")",-31}");
                                 //Console.WriteLine($"{BitConverter.GetBytes(data).ToHexString()} | 0x{data:x08} {Convert.ToString(data, 2).PadLeft(32, '0')} |");
                             }
@@ -420,14 +420,14 @@ namespace EPBLib.Helpers
                 {
                     UInt32 data = reader.ReadUInt32();
                     blockCount++;
-                    EpbBlock block = new EpbBlock(new EpbBlockPos() { X = (byte)x, Y = (byte)y, Z = (byte)z })
+                    EpbBlock block = new EpbBlock(new EpbBlockPos(x, y, z))
                     {
                         BlockType = EpbBlock.GetBlockType((UInt16)(data & 0x7ff)),
                         Rotation = (EpbBlock.EpbBlockRotation)((data >> 11) & 0x1f),
                         Unknown00 = (UInt16)((data >> 16) & 0x3ff),
                         Variant = (byte)((data >> 25) & 0x1f)
                     };
-                    epb.SetBlock(block, x, y, z);
+                    epb.SetBlock(block);
                     Console.WriteLine($"    {blockCount,5} ({x,4}, {y,4}, {z,4}): Rot={block.Rotation} Unknown2=0x{block.Unknown00:x3} Type={block.BlockType,-31} Variant=\"{block.VariantName + "\" (0x" + block.Variant.ToString("x2") + "=" + block.Variant + ")",-31}");
                     //Console.WriteLine( $"{BitConverter.GetBytes(data).ToHexString()} | 0x{data:x08} {Convert.ToString(data, 2).PadLeft(32, '0')} |");
                     return b - 4;
@@ -1076,7 +1076,7 @@ namespace EPBLib.Helpers
             return bytesLeft;
         }
 
-        public static long ReadEpbMatrix(this BinaryReader reader, EpBlueprint epb, long bytesLeft, Func<BinaryReader, EpBlueprint, UInt32, UInt32, UInt32, long, long> func)
+        public static long ReadEpbMatrix(this BinaryReader reader, EpBlueprint epb, long bytesLeft, Func<BinaryReader, EpBlueprint, byte, byte, byte, long, long> func)
         {
             UInt32 matrixSize = reader.ReadUInt32();
             bytesLeft -= 4;
@@ -1094,10 +1094,10 @@ namespace EPBLib.Helpers
                 {
                     for (UInt32 x = 0; x < epb.Width; x++)
                     {
-                        uint index = z * epb.Width * epb.Height + y * epb.Width + x;
+                        UInt32 index = (byte)z * epb.Width * epb.Height + (byte)y * epb.Width + (byte)x;
                         if (index < m.Length && m[index]) //TODO: Why do I have to test against length? v23/BA_FillerTest.epb
                         {
-                            bytesLeft = func(reader, epb, x, y, z, bytesLeft);
+                            bytesLeft = func(reader, epb, (byte)x, (byte)y, (byte)z, bytesLeft);
                         }
                     }
                 }
@@ -1317,18 +1317,11 @@ namespace EPBLib.Helpers
             }
             else
             {
-                UInt32 x = reader.ReadUInt32();
-                UInt32 y = reader.ReadUInt32();
-                UInt32 z = reader.ReadUInt32();
+                byte x = (byte)reader.ReadUInt32();
+                byte y = (byte)reader.ReadUInt32();
+                byte z = (byte)reader.ReadUInt32();
                 bytesLeft -= 12;
-                entry.Pos = new EpbBlockPos()
-                {
-                    X = (byte)x,
-                    Y = (byte)y,
-                    Z = (byte)z,
-                    U1 = 8,
-                    U2 = 8
-                };
+                entry.Pos = new EpbBlockPos(x, y, z, 8, 8);
                 entry.Name = "";
             }
             Console.WriteLine($"        Pos={entry.Pos} Name=\"{entry.Name}\"");
@@ -1341,14 +1334,12 @@ namespace EPBLib.Helpers
         {
             UInt32 data = reader.ReadUInt32();
             bytesLeft -= 4;
-            return new EpbBlockPos()
-            {
-                U1 = (byte)((data >> 28) & 0x0f),
-                X  = (byte)((data >> 20) & 0xff),
-                Y  = (byte)((data >> 12) & 0xff),
-                U2 = (byte)((data >>  8) & 0x0f),
-                Z  = (byte)((data >>  0) & 0xff)
-            };
+            return new EpbBlockPos(
+                (byte) ((data >> 20) & 0xff),
+                (byte) ((data >> 12) & 0xff),
+                (byte) ((data >> 0) & 0xff),
+                (byte) ((data >> 28) & 0x0f),
+                (byte) ((data >> 8) & 0x0f));
         }
 
         public static string ReadEpString(this BinaryReader reader, ref long bytesLeft)

@@ -327,7 +327,7 @@ namespace epb
             byte x = 0;
             foreach (EpbBlock.EpbBlockRotation rot in Enum.GetValues(typeof(EpbBlock.EpbBlockRotation)))
             {
-                block = new EpbBlock(new EpbBlockPos() { X = (byte)x, Y = (byte)0, Z = (byte)0 }) { BlockType = BlockType, Variant = BlockVariant };
+                block = new EpbBlock(new EpbBlockPos(x, 0, 0 )) { BlockType = BlockType, Variant = BlockVariant };
                 block.SetColour(EpbColourIndex.Red, EpbBlock.FaceIndex.Right);
                 block.SetColour(EpbColourIndex.BrightGreen, EpbBlock.FaceIndex.Top);
                 block.SetColour(EpbColourIndex.Blue, EpbBlock.FaceIndex.Front);
@@ -335,16 +335,16 @@ namespace epb
                 block.SetColour(EpbColourIndex.Pink, EpbBlock.FaceIndex.Bottom);
                 block.SetColour(EpbColourIndex.Yellow, EpbBlock.FaceIndex.Back);
                 block.Rotation = rot;
-                epb.SetBlock(block, 0, 0, x);
+                epb.SetBlock(block);
                 x += 2;
             }
 
-            block = new EpbBlock(new EpbBlockPos() { X = 2, Y = 0, Z = 0 }) { BlockType = BlockType, Variant = BlockVariant };
+            block = new EpbBlock(new EpbBlockPos(2, 0, 0 )) { BlockType = BlockType, Variant = BlockVariant };
             block.SetColour(EpbColourIndex.Red);
-            epb.SetBlock(block, 2, 0, 0);
-            block = new EpbBlock(new EpbBlockPos() { X = 0, Y = 2, Z = 0 }) { BlockType = BlockType, Variant = BlockVariant };
+            epb.SetBlock(block);
+            block = new EpbBlock(new EpbBlockPos(0, 2, 0)) { BlockType = BlockType, Variant = BlockVariant };
             block.SetColour(EpbColourIndex.BrightGreen);
-            epb.SetBlock(block, 0, 2, 0);
+            epb.SetBlock(block);
 
             // Write the file:
             using (FileStream stream = File.Create(path))
@@ -360,11 +360,11 @@ namespace epb
         {
             EpBlueprint epb = CreateCommon();
 
-            for (UInt32 z = 0; z < Depth; z++)
+            for (int z = 0; z < Depth; z++)
             {
-                for (UInt32 y = 0; y < Height; y++)
+                for (int y = 0; y < Height; y++)
                 {
-                    for (UInt32 x = 0; x < Width; x++)
+                    for (int x = 0; x < Width; x++)
                     {
                         bool isInterior = (x > 0 && x < (Width - 1))
                                           && (y > 0 && y < (Height - 1))
@@ -372,7 +372,7 @@ namespace epb
 
                         if (!isInterior || !hollow)
                         {
-                            EpbBlock block = new EpbBlock(new EpbBlockPos() { X = (byte)x, Y = (byte)y, Z = (byte)z }) { BlockType = BlockType, Variant = BlockVariant };
+                            EpbBlock block = new EpbBlock(new EpbBlockPos((byte)x, (byte)y, (byte)z)) { BlockType = BlockType, Variant = BlockVariant };
                             block.SetColour(isInterior ? EpbColourIndex.Pink : EpbColourIndex.None);
                             block.SetTexture(14, (x % 2) == 1);
                             block.SetSymbol(1, (EpbBlock.SymbolRotation)(x % 4), EpbBlock.FaceIndex.Back);
@@ -381,7 +381,7 @@ namespace epb
                             block.SetSymbol(4, face: EpbBlock.FaceIndex.Left);
                             block.SetSymbol(5, face: EpbBlock.FaceIndex.Top);
                             block.SetSymbol(6, face: EpbBlock.FaceIndex.Bottom);
-                            epb.SetBlock(block, x, y, z);
+                            epb.SetBlock(block);
                         }
                     }
                 }
@@ -426,30 +426,23 @@ namespace epb
         static void CreateBoxFrame(string path)
         {
             EpBlueprint epb = CreateCommon();
-
-            for (UInt32 z = 0; z < Depth; z++)
+            for (int z = 0; z < Depth; z++)
             {
-                for (UInt32 y = 0; y < Height; y++)
+                for (int y = 0; y < Height; y++)
                 {
-                    for (UInt32 x = 0; x < Width; x++)
+                    for (int x = 0; x < Width; x++)
                     {
                         bool a = x % (Width  - 1) == 0;
                         bool b = y % (Height - 1) == 0;
                         bool c = z % (Depth  - 1) == 0;
-
-                        if (!(
-                               (!a && !b &&  c)
-                            || (!a &&  b && !c)
-                            || ( a && !b && !c)
-                            || (!a && !b && !c)
-                           ))
+                        int d = (a ? 1 : 0) + (b ? 1 : 0) + (c ? 1 : 0);
+                        if (d >= 2)
                         {
-                            epb.SetBlock(new EpbBlock(new EpbBlockPos() { X = (byte)x, Y = (byte)y, Z = (byte)z }) { BlockType = BlockType, Variant = BlockVariant }, x, y, z);
+                            epb.SetBlock(new EpbBlock(new EpbBlockPos((byte)x, (byte)y, (byte)z)) { BlockType = BlockType, Variant = BlockVariant });
                         }
                     }
                 }
             }
-
             // Write the file:
             using (FileStream stream = File.Create(path))
             {
@@ -468,11 +461,11 @@ namespace epb
             UInt32 h = Height;
             UInt32 d = Depth;
 
-            for (UInt32 y = 0; y < h; y++)
+            for (int y = 0; y < h; y++)
             {
-                for (UInt32 z = y; z < d; z++)
+                for (int z = y; z < d; z++)
                 {
-                    for (UInt32 x = y; x < w; x++)
+                    for (int x = y; x < w; x++)
                     {
                         bool isBackEdge  = (z == y);
                         bool isFrontEdge = (z == (d - 1));
@@ -536,9 +529,9 @@ namespace epb
 
                         if (!isInterior || !hollow)
                         {
-                            EpbBlock block = new EpbBlock(new EpbBlockPos() { X = (byte)x, Y = (byte)y, Z = (byte)z }) {BlockType = t, Rotation = r, Variant = v};
+                            EpbBlock block = new EpbBlock(new EpbBlockPos((byte)x, (byte)y, (byte)z)) {BlockType = t, Rotation = r, Variant = v};
                             block.SetColour(isInterior ? EpbColourIndex.Pink : EpbColourIndex.None);
-                            epb.SetBlock(block, x, y, z);
+                            epb.SetBlock(block);
                         }
                     }
                 }
@@ -569,10 +562,10 @@ namespace epb
             Depth = 1;
 
             EpBlueprint epb = CreateCommon();
-            UInt32 i = 0;
+            byte i = 0;
             foreach (UInt16 bt in blockTypes )
             {
-                epb.SetBlock(new EpbBlock(new EpbBlockPos() { X = (byte)i, Y = 0, Z = 0 }) { BlockType = EpbBlock.BlockTypes[bt], Variant = BlockVariant }, i, 0, 0);
+                epb.SetBlock(new EpbBlock(new EpbBlockPos(i, 0, 0)) { BlockType = EpbBlock.BlockTypes[bt], Variant = BlockVariant });
                 i += 14;
             }
 
@@ -605,7 +598,7 @@ namespace epb
                     EpbBlock.EpbBlockType bt = EpbBlock.BlockTypes[t];
                     byte v = EpbBlock.GetVariant(t, variantName);
                     EpbBlock block =
-                        new EpbBlock(new EpbBlockPos() {X = x, Y = 0, Z = z})
+                        new EpbBlock(new EpbBlockPos(x, 0, z))
                         {
                             BlockType = bt,
                             Variant = v,
@@ -619,7 +612,7 @@ namespace epb
                                 [5] = EpbColourIndex.Yellow
                             }
                         };
-                    epb.SetBlock(block, x, 0, z);
+                    epb.SetBlock(block);
                     i++;
                 }
             }

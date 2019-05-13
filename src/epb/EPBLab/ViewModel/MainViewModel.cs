@@ -113,7 +113,7 @@ namespace EPBLab.ViewModel
                     EpbBlock.EpbBlockType bt = EpbBlock.BlockTypes[t];
                     byte v = EpbBlock.GetVariant(t, variantName);
                     EpbBlock block =
-                        new EpbBlock(new EpbBlockPos() {X = x, Y = 0, Z = z})
+                        new EpbBlock(new EpbBlockPos(x, 0, z))
                         {
                             BlockType = bt,
                             Variant = v,
@@ -127,7 +127,7 @@ namespace EPBLab.ViewModel
                                 [5] = EpbColourIndex.Yellow
                             }
                         };
-                    blueprint.SetBlock(block, x, 0, z);
+                    blueprint.SetBlock(block);
                     i++;
                 }
             }
