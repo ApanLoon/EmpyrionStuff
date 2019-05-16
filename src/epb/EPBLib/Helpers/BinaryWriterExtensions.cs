@@ -259,12 +259,19 @@ namespace EPBLib.Helpers
             bool[] m = new bool[epb.Width * epb.Height * epb.Depth];
             List<byte> tmpList = new List<byte>();
 
-            foreach (EpbBlock block in epb.Blocks)
+            for (UInt32 z = 0; z < epb.Depth; z++)
             {
-                if (func(epb, block, tmpList))
+                for (UInt32 y = 0; y < epb.Height; y++)
                 {
-                    EpbBlockPos pos = block.Position;
-                    m[pos.Z * epb.Width * epb.Height + pos.Y * epb.Width + pos.X] = true;
+                    for (UInt32 x = 0; x < epb.Width; x++)
+                    {
+                        EpbBlock block = epb.Blocks[(byte)x, (byte)y, (byte)z];
+                        if (func(epb, block, tmpList))
+                        {
+                            EpbBlockPos pos = block.Position;
+                            m[pos.Z * epb.Width * epb.Height + pos.Y * epb.Width + pos.X] = true;
+                        }
+                    }
                 }
             }
 
@@ -275,9 +282,6 @@ namespace EPBLib.Helpers
             list.AddRange(tmpList);
             return 4 + matrix.Length + tmpList.Count;
         }
-
-
-
 
         #endregion EpbBlocks
 
