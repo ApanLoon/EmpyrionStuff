@@ -69,7 +69,7 @@ namespace EPBLib
             {   333, new EpbBlockType(){Id =   333, Name = "RailingDiagonal"              , Category = "BuildingBlocks"               , Ref = ""                             }},
             {   334, new EpbBlockType(){Id =   334, Name = "RailingVert"                  , Category = "BuildingBlocks"               , Ref = "RailingDiagonal"              }},
             {   335, new EpbBlockType(){Id =   335, Name = "OfflineProtector"             , Category = "Devices"                      , Ref = ""                             }},
-            {   336, new EpbBlockType(){Id =   336, Name = "WarpDriveTank"                , Category = "Devices"                      , Ref = ""                             }},
+            {   336, new EpbBlockType(){Id =   336, Name = "PentaxidTank"                 , Category = "Devices"                      , Ref = ""                             }},
             {   339, new EpbBlockType(){Id =   339, Name = "SurvivalTent"                 , Category = "Devices"                      , Ref = ""                             }},
             {   380, new EpbBlockType(){Id =   380, Name = "HullSmallBlocks"              , Category = "BuildingBlocks"               , Ref = ""                             }},
             {   381, new EpbBlockType(){Id =   381, Name = "HullFullSmall"                , Category = "BuildingBlocks"               , Ref = ""                             }},
@@ -108,7 +108,7 @@ namespace EPBLib
             {   431, new EpbBlockType(){Id =   431, Name = "WeaponSV04"                   , Category = "Weapons/Items"                , Ref = ""                             }},
             {   432, new EpbBlockType(){Id =   432, Name = "WeaponSV05"                   , Category = "Weapons/Items"                , Ref = ""                             }},
             {   445, new EpbBlockType(){Id =   445, Name = "LandinggearMSHeavy"           , Category = "Devices"                      , Ref = ""                             }},
-            {   446, new EpbBlockType(){Id =   446, Name = "RampSteep"                    , Category = "BuildingBlocks"               , Ref = "Hull"                         }},
+            {   446, new EpbBlockType(){Id =   446, Name = "Deprecated-RampSteep"         , Category = "BuildingBlocks"               , Ref = "Hull"                         }}, //Removed in A10.0.0-2446
             {   449, new EpbBlockType(){Id =   449, Name = "ThrusterSVRoundNormal"        , Category = "Devices"                      , Ref = ""                             }},
             {   450, new EpbBlockType(){Id =   450, Name = "ThrusterSVRoundArmored"       , Category = "Devices"                      , Ref = "ThrusterSVRoundNormal"        }},
             {   451, new EpbBlockType(){Id =   451, Name = "ThrusterSVRoundSlant"         , Category = "Devices"                      , Ref = "ThrusterSVRoundNormal"        }},
@@ -236,6 +236,7 @@ namespace EPBLib
             {   772, new EpbBlockType(){Id =   772, Name = "ThrusterMSRoundBlocks"        , Category = "Devices"                      , Ref = ""                             }},
             {   778, new EpbBlockType(){Id =   778, Name = "ThrusterMSRound2x2Blocks"     , Category = "Devices"                      , Ref = ""                             }},
             {   779, new EpbBlockType(){Id =   779, Name = "LandinggearSingle"            , Category = "Devices"                      , Ref = ""                             }},
+            {   780, new EpbBlockType(){Id =   780, Name = "LandinggearDouble"            , Category = "Devices"                      , Ref = "LandinggearSingle"            }},
             {   781, new EpbBlockType(){Id =   781, Name = "CloneChamber"                 , Category = "Devices"                      , Ref = ""                             }},
             {   795, new EpbBlockType(){Id =   795, Name = "Window_v1x1Inv"               , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  }},
             {   796, new EpbBlockType(){Id =   796, Name = "Window_v1x2"                  , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  }},
@@ -642,7 +643,7 @@ namespace EPBLib
             {  1430, new EpbBlockType(){Id =  1430, Name = "DoorSS01Slim"                 , Category = "Devices"                      , Ref = "DoorSS01"                     }},
             {  1435, new EpbBlockType(){Id =  1435, Name = "WarpDriveSV"                  , Category = "Devices"                      , Ref = "WarpDrive"                    }},
             {  1436, new EpbBlockType(){Id =  1436, Name = "LandClaimDevice"              , Category = "Devices"                      , Ref = ""                             }},
-            {  1437, new EpbBlockType(){Id =  1437, Name = "WarpDriveTankSV"              , Category = "Devices"                      , Ref = ""                             }},
+            {  1437, new EpbBlockType(){Id =  1437, Name = "PentaxidTankSV"               , Category = "Devices"                      , Ref = ""                             }},
             {  1440, new EpbBlockType(){Id =  1440, Name = "StairsBlocksConcrete"         , Category = "BuildingBlocks"               , Ref = "StairsBlocks"                 }},
             {  1441, new EpbBlockType(){Id =  1441, Name = "StairShapesShortConcrete"     , Category = "BuildingBlocks"               , Ref = "StairShapes"                  }},
             {  1442, new EpbBlockType(){Id =  1442, Name = "StairShapesLongConcrete"      , Category = "BuildingBlocks"               , Ref = "StairShapes"                  }},
@@ -812,9 +813,9 @@ namespace EPBLib
             {  1669, new EpbBlockType(){Id =  1669, Name = "TurretGVToolRetract"          , Category = "Weapons/Items"                , Ref = "TurretGVTool"                 }},
             {  1670, new EpbBlockType(){Id =  1670, Name = "SentryGun03Retract"           , Category = "Weapons/Items"                , Ref = "SentryGun03"                  }},
             {  1671, new EpbBlockType(){Id =  1671, Name = "SentryGun05"                  , Category = "Weapons/Items"                , Ref = "SentryGun03"                  }},
-            {  1672, new EpbBlockType(){Id =  1672, Name = "SentryGun05Retract"           , Category = "Weapons/Items"                , Ref = "SentryGun03"                  }},
+            {  1672, new EpbBlockType(){Id =  1672, Name = "deprecated-SentryGun05Retract"           , Category = "Weapons/Items"                , Ref = "SentryGun03"                  }}, // Removed in A10.0.0-2446
             {  1673, new EpbBlockType(){Id =  1673, Name = "SentryGunBlocks"              , Category = "Weapons/Items"                , Ref = ""                             }},
-            {  1674, new EpbBlockType(){Id =  1674, Name = "SentryGun01Retract"           , Category = "Weapons/Items"                , Ref = "SentryGun01"                  }},
+            {  1674, new EpbBlockType(){Id =  1674, Name = "deprecated-SentryGun01Retract"           , Category = "Weapons/Items"                , Ref = "SentryGun01"                  }}, // Removed in A10.0.0-2446
             {  1675, new EpbBlockType(){Id =  1675, Name = "SentryGun02Retract"           , Category = "Weapons/Items"                , Ref = "SentryGun02"                  }},
             {  1676, new EpbBlockType(){Id =  1676, Name = "CargoContainerSmall"          , Category = "Devices"                      , Ref = ""                             }},
             {  1677, new EpbBlockType(){Id =  1677, Name = "CargoContainerMedium"         , Category = "Devices"                      , Ref = "CargoContainerSmall"          }},
@@ -854,6 +855,8 @@ namespace EPBLib
             {  1714, new EpbBlockType(){Id =  1714, Name = "ScifiContainer1Large"         , Category = "Devices"                      , Ref = "ContainerMS01"                }},
             {  1715, new EpbBlockType(){Id =  1715, Name = "ScifiContainer2Large"         , Category = "Devices"                      , Ref = "ContainerMS01"                }},
             {  1716, new EpbBlockType(){Id =  1716, Name = "ScifiContainerPowerLarge"     , Category = "Devices"                      , Ref = "ContainerMS01"                }},
+            {  1717, new EpbBlockType(){Id =  1717, Name = "SentryGun01Retract"           , Category = "Weapons/Items"                , Ref = "SentryGun01RetractV2"         }},
+            {  1718, new EpbBlockType(){Id =  1718, Name = "SentryGun05Retract"           , Category = "Weapons/Items"                , Ref = "SentryGun05RetractV2"         }},
             {  1719, new EpbBlockType(){Id =  1719, Name = "DecoVesselBlocks"             , Category = "Deco Blocks"                  , Ref = ""                             }},
             {  1720, new EpbBlockType(){Id =  1720, Name = "SVDecoAeroblister01"          , Category = "Deco Blocks"                  , Ref = ""                             }},
             {  1721, new EpbBlockType(){Id =  1721, Name = "SVDecoAirbrake01"             , Category = "Deco Blocks"                  , Ref = "SVDecoAeroblister01"          }},
@@ -929,6 +932,10 @@ namespace EPBLib
             {  1792, new EpbBlockType(){Id =  1792, Name = "HullArmoredExtendedSmall"     , Category = "BuildingBlocks"               , Ref = "HullArmoredFullSmall"         }},
             {  1793, new EpbBlockType(){Id =  1793, Name = "HullCombatExtendedSmall"      , Category = "BuildingBlocks"               , Ref = "HullCombatFullSmall"          }},
             {  1794, new EpbBlockType(){Id =  1794, Name = "AlienExtendedLarge"           , Category = "BuildingBlocks"               , Ref = "AlienFullLarge"               }},
+            {  1795, new EpbBlockType(){Id =  1795, Name = "ContainerMS02Large"           , Category = "Devices"                      , Ref = "ContainerMS01"                }},
+            {  1796, new EpbBlockType(){Id =  1796, Name = "ContainerMS03Large"           , Category = "Devices"                      , Ref = "ContainerMS01"                }},
+            {  1797, new EpbBlockType(){Id =  1797, Name = "ContainerMS04Large"           , Category = "Devices"                      , Ref = "ContainerMS01"                }},
+            {  1798, new EpbBlockType(){Id =  1798, Name = "SVDecoVent02"                 , Category = "Deco Blocks"                  , Ref = "SVDecoAeroblister01"          }},
             {  1800, new EpbBlockType(){Id =  1800, Name = "CockpitBlocksSVT2"            , Category = "Devices"                      , Ref = ""                             }},
             {  1801, new EpbBlockType(){Id =  1801, Name = "CockpitSV01T2"                , Category = "Devices"                      , Ref = "CockpitSV01"                  }},
             {  1802, new EpbBlockType(){Id =  1802, Name = "CockpitSV_ShortRangeT2"       , Category = "Devices"                      , Ref = "CockpitSV_ShortRange"         }},
@@ -937,6 +944,83 @@ namespace EPBLib
             {  1805, new EpbBlockType(){Id =  1805, Name = "CockpitSV05NewT2"             , Category = "Devices"                      , Ref = "CockpitSV05New"               }},
             {  1806, new EpbBlockType(){Id =  1806, Name = "CockpitSV06T2"                , Category = "Devices"                      , Ref = "CockpitSV06"                  }},
             {  1807, new EpbBlockType(){Id =  1807, Name = "CockpitSV07NewT2"             , Category = "Devices"                      , Ref = "CockpitSV07New"               }},
+            {  1808, new EpbBlockType(){Id =  1808, Name = "ShieldGeneratorBA"            , Category = "Devices"                      , Ref = ""                             }},
+            {  1809, new EpbBlockType(){Id =  1809, Name = "ShieldGeneratorCV"            , Category = "Devices"                      , Ref = "ShieldGeneratorBA"            }},
+            {  1810, new EpbBlockType(){Id =  1810, Name = "ShieldGeneratorSVHV"          , Category = "Devices"                      , Ref = "ShieldGeneratorBA"            }},
+            {  1811, new EpbBlockType(){Id =  1811, Name = "ShieldGeneratorCVT2"          , Category = "Devices"                      , Ref = "ShieldGeneratorCV"            }},
+            {  1812, new EpbBlockType(){Id =  1812, Name = "ShieldGeneratorBAT2"          , Category = "Devices"                      , Ref = "ShieldGeneratorBA"            }},
+            {  1813, new EpbBlockType(){Id =  1813, Name = "ShieldGeneratorPOI"           , Category = "Devices"                      , Ref = "ShieldGeneratorBA"            }},
+            {  1814, new EpbBlockType(){Id =  1814, Name = "ContainerMS05Large"           , Category = "Devices"                      , Ref = "ContainerMS01"                }},
+            {  1815, new EpbBlockType(){Id =  1815, Name = "DoorSingleArmored"            , Category = "Devices"                      , Ref = "DoorArmored"                  }},
+            {  1816, new EpbBlockType(){Id =  1816, Name = "DoorSingleGlassArmored"       , Category = "Devices"                      , Ref = "DoorArmored"                  }},
+            {  1817, new EpbBlockType(){Id =  1817, Name = "DoorSingleGlassFullArmored"   , Category = "Devices"                      , Ref = "DoorArmored"                  }},
+            {  1818, new EpbBlockType(){Id =  1818, Name = "BoardingRamp1x4x6"            , Category = "Devices"                      , Ref = "RampTemplate"                 }},
+            {  1819, new EpbBlockType(){Id =  1819, Name = "BoardingRamp2x4x6"            , Category = "Devices"                      , Ref = "RampTemplate"                 }},
+            {  1820, new EpbBlockType(){Id =  1820, Name = "BoardingRamp3x4x6"            , Category = "Devices"                      , Ref = "RampTemplate"                 }},
+            {  1821, new EpbBlockType(){Id =  1821, Name = "BoardingRamp5x4x6"            , Category = "Devices"                      , Ref = "RampTemplate"                 }},
+            {  1822, new EpbBlockType(){Id =  1822, Name = "BoardingRamp5x4x9"            , Category = "Devices"                      , Ref = "RampTemplate"                 }},
+            {  1823, new EpbBlockType(){Id =  1823, Name = "BoardingRamp8x6x12"           , Category = "Devices"                      , Ref = "RampTemplate"                 }},
+            {  1824, new EpbBlockType(){Id =  1824, Name = "WoodExtended2"                , Category = "BuildingBlocks"               , Ref = "WoodFull"                     }},
+            {  1825, new EpbBlockType(){Id =  1825, Name = "ConcreteExtended2"            , Category = "BuildingBlocks"               , Ref = "ConcreteFull"                 }},
+            {  1826, new EpbBlockType(){Id =  1826, Name = "ConcreteArmoredExtended2"     , Category = "BuildingBlocks"               , Ref = "ConcreteArmoredFull"          }},
+            {  1827, new EpbBlockType(){Id =  1827, Name = "PlasticExtendedLarge2"        , Category = "BuildingBlocks"               , Ref = "PlasticFullLarge"             }},
+            {  1828, new EpbBlockType(){Id =  1828, Name = "HullExtendedLarge2"           , Category = "BuildingBlocks"               , Ref = "HullFullLarge"                }},
+            {  1829, new EpbBlockType(){Id =  1829, Name = "HullArmoredExtendedLarge2"    , Category = "BuildingBlocks"               , Ref = "HullArmoredFullLarge"         }},
+            {  1830, new EpbBlockType(){Id =  1830, Name = "HullCombatExtendedLarge2"     , Category = "BuildingBlocks"               , Ref = "HullCombatFullLarge"          }},
+            {  1831, new EpbBlockType(){Id =  1831, Name = "AlienExtended2"               , Category = "BuildingBlocks"               , Ref = "AlienFull"                    }},
+            {  1832, new EpbBlockType(){Id =  1832, Name = "PlasticExtendedSmall2"        , Category = "BuildingBlocks"               , Ref = "PlasticFullSmall"             }},
+            {  1833, new EpbBlockType(){Id =  1833, Name = "HullExtendedSmall2"           , Category = "BuildingBlocks"               , Ref = "HullFullSmall"                }},
+            {  1834, new EpbBlockType(){Id =  1834, Name = "HullArmoredExtendedSmall2"    , Category = "BuildingBlocks"               , Ref = "HullArmoredFullSmall"         }},
+            {  1835, new EpbBlockType(){Id =  1835, Name = "HullCombatExtendedSmall2"     , Category = "BuildingBlocks"               , Ref = "HullCombatFullSmall"          }},
+            {  1836, new EpbBlockType(){Id =  1836, Name = "AlienExtendedLarge2"          , Category = "BuildingBlocks"               , Ref = "AlienFullLarge"               }},
+            {  1837, new EpbBlockType(){Id =  1837, Name = "WoodExtended3"                , Category = "BuildingBlocks"               , Ref = "WoodFull"                     }},
+            {  1838, new EpbBlockType(){Id =  1838, Name = "ConcreteExtended3"            , Category = "BuildingBlocks"               , Ref = "ConcreteFull"                 }},
+            {  1839, new EpbBlockType(){Id =  1839, Name = "ConcreteArmoredExtended3"     , Category = "BuildingBlocks"               , Ref = "ConcreteArmoredFull"          }},
+            {  1840, new EpbBlockType(){Id =  1840, Name = "PlasticExtendedLarge3"        , Category = "BuildingBlocks"               , Ref = "PlasticFullLarge"             }},
+            {  1841, new EpbBlockType(){Id =  1841, Name = "HullExtendedLarge3"           , Category = "BuildingBlocks"               , Ref = "HullFullLarge"                }},
+            {  1842, new EpbBlockType(){Id =  1842, Name = "HullArmoredExtendedLarge3"    , Category = "BuildingBlocks"               , Ref = "HullArmoredFullLarge"         }},
+            {  1843, new EpbBlockType(){Id =  1843, Name = "HullCombatExtendedLarge3"     , Category = "BuildingBlocks"               , Ref = "HullCombatFullLarge"          }},
+            {  1844, new EpbBlockType(){Id =  1844, Name = "AlienExtended3"               , Category = "BuildingBlocks"               , Ref = "AlienFull"                    }},
+            {  1845, new EpbBlockType(){Id =  1845, Name = "PlasticExtendedSmall3"        , Category = "BuildingBlocks"               , Ref = "PlasticFullSmall"             }},
+            {  1846, new EpbBlockType(){Id =  1846, Name = "HullExtendedSmall3"           , Category = "BuildingBlocks"               , Ref = "HullFullSmall"                }},
+            {  1847, new EpbBlockType(){Id =  1847, Name = "HullArmoredExtendedSmall3"    , Category = "BuildingBlocks"               , Ref = "HullArmoredFullSmall"         }},
+            {  1848, new EpbBlockType(){Id =  1848, Name = "HullCombatExtendedSmall3"     , Category = "BuildingBlocks"               , Ref = "HullCombatFullSmall"          }},
+            {  1849, new EpbBlockType(){Id =  1849, Name = "AlienExtendedLarge3"          , Category = "BuildingBlocks"               , Ref = "AlienFullLarge"               }},
+            {  1850, new EpbBlockType(){Id =  1850, Name = "WoodExtended4"                , Category = "BuildingBlocks"               , Ref = "WoodFull"                     }},
+            {  1851, new EpbBlockType(){Id =  1851, Name = "ConcreteExtended4"            , Category = "BuildingBlocks"               , Ref = "ConcreteFull"                 }},
+            {  1852, new EpbBlockType(){Id =  1852, Name = "ConcreteArmoredExtended4"     , Category = "BuildingBlocks"               , Ref = "ConcreteArmoredFull"          }},
+            {  1853, new EpbBlockType(){Id =  1853, Name = "PlasticExtendedLarge4"        , Category = "BuildingBlocks"               , Ref = "PlasticFullLarge"             }},
+            {  1854, new EpbBlockType(){Id =  1854, Name = "HullExtendedLarge4"           , Category = "BuildingBlocks"               , Ref = "HullFullLarge"                }},
+            {  1855, new EpbBlockType(){Id =  1855, Name = "HullArmoredExtendedLarge4"    , Category = "BuildingBlocks"               , Ref = "HullArmoredFullLarge"         }},
+            {  1856, new EpbBlockType(){Id =  1856, Name = "HullCombatExtendedLarge4"     , Category = "BuildingBlocks"               , Ref = "HullCombatFullLarge"          }},
+            {  1857, new EpbBlockType(){Id =  1857, Name = "AlienExtended4"               , Category = "BuildingBlocks"               , Ref = "AlienFull"                    }},
+            {  1858, new EpbBlockType(){Id =  1858, Name = "PlasticExtendedSmall4"        , Category = "BuildingBlocks"               , Ref = "PlasticFullSmall"             }},
+            {  1859, new EpbBlockType(){Id =  1859, Name = "HullExtendedSmall4"           , Category = "BuildingBlocks"               , Ref = "HullFullSmall"                }},
+            {  1860, new EpbBlockType(){Id =  1860, Name = "HullArmoredExtendedSmall4"    , Category = "BuildingBlocks"               , Ref = "HullArmoredFullSmall"         }},
+            {  1861, new EpbBlockType(){Id =  1861, Name = "HullCombatExtendedSmall4"     , Category = "BuildingBlocks"               , Ref = "HullCombatFullSmall"          }},
+            {  1862, new EpbBlockType(){Id =  1862, Name = "AlienExtendedLarge4"          , Category = "BuildingBlocks"               , Ref = "AlienFullLarge"               }},
+            {  1863, new EpbBlockType(){Id =  1863, Name = "WoodExtended5"                , Category = "BuildingBlocks"               , Ref = "WoodFull"                     }},
+            {  1864, new EpbBlockType(){Id =  1864, Name = "ConcreteExtended5"            , Category = "BuildingBlocks"               , Ref = "ConcreteFull"                 }},
+            {  1865, new EpbBlockType(){Id =  1865, Name = "ConcreteArmoredExtended5"     , Category = "BuildingBlocks"               , Ref = "ConcreteArmoredFull"          }},
+            {  1866, new EpbBlockType(){Id =  1866, Name = "PlasticExtendedLarge5"        , Category = "BuildingBlocks"               , Ref = "PlasticFullLarge"             }},
+            {  1867, new EpbBlockType(){Id =  1867, Name = "HullExtendedLarge5"           , Category = "BuildingBlocks"               , Ref = "HullFullLarge"                }},
+            {  1868, new EpbBlockType(){Id =  1868, Name = "HullArmoredExtendedLarge5"    , Category = "BuildingBlocks"               , Ref = "HullArmoredFullLarge"         }},
+            {  1869, new EpbBlockType(){Id =  1869, Name = "HullCombatExtendedLarge5"     , Category = "BuildingBlocks"               , Ref = "HullCombatFullLarge"          }},
+            {  1870, new EpbBlockType(){Id =  1870, Name = "AlienExtended5"               , Category = "BuildingBlocks"               , Ref = "AlienFull"                    }},
+            {  1871, new EpbBlockType(){Id =  1871, Name = "PlasticExtendedSmall5"        , Category = "BuildingBlocks"               , Ref = "PlasticFullSmall"             }},
+            {  1872, new EpbBlockType(){Id =  1872, Name = "HullExtendedSmall5"           , Category = "BuildingBlocks"               , Ref = "HullFullSmall"                }},
+            {  1873, new EpbBlockType(){Id =  1873, Name = "HullArmoredExtendedSmall5"    , Category = "BuildingBlocks"               , Ref = "HullArmoredFullSmall"         }},
+            {  1874, new EpbBlockType(){Id =  1874, Name = "HullCombatExtendedSmall5"     , Category = "BuildingBlocks"               , Ref = "HullCombatFullSmall"          }},
+            {  1875, new EpbBlockType(){Id =  1875, Name = "AlienExtendedLarge5"          , Category = "BuildingBlocks"               , Ref = "AlienFullLarge"               }},
+            {  1876, new EpbBlockType(){Id =  1876, Name = "DrillAttachmentLarge"         , Category = "Weapons/Items"                , Ref = "DrillAttachment"              }},
+            {  1877, new EpbBlockType(){Id =  1877, Name = "Antenna06"                    , Category = "Deco Blocks"                  , Ref = "Antenna"                      }},
+            {  1878, new EpbBlockType(){Id =  1878, Name = "Antenna07"                    , Category = "Deco Blocks"                  , Ref = "Antenna"                      }},
+            {  1879, new EpbBlockType(){Id =  1879, Name = "Antenna08"                    , Category = "Deco Blocks"                  , Ref = "Antenna"                      }},
+            {  1880, new EpbBlockType(){Id =  1880, Name = "Antenna09"                    , Category = "Deco Blocks"                  , Ref = "Antenna"                      }},
+            {  1881, new EpbBlockType(){Id =  1881, Name = "Antenna10"                    , Category = "Deco Blocks"                  , Ref = "Antenna"                      }},
+            {  1882, new EpbBlockType(){Id =  1882, Name = "Antenna11"                    , Category = "Deco Blocks"                  , Ref = "Antenna"                      }},
+            {  1883, new EpbBlockType(){Id =  1883, Name = "Antenna12"                    , Category = "Deco Blocks"                  , Ref = "Antenna"                      }},
+            {  1884, new EpbBlockType(){Id =  1884, Name = "Antenna13"                    , Category = "Deco Blocks"                  , Ref = "Antenna"                      }},
 
             // -------- Manually added: ---------
             {    53, new EpbBlockType(){Id =    53, Name = "VoxelSathium"                 , Category = "Voxel/Materials"              , Ref = ""                             }},
@@ -1084,48 +1168,126 @@ BlockType=828
 BlockType=959
          */
 
+        //                                                                      0                      1                       2                    3                4                   5                    6                    7                    8                  9                     10                  11                         12                         13                         14                     15                           16                                17                           18                                19                           20                             21                                  22                             23                          24                  25                         26                         27                     28                     29                    30                   31
+        public static readonly string[] BuildingBlockVariants_FullLarge      = {"Cube",                "InvertedCorner",       "CornerLongA",       "CornerLongB",   "CornerLongC",      "CornerLongD",       "CornerLarge",       "Corner",            "RampBottom",      "RampTop",            "Wedge",            "CurveOutSlope",           "InvertedCornerRound",     "HalfRound",               "CurveQuarter",        "QuarterRound",              "Cylinder",                       "HalfRoundInv",              "QuarterRoundInv",                "CurveOutSlopeInv",          "RoundSlopeEdgeInward",        "CylinderEndA",                     "CylinderEndB",                "CylinderEndC",             "RampWedgeTop",     "Round4WayConnector",      "RoundSlopeEdge",          "CornerLargeB",        "CornerLargeC",        "CornerLargeD",       "CornerLongE",       "PyramidA"           };
+        public static readonly string[] BuildingBlockVariants_ThinLarge      = {"Wall",                "WallCorner",           "WedgeThin",         "CornerThin",    "WallSloped",       "WallSlopedBottom",  "WallSlopedTop",     "WallSlopedBottom2", "WallSlopedTop2",  "CornerRoundThin",    "QuarterRoundThin", "InvertedCornerRoundThin", "RoundSlopeEdgeThin",      "CurveQuarterThin",        "CornerRoundThin2",    "CornerThin2",               "Wall3Corner",                    "WallHalf",                  "CubeHalf",                       "RampTopDouble",             "RampBottomA",                 "RampBottomB",                      "RampBottomC",                 "RampWedgeBottom",          "Beam",             "CylinderThin",            "CylinderThinTJoint",      "CylinderThinCurved",  "CylinderFenceBottom", "CylinderFenceTop",   "SlopeHalf",         "CornerSmallB"       };
+        public static readonly string[] BuildingBlockVariants_ExtendedLarge  = {"CornerSmallA",        "CornerSmallC",         "CornerLongF",       "CornerB",       "WallCornerRound",  "NotchedA",          "NotchedB",          "NotchedC",          "CubeQuarter",     "CylinderThinXJoint", "RampWedgeTopB",    "CutCornerB",              "CornerLargeDV2",          "NotchedAV2",              "QuarterRoundV2",      "RampTopV2",                 "CurveOutSlopeV2",                "CurveOutSlopeV3",           "HalfRoundV2",                    "HalfRoundV3",               "QuarterRoundV3",              "QuarterRoundV4",                   "CylinderFenceDiagonalBottom", "CylinderFenceDiagonalTop", "CubeToRoundL",     "CubeToRoundR",            "CubeToRoundVert",         "InvertedCornerThin",  "RampToRoundL",        "RampToRoundR",       "SlopeToRoundL",     "SlopeToRoundR"      };
+        public static readonly string[] BuildingBlockVariants_ExtendedLarge2 = {"WallCornerV2",        "WallCornerV3",         "RampBottomV2",      "RampBottomV3",  "RampBottomCHalf",  "InvertedCornerV2L", "InvertedCornerV2R", "CubeEighth",        "CornerLongBV2",   "CornerLongBV3",      "NotchedAV3",       "NotchedBV2",              "BeamShort",               "CornerThin3",             "RampTopDoubleHalf",   "RampTopDoubleQuarter",      "WallDoorFrame",                  "WallDouble",                "WallSlopedBottomDouble",         "WallSlopedBottomLowDouble", null,                          null,                               "WallSlopedBottomWide",        "WallSlopedBottomWide2",    "WallSlopedDouble", "WallSlopedMiddleDouble1", "WallSlopedMiddleDouble2", "WallSlopedTopDouble", "WallSlopedTopWide",   "WallSlopedTopWide2", "WallFrameCylinder", "WallFrameRectangle" };
+        public static readonly string[] BuildingBlockVariants_ExtendedLarge3 = {"WallCornerLargeV2",   "WallCornerLargeV3",    "RampBottomV4L",     "RampBottomV4R", "RampBottomV5L",    "RampBottomV5R",     null,                null,                "RampWedgeTopBV2", "RampWedgeTopBV3",    "RampWedgeTopBV4",  "CornerLongEV2",           "CornerLongEV3",           "CornerSmallD",            "CornerSmallE",        "CornerLargeBV2",            "CornerLargeCV2",                 "CornerLargeV2",             "CornerLongCV2",                  "CurveOutSlopeV4",           "CurveOutSlopeV5",             "CylinderFenceCross",               "CylinderFenceL1",             "CylinderFenceT",           "CylinderFenceL2R", "CylinderFenceT",          "CylinderThin6WayJoint",   "HalfRoundV4",         "HalfRoundV5",         "QuarterRoundV5",     "QuarterRoundV6",    "QuarterRoundV7"     };
+        public static readonly string[] BuildingBlockVariants_ExtendedLarge4 = {"QuarterRoundQuarter", "QuarterRoundV3Corner", "QuarterRoundInvV2", null,            null,               "PyramidToRoundL",   null,                null,                null,              null,                 "PyramidToRoundR",  "QuarterRoundHalf",        "QuarterRoundThick",       "QuarterRoundThickHalf",   "QuarterRoundV3Half",  "RampBottomV6",              "RampTopRound",                   "RampTopRoundHalf",          "RampTopRoundV2",                 "RampTopRoundV3",            "RampWedgeTopV4L",             "RampWedgeTopV4R",                  "CornerLongBV4",               "CornerLongBV5",            "CornerLongBV6",    "CornerLongBV7",           "CornerLongBV8",           "CylinderThin3Way",    "CylinderThin4Way",    "CylinderThin5Way",   null,                null                 };
+        public static readonly string[] BuildingBlockVariants_ExtendedLarge5 = {"WallCornerLarge",     null,                   null,                null,            "InvertedCornerV3", "InvertedCornerV3L", "InvertedCornerV3R", "NotchedBV3",        "NotchedCV2",      "RampWedgeTopV2",     "RampWedgeTopV3",   "WallInterior",            "WallInteriorCornerInner", "WallInteriorCornerOuter", "WallInteriorV2",      "WallInteriorV2CornerInner", "WallInteriorV2CornerInnerRound", "WallInteriorV2CornerOuter", "WallInteriorV2CornerOuterRound", "WallInteriorRoof",          "WallInteriorCornerInnerRoof", "WallInteriorCornerInnerRoundRoof", "WallExterior",                "WallExteriorWindow",       "WallExteriorThin", "WallExteriorThinWindow",  "WallExteriorTop",         "WallExteriorRamp",    "DoorFrame1",          "DoorFrame2",         "DoorFrame3",        null                 };
+
         public static readonly Dictionary<UInt16, string[]> BlockVariants = new Dictionary<UInt16, String[]>()
         {
             // Building Blocks:
 
-            // HullFullSmall, HullThinSmall, HullExtendedSmall
-            {381,  new string[] {"Cube", "Cut Corner", "Corner Long A", "Corner Long B", "Corner Long C", "Corner Long D", "Corner Large A", "Corner", "Ramp Bottom", "Ramp Top", "Slope", "Curved Corner", "Round Cut Corner", "Round Corner", "Round Corner Long", "Round Slope", "Cylinder", "Inward Corner", "Inward Round Slope", "Inward Curved Corner", "Round Slope Edge Inward", "Cylinder End A", "Cylinder End B", "Cylinder End C", "Ramp Wedge Top", "Round 4 Way Connector", "Round Slope Edge", "Corner Large B", "Corner Large C", "Corner Large D", "Corner Long E", "Pyramid A" }},
-            {382,  new string[] {"Wall", "Wall L-shape", "Thin Slope", "Thin Corner", "Sloped Wall", "Sloped Wall Bottom (right)", "Sloped Wall Top (right)", "Sloped Wall Bottom (left)", "Sloped Wall Top (left)", "Round Corner Thin", "Round Slope Thin", "Round Cut Corner Thin", "Round Slope Edge Thin", "Round Corner Long Thin", "Corner Round Thin 2", "Corner Thin 2", "Wall 3 Corner", "Wall Half", "Cube Half", "Ramp Top Double", "Ramp Bottom A", "Ramp Bottom B", "Ramp Bottom C", "Ramp Wedge Bottom", "Beam", "Cylinder Thin", "Cylinder Thin T Joint", "Cylinder Thin Curved", "Cylinder Fence Bottom", "Cylinder Fence Top", "Slope Half" }},
-            {1791, new string[] {"Corner Small A", "Corner Small C", "CornerLongF", "CornerB", "WallCornerRound", "NotchedA", "NotchedB", "NotchedC", "CubeQuarter", "CylinderThinXJoint", "RampWedgeTopB", "CutCornerB" }},
+            // Plastic Small (Parent: 1478)
+            {1479, BuildingBlockVariants_FullLarge      },
+            {1480, BuildingBlockVariants_ThinLarge      },
+            {1790, BuildingBlockVariants_ExtendedLarge  },
+            {1832, BuildingBlockVariants_ExtendedLarge2 },
+            {1845, BuildingBlockVariants_ExtendedLarge3 },
+            {1858, BuildingBlockVariants_ExtendedLarge4 },
+            {1871, BuildingBlockVariants_ExtendedLarge5 },
 
-            // HullArmoredFullSmall, HullArmoredThinSmall
-            {383,  new string[] {"Cube", "Cut Corner", "Corner Long A", "Corner Long B", "Corner Long C", "Corner Long D", "Corner Large A", "Corner", "Ramp Bottom", "Ramp Top", "Slope", "Curved Corner", "Round Cut Corner", "Round Corner", "Round Corner Long", "Round Slope", "Cylinder", "Inward Corner", "Inward Round Slope", "Inward Curved Corner", "Round Slope Edge Inward", "Cylinder End A", "Cylinder End B", "Cylinder End C", "Ramp Wedge Top", "Round 4 Way Connector", "Round Slope Edge", "Corner Large B", "Corner Large C", "Corner Large D", "Corner Long E", "Pyramid A" }},
-            {384,  new string[] {"Wall", "Wall L-shape", "Thin Slope", "Thin Corner", "Sloped Wall", "Sloped Wall Bottom (right)", "Sloped Wall Top (right)", "Sloped Wall Bottom (left)", "Sloped Wall Top (left)", "Round Corner Thin", "Round Slope Thin", "Round Cut Corner Thin", "Round Slope Edge Thin", "Round Corner Long Thin", "Corner Round Thin 2", "Corner Thin 2", "Wall 3 Corner", "Wall Half", "Cube Half", "Ramp Top Double", "Ramp Bottom A", "Ramp Bottom B", "Ramp Bottom C", "Ramp Wedge Bottom", "Beam", "Cylinder Thin", "Cylinder Thin T Joint", "Cylinder Thin Curved", "Cylinder Fence Bottom", "Cylinder Fence Top", "Slope Half" }},
+            // Hull Small (Parent: 380)
+            {381,  BuildingBlockVariants_FullLarge      },
+            {382,  BuildingBlockVariants_ThinLarge      },
+            {1791, BuildingBlockVariants_ExtendedLarge  },
+            {1833, BuildingBlockVariants_ExtendedLarge2 },
+            {1846, BuildingBlockVariants_ExtendedLarge3 },
+            {1859, BuildingBlockVariants_ExtendedLarge4 },
+            {1872, BuildingBlockVariants_ExtendedLarge5 },
 
-            // WoodFull, WoodThin, WoodExtended
-            {397,  new string[] {"Cube", "Cut Corner", "Corner Long A", "Corner Long B", "Corner Long C", "Corner Long D", "Corner Large A", "Corner", "Ramp Bottom", "Ramp Top", "Slope", "Curved Corner", "Round Cut Corner", "Round Corner", "Round Corner Long", "Round Slope", "Cylinder", "Inward Corner", "Inward Round Slope", "Inward Curved Corner", "Round Slope Edge Inward", "Cylinder End A", "Cylinder End B", "Cylinder End C", "Ramp Wedge Top", "Round 4 Way Connector", "Round Slope Edge", "Corner Large B", "Corner Large C", "Corner Large D", "Corner Long E", "Pyramid A" }},
-            {398,  new string[] {"Wall", "Wall L-shape", "Thin Slope", "Thin Corner", "Sloped Wall", "Sloped Wall Bottom (right)", "Sloped Wall Top (right)", "Sloped Wall Bottom (left)", "Sloped Wall Top (left)", "Round Corner Thin", "Round Slope Thin", "Round Cut Corner Thin", "Round Slope Edge Thin", "Round Corner Long Thin", "Corner Round Thin 2", "Corner Thin 2", "Wall 3 Corner", "Wall Half", "Cube Half", "Ramp Top Double", "Ramp Bottom A", "Ramp Bottom B", "Ramp Bottom C", "Ramp Wedge Bottom", "Beam", "Cylinder Thin", "Cylinder Thin T Joint", "Cylinder Thin Curved", "Cylinder Fence Bottom", "Cylinder Fence Top", "Slope Half" }},
-            {1782, new string[] {"Corner Small A", "Corner Small C", "CornerLongF", "CornerB", "WallCornerRound", "NotchedA", "NotchedB", "NotchedC", "CubeQuarter", "CylinderThinXJoint", "RampWedgeTopB", "CutCornerB" }},
+            // Hull Armored Small (Parent: 393)
+            {383,  BuildingBlockVariants_FullLarge      },
+            {384,  BuildingBlockVariants_ThinLarge      },
+            {1792, BuildingBlockVariants_ExtendedLarge  },
+            {1834, BuildingBlockVariants_ExtendedLarge2 },
+            {1847, BuildingBlockVariants_ExtendedLarge3 },
+            {1860, BuildingBlockVariants_ExtendedLarge4 },
+            {1873, BuildingBlockVariants_ExtendedLarge5 },
 
-            // ConcreteFull, ConcreteThin, ConcreteExtended
-            {400,  new string[] {"Cube", "Cut Corner", "Corner Long A", "Corner Long B", "Corner Long C", "Corner Long D", "Corner Large A", "Corner", "Ramp Bottom", "Ramp Top", "Slope", "Curved Corner", "Round Cut Corner", "Round Corner", "Round Corner Long", "Round Slope", "Cylinder", "Inward Corner", "Inward Round Slope", "Inward Curved Corner", "Round Slope Edge Inward", "Cylinder End A", "Cylinder End B", "Cylinder End C", "Ramp Wedge Top", "Round 4 Way Connector", "Round Slope Edge", "Corner Large B", "Corner Large C", "Corner Large D", "Corner Long E", "Pyramid A" }},
-            {401,  new string[] {"Wall", "Wall L-shape", "Thin Slope", "Thin Corner", "Sloped Wall", "Sloped Wall Bottom (right)", "Sloped Wall Top (right)", "Sloped Wall Bottom (left)", "Sloped Wall Top (left)", "Round Corner Thin", "Round Slope Thin", "Round Cut Corner Thin", "Round Slope Edge Thin", "Round Corner Long Thin", "Corner Round Thin 2", "Corner Thin 2", "Wall 3 Corner", "Wall Half", "Cube Half", "Ramp Top Double", "Ramp Bottom A", "Ramp Bottom B", "Ramp Bottom C", "Ramp Wedge Bottom", "Beam", "Cylinder Thin", "Cylinder Thin T Joint", "Cylinder Thin Curved", "Cylinder Fence Bottom", "Cylinder Fence Top", "Slope Half" }},
-            {1783, new string[] {"Corner Small A", "Corner Small C", "CornerLongF", "CornerB", "WallCornerRound", "NotchedA", "NotchedB", "NotchedC", "CubeQuarter", "CylinderThinXJoint", "RampWedgeTopB", "CutCornerB" }},
+            // Hull Combat Small (Parent: 1594)
+            {1595, BuildingBlockVariants_FullLarge      },
+            {1596, BuildingBlockVariants_ThinLarge      },
+            {1793, BuildingBlockVariants_ExtendedLarge  },
+            {1835, BuildingBlockVariants_ExtendedLarge2 },
+            {1848, BuildingBlockVariants_ExtendedLarge3 },
+            {1861, BuildingBlockVariants_ExtendedLarge4 },
+            {1874, BuildingBlockVariants_ExtendedLarge5 },
 
-            // HullFullLarge, HullThinLarge, HullExtendedLarge
-            {403,  new string[] {"Cube", "Cut Corner", "Corner Long A", "Corner Long B", "Corner Long C", "Corner Long D", "Corner Large A", "Corner", "Ramp Bottom", "Ramp Top", "Slope", "Curved Corner", "Round Cut Corner", "Round Corner", "Round Corner Long", "Round Slope", "Cylinder", "Inward Corner", "Inward Round Slope", "Inward Curved Corner", "Round Slope Edge Inward", "Cylinder End A", "Cylinder End B", "Cylinder End C", "Ramp Wedge Top", "Round 4 Way Connector", "Round Slope Edge", "Corner Large B", "Corner Large C", "Corner Large D", "Corner Long E", "Pyramid A" }},
-            {404,  new string[] {"Wall", "Wall L-shape", "Thin Slope", "Thin Corner", "Sloped Wall", "Sloped Wall Bottom (right)", "Sloped Wall Top (right)", "Sloped Wall Bottom (left)", "Sloped Wall Top (left)", "Round Corner Thin", "Round Slope Thin", "Round Cut Corner Thin", "Round Slope Edge Thin", "Round Corner Long Thin", "Corner Round Thin 2", "Corner Thin 2", "Wall 3 Corner", "Wall Half", "Cube Half", "Ramp Top Double", "Ramp Bottom A", "Ramp Bottom B", "Ramp Bottom C", "Ramp Wedge Bottom", "Beam", "Cylinder Thin", "Cylinder Thin T Joint", "Cylinder Thin Curved", "Cylinder Fence Bottom", "Cylinder Fence Top", "Slope Half" }},
-            {1786, new string[] {"Corner Small A", "Corner Small C", "CornerLongF", "CornerB", "WallCornerRound", "NotchedA", "NotchedB", "NotchedC", "CubeQuarter", "CylinderThinXJoint", "RampWedgeTopB", "CutCornerB" }},
+            // Alien (Parent: 408)
+            {409,  BuildingBlockVariants_FullLarge      },
+            {410,  BuildingBlockVariants_ThinLarge      },
+            {1789, BuildingBlockVariants_ExtendedLarge  },
+            {1831, BuildingBlockVariants_ExtendedLarge2 },
+            {1844, BuildingBlockVariants_ExtendedLarge3 },
+            {1857, BuildingBlockVariants_ExtendedLarge4 },
+            {1870, BuildingBlockVariants_ExtendedLarge5 },
 
-            // HullArmormedFullLarge, HullArmoredThinLarge, HullArmoredExtendedLarge
-            {406,  new string[] {"Cube", "Cut Corner", "Corner Long A", "Corner Long B", "Corner Long C", "Corner Long D", "Corner Large A", "Corner", "Ramp Bottom", "Ramp Top", "Slope", "Curved Corner", "Round Cut Corner", "Round Corner", "Round Corner Long", "Round Slope", "Cylinder", "Inward Corner", "Inward Round Slope", "Inward Curved Corner", "Round Slope Edge Inward", "Cylinder End A", "Cylinder End B", "Cylinder End C", "Ramp Wedge Top", "Round 4 Way Connector", "Round Slope Edge", "Corner Large B", "Corner Large C", "Corner Large D", "Corner Long E", "Pyramid A" }},
-            {407,  new string[] {"Wall", "Wall L-shape", "Thin Slope", "Thin Corner", "Sloped Wall", "Sloped Wall Bottom (right)", "Sloped Wall Top (right)", "Sloped Wall Bottom (left)", "Sloped Wall Top (left)", "Round Corner Thin", "Round Slope Thin", "Round Cut Corner Thin", "Round Slope Edge Thin", "Round Corner Long Thin", "Corner Round Thin 2", "Corner Thin 2", "Wall 3 Corner", "Wall Half", "Cube Half", "Ramp Top Double", "Ramp Bottom A", "Ramp Bottom B", "Ramp Bottom C", "Ramp Wedge Bottom", "Beam", "Cylinder Thin", "Cylinder Thin T Joint", "Cylinder Thin Curved", "Cylinder Fence Bottom", "Cylinder Fence Top", "Slope Half" }},
-            {1787, new string[] {"Corner Small A", "Corner Small C", "CornerLongF", "CornerB", "WallCornerRound", "NotchedA", "NotchedB", "NotchedC", "CubeQuarter", "CylinderThinXJoint", "RampWedgeTopB", "CutCornerB" }},
+            // Wood (Parent: 396)
+            {397,  BuildingBlockVariants_FullLarge      },
+            {398,  BuildingBlockVariants_ThinLarge      },
+            {1782, BuildingBlockVariants_ExtendedLarge  },
+            {1824, BuildingBlockVariants_ExtendedLarge2 },
+            {1837, BuildingBlockVariants_ExtendedLarge3 },
+            {1850, BuildingBlockVariants_ExtendedLarge4 },
+            {1863, BuildingBlockVariants_ExtendedLarge5 },
 
-            // AlienFull, AlienThin, AlienExtended
-            {409,  new string[] {"Cube", "Cut Corner", "Corner Long A", "Corner Long B", "Corner Long C", "Corner Long D", "Corner Large A", "Corner", "Ramp Bottom", "Ramp Top", "Slope", "Curved Corner", "Round Cut Corner", "Round Corner", "Round Corner Long", "Round Slope", "Cylinder", "Inward Corner", "Inward Round Slope", "Inward Curved Corner", "Round Slope Edge Inward", "Cylinder End A", "Cylinder End B", "Cylinder End C", "Ramp Wedge Top", "Round 4 Way Connector", "Round Slope Edge", "Corner Large B", "Corner Large C", "Corner Large D", "Corner Long E", "Pyramid A" }},
-            {410,  new string[] {"Wall", "Wall L-shape", "Thin Slope", "Thin Corner", "Sloped Wall", "Sloped Wall Bottom (right)", "Sloped Wall Top (right)", "Sloped Wall Bottom (left)", "Sloped Wall Top (left)", "Round Corner Thin", "Round Slope Thin", "Round Cut Corner Thin", "Round Slope Edge Thin", "Round Corner Long Thin", "Corner Round Thin 2", "Corner Thin 2", "Wall 3 Corner", "Wall Half", "Cube Half", "Ramp Top Double", "Ramp Bottom A", "Ramp Bottom B", "Ramp Bottom C", "Ramp Wedge Bottom", "Beam", "Cylinder Thin", "Cylinder Thin T Joint", "Cylinder Thin Curved", "Cylinder Fence Bottom", "Cylinder Fence Top", "Slope Half" }},
-            {1789, new string[] {"Corner Small A", "Corner Small C", "CornerLongF", "CornerB", "WallCornerRound", "NotchedA", "NotchedB", "NotchedC", "CubeQuarter", "CylinderThinXJoint", "RampWedgeTopB", "CutCornerB" }},
+            // Concrete (Parent: 399)
+            {400,  BuildingBlockVariants_FullLarge      },
+            {401,  BuildingBlockVariants_ThinLarge      },
+            {1783, BuildingBlockVariants_ExtendedLarge  },
+            {1825, BuildingBlockVariants_ExtendedLarge2 },
+            {1838, BuildingBlockVariants_ExtendedLarge3 },
+            {1851, BuildingBlockVariants_ExtendedLarge4 },
+            {1864, BuildingBlockVariants_ExtendedLarge5 },
 
-            // HullCombatFullLarge, HullCombatThinLarge, HullCombatExtendedLarge
-            {412,  new string[] {"Cube", "Cut Corner", "Corner Long A", "Corner Long B", "Corner Long C", "Corner Long D", "Corner Large A", "Corner", "Ramp Bottom", "Ramp Top", "Slope", "Curved Corner", "Round Cut Corner", "Round Corner", "Round Corner Long", "Round Slope", "Cylinder", "Inward Corner", "Inward Round Slope", "Inward Curved Corner", "Round Slope Edge Inward", "Cylinder End A", "Cylinder End B", "Cylinder End C", "Ramp Wedge Top", "Round 4 Way Connector", "Round Slope Edge", "Corner Large B", "Corner Large C", "Corner Large D", "Corner Long E", "Pyramid A" }},
-            {413,  new string[] {"Wall", "Wall L-shape", "Thin Slope", "Thin Corner", "Sloped Wall", "Sloped Wall Bottom (right)", "Sloped Wall Top (right)", "Sloped Wall Bottom (left)", "Sloped Wall Top (left)", "Round Corner Thin", "Round Slope Thin", "Round Cut Corner Thin", "Round Slope Edge Thin", "Round Corner Long Thin", "Corner Round Thin 2", "Corner Thin 2", "Wall 3 Corner", "Wall Half", "Cube Half", "Ramp Top Double", "Ramp Bottom A", "Ramp Bottom B", "Ramp Bottom C", "Ramp Wedge Bottom", "Beam", "Cylinder Thin", "Cylinder Thin T Joint", "Cylinder Thin Curved", "Cylinder Fence Bottom", "Cylinder Fence Top", "Slope Half" }},
-            {1788, new string[] {"Corner Small A", "Corner Small C", "CornerLongF", "CornerB", "WallCornerRound", "NotchedA", "NotchedB", "NotchedC", "CubeQuarter", "CylinderThinXJoint", "RampWedgeTopB", "CutCornerB" }},
+            // Concrete Armored (Parent: 1322)
+            {1323, BuildingBlockVariants_FullLarge      },
+            {1324, BuildingBlockVariants_ThinLarge      },
+            {1784, BuildingBlockVariants_ExtendedLarge  },
+            {1826, BuildingBlockVariants_ExtendedLarge2 },
+            {1839, BuildingBlockVariants_ExtendedLarge3 },
+            {1852, BuildingBlockVariants_ExtendedLarge4 },
+            {1865, BuildingBlockVariants_ExtendedLarge5 },
+
+            // Hull Large (Parent: 402)
+            {403,  BuildingBlockVariants_FullLarge      },
+            {404,  BuildingBlockVariants_ThinLarge      },
+            {1786, BuildingBlockVariants_ExtendedLarge  },
+            {1828, BuildingBlockVariants_ExtendedLarge2 },
+            {1841, BuildingBlockVariants_ExtendedLarge3 },
+            {1854, BuildingBlockVariants_ExtendedLarge4 },
+            {1867, BuildingBlockVariants_ExtendedLarge5 },
+
+            // Hull Armormed Large (Parent: 405)
+            {406,  BuildingBlockVariants_FullLarge      },
+            {407,  BuildingBlockVariants_ThinLarge      },
+            {1787, BuildingBlockVariants_ExtendedLarge  },
+            {1829, BuildingBlockVariants_ExtendedLarge2 },
+            {1842, BuildingBlockVariants_ExtendedLarge3 },
+            {1855, BuildingBlockVariants_ExtendedLarge4 },
+            {1868, BuildingBlockVariants_ExtendedLarge5 },
+
+            // Alien Large (Parent: 1395)
+            {1396, BuildingBlockVariants_FullLarge      },
+            {1397, BuildingBlockVariants_ThinLarge      },
+            {1794, BuildingBlockVariants_ExtendedLarge  },
+            {1836, BuildingBlockVariants_ExtendedLarge2 },
+            {1849, BuildingBlockVariants_ExtendedLarge3 },
+            {1862, BuildingBlockVariants_ExtendedLarge4 },
+            {1875, BuildingBlockVariants_ExtendedLarge5 },
+
+            // Hull Combat Large (Parent: 411)
+            {412,  BuildingBlockVariants_FullLarge      },
+            {413,  BuildingBlockVariants_ThinLarge      },
+            {1788, BuildingBlockVariants_ExtendedLarge  },
+            {1830, BuildingBlockVariants_ExtendedLarge2 },
+            {1843, BuildingBlockVariants_ExtendedLarge3 },
+            {1856, BuildingBlockVariants_ExtendedLarge4 },
+            {1869, BuildingBlockVariants_ExtendedLarge5 },
 
             //Growing Plot Steel
             {462, new string[] {"Growing Plot Steel"}},
@@ -1161,7 +1323,7 @@ BlockType=959
             {1125, new string[] {"Stairs Wedge (texturable)", "Stairs Corner - right (texturable)", "Stairs Corner - left (texturable)" }},
             {1126, new string[] {"Stairs Wedge 2 (texturable)" }},
 
-            // "Truss Blocks": 
+            // TrussLargeBlocks (Parent: 1075 =0x433)
             // In the block count list "Truss Blocks" variants all count as block type 0x433!
             {416,  new string[] {"Cube" }},
             {705,  new string[] {"Corner" }},
@@ -1178,7 +1340,7 @@ BlockType=959
             {1415, new string[] {"Round Slope Thin" }},
             {1416, new string[] {"Corner Round Thin" }},
 
-            // "Window Blocks L":
+            // Window Large Blocks (Parent: 1128 =0x468)
             // TODO: In the block count list "Window Blocks L" variants all count as block type 0x468!
             {770,  new string[] {"Unknown", "Vertical 1x1" }},
             {796,  new string[] {"Unknown", "Vertical 1x2" }},
@@ -1202,11 +1364,6 @@ BlockType=959
             {1201, new string[] {"Unknown", "Round Corner Edge" }},
             {1202, new string[] {"Unknown", "Corner Thin" }},
 
-            // "Armored Concrete Blocks": ConcreteArmoredFull, ConcreteArmoredThin, ConcreteArmoredExtended
-            {1323, new string[] {"Cube", "Cut Corner", "Corner Long A", "Corner Long B", "Corner Long C", "Corner Long D", "Corner Large A", "Corner", "Ramp Bottom", "Ramp Top", "Slope", "Curved Corner", "Round Cut Corner", "Round Corner", "Round Corner Long", "Round Slope", "Cylinder", "Inward Corner", "Inward Round Slope", "Inward Curved Corner", "Round Slope Edge Inward", "Cylinder End A", "Cylinder End B", "Cylinder End C", "Ramp Wedge Top", "Round 4 Way Connector", "Round Slope Edge", "Corner Large B", "Corner Large C", "Corner Large D", "Corner Long E", "Pyramid A" }},
-            {1324, new string[] {"Wall", "Wall L-shape", "Thin Slope", "Thin Corner", "Sloped Wall", "Sloped Wall Bottom (right)", "Sloped Wall Top (right)", "Sloped Wall Bottom (left)", "Sloped Wall Top (left)", "Round Corner Thin", "Round Slope Thin", "Round Cut Corner Thin", "Round Slope Edge Thin", "Round Corner Long Thin", "Corner Round Thin 2", "Corner Thin 2", "Wall 3 Corner", "Wall Half", "Cube Half", "Ramp Top Double", "Ramp Bottom A", "Ramp Bottom B", "Ramp Bottom C", "Ramp Wedge Bottom", "Beam", "Cylinder Thin", "Cylinder Thin T Joint", "Cylinder Thin Curved", "Cylinder Fence Bottom", "Cylinder Fence Top", "Slope Half" }},
-            {1784, new string[] {"Corner Small A", "Corner Small C", "CornerLongF", "CornerB", "WallCornerRound", "NotchedA", "NotchedB", "NotchedC", "CubeQuarter", "CylinderThinXJoint", "RampWedgeTopB", "CutCornerB" }},
-
             // "Steel Blocks L - Destroyed": HullFullLargeDestroyed, HullThinLargeDestroyed
             {1387, new string[] {"Cube - Destroyed", "Cut Corner - Destroyed", "Corner Long A - Destroyed", "Corner Long B - Destroyed", "Corner Long C - Destroyed", "Corner Long D - Destroyed", "Corner Large A - Destroyed", "Corner - Destroyed", "Ramp Bottom - Destroyed", "Ramp Top - Destroyed", "Slope - Destroyed", "Curved Corner - Destroyed", "Round Cut Corner - Destroyed", "Round Corner - Destroyed", "Round Corner Long - Destroyed", "Round Slope - Destroyed", "Cylinder - Destroyed", "Inward Corner - Destroyed", "Inward Round Slope - Destroyed", "Inward Curved Corner - Destroyed", "Round Slope Edge Inward - Destroyed", "Cylinder End A - Destroyed", "Cylinder End B - Destroyed", "Cylinder End C - Destroyed", "Ramp Wedge Top - Destroyed", "Round 4 Way Connector - Destroyed", "Round Slope Edge - Destroyed", "Corner Large B - Destroyed", "Corner Large C - Destroyed", "Corner Large D - Destroyed", "Corner Long E - Destroyed", "Pyramid A - Destroyed" }},
             {1388, new string[] {"Wall - Destroyed", "Wall L-shape - Destroyed", "Thin Slope - Destroyed", "Thin Corner - Destroyed", "Sloped Wall - Destroyed", "Sloped Wall Bottom (right) - Destroyed", "Sloped Wall Top (right) - Destroyed", "Sloped Wall Bottom (left) - Destroyed", "Sloped Wall Top (left) - Destroyed", "Round Corner Thin - Destroyed", "Round Slope Thin - Destroyed", "Round Cut Corner Thin - Destroyed", "Round Slope Edge Thin - Destroyed", "Round Corner Long Thin - Destroyed", "Corner Round Thin 2 - Destroyed", "Corner Thin 2 - Destroyed", "Wall 3 Corner - Destroyed", "Wall Half - Destroyed", "Cube Half - Destroyed", "Ramp Top Double - Destroyed", "Ramp Bottom A - Destroyed", "Ramp Bottom B - Destroyed", "Ramp Bottom C - Destroyed", "Ramp Wedge Bottom - Destroyed", "Beam - Destroyed", "Cylinder Thin - Destroyed", "Cylinder Thin T Joint - Destroyed", "Cylinder Thin Curved - Destroyed", "Cylinder Fence Bottom - Destroyed", "Cylinder Fence Top - Destroyed", "Slope Half - Destroyed" }},
@@ -1214,10 +1371,6 @@ BlockType=959
             // "Concrete Blocks L - Destroyed": ConcreteFullDestroyed, ConcreteThinDestroyed
             {1393, new string[] {"Cube - Destroyed", "Cut Corner - Destroyed", "Corner Long A - Destroyed", "Corner Long B - Destroyed", "Corner Long C - Destroyed", "Corner Long D - Destroyed", "Corner Large A - Destroyed", "Corner - Destroyed", "Ramp Bottom - Destroyed", "Ramp Top - Destroyed", "Slope - Destroyed", "Curved Corner - Destroyed", "Round Cut Corner - Destroyed", "Round Corner - Destroyed", "Round Corner Long - Destroyed", "Round Slope - Destroyed", "Cylinder - Destroyed", "Inward Corner - Destroyed", "Inward Round Slope - Destroyed", "Inward Curved Corner - Destroyed", "Round Slope Edge Inward - Destroyed", "Cylinder End A - Destroyed", "Cylinder End B - Destroyed", "Cylinder End C - Destroyed", "Ramp Wedge Top - Destroyed", "Round 4 Way Connector - Destroyed", "Round Slope Edge - Destroyed", "Corner Large B - Destroyed", "Corner Large C - Destroyed", "Corner Large D - Destroyed", "Corner Long E - Destroyed", "Pyramid A - Destroyed" }},
             {1394, new string[] {"Wall - Destroyed", "Wall L-shape - Destroyed", "Thin Slope - Destroyed", "Thin Corner - Destroyed", "Sloped Wall - Destroyed", "Sloped Wall Bottom (right) - Destroyed", "Sloped Wall Top (right) - Destroyed", "Sloped Wall Bottom (left) - Destroyed", "Sloped Wall Top (left) - Destroyed", "Round Corner Thin - Destroyed", "Round Slope Thin - Destroyed", "Round Cut Corner Thin - Destroyed", "Round Slope Edge Thin - Destroyed", "Round Corner Long Thin - Destroyed", "Corner Round Thin 2 - Destroyed", "Corner Thin 2 - Destroyed", "Wall 3 Corner - Destroyed", "Wall Half - Destroyed", "Cube Half - Destroyed", "Ramp Top Double - Destroyed", "Ramp Bottom A - Destroyed", "Ramp Bottom B - Destroyed", "Ramp Bottom C - Destroyed", "Ramp Wedge Bottom - Destroyed", "Beam - Destroyed", "Cylinder Thin - Destroyed", "Cylinder Thin T Joint - Destroyed", "Cylinder Thin Curved - Destroyed", "Cylinder Fence Bottom - Destroyed", "Cylinder Fence Top - Destroyed", "Slope Half - Destroyed" }},
-
-            // "Xeno Steel Blocks": AlienFullLarge, AlienThinLarge
-            {1396, new string[] {"Cube", "Cut Corner", "Corner Long A", "Corner Long B", "Corner Long C", "Corner Long D", "Corner Large A", "Corner", "Ramp Bottom", "Ramp Top", "Slope", "Curved Corner", "Round Cut Corner", "Round Corner", "Round Corner Long", "Round Slope", "Cylinder", "Inward Corner", "Inward Round Slope", "Inward Curved Corner", "Round Slope Edge Inward", "Cylinder End A", "Cylinder End B", "Cylinder End C", "Ramp Wedge Top", "Round 4 Way Connector", "Round Slope Edge", "Corner Large B", "Corner Large C", "Corner Large D", "Corner Long E", "Pyramid A" }},
-            {1397, new string[] {"Wall", "Wall L-shape", "Thin Slope", "Thin Corner", "Sloped Wall", "Sloped Wall Bottom (right)", "Sloped Wall Top (right)", "Sloped Wall Bottom (left)", "Sloped Wall Top (left)", "Round Corner Thin", "Round Slope Thin", "Round Cut Corner Thin", "Round Slope Edge Thin", "Round Corner Long Thin", "Corner Round Thin 2", "Corner Thin 2", "Wall 3 Corner", "Wall Half", "Cube Half", "Ramp Top Double", "Ramp Bottom A", "Ramp Bottom B", "Ramp Bottom C", "Ramp Wedge Bottom", "Beam", "Cylinder Thin", "Cylinder Thin T Joint", "Cylinder Thin Curved", "Cylinder Fence Bottom", "Cylinder Fence Top", "Slope Half" }},
         };
 
         public enum FaceIndex
