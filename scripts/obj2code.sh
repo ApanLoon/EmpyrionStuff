@@ -3,10 +3,10 @@
 ## Convert OBJ file as exported from Realsof3D to C# code suitable for
 ## EPBLab/ViewModel/BlocksViewModel.cs. Object hierarchy must conform to
 ##
-##  xx/Block/Variant/face
+##  xx/Block/nn Variant/face
 ##
-## where xx can be anything and face is the name of the SDS object, one for
-## each "side".
+## where xx can be anything, nn is the two-digit variant index and face is
+## the name of the SDS object, one for each "side".
 ##
 ## Settings for Realsoft3D OBJ exporter:
 ##
@@ -31,15 +31,18 @@ BEGIN \
 {
     block="";
     variant="";
+    variantIndex=0;
     face="";
     totalVCount=0;
     faceVCount=0;
-    printf ("        #region AddGeometry\n");
+    printf ("        #region MeshGenerators\n");
 }
 /^g/\
 {
     newBlock = $4;
-    newVariant = $5;
+    split($5, a, "_");
+    newVariantIndex = a[1] + 0; ## Add zero to force numeric variable ("00" => 0)
+    newVariant = a[2];
     newFace = convertFace($6);
 
     if (newBlock != block)
@@ -55,8 +58,11 @@ BEGIN \
             closeVariant();
         }
         variant = newVariant;
+        variantIndex = newVariantIndex;
         face = "";               # Prevent close face
-        printf ("        private int AddGeometry_%s(MeshGeometry3D mesh, EpbColourIndex[] colours, int faceIndex)\n        {\n", strip(variant));
+        methodName = sprintf("AddMesh_%s", strip(variant));
+        meshGenerators[block][variantIndex] =  methodName;
+        printf ("        private static int %s(EpBlueprint blueprint, MeshGeometry3D mesh, EpbColourIndex[] colours, int faceIndex)\n        {\n", methodName);
     }
 
     if (newFace != face)
@@ -78,7 +84,7 @@ BEGIN \
 }
 /^vt /\
 {
-    printf ("            mesh.TextureCoordinates.Add(GetUV(colours[(int)EpbBlock.FaceIndex.%s], %f, %f));\n", face, $2, $3);
+    printf ("            mesh.TextureCoordinates.Add(GetUV(blueprint, colours[(int)EpbBlock.FaceIndex.%s], %f, %f));\n", face, $2, $3);
 }
 /^vn /\
 {
@@ -97,7 +103,25 @@ END \
     {
         closeVariant();
     }
-    printf ("        #endregion AddGeometry\n");
+    printf ("        #endregion MeshGenerators\n");
+    printf ("        #region MeshGeneratorLookups\n");
+    for (key in meshGenerators)
+    {
+        variableName = sprintf ("%s_MeshGenerators", key);
+        printf ("        private MeshGenerator[] %s = {", variableName);
+        for (i = 0; i < 32; i++)
+        {
+            generator = meshGenerators[key][i];
+            if (generator == "")
+            {
+                generator = "null";
+            }
+            printf ("%s, ", generator);
+        }
+        printf ("};\n");
+    }
+    printf ("        #endregion MeshGeneratorLookups\n");
+
 }
 function closeFace()
 {

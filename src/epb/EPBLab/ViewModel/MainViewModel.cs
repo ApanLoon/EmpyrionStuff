@@ -100,12 +100,13 @@ namespace EPBLab.ViewModel
 
         static EpBlueprint CreateHullVariants()
         {
-            EpBlueprint blueprint = new EpBlueprint(EpBlueprint.EpbType.SmallVessel, 16, 1, 20);
+            UInt16[] types = { 381, 382, 1791, 1833, 1846, 1859, 1872 }; // HullFullSmall, HullThinSmall, HullExtendedSmall, HullExtendedSmall2, HullExtendedSmall3, HullExtendedSmall4, HullExtendedSmall5
+            EpBlueprint blueprint = new EpBlueprint(EpBlueprint.EpbType.SmallVessel, 16, (UInt32)types.Length * 2, 20);
 
-            UInt16[] types = new UInt16[] {381, 382, 1791}; // HullFullSmall, HullThinSmall, HullExtendedSmall
-            int i = 0;
+            byte y = 0;
             foreach (UInt16 t in types)
             {
+                int i = 0;
                 foreach (string variantName in EpbBlock.BlockVariants[t])
                 {
                     byte x = (byte)((i % 8) * 2);
@@ -113,7 +114,7 @@ namespace EPBLab.ViewModel
                     EpbBlock.EpbBlockType bt = EpbBlock.BlockTypes[t];
                     byte v = EpbBlock.GetVariant(t, variantName);
                     EpbBlock block =
-                        new EpbBlock(new EpbBlockPos(x, 0, z))
+                        new EpbBlock(new EpbBlockPos(x, y, z))
                         {
                             BlockType = bt,
                             Variant = v,
@@ -130,6 +131,8 @@ namespace EPBLab.ViewModel
                     blueprint.SetBlock(block);
                     i++;
                 }
+
+                y += 2;
             }
 
             return blueprint;
