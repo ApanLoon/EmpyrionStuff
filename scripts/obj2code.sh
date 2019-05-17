@@ -35,7 +35,32 @@ BEGIN \
     face="";
     totalVCount=0;
     faceVCount=0;
-    printf ("        #region MeshGenerators\n");
+
+    printf ("using System.Windows;\r\n");
+    printf ("using System.Windows.Media;\r\n");
+    printf ("using System.Windows.Media.Media3D;\r\n");
+    printf ("using EPBLib;\r\n");
+    printf ("using EPBLib.BlockData;\r\n");
+    printf ("\r\n");
+    printf ("namespace EPBLab.ViewModel.BlockMeshes\r\n");
+    printf ("{\r\n");
+    printf ("    public static class MeshGenerators\r\n");
+    printf ("    {\r\n");
+    printf ("        public delegate int MeshGenerator(EpBlueprint blueprint, MeshGeometry3D mesh, EpbColourIndex[] colours, int faceIndex);\r\n");
+    printf ("\r\n");
+    printf ("        public static void AddTriangle(Int32Collection triangles, int a, int b, int c)\r\n");
+    printf ("        {\r\n");
+    printf ("            triangles.Add(a);\r\n");
+    printf ("            triangles.Add(b);\r\n");
+    printf ("            triangles.Add(c);\r\n");
+    printf ("        }\r\n");
+    printf ("        public static Point GetUV(EpBlueprint blueprint, EpbColourIndex c, double s, double t)\r\n");
+    printf ("        {\r\n");
+    printf ("            Point p = new Point((double)c / (blueprint.Palette.Length - 1), t);\r\n");
+    printf ("            return p;\r\n");
+    printf ("        }\r\n");
+    printf ("\r\n");
+    printf ("        #region MeshGenerators\r\n");
 }
 /^g/\
 {
@@ -48,7 +73,7 @@ BEGIN \
     if (newBlock != block)
     {
         block = newBlock;
-        printf ("\n        //%s\n", strip(block));
+        printf ("        //%s\r\n", strip(block));
     }
 
     if (newVariant != variant)
@@ -62,7 +87,7 @@ BEGIN \
         face = "";               # Prevent close face
         methodName = sprintf("AddMesh_%s", strip(variant));
         meshGenerators[block][variantIndex] =  methodName;
-        printf ("        private static int %s(EpBlueprint blueprint, MeshGeometry3D mesh, EpbColourIndex[] colours, int faceIndex)\n        {\n", methodName);
+        printf ("        private static int %s(EpBlueprint blueprint, MeshGeometry3D mesh, EpbColourIndex[] colours, int faceIndex)\r\n        {\r\n", methodName);
     }
 
     if (newFace != face)
@@ -73,29 +98,29 @@ BEGIN \
         }
         face = newFace;
         faceVCount = 0;
-        printf ("            // %s\n", strip(face));
+        printf ("            // %s\r\n", strip(face));
     }
 }
 /^v /\
 {
     totalVCount = totalVCount + 1;
     faceVCount = faceVCount + 1;
-    printf ("            mesh.Positions.Add(new Point3D(%f, %f, %f));\n", $2, $3, $4);
+    printf ("            mesh.Positions.Add(new Point3D(%f, %f, %f));\r\n", $2, $3, $4);
 }
 /^vt /\
 {
-    printf ("            mesh.TextureCoordinates.Add(GetUV(blueprint, colours[(int)EpbBlock.FaceIndex.%s], %f, %f));\n", face, $2, $3);
+    printf ("            mesh.TextureCoordinates.Add(GetUV(blueprint, colours[(int)EpbBlock.FaceIndex.%s], %f, %f));\r\n", face, $2, $3);
 }
 /^vn /\
 {
-    printf ("            mesh.Normals.Add(new Vector3D(%f, %f, %f));\n", $2, $3, $4);
+    printf ("            mesh.Normals.Add(new Vector3D(%f, %f, %f));\r\n", $2, $3, $4);
 }
 /^f /\
 {
     i = vertexIndex($2) - (totalVCount - faceVCount + 1);
     j = vertexIndex($3) - (totalVCount - faceVCount + 1);
     k = vertexIndex($4) - (totalVCount - faceVCount + 1);
-    printf ("            AddTriangle(mesh.TriangleIndices, faceIndex + %d, faceIndex + %d, faceIndex + %d);\n", i, j, k);
+    printf ("            AddTriangle(mesh.TriangleIndices, faceIndex + %d, faceIndex + %d, faceIndex + %d);\r\n", i, j, k);
 }
 END \
 {
@@ -103,12 +128,12 @@ END \
     {
         closeVariant();
     }
-    printf ("        #endregion MeshGenerators\n");
-    printf ("        #region MeshGeneratorLookups\n");
+    printf ("        #endregion MeshGenerators\r\n");
+    printf ("        #region MeshGeneratorLookups\r\n");
     for (key in meshGenerators)
     {
         variableName = sprintf ("%s_MeshGenerators", key);
-        printf ("        private MeshGenerator[] %s = {", variableName);
+        printf ("        public static MeshGenerator[] %s = {", variableName);
         for (i = 0; i < 32; i++)
         {
             generator = meshGenerators[key][i];
@@ -118,18 +143,19 @@ END \
             }
             printf ("%s, ", generator);
         }
-        printf ("};\n");
+        printf ("};\r\n");
     }
-    printf ("        #endregion MeshGeneratorLookups\n");
-
+    printf ("        #endregion MeshGeneratorLookups\r\n");
+    printf ("    }\r\n");
+    printf ("}\r\n");
 }
 function closeFace()
 {
-    printf ("            faceIndex += %d;\n", faceVCount);
+    printf ("            faceIndex += %d;\r\n", faceVCount);
 }
 function closeVariant()
 {
-    printf ("            return faceIndex;\n        }\n");
+    printf ("            return faceIndex;\r\n        }\r\n");
 }
 function vertexIndex(s)
 {

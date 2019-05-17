@@ -88,6 +88,7 @@
     <Compile Include="Model\DataItem.cs" />
     <Compile Include="Model\DataService.cs" />
     <Compile Include="Model\IDataService.cs" />
+    <Compile Include="ViewModel\BlockMeshes\MeshGenerators.cs" />
     <Compile Include="ViewModel\BlocksViewModel.cs" />
     <Compile Include="ViewModel\BlueprintViewModel.cs" />
     <Compile Include="ViewModel\Logic\ConnectionPointViewModel.cs" />
@@ -232,9 +233,7 @@
       <Name>EPBLib</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModel\3D\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
