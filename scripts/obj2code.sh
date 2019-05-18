@@ -3,10 +3,10 @@
 ## Convert OBJ file as exported from Realsof3D to C# code suitable for
 ## EPBLab/ViewModel/BlocksViewModel.cs. Object hierarchy must conform to
 ##
-##  xx/Block/nn Variant/face
+##  Export/Block/nn Variant/face
 ##
-## where xx can be anything, nn is the two-digit variant index and face is
-## the name of the SDS object, one for each "side".
+## where nn is the two-digit variant index and face is the name of the
+## SDS object, one for each "side".
 ##
 ## Settings for Realsoft3D OBJ exporter:
 ##
@@ -35,6 +35,7 @@ BEGIN \
     face="";
     totalVCount=0;
     faceVCount=0;
+    ignoreObject=0;
 
     printf ("using System.Windows;\r\n");
     printf ("using System.Windows.Media;\r\n");
@@ -64,6 +65,13 @@ BEGIN \
 }
 /^g/\
 {
+    if ($3 != "Export")
+    {
+        ignoreObject = 1;
+        next;
+    }
+    ignoreObject = 0;
+
     newBlock = $4;
     split($5, a, "_");
     newVariantIndex = a[1] + 0; ## Add zero to force numeric variable ("00" => 0)
@@ -103,20 +111,36 @@ BEGIN \
 }
 /^v /\
 {
+    if (ignoreObject)
+    {
+        next;
+    }
     totalVCount = totalVCount + 1;
     faceVCount = faceVCount + 1;
     printf ("            mesh.Positions.Add(new Point3D(%f, %f, %f));\r\n", $2, $3, $4);
 }
 /^vt /\
 {
+    if (ignoreObject)
+    {
+        next;
+    }
     printf ("            mesh.TextureCoordinates.Add(GetUV(blueprint, colours[(int)EpbBlock.FaceIndex.%s], %f, %f));\r\n", face, $2, $3);
 }
 /^vn /\
 {
+    if (ignoreObject)
+    {
+        next;
+    }
     printf ("            mesh.Normals.Add(new Vector3D(%f, %f, %f));\r\n", $2, $3, $4);
 }
 /^f /\
 {
+    if (ignoreObject)
+    {
+        next;
+    }
     i = vertexIndex($2) - (totalVCount - faceVCount + 1);
     j = vertexIndex($3) - (totalVCount - faceVCount + 1);
     k = vertexIndex($4) - (totalVCount - faceVCount + 1);

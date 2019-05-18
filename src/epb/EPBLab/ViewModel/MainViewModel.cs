@@ -109,26 +109,29 @@ namespace EPBLab.ViewModel
                 int i = 0;
                 foreach (string variantName in EpbBlock.BlockVariants[t])
                 {
-                    byte x = (byte)((i % 8) * 2);
-                    byte z = (byte)((i / 8) * 2);
-                    EpbBlock.EpbBlockType bt = EpbBlock.BlockTypes[t];
-                    byte v = EpbBlock.GetVariant(t, variantName);
-                    EpbBlock block =
-                        new EpbBlock(new EpbBlockPos(x, y, z))
-                        {
-                            BlockType = bt,
-                            Variant = v,
-                            Colours =
+                    if (variantName != null)
+                    {
+                        byte x = (byte)((i % 8) * 2);
+                        byte z = (byte)((i / 8) * 2);
+                        EpbBlock.EpbBlockType bt = EpbBlock.BlockTypes[t];
+                        byte v = EpbBlock.GetVariant(t, variantName);
+                        EpbBlock block =
+                            new EpbBlock(new EpbBlockPos(x, y, z))
                             {
-                                [0] = EpbColourIndex.Red,
-                                [1] = EpbColourIndex.BrightGreen,
-                                [2] = EpbColourIndex.Blue,
-                                [3] = EpbColourIndex.Cyan,
-                                [4] = EpbColourIndex.Purple,
-                                [5] = EpbColourIndex.Yellow
-                            }
-                        };
-                    blueprint.SetBlock(block);
+                                BlockType = bt,
+                                Variant = v,
+                                Colours =
+                                {
+                                    [0] = EpbColourIndex.Red,
+                                    [1] = EpbColourIndex.BrightGreen,
+                                    [2] = EpbColourIndex.Blue,
+                                    [3] = EpbColourIndex.Cyan,
+                                    [4] = EpbColourIndex.Purple,
+                                    [5] = EpbColourIndex.Yellow
+                                }
+                            };
+                        blueprint.SetBlock(block);
+                    }
                     i++;
                 }
 

@@ -584,6 +584,5 @@ namespace EPBLab.ViewModel
             MeshGenerators.AddTriangle(mesh.TriangleIndices, faceIndex + 3, faceIndex + 1, faceIndex + 2);
             return faceIndex;
         }
-
     }
 }
