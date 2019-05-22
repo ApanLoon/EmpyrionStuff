@@ -1533,7 +1533,7 @@ BlockType=959
         }
 
 
-        protected Dictionary<string, EpbBlockTag> Tags = new Dictionary<string, EpbBlockTag>();
+        public Dictionary<string, EpbBlockTag> Tags = new Dictionary<string, EpbBlockTag>();
 
         public void AddTag(EpbBlockTag tag)
         {

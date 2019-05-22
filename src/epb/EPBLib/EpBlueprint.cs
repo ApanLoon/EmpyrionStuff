@@ -67,5 +67,34 @@ namespace EPBLib
             // TODO: Update blockCounts
             Blocks[block.Position] = block;
         }
+
+        /// <summary>
+        /// Sets the dimensions of this blueprint to the minimum that encloses all its blocks.
+        /// </summary>
+        public void UpdateDimensions()
+        {
+            UInt32 width = 0;
+            UInt32 height = 0;
+            UInt32 depth = 0;
+            foreach (EpbBlock block in Blocks)
+            {
+                EpbBlockPos pos = block.Position;
+                if (pos.X >= width)
+                {
+                    width = (UInt32)pos.X + 1;
+                }
+                if (pos.Y >= height)
+                {
+                    height = (UInt32)pos.Y + 1;
+                }
+                if (pos.Z >= depth)
+                {
+                    depth = (UInt32)pos.Z + 1;
+                }
+            }
+            Width = width;
+            Height = height;
+            Depth = depth;
+        }
     }
 }
