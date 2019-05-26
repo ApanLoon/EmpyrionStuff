@@ -41,17 +41,14 @@ namespace EPBLib
         public UInt32 UnknownCount02 { get; set; }
         public UInt32 UnknownCount03 { get; set; }
         public UInt32 TriangleCount { get; set; }
-
         public List<EpbDeviceGroup> DeviceGroups;
         public EpbBlockList Blocks { get; set; }
-
         public byte[] Unknown07 { get; set; }
-
         public List<EpbSignalSource> SignalSources = new List<EpbSignalSource>();
         public List<EpbSignalTarget> SignalTargets = new List<EpbSignalTarget>();
         public List<EpbSignalOperator> SignalOperators = new List<EpbSignalOperator>();
-
         public List<string> CustomNames = new List<string>();
+        public Dictionary<string, byte[]> Unknown08 = new Dictionary<string, byte[]>();
 
         public EpbPalette Palette = new EpbPalette();
         #endregion Properties

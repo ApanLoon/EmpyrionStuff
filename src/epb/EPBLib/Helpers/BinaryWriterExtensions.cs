@@ -397,9 +397,15 @@ namespace EPBLib.Helpers
 
         private static long AddUnknown08ToList(EpBlueprint epb, long byteCount, List<byte> byteList)
         {
-            //TODO: Save the actual thing
-            UInt16 nUnknown08 = 0;
+            UInt16 nUnknown08 = (UInt16)epb.Unknown08.Count;
             byteList.AddRange(BitConverter.GetBytes(nUnknown08));
+            byteCount += 2;
+            foreach (string key in epb.Unknown08.Keys)
+            {
+                byteCount += AddStringToList(epb, byteList, key);
+                byteList.AddRange(epb.Unknown08[key]);
+                byteCount += epb.Unknown08[key].Length;
+            }
             return byteCount;
         }
 

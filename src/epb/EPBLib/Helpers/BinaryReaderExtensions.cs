@@ -999,6 +999,7 @@ namespace EPBLib.Helpers
                 byte[] unknown = reader.ReadBytes(8);
                 bytesLeft -= 8;
                 Console.WriteLine($"    {i}: {unknown.ToHexString()} \"{name}\"");
+                epb.Unknown08[name] = unknown;
             }
             return bytesLeft;
         }
