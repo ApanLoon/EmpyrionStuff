@@ -976,6 +976,7 @@ namespace EPBLib.Helpers
             {
                 string s = ReadEpString(reader, ref bytesLeft);
                 Console.WriteLine($"    {i}: \"{s}\"");
+                epb.CustomNames.Add(s);
             }
             return bytesLeft;
         }

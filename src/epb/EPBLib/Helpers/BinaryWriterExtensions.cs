@@ -385,9 +385,13 @@ namespace EPBLib.Helpers
 
         private static long AddCustomNamesToList(EpBlueprint epb, long byteCount, List<byte> byteList)
         {
-            //TODO: Save the actual thing
-            UInt16 nCustom = 0;
+            UInt16 nCustom = (UInt16)epb.CustomNames.Count;
             byteList.AddRange(BitConverter.GetBytes(nCustom));
+            byteCount += 2;
+            foreach (string name in epb.CustomNames)
+            {
+                byteCount += AddStringToList(epb, byteList, name);
+            }
             return byteCount;
         }
 

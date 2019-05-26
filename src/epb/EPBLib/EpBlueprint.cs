@@ -50,6 +50,9 @@ namespace EPBLib
         public List<EpbSignalSource> SignalSources = new List<EpbSignalSource>();
         public List<EpbSignalTarget> SignalTargets = new List<EpbSignalTarget>();
         public List<EpbSignalOperator> SignalOperators = new List<EpbSignalOperator>();
+
+        public List<string> CustomNames = new List<string>();
+
         public EpbPalette Palette = new EpbPalette();
         #endregion Properties
 
