@@ -438,6 +438,11 @@ namespace EPBLib.Helpers
             {
                 UInt16 damage = r.ReadUInt16();
                 damageStateCount++;
+                EpbBlock block = epb.Blocks[x, y, z];
+                if (block != null)
+                {
+                    block.DamageState = damage;
+                }
                 Console.WriteLine(
                     $"    {damageStateCount,5} ({x,4}, {y,4}, {z,4}): {damage} (0x{damage:x4})");
                 return b - 2;

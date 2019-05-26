@@ -130,7 +130,15 @@ namespace EPBLib.Helpers
 
         private static long AddDamageStatesToList(EpBlueprint epb, long byteCount, List<byte> byteList)
         {
-            byteCount += AddEpbMatrixToList(epb, byteList, (blueprint, block, list) => { return false; });
+            byteCount += AddEpbMatrixToList(epb, byteList, (blueprint, block, list) =>
+            {
+                if (block == null || block.DamageState == 0)
+                {
+                    return false;
+                }
+                list.AddRange(BitConverter.GetBytes(block.DamageState));
+                return true;
+            });
             return byteCount;
         }
 

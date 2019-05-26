@@ -1462,6 +1462,8 @@ BlockType=959
             set => Variant = GetVariant(BlockType.Id, value);
         }
 
+        public UInt16 DamageState {get; set;}
+        
         public EpbColourIndex[] Colours = new EpbColourIndex[6];     // 5 bit colour index
         public byte[] Textures = new byte[6];        // 6 bit texture index
         public bool[] TextureFlips = new bool[6];
