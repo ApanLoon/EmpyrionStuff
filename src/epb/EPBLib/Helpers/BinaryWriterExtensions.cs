@@ -88,10 +88,6 @@ namespace EPBLib.Helpers
             byteCount = AddCustomPalettesToList(epb, byteCount, byteList);
 
             byte[] blockBuffer = byteList.ToArray();
-
-
-
-
             using (MemoryStream outputMemStream = new MemoryStream())
             {
                 using (MemoryStream memStreamIn = new MemoryStream(blockBuffer))
@@ -298,7 +294,7 @@ namespace EPBLib.Helpers
                 if (block.Tags.Count != 0)
                 {
                     byteCount += AddBlockPosToList(epb, l, block.Position);
-                    l.Add(0); // Unknown06
+                    l.Add(1); // Unknown06
                     byteCount += 1;
                     byteCount += AddBlockTagListToList(epb, l, block.Tags.Values.ToArray()); // TODO: Is the order of these significant?
                     nBlocks++;
@@ -312,9 +308,9 @@ namespace EPBLib.Helpers
 
         private static long AddUnknown07ToList(EpBlueprint epb, long byteCount, List<byte> byteList)
         {
-            //TODO: Save the actual thing
-            UInt16 nUnknown07 = 0;
+            UInt16 nUnknown07 = (UInt16)(epb.Unknown07.Length / 6);
             byteList.AddRange(BitConverter.GetBytes(nUnknown07));
+            byteList.AddRange(epb.Unknown07);
             return byteCount;
         }
 

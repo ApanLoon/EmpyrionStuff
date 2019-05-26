@@ -715,7 +715,7 @@ namespace EPBLib.Helpers
                 UInt16 nTags = reader.ReadUInt16();
                 bytesLeft -= 2;
 
-                Console.WriteLine($"{pos}, {unknown06:x2}, {nTags}");
+                Console.WriteLine($"{pos}, Unknown06: {unknown06:x2}, Count: {nTags}");
 
                 EpbBlock block = epb.Blocks[pos.X, pos.Y, pos.Z];
 
@@ -741,9 +741,9 @@ namespace EPBLib.Helpers
 
             UInt16 unknown07Count = reader.ReadUInt16();
             bytesLeft -= 2;
-            byte[] unknown07 = reader.ReadBytes(unknown07Count * 6);
+            epb.Unknown07 = reader.ReadBytes(unknown07Count * 6);
             bytesLeft -= unknown07Count * 6;
-            Console.WriteLine($"Unknown07: {unknown07.ToHexString()}");
+            Console.WriteLine($"Unknown07: {epb.Unknown07.ToHexString()}");
             return bytesLeft;
         }
         #endregion Unknown07

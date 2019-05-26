@@ -44,10 +44,13 @@ namespace EPBLib
 
         public List<EpbDeviceGroup> DeviceGroups;
         public EpbBlockList Blocks { get; set; }
-        public EpbPalette Palette = new EpbPalette();
+
+        public byte[] Unknown07 { get; set; }
+
         public List<EpbSignalSource> SignalSources = new List<EpbSignalSource>();
         public List<EpbSignalTarget> SignalTargets = new List<EpbSignalTarget>();
         public List<EpbSignalOperator> SignalOperators = new List<EpbSignalOperator>();
+        public EpbPalette Palette = new EpbPalette();
         #endregion Properties
 
         public EpBlueprint (EpbType type = EpbType.Base, UInt32 width = 0, UInt32 height = 0, UInt32 depth = 0)
