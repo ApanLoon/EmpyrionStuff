@@ -273,7 +273,7 @@ namespace epb
 
             EpMetaTag02 metaTag08 = new EpMetaTag02(EpMetaTagKey.BuildVersion)
             {
-                Value = 0x064a,
+                Value = 1838,
                 Unknown = 0
             };
             epb.MetaTags.Add(metaTag08.Key, metaTag08);
