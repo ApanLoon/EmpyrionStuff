@@ -318,6 +318,7 @@ namespace EPBLib.Helpers
         {
             UInt16 nSignalSources = (UInt16)epb.SignalSources.Count;
             byteList.AddRange(BitConverter.GetBytes(nSignalSources));
+            byteCount += 2;
             foreach (EpbSignalSource source in epb.SignalSources)
             {
                 byteList.Add(source.Unknown01);
@@ -326,13 +327,44 @@ namespace EPBLib.Helpers
             return byteCount;
         }
 
-
-
         private static long AddSignalTargetsToList(EpBlueprint epb, long byteCount, List<byte> byteList)
         {
-            //TODO: Save the actual thing
+            UInt16 nSignalSources = 0;
+            List<byte> bufAll = new List<byte>();
+            List<byte> bufOne = new List<byte>();
+            string signalName = "";
             UInt16 nSignalTargets = 0;
-            byteList.AddRange(BitConverter.GetBytes(nSignalTargets));
+            foreach (EpbSignalTarget target in epb.SignalTargets.OrderBy(target => target.SignalName))
+            {
+                if (signalName != target.SignalName)
+                {
+                    if (nSignalTargets != 0)
+                    {
+                        bufAll.AddRange(BitConverter.GetBytes(nSignalTargets));
+                        byteCount += 2;
+                        bufAll.AddRange(bufOne.ToArray());
+                        bufOne.Clear();
+                        nSignalTargets = 0;
+                    }
+                    signalName = target.SignalName;
+                    byteCount += AddStringToList(epb, bufAll, signalName);
+                    nSignalSources++;
+                }
+                bufOne.Add(target.Unknown01);
+                byteCount += 1;
+                byteCount += AddBlockTagListToList(epb, bufOne, target.Tags.Values.ToArray()); // TODO: Is the order of these significant?
+                nSignalTargets++;
+            }
+            if (nSignalTargets != 0)
+            {
+                bufAll.AddRange(BitConverter.GetBytes(nSignalTargets));
+                byteCount += 2;
+                bufAll.AddRange(bufOne.ToArray());
+            }
+
+            byteList.AddRange(BitConverter.GetBytes(nSignalSources));
+            byteCount += 2;
+            byteList.AddRange(bufAll.ToArray());
             return byteCount;
         }
 
