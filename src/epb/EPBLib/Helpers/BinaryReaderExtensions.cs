@@ -53,10 +53,9 @@ namespace EPBLib.Helpers
 
             EpBlueprint epb = new EpBlueprint(type, width, height, depth);
 
-            UInt16 unknown01 = reader.ReadUInt16();
+            epb.Unknown01 = reader.ReadUInt16();
             bytesLeft -= 2;
-
-            Console.WriteLine($"Unknown01: {unknown01}");
+            Console.WriteLine($"Unknown01: {epb.Unknown01}");
 
             epb.MetaTags = reader.ReadEpMetaTagDictionary(ref bytesLeft);
             foreach (EpMetaTag tag in epb.MetaTags.Values)
@@ -65,37 +64,37 @@ namespace EPBLib.Helpers
             }
 
 
-            UInt16 unknown02 = reader.ReadUInt16();
+            epb.Unknown02 = reader.ReadUInt16();
             bytesLeft -= 2;
-            Console.WriteLine($"Unknown02: 0x{unknown02:x4}");
+            Console.WriteLine($"Unknown02: 0x{epb.Unknown02:x4}");
 
-            UInt32 nLights = reader.ReadUInt32();
+            epb.LightCount = reader.ReadUInt32();
             bytesLeft -= 4;
-            Console.WriteLine($"nLights:        {nLights} (0x{nLights:x8})");
-            UInt32 unknownCount01 = reader.ReadUInt32();
+            Console.WriteLine($"LightCount:     {epb.LightCount} (0x{epb.LightCount:x8})");
+            epb.UnknownCount01 = reader.ReadUInt32();
             bytesLeft -= 4;
-            Console.WriteLine($"unknownCount01: {unknownCount01} (0x{unknownCount01:x8})");
-            UInt32 nDevices = reader.ReadUInt32();
+            Console.WriteLine($"UnknownCount01: {epb.UnknownCount01} (0x{epb.UnknownCount01:x8})");
+            epb.DeviceCount = reader.ReadUInt32();
             bytesLeft -= 4;
-            Console.WriteLine($"nDevices:       {nDevices} (0x{nDevices:x8})");
-            UInt32 unknownCount02 = reader.ReadUInt32();
+            Console.WriteLine($"DeviceCount:    {epb.DeviceCount} (0x{epb.DeviceCount:x8})");
+            epb.UnknownCount02 = reader.ReadUInt32();
             bytesLeft -= 4;
-            Console.WriteLine($"unknownCount02: {unknownCount02} (0x{unknownCount02:x8})");
+            Console.WriteLine($"UnknownCount02: {epb.UnknownCount02} (0x{epb.UnknownCount02:x8})");
             UInt32 nBlocks = reader.ReadUInt32();
             bytesLeft -= 4;
             Console.WriteLine($"nBlocks:        {nBlocks} (0x{nBlocks:x8})");
 
             if (version >= 13)
             {
-                UInt32 unknownCount03 = reader.ReadUInt32();
+                epb.UnknownCount03 = reader.ReadUInt32();
                 bytesLeft -= 4;
-                Console.WriteLine($"unknownCount03: {unknownCount03} (0x{unknownCount03:x8})");
+                Console.WriteLine($"UnknownCount03: {epb.UnknownCount03} (0x{epb.UnknownCount03:x8})");
             }
             if (version >= 18)
             {
-                UInt32 nTriangles = reader.ReadUInt32();
+                epb.TriangleCount = reader.ReadUInt32();
                 bytesLeft -= 4;
-                Console.WriteLine($"nTriangles:     {nTriangles} (0x{nTriangles:x8})");
+                Console.WriteLine($"TriangleCount:  {epb.TriangleCount} (0x{epb.TriangleCount:x8})");
             }
 
             UInt16 nBlockCounts = reader.ReadUInt16();
@@ -121,20 +120,7 @@ namespace EPBLib.Helpers
 
             if (version > 8)
             {
-                byte[] unknown05 = reader.ReadBytes(1);
-                bytesLeft -= 1;
-                Console.WriteLine($"Unknown05: {unknown05.ToHexString()}");
-            }
-
-            if (version > 8)
-            {
-                UInt32 build = 0;
-                if (epb.MetaTags.ContainsKey(EpMetaTagKey.BuildVersion))
-                {
-                    EpMetaTag02 buildVersion = (EpMetaTag02)epb.MetaTags[EpMetaTagKey.BuildVersion];
-                    build = buildVersion.Value;
-                }
-                epb.DeviceGroups = reader.ReadEpbDeviceGroups(version, build, ref bytesLeft);
+                epb.DeviceGroups = reader.ReadEpbDeviceGroups(version, ref bytesLeft);
             }
 
             UInt32 dataLength = (UInt32)bytesLeft;              //Prior to v23, there was nothing after the zipped data
@@ -1200,7 +1186,7 @@ namespace EPBLib.Helpers
             for (int i = 0; i < nTags; i++)
             {
                 EpMetaTag tag = reader.ReadEpMetaTag(ref bytesLeft);
-                dictionary.Add(tag.Key, tag);
+                dictionary[tag.Key] = tag;
             }
             return dictionary;
         }
@@ -1262,25 +1248,29 @@ namespace EPBLib.Helpers
 
         #region EpbDevices
 
-        public static List<EpbDeviceGroup> ReadEpbDeviceGroups(this BinaryReader reader, UInt32 version, UInt32 build, ref long bytesLeft)
+        public static List<EpbDeviceGroup> ReadEpbDeviceGroups(this BinaryReader reader, UInt32 version, ref long bytesLeft)
         {
             List<EpbDeviceGroup> groups = new List<EpbDeviceGroup>();
+
+            byte deviceGroupVersion = reader.ReadByte();
+            bytesLeft -= 1;
+
             UInt16 nGroups = reader.ReadUInt16();
             bytesLeft -= 2;
-            Console.WriteLine($"DeviceGroups ({nGroups}):");
+            Console.WriteLine($"DeviceGroups (Version: {deviceGroupVersion}, Count: {nGroups}):");
             for (int i = 0; i < nGroups; i++)
             {
-                groups.Add(reader.ReadEpbDeviceGroup(version, build, ref bytesLeft));
+                groups.Add(reader.ReadEpbDeviceGroup(version, deviceGroupVersion, ref bytesLeft));
             }
             return groups;
         }
-        public static EpbDeviceGroup ReadEpbDeviceGroup(this BinaryReader reader, UInt32 version, UInt32 build, ref long bytesLeft)
+        public static EpbDeviceGroup ReadEpbDeviceGroup(this BinaryReader reader, UInt32 version, byte deviceGroupVersion, ref long bytesLeft)
         {
             EpbDeviceGroup group = new EpbDeviceGroup();
             group.Name = reader.ReadEpString(ref bytesLeft);
             Console.Write($"    {group.Name,-30} (");
 
-            if (version >= 20 && build > 1772) //TODO: Some v20 files omit this byte. Filtering with the latest build version that I know creates these files.
+            if (deviceGroupVersion >= 5)
             {
                 group.DeviceGroupUnknown03 = reader.ReadByte();
                 bytesLeft -= 1;
@@ -1291,7 +1281,7 @@ namespace EPBLib.Helpers
             bytesLeft -= 1;
             Console.Write($" u1=0x{group.DeviceGroupUnknown01:x2}");
 
-            if (version >= 15 && build >= 1006) //TODO: Some v15 files omit this byte. Filtering with the latest build version that I know creates these files.
+            if (deviceGroupVersion >= 4)
             {
                 group.Shortcut = reader.ReadByte();
                 bytesLeft -= 1;

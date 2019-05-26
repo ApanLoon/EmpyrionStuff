@@ -25,17 +25,17 @@ namespace EPBLib.Helpers
             writer.Write(epb.Width);
             writer.Write(epb.Height);
             writer.Write(epb.Depth);
-            writer.Write((UInt16)1); //Unknown01
+            writer.Write(epb.Unknown01);
             writer.Write(epb.MetaTags);
 
-            writer.Write((UInt16)0); //Unknown02
-            writer.Write((UInt32)0); // TODO: Count the number of light blocks in the model
-            writer.Write((UInt32)0); // UnknownCount01
-            writer.Write((UInt32)0); // TODO: Count the number of devices in the model
-            writer.Write((UInt32)0); // UnknownCount02
+            writer.Write(epb.Unknown02);
+            writer.Write(epb.LightCount); // TODO: Count the number of light blocks in the model
+            writer.Write(epb.UnknownCount01);
+            writer.Write(epb.DeviceCount); // TODO: Count the number of devices in the model
+            writer.Write(epb.UnknownCount02);
             writer.Write((UInt32)epb.Blocks.Count);
-            writer.Write((UInt32)0); // UnknownCount03
-            writer.Write((UInt32)0); // TODO: Count the number of triangles in the model
+            writer.Write(epb.UnknownCount03);
+            writer.Write(epb.TriangleCount);
 
             Dictionary<EpbBlock.EpbBlockType, UInt32> blockCounts = new Dictionary<EpbBlock.EpbBlockType, uint>();
             foreach (EpbBlock block in epb.Blocks)
@@ -52,8 +52,6 @@ namespace EPBLib.Helpers
                 writer.Write(type);
                 writer.Write(blockCounts[type]);
             }
-
-            writer.Write((byte)0x04); // unknown05
 
             writer.Write(epb.DeviceGroups);
             writer.WriteEpbBlocks(epb);
@@ -485,6 +483,12 @@ namespace EPBLib.Helpers
         private static long AddStringToList(EpBlueprint epb, List<byte> byteList, string s)
         {
             long byteCount = 0;
+            if (s == null)
+            {
+                byteList.Add(0); // Zero length string
+                return 1;
+            }
+
             byte[] buf = System.Text.Encoding.UTF8.GetBytes(s);
             int len = buf.Length;
             do
@@ -580,6 +584,7 @@ namespace EPBLib.Helpers
 
         public static void Write(this BinaryWriter writer, List<EpbDeviceGroup> groups)
         {
+            writer.Write((byte)5);
             writer.Write((UInt16)groups.Count);
             foreach (var group in groups)
             {
@@ -614,6 +619,11 @@ namespace EPBLib.Helpers
         }
         public static void WriteEpString(this BinaryWriter writer, string s)
         {
+            if (s == null)
+            {
+                writer.Write((byte)0); // Zero length string
+                return;
+            }
             byte[] buf = System.Text.Encoding.UTF8.GetBytes(s);
             int len = buf.Length;
             do
