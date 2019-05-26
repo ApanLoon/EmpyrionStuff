@@ -11,6 +11,7 @@ using GalaSoft.MvvmLight.Command;
 using EPBLib;
 using EPBLib.BlockData;
 using EPBLib.Helpers;
+using EPBLib.Logic;
 using GalaSoft.MvvmLight.Messaging;
 
 namespace EPBLab.ViewModel
@@ -90,6 +91,8 @@ namespace EPBLab.ViewModel
 
         protected void NewBlueprint()
         {
+            //var blueprint = CreateCore();
+            //var blueprint = CreateCoreWithLever();
             var blueprint = CreateHullVariants();
 
             BlueprintViewModel vm = new BlueprintViewModel("New", blueprint);
@@ -97,6 +100,70 @@ namespace EPBLab.ViewModel
             SelectedBlueprintIndex = Blueprints.Count - 1;
         }
 
+        static EpBlueprint CreateCore()
+        {
+            EpBlueprint blueprint = new EpBlueprint(EpBlueprint.EpbType.Base, 1, 1, 1);
+            EpbBlockPos corePos = new EpbBlockPos(0, 0, 0, 8, 8);
+            blueprint.SetBlock(
+                new EpbBlock(corePos)
+                {
+                    BlockType = EpbBlock.BlockTypes[558],
+                    Variant = 0
+                });
+            blueprint.DeviceCount = 1;
+            EpbDeviceGroup group = new EpbDeviceGroup()
+            {
+                Name = "Ungrouped",
+                DeviceGroupUnknown01 = 1,
+                Shortcut = 255,
+                DeviceGroupUnknown03 = 0
+            };
+            group.Entries.Add(new EpbDeviceGroupEntry() { Pos = corePos });
+            blueprint.DeviceGroups.Add(group);
+            return blueprint;
+        }
+
+        static EpBlueprint CreateCoreWithLever()
+        {
+            EpBlueprint blueprint = new EpBlueprint(EpBlueprint.EpbType.Base, 1, 1, 2);
+
+            EpbBlockPos leverPos = new EpbBlockPos(0, 0, 0, 8, 8);
+            EpbBlockPos corePos = new EpbBlockPos(0, 0, 1, 8, 8);
+
+            blueprint.SetBlock (
+                new EpbBlock(leverPos)
+                {
+                    BlockType = EpbBlock.BlockTypes[1262],
+                    Variant = 0
+                });
+            blueprint.SetBlock(
+                new EpbBlock(corePos)
+                {
+                    BlockType = EpbBlock.BlockTypes[558],
+                    Variant = 0
+                });
+
+            blueprint.DeviceCount = 2;
+
+            EpbDeviceGroup group = new EpbDeviceGroup()
+            {
+                Name = "Ungrouped",
+                DeviceGroupUnknown01 = 1,
+                Shortcut = 255,
+                DeviceGroupUnknown03 = 0
+            };
+            group.Entries.Add(new EpbDeviceGroupEntry() { Pos = corePos });
+            group.Entries.Add(new EpbDeviceGroupEntry() { Pos = leverPos });
+            blueprint.DeviceGroups.Add(group);
+
+            blueprint.SignalSources.Add(new EpbSignalSource()
+            {
+                Name = "Lever0",
+                Pos = leverPos,
+                State = 0x00020000
+            });
+            return blueprint;
+        }
 
         static EpBlueprint CreateHullVariants()
         {
