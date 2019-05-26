@@ -322,6 +322,7 @@ namespace EPBLib.Helpers
             foreach (EpbSignalSource source in epb.SignalSources)
             {
                 byteList.Add(source.Unknown01);
+                byteCount += 1;
                 byteCount += AddBlockTagListToList(epb, byteList, source.Tags.Values.ToArray()); // TODO: Is the order of these significant?
             }
             return byteCount;
@@ -370,9 +371,15 @@ namespace EPBLib.Helpers
 
         private static long AddSignalOperatorsToList(EpBlueprint epb, long byteCount, List<byte> byteList)
         {
-            //TODO: Save the actual thing
-            UInt16 nSignalOperators = 0;
+            UInt16 nSignalOperators = (UInt16)epb.SignalOperators.Count;
             byteList.AddRange(BitConverter.GetBytes(nSignalOperators));
+            byteCount += 2;
+            foreach (EpbSignalOperator signalOperator in epb.SignalOperators)
+            {
+                byteList.Add(signalOperator.Unknown01);
+                byteCount += 1;
+                byteCount += AddBlockTagListToList(epb, byteList, signalOperator.Tags.Values.ToArray()); // TODO: Is the order of these significant?
+            }
             return byteCount;
         }
 
