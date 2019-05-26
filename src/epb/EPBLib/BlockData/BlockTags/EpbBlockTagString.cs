@@ -9,6 +9,12 @@ namespace EPBLib
             BlockTagType = TagType.String;
             Name = name;
         }
+        public EpbBlockTagString(string name, string value)
+        {
+            BlockTagType = TagType.String;
+            Name = name;
+            Value = value;
+        }
 
         public string Value { get; set; }
 

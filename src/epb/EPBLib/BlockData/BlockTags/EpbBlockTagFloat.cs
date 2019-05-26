@@ -10,6 +10,12 @@ namespace EPBLib
             BlockTagType = TagType.Float;
             Name = name;
         }
+        public EpbBlockTagFloat(string name, float value)
+        {
+            BlockTagType = TagType.Float;
+            Name = name;
+            Value = value;
+        }
 
         public float Value { get; set; }
         public override string ToString()

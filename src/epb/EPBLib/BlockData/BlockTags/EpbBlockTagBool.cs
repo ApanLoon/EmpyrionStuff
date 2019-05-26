@@ -9,6 +9,12 @@ namespace EPBLib
             BlockTagType = TagType.Bool;
             Name = name;
         }
+        public EpbBlockTagBool(string name, bool value)
+        {
+            BlockTagType = TagType.Bool;
+            Name = name;
+            Value = value;
+        }
 
         public bool Value { get; set; }
 

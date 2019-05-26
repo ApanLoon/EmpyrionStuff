@@ -9,6 +9,12 @@ namespace EPBLib
             BlockTagType = TagType.UInt32;
             Name = name;
         }
+        public EpbBlockTagUInt32(string name, UInt32 value)
+        {
+            BlockTagType = TagType.UInt32;
+            Name = name;
+            Value = value;
+        }
 
         public UInt32 Value { get; set; }
 
