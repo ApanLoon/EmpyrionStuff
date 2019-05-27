@@ -25,7 +25,7 @@ namespace EPBLib
         #endregion Types
 
         #region Properties
-        public UInt32 Version { get; protected set; }
+        public UInt32 Version { get; set; }
         public EpbType Type { get; set; }
         public UInt32 Width { get; set; }
         public UInt32 Height { get; set; }

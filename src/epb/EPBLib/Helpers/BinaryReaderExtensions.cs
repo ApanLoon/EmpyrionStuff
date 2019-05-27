@@ -52,6 +52,7 @@ namespace EPBLib.Helpers
             Console.WriteLine($"Depth:    {depth}");
 
             EpBlueprint epb = new EpBlueprint(type, width, height, depth);
+            epb.Version = version;
 
             epb.Unknown01 = reader.ReadUInt16();
             bytesLeft -= 2;
