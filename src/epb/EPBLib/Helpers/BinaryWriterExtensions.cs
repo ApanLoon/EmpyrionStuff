@@ -37,20 +37,11 @@ namespace EPBLib.Helpers
             writer.Write(epb.UnknownCount03);
             writer.Write(epb.TriangleCount);
 
-            Dictionary<EpbBlock.EpbBlockType, UInt32> blockCounts = new Dictionary<EpbBlock.EpbBlockType, uint>();
-            foreach (EpbBlock block in epb.Blocks)
-            {
-                if (!blockCounts.ContainsKey(block.BlockType))
-                {
-                    blockCounts.Add(block.BlockType, 0);
-                }
-                blockCounts[block.BlockType]++;
-            }
-            writer.Write((UInt16)blockCounts.Count);
-            foreach (EpbBlock.EpbBlockType type in blockCounts.Keys)
+            writer.Write((UInt16)epb.BlockCounts.Count);
+            foreach (EpbBlock.EpbBlockType type in epb.BlockCounts.Keys)
             {
                 writer.Write(type);
-                writer.Write(blockCounts[type]);
+                writer.Write(epb.BlockCounts[type]);
             }
 
             writer.Write(epb.DeviceGroups);

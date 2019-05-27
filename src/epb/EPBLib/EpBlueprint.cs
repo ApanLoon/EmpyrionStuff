@@ -27,9 +27,9 @@ namespace EPBLib
         #region Properties
         public UInt32 Version { get; protected set; }
         public EpbType Type { get; set; }
-        public UInt32 Width { get; protected set; }
-        public UInt32 Height { get; protected set; }
-        public UInt32 Depth { get; protected set; }
+        public UInt32 Width { get; set; }
+        public UInt32 Height { get; set; }
+        public UInt32 Depth { get; set; }
         public UInt16 Unknown01 { get; set; }
 
         public Dictionary<EpMetaTagKey, EpMetaTag> MetaTags = new Dictionary<EpMetaTagKey, EpMetaTag>();
@@ -41,6 +41,9 @@ namespace EPBLib
         public UInt32 UnknownCount02 { get; set; }
         public UInt32 UnknownCount03 { get; set; }
         public UInt32 TriangleCount { get; set; }
+
+        public Dictionary<EpbBlock.EpbBlockType, UInt32> BlockCounts = new Dictionary<EpbBlock.EpbBlockType, uint>();
+
         public List<EpbDeviceGroup> DeviceGroups = new List<EpbDeviceGroup>();
         public EpbBlockList Blocks { get; set; }
         public byte[] Unknown07 = new byte[0];
@@ -98,33 +101,44 @@ namespace EPBLib
             Blocks[block.Position] = block;
         }
 
-        /// <summary>
-        /// Sets the dimensions of this blueprint to the minimum that encloses all its blocks.
-        /// </summary>
-        public void UpdateDimensions()
+        public void ComputeDimensions()
         {
             UInt32 width = 0;
             UInt32 height = 0;
             UInt32 depth = 0;
             foreach (EpbBlock block in Blocks)
             {
-                EpbBlockPos pos = block.Position;
-                if (pos.X >= width)
+                if (block.Position.X >= width)
                 {
-                    width = (UInt32)pos.X + 1;
+                    width = (UInt32)(block.Position.X + 1);
                 }
-                if (pos.Y >= height)
+                if (block.Position.Y >= height)
                 {
-                    height = (UInt32)pos.Y + 1;
+                    height = (UInt32)(block.Position.Y + 1);
                 }
-                if (pos.Z >= depth)
+                if (block.Position.Z >= depth)
                 {
-                    depth = (UInt32)pos.Z + 1;
+                    depth = (UInt32)(block.Position.Z + 1);
                 }
             }
             Width = width;
             Height = height;
             Depth = depth;
+        }
+
+        public void CountBlocks()
+        {
+            Dictionary<EpbBlock.EpbBlockType, UInt32> blockCounts = new Dictionary<EpbBlock.EpbBlockType, uint>();
+            foreach (EpbBlock block in Blocks)
+            {
+                // TODO: Take grouping of block types into account
+                if (!blockCounts.ContainsKey(block.BlockType))
+                {
+                    blockCounts.Add(block.BlockType, 0);
+                }
+                blockCounts[block.BlockType]++;
+            }
+            BlockCounts = blockCounts;
         }
     }
 }

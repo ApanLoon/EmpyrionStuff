@@ -113,6 +113,7 @@ namespace EPBLib.Helpers
                 UInt32 blockCount = reader.ReadUInt32();
                 bytesLeft -= 4;
                 Console.WriteLine($"    BlockType={blockType,-40} Count={blockCount}");
+                epb.BlockCounts[blockType] = blockCount;
 
                 nBlocksTotal += blockCount;
             }

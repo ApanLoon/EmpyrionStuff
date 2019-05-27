@@ -345,6 +345,7 @@ namespace epb
             block = new EpbBlock(new EpbBlockPos(0, 2, 0)) { BlockType = BlockType, Variant = BlockVariant };
             block.SetColour(EpbColourIndex.BrightGreen);
             epb.SetBlock(block);
+            epb.CountBlocks();
 
             // Write the file:
             using (FileStream stream = File.Create(path))
@@ -386,6 +387,7 @@ namespace epb
                     }
                 }
             }
+            epb.CountBlocks();
 
             //// Create Device list:
             //EpbDeviceGroup group = new EpbDeviceGroup
@@ -443,6 +445,8 @@ namespace epb
                     }
                 }
             }
+            epb.CountBlocks();
+
             // Write the file:
             using (FileStream stream = File.Create(path))
             {
@@ -539,6 +543,7 @@ namespace epb
                 w -= 1;
                 d -= 1;
             }
+            epb.CountBlocks();
 
             // Write the file:
             using (FileStream stream = File.Create(path))
@@ -568,6 +573,7 @@ namespace epb
                 epb.SetBlock(new EpbBlock(new EpbBlockPos(i, 0, 0)) { BlockType = EpbBlock.BlockTypes[bt], Variant = BlockVariant });
                 i += 14;
             }
+            epb.CountBlocks();
 
             // Write the file:
             using (FileStream stream = File.Create(path))
@@ -616,6 +622,7 @@ namespace epb
                     i++;
                 }
             }
+            epb.CountBlocks();
 
             // Write the file:
             FileStream stream = null;
