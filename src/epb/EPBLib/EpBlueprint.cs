@@ -32,7 +32,7 @@ namespace EPBLib
         public UInt32 Depth { get; protected set; }
         public UInt16 Unknown01 { get; set; }
 
-        public Dictionary<EpMetaTagKey, EpMetaTag> MetaTags;
+        public Dictionary<EpMetaTagKey, EpMetaTag> MetaTags = new Dictionary<EpMetaTagKey, EpMetaTag>();
 
         public UInt16 Unknown02 { get; set; }
         public UInt32 LightCount { get; set; }
@@ -41,9 +41,9 @@ namespace EPBLib
         public UInt32 UnknownCount02 { get; set; }
         public UInt32 UnknownCount03 { get; set; }
         public UInt32 TriangleCount { get; set; }
-        public List<EpbDeviceGroup> DeviceGroups;
+        public List<EpbDeviceGroup> DeviceGroups = new List<EpbDeviceGroup>();
         public EpbBlockList Blocks { get; set; }
-        public byte[] Unknown07 { get; set; }
+        public byte[] Unknown07 = new byte[0];
         public List<EpbSignalSource> SignalSources = new List<EpbSignalSource>();
         public List<EpbSignalTarget> SignalTargets = new List<EpbSignalTarget>();
         public List<EpbSignalOperator> SignalOperators = new List<EpbSignalOperator>();
@@ -61,7 +61,6 @@ namespace EPBLib
             Height         = height;
             Depth          = depth;
             Unknown01      = 1;
-            MetaTags       = new Dictionary<EpMetaTagKey, EpMetaTag>();
             Unknown02      = 0;
             LightCount     = 0;
             UnknownCount01 = 0;
@@ -69,7 +68,6 @@ namespace EPBLib
             UnknownCount02 = 0;
             UnknownCount03 = 0;
             TriangleCount  = 0;
-            DeviceGroups = new List<EpbDeviceGroup>();
 
             MetaTags[EpMetaTagKey.UnknownMetax11] = new EpMetaTag03(EpMetaTagKey.UnknownMetax11)     { Value = new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00 }};
             MetaTags[EpMetaTagKey.UnknownMetax01] = new EpMetaTagUInt16(EpMetaTagKey.UnknownMetax01) { Value = 0x0000};
