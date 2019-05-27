@@ -34,51 +34,51 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Label     Grid.Row="0" Grid.Column="0" Margin="3, 3, 3, 3" Content="Version:" />
-                <TextBlock Grid.Row="0" Grid.Column="1" Margin="3, 3, 3, 3" Text="{Binding Version}" />
+                <TextBlock Grid.Row="0" Grid.Column="1" Margin="3, 3, 3, 3" Padding="0,3,0,0" Text="{Binding Version}" />
 
                 <Label    Grid.Row="1" Grid.Column="0"  Margin="3, 3, 3, 3" Content="Type:" />
                 <ComboBox Grid.Row="1" Grid.Column="1" Margin="3, 3, 3, 3" ItemsSource="{Binding BlueprintTypes}" SelectedItem="{Binding Type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" />
 
-                <Label Grid.Row="2" Grid.Column="0" Margin="3, 3, 3, 3" Content="Width:" />
-                <TextBox Grid.Row="2" Grid.Column="1" Margin="3, 3, 3, 3" Text="{Binding Width}" />
+                <Label Grid.Row="2" Grid.Column="0" Margin="3, 3, 3, 3" Content="Width:" ToolTip="Type: UInt32" />
+                <TextBox Grid.Row="2" Grid.Column="1" Margin="3, 3, 3, 3" Padding="0,3,0,0" Text="{Binding Width}" />
 
-                <Label Grid.Row="3" Grid.Column="0" Margin="3, 3, 3, 3" Content="Height:" />
-                <TextBox Grid.Row="3" Grid.Column="1" Margin="3, 3, 3, 3" Text="{Binding Height}" />
+                <Label Grid.Row="3" Grid.Column="0" Margin="3, 3, 3, 3" Content="Height:" ToolTip="Type: UInt32" />
+                <TextBox Grid.Row="3" Grid.Column="1" Margin="3, 3, 3, 3" Padding="0,3,0,0" Text="{Binding Height}" />
 
-                <Label Grid.Row="4" Grid.Column="0" Margin="3, 3, 3, 3" Content="Depth:" />
-                <TextBox Grid.Row="4" Grid.Column="1" Margin="3, 3, 3, 3" Text="{Binding Depth}" />
+                <Label Grid.Row="4" Grid.Column="0" Margin="3, 3, 3, 3" Content="Depth:" ToolTip="Type: UInt32" />
+                <TextBox Grid.Row="4" Grid.Column="1" Margin="3, 3, 3, 3" Padding="0,3,0,0" Text="{Binding Depth}" />
 
-                <Label Grid.Row="5" Grid.Column="0"  Margin="3, 3, 3, 3" Content="Unknown01:" />
-                <TextBox Grid.Row="5" Grid.Column="1" Margin="3, 3, 3, 3" Text="{Binding Unknown01}" />
+                <Label Grid.Row="5" Grid.Column="0"  Margin="3, 3, 3, 3" Content="Unknown01:" ToolTip="Type: UInt16" />
+                <TextBox Grid.Row="5" Grid.Column="1" Margin="3, 3, 3, 3" Padding="0,3,0,0" Text="{Binding Unknown01}" />
 
-                <Label Grid.Row="6" Grid.Column="0"  Margin="3, 3, 3, 3" Content="Unknown02:" />
-                <TextBox Grid.Row="6" Grid.Column="1" Margin="3, 3, 3, 3" Text="{Binding Unknown02}" />
+                <Label Grid.Row="6" Grid.Column="0"  Margin="3, 3, 3, 3" Content="Unknown02:" ToolTip="Type: UInt16" />
+                <TextBox Grid.Row="6" Grid.Column="1" Margin="3, 3, 3, 3" Padding="0,3,0,0" Text="{Binding Unknown02}" />
 
-                <Label Grid.Row="7" Grid.Column="0"  Margin="3, 3, 3, 3" Content="Light count:" />
-                <TextBox Grid.Row="7" Grid.Column="1" Margin="3, 3, 3, 3" Text="{Binding LightCount}" />
+                <Label Grid.Row="7" Grid.Column="0"  Margin="3, 3, 3, 3" Content="Light count:" ToolTip="Type: UInt32" />
+                <TextBox Grid.Row="7" Grid.Column="1" Margin="3, 3, 3, 3" Padding="0,3,0,0" Text="{Binding LightCount}" />
 
-                <Label Grid.Row="8" Grid.Column="0"  Margin="3, 3, 3, 3" Content="Unknown count 01:" />
-                <TextBox Grid.Row="8" Grid.Column="1" Margin="3, 3, 3, 3" Text="{Binding UnknownCount01}" />
+                <Label Grid.Row="8" Grid.Column="0"  Margin="3, 3, 3, 3" Content="Unknown count 01:" ToolTip="Type: UInt32" />
+                <TextBox Grid.Row="8" Grid.Column="1" Margin="3, 3, 3, 3" Padding="0,3,0,0" Text="{Binding UnknownCount01}" />
 
-                <Label Grid.Row="9" Grid.Column="0"  Margin="3, 3, 3, 3" Content="Device count:" />
-                <TextBox Grid.Row="9" Grid.Column="1" Margin="3, 3, 3, 3" Text="{Binding DeviceCount}" />
+                <Label Grid.Row="9" Grid.Column="0"  Margin="3, 3, 3, 3" Content="Device count:" ToolTip="Type: UInt32" />
+                <TextBox Grid.Row="9" Grid.Column="1" Margin="3, 3, 3, 3" Padding="0,3,0,0" Text="{Binding DeviceCount}" />
 
-                <Label Grid.Row="10" Grid.Column="0"  Margin="3, 3, 3, 3" Content="Unknown count 02:" />
-                <TextBox Grid.Row="10" Grid.Column="1" Margin="3, 3, 3, 3" Text="{Binding UnknownCount02}" />
+                <Label Grid.Row="10" Grid.Column="0"  Margin="3, 3, 3, 3" Content="Unknown count 02:" ToolTip="Type: UInt32" />
+                <TextBox Grid.Row="10" Grid.Column="1" Margin="3, 3, 3, 3" Padding="0,3,0,0" Text="{Binding UnknownCount02}" />
 
-                <Label Grid.Row="11" Grid.Column="0"  Margin="3, 3, 3, 3" Content="Block count:" />
-                <TextBlock Grid.Row="11" Grid.Column="1" Margin="3, 3, 3, 3" Text="{Binding BlockCount}" />
+                <Label Grid.Row="11" Grid.Column="0"  Margin="3, 3, 3, 3" Content="Block count:" ToolTip="Type: UInt32" />
+                <TextBlock Grid.Row="11" Grid.Column="1" Margin="3, 3, 3, 3" Padding="0,3,0,0" Text="{Binding BlockCount}" />
 
-                <Label Grid.Row="12" Grid.Column="0"  Margin="3, 3, 3, 3" Content="Unknown count 03:" />
-                <TextBox Grid.Row="12" Grid.Column="1" Margin="3, 3, 3, 3" Text="{Binding UnknownCount03}" />
+                <Label Grid.Row="12" Grid.Column="0"  Margin="3, 3, 3, 3" Content="Unknown count 03:" ToolTip="Type: UInt32" />
+                <TextBox Grid.Row="12" Grid.Column="1" Margin="3, 3, 3, 3" Padding="0,3,0,0" Text="{Binding UnknownCount03}" />
 
-                <Label Grid.Row="13" Grid.Column="0"  Margin="3, 3, 3, 3" Content="Triangle count:" />
-                <TextBox Grid.Row="13" Grid.Column="1" Margin="3, 3, 3, 3" Text="{Binding TriangleCount}" />
+                <Label Grid.Row="13" Grid.Column="0"  Margin="3, 3, 3, 3" Content="Triangle count:" ToolTip="Type: UInt32" />
+                <TextBox Grid.Row="13" Grid.Column="1" Margin="3, 3, 3, 3" Padding="0,3,0,0" Text="{Binding TriangleCount}" />
 
                 <Label Grid.Row="14" Grid.Column="0" Margin="3, 3, 3, 3" Content="Block counts:" />
-                <Button Grid.Row="14" Grid.Column="1" Margin="3, 3, 3, 3" Content="Count" Command="{Binding CommandCountBlocks}" />
+                <Button Grid.Row="14" Grid.Column="1" Margin="3, 3, 3, 3" Content="Count" Command="{Binding CommandCountBlocks}" ToolTip="Count the block types, does not group correctly" />
 
-                <ListBox Grid.Row="15" Grid.Column="0" Grid.ColumnSpan="2" HorizontalContentAlignment="Stretch" Margin="0, 0, 0, 0" ItemsSource="{Binding BlockCounts}">
+                <ListBox Grid.Row="15" Grid.Column="0" Grid.ColumnSpan="2" HorizontalContentAlignment="Stretch" Margin="3, 3, 3, 3" ItemsSource="{Binding BlockCounts}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid>
@@ -96,7 +96,7 @@
                 </ListBox>
 
 
-                <Button Grid.Row="2" Grid.Column="2" Grid.RowSpan="3" Margin="3, 3, 3, 3" Command="{Binding CommandComputeDimensions}">
+                <Button Grid.Row="2" Grid.Column="2" Grid.RowSpan="3" Margin="3, 3, 3, 3" Command="{Binding CommandComputeDimensions}" ToolTip="Updates Width, Height and Depth according to the actual blocks">
                     <Button.LayoutTransform>
                         <RotateTransform Angle="-90"></RotateTransform>
                     </Button.LayoutTransform>
