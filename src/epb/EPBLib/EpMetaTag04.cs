@@ -12,6 +12,11 @@ namespace EPBLib
 
         public byte[] Value { get; set; }
 
+        public override string ValueToString()
+        {
+            return $"{BitConverter.ToString(Value).Replace("-", "")}";
+        }
+
         public override string ToString()
         {
             return $"{base.ToString()} Value={BitConverter.ToString(Value).Replace("-", "")}";

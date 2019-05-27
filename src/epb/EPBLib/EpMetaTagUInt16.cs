@@ -12,6 +12,11 @@ namespace EPBLib.Helpers
 
         public UInt16 Value { get; set; }
 
+        public override string ValueToString()
+        {
+            return $"{Value}";
+        }
+
         public override string ToString()
         {
             return $"{Key,-14}: {Value}";

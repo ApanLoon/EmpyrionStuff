@@ -8,6 +8,10 @@ namespace EPBLib
     {
         public EpMetaTagKey Key { get; protected set; }
         public EpMetaTagType TagType { get; protected set; }
+        public virtual string ValueToString()
+        {
+            return ToString();
+        }
         public override string ToString()
         {
             return $"{Key,-14}: Type={TagType}";
