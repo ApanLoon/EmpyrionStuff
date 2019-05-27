@@ -111,6 +111,7 @@ namespace EPBLab.ViewModel
                     Variant = 0
                 });
             blueprint.DeviceCount = 1;
+            blueprint.CountBlocks();
             EpbDeviceGroup group = new EpbDeviceGroup()
             {
                 Name = "Ungrouped",
@@ -144,6 +145,7 @@ namespace EPBLab.ViewModel
                 });
 
             blueprint.DeviceCount = 2;
+            blueprint.CountBlocks();
 
             EpbDeviceGroup group = new EpbDeviceGroup()
             {
@@ -204,6 +206,7 @@ namespace EPBLab.ViewModel
 
                 y += 2;
             }
+            blueprint.CountBlocks();
 
             return blueprint;
         }

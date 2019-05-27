@@ -31,7 +31,7 @@ namespace EPBLab.ViewModel
         {
             Key = tag.Key.ToString();
             TypeName = tag.TagType.ToString();
-            Value = tag.ToString();
+            Value = tag.ValueToString();
         }
     }
 }

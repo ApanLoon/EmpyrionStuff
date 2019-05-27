@@ -6,43 +6,128 @@
              xmlns:view="clr-namespace:EPBLab.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Margin="2, 2, 2, 2" VerticalAlignment="Top">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="26" />
-            <RowDefinition Height="26" />
-            <RowDefinition Height="26" />
-            <RowDefinition Height="26" />
-            <RowDefinition Height="26" />
-            <RowDefinition Height="100" />
-            <RowDefinition Height="26" />
-            <RowDefinition Height="26" />
-            <RowDefinition Height="26" />
-            <RowDefinition Height="26" />
-            <RowDefinition Height="26" />
-            <RowDefinition Height="26" />
-        </Grid.RowDefinitions>
-        <Label Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Version:" />
-        <TextBlock Grid.Row="0" VerticalAlignment="Center" Margin="100, 0, 0, 0" Text="{Binding Version}" />
+    <Grid>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+            <Grid Margin="2, 2, 2, 2" VerticalAlignment="Top">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Label     Grid.Row="0" Grid.Column="0" Margin="3, 3, 3, 3" Content="Version:" />
+                <TextBlock Grid.Row="0" Grid.Column="1" Margin="3, 3, 3, 3" Text="{Binding Version}" />
 
-        <Label Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Type:" />
-        <ComboBox Grid.Row="1" VerticalAlignment="Center" Margin="100, 0, 0, 0" ItemsSource="{Binding BlueprintTypes}" SelectedItem="{Binding Type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" />
+                <Label    Grid.Row="1" Grid.Column="0"  Margin="3, 3, 3, 3" Content="Type:" />
+                <ComboBox Grid.Row="1" Grid.Column="1" Margin="3, 3, 3, 3" ItemsSource="{Binding BlueprintTypes}" SelectedItem="{Binding Type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" />
 
-        <Label Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Width:" />
-        <TextBlock Grid.Row="2" VerticalAlignment="Center" Margin="100, 0, 0, 0" Text="{Binding Width}" />
+                <Label Grid.Row="2" Grid.Column="0" Margin="3, 3, 3, 3" Content="Width:" />
+                <TextBox Grid.Row="2" Grid.Column="1" Margin="3, 3, 3, 3" Text="{Binding Width}" />
 
-        <Label Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Height:" />
-        <TextBlock Grid.Row="3" VerticalAlignment="Center" Margin="100, 0, 0, 0" Text="{Binding Height}" />
+                <Label Grid.Row="3" Grid.Column="0" Margin="3, 3, 3, 3" Content="Height:" />
+                <TextBox Grid.Row="3" Grid.Column="1" Margin="3, 3, 3, 3" Text="{Binding Height}" />
 
-        <Label Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Depth:" />
-        <TextBlock Grid.Row="4" VerticalAlignment="Center" Margin="100, 0, 0, 0" Text="{Binding Depth}" />
+                <Label Grid.Row="4" Grid.Column="0" Margin="3, 3, 3, 3" Content="Depth:" />
+                <TextBox Grid.Row="4" Grid.Column="1" Margin="3, 3, 3, 3" Text="{Binding Depth}" />
 
-        <Label Grid.Row="5" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Meta data:" />
-        <ListBox Grid.Row="5" VerticalAlignment="Center" Margin="100, 0, 0, 0" ItemsSource="{Binding MetaTags}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Value}" />
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+                <Label Grid.Row="5" Grid.Column="0"  Margin="3, 3, 3, 3" Content="Unknown01:" />
+                <TextBox Grid.Row="5" Grid.Column="1" Margin="3, 3, 3, 3" Text="{Binding Unknown01}" />
+
+                <Label Grid.Row="6" Grid.Column="0"  Margin="3, 3, 3, 3" Content="Unknown02:" />
+                <TextBox Grid.Row="6" Grid.Column="1" Margin="3, 3, 3, 3" Text="{Binding Unknown02}" />
+
+                <Label Grid.Row="7" Grid.Column="0"  Margin="3, 3, 3, 3" Content="Light count:" />
+                <TextBox Grid.Row="7" Grid.Column="1" Margin="3, 3, 3, 3" Text="{Binding LightCount}" />
+
+                <Label Grid.Row="8" Grid.Column="0"  Margin="3, 3, 3, 3" Content="Unknown count 01:" />
+                <TextBox Grid.Row="8" Grid.Column="1" Margin="3, 3, 3, 3" Text="{Binding UnknownCount01}" />
+
+                <Label Grid.Row="9" Grid.Column="0"  Margin="3, 3, 3, 3" Content="Device count:" />
+                <TextBox Grid.Row="9" Grid.Column="1" Margin="3, 3, 3, 3" Text="{Binding DeviceCount}" />
+
+                <Label Grid.Row="10" Grid.Column="0"  Margin="3, 3, 3, 3" Content="Unknown count 02:" />
+                <TextBox Grid.Row="10" Grid.Column="1" Margin="3, 3, 3, 3" Text="{Binding UnknownCount02}" />
+
+                <Label Grid.Row="11" Grid.Column="0"  Margin="3, 3, 3, 3" Content="Block count:" />
+                <TextBlock Grid.Row="11" Grid.Column="1" Margin="3, 3, 3, 3" Text="{Binding BlockCount}" />
+
+                <Label Grid.Row="12" Grid.Column="0"  Margin="3, 3, 3, 3" Content="Unknown count 03:" />
+                <TextBox Grid.Row="12" Grid.Column="1" Margin="3, 3, 3, 3" Text="{Binding UnknownCount03}" />
+
+                <Label Grid.Row="13" Grid.Column="0"  Margin="3, 3, 3, 3" Content="Triangle count:" />
+                <TextBox Grid.Row="13" Grid.Column="1" Margin="3, 3, 3, 3" Text="{Binding TriangleCount}" />
+
+                <Label Grid.Row="14" Grid.Column="0" Margin="3, 3, 3, 3" Content="Block counts:" />
+                <Button Grid.Row="14" Grid.Column="1" Margin="3, 3, 3, 3" Content="Count" Command="{Binding CommandCountBlocks}" />
+
+                <ListBox Grid.Row="15" Grid.Column="0" Grid.ColumnSpan="2" HorizontalContentAlignment="Stretch" Margin="0, 0, 0, 0" ItemsSource="{Binding BlockCounts}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="{Binding Key}" />
+                                <TextBlock Grid.Column="1" Text=":" />
+                                <TextBlock Grid.Column="2" TextAlignment="Right" Text="{Binding Value}" />
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+
+                <Button Grid.Row="2" Grid.Column="2" Grid.RowSpan="3" Margin="3, 3, 3, 3" Command="{Binding CommandComputeDimensions}">
+                    <Button.LayoutTransform>
+                        <RotateTransform Angle="-90"></RotateTransform>
+                    </Button.LayoutTransform>
+                    <TextBlock TextAlignment="Center">Compute<LineBreak />Dimensions</TextBlock>
+                </Button>
+
+
+                <Label Grid.Row="0" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="3, 3, 3, 3" Content="Meta data:" />
+                <ListBox Grid.Row="1" Grid.Column="3" Grid.RowSpan="13" HorizontalContentAlignment="Stretch" Margin="3, 3, 3, 3" ItemsSource="{Binding MetaTags}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.ToolTip>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label Content="Type: " />
+                                        <Label Content="{Binding TypeName}" />
+                                    </StackPanel>
+                                </Grid.ToolTip>
+                                <TextBlock Grid.Column="0" Text="{Binding Key}" />
+                                <TextBlock Grid.Column="1" Text=":" />
+                                <TextBlock Grid.Column="2" TextAlignment="Right" Text="{Binding Value}" />
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+        </ScrollViewer>
     </Grid>
 </UserControl>
