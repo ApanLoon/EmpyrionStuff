@@ -31,11 +31,11 @@
                     <DataTemplate>
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <TextBox Grid.Column="0" Text="{Binding Name}" />
-                            <TextBlock Grid.Column="1" HorizontalAlignment="Right" Text="{Binding Pos}" />
+                            <TextBox Grid.Column="0" Margin="0" Text="{Binding Name}" />
+                            <TextBlock Grid.Column="1" Margin="3" TextAlignment="Right" Text="{Binding Pos}" />
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

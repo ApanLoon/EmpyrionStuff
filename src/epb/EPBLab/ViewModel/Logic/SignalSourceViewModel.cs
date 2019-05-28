@@ -13,8 +13,13 @@ namespace EPBLab.ViewModel.Logic
         public string Name
         {
             get => Source.Name;
-            set => Source.Name = value;
+            set
+            {
+                Source.Name = value;
+                RaisePropertyChanged(NamePropertyName);
+            }
         }
+        public static readonly string NamePropertyName = "Name";
 
         public string Pos => Source.Pos.ToString();
 
