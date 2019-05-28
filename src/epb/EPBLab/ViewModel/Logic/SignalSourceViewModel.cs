@@ -10,7 +10,12 @@ namespace EPBLab.ViewModel.Logic
     {
         protected EpbSignalSource Source;
 
-        public string Name => Source.Name;
+        public string Name
+        {
+            get => Source.Name;
+            set => Source.Name = value;
+        }
+
         public string Pos => Source.Pos.ToString();
 
 
