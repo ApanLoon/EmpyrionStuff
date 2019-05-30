@@ -5,33 +5,29 @@ namespace EPBLab.ViewModel
 {
     public class MetaTagViewModel : ViewModelBase
     {
-        private string _key;
+        protected EpMetaTag Tag;
+
         public string Key
         {
-            get => _key;
-            set => Set(ref _key, value);
+            get => $"{Tag.Key}:";
+            //set => Set(ref _key, value);
         }
 
-        private string _typeName;
         public string TypeName
         {
-            get => _typeName;
-            set => Set(ref _typeName, value);
+            get => Tag.TagType.ToString();
+            //set => Set(ref _typeName, value);
         }
 
-        private string _value;
-
-        public string Value
+        public virtual string Value
         {
-            get => _value;
-            set => Set(ref _value, value); //TODO: Allow setting the value in the model
+            get => Tag.ValueToString();
+            set => throw new System.NotImplementedException();
         }
 
         public MetaTagViewModel(EpMetaTag tag)
         {
-            Key = tag.Key.ToString();
-            TypeName = tag.TagType.ToString();
-            Value = tag.ValueToString();
+            Tag = tag;
         }
     }
 }

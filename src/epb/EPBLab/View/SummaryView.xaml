@@ -6,6 +6,7 @@
              xmlns:view="clr-namespace:EPBLab.View"
              xmlns:tree="clr-namespace:EPBLab.ViewModel.Tree"
              xmlns:m="clr-namespace:EPBLib;assembly=EPBLib"
+             xmlns:vm="clr-namespace:EPBLab.ViewModel.MetaTags"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
@@ -108,11 +109,111 @@
 
                 <Label Grid.Row="0" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="3, 3, 3, 3" Content="Meta data:" />
                 <ListBox Grid.Row="1" Grid.Column="3" Grid.RowSpan="13" HorizontalContentAlignment="Stretch" Margin="3, 3, 3, 3" ItemsSource="{Binding MetaTags}">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
+                    <ListBox.Resources>
+                        <DataTemplate DataType="{x:Type vm:MetaTag02ViewModel}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="120" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.ToolTip>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label Content="Type: " />
+                                        <Label Content="{Binding TypeName}" />
+                                    </StackPanel>
+                                </Grid.ToolTip>
+                                <TextBlock Grid.Column="0" Margin="3" Text="{Binding Key}" />
+                                <TextBox Grid.Column="1" Margin="3" TextAlignment="Right" Text="{Binding Value}" />
+                            </Grid>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type vm:MetaTag03ViewModel}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="120" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.ToolTip>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label Content="Type: " />
+                                        <Label Content="{Binding TypeName}" />
+                                        <Label Content=" (Exactly 10 hexadecimal digits)" />
+                                    </StackPanel>
+                                </Grid.ToolTip>
+                                <TextBlock Grid.Column="0" Margin="3" Text="{Binding Key}" />
+                                <TextBox Grid.Column="1" Margin="3" TextAlignment="Right" Text="{Binding Value}" />
+                            </Grid>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type vm:MetaTag04ViewModel}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="120" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.ToolTip>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label Content="Type: " />
+                                        <Label Content="{Binding TypeName}" />
+                                        <Label Content=" (Exactly 26 hexadecimal digits)" />
+                                    </StackPanel>
+                                </Grid.ToolTip>
+                                <TextBlock Grid.Column="0" Margin="3" Text="{Binding Key}" />
+                                <TextBox Grid.Column="1" Margin="3" TextAlignment="Right" Text="{Binding Value}" />
+                            </Grid>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type vm:MetaTag05ViewModel}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="120" />
+                                    <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.ToolTip>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label Content="Type: " />
+                                        <Label Content="{Binding TypeName}" />
+                                        <Label Content=" (DateTime and a byte)" />
+                                    </StackPanel>
+                                </Grid.ToolTip>
+                                <TextBlock Grid.Column="0" Margin="3" Text="{Binding Key}" />
+                                <TextBox Grid.Column="1" Margin="3" TextAlignment="Right" Text="{Binding Date}" />
+                                <TextBox Grid.Column="2" Margin="3" TextAlignment="Right" Text="{Binding Unknown}" />
+                            </Grid>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type vm:MetaTagStringViewModel}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="120" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.ToolTip>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label Content="Type: " />
+                                        <Label Content="{Binding TypeName}" />
+                                    </StackPanel>
+                                </Grid.ToolTip>
+                                <TextBlock Grid.Column="0" Margin="3" Text="{Binding Key}" />
+                                <TextBox Grid.Column="1" Margin="3" TextAlignment="Right" Text="{Binding Value}" />
+                            </Grid>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type vm:MetaTagUInt16ViewModel}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="120" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.ToolTip>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label Content="Type: " />
+                                        <Label Content="{Binding TypeName}" />
+                                    </StackPanel>
+                                </Grid.ToolTip>
+                                <TextBlock Grid.Column="0" Margin="3" Text="{Binding Key}" />
+                                <TextBox Grid.Column="1" Margin="3" TextAlignment="Right" Text="{Binding Value}" />
+                            </Grid>
+                        </DataTemplate>
+                        <!--<DataTemplate DataType="{x:Type vm:MetaTagViewModel}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
@@ -123,11 +224,10 @@
                                     </StackPanel>
                                 </Grid.ToolTip>
                                 <TextBlock Grid.Column="0" Text="{Binding Key}" />
-                                <TextBlock Grid.Column="1" Text=":" />
-                                <TextBlock Grid.Column="2" TextAlignment="Right" Text="{Binding Value}" />
+                                <TextBlock Grid.Column="1" TextAlignment="Right" Text="{Binding Value}" />
                             </Grid>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
+                        </DataTemplate>-->
+                    </ListBox.Resources>
                 </ListBox>
 
                 <Label Grid.Row="14" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="3" Content="Device groups:" />

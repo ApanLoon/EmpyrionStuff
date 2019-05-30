@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using EPBLab.ViewModel.MetaTags;
 using EPBLab.ViewModel.Tree;
 using EPBLib;
+using EPBLib.Helpers;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 
@@ -146,12 +148,7 @@ namespace EPBLab.ViewModel
         }
         public static readonly string TriangleCountPropertyName = "TriangleCount";
 
-        private ObservableCollection<MetaTagViewModel> _metaTags = new ObservableCollection<MetaTagViewModel>();
-        public ObservableCollection<MetaTagViewModel> MetaTags
-        {
-            get => _metaTags;
-            set => Set(ref _metaTags, value);
-        }
+        public ObservableCollection<MetaTagViewModel> MetaTags { get; } = new ObservableCollection<MetaTagViewModel>();
 
         private ObservableCollection<KeyValuePair<EpbBlock.EpbBlockType, UInt32>> _blockCounts = new ObservableCollection<KeyValuePair<EpbBlock.EpbBlockType, UInt32>>();
         public ObservableCollection<KeyValuePair<EpbBlock.EpbBlockType, UInt32>> BlockCounts
@@ -219,7 +216,32 @@ namespace EPBLab.ViewModel
 
             foreach (EpMetaTag tag in blueprint.MetaTags.Values)
             {
-                MetaTags.Add(new MetaTagViewModel(tag));
+                MetaTagViewModel vm;
+                switch (tag)
+                {
+                    case EpMetaTag02 t:
+                        vm = new MetaTag02ViewModel(t);
+                        break;
+                    case EpMetaTag03 t:
+                        vm = new MetaTag03ViewModel(t);
+                        break;
+                    case EpMetaTag04 t:
+                        vm = new MetaTag04ViewModel(t);
+                        break;
+                    case EpMetaTag05 t:
+                        vm = new MetaTag05ViewModel(t);
+                        break;
+                    case EpMetaTagString t:
+                        vm = new MetaTagStringViewModel(t);
+                        break;
+                    case EpMetaTagUInt16 t:
+                        vm = new MetaTagUInt16ViewModel(t);
+                        break;
+                    default:
+                        vm = new MetaTagViewModel(tag);
+                        break;
+                }
+                MetaTags.Add(vm);
             }
 
             foreach (KeyValuePair<EpbBlock.EpbBlockType, uint> blockCount in blueprint.BlockCounts)
