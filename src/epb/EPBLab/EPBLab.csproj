@@ -105,7 +105,7 @@
     <Compile Include="ViewModel\MetaTags\MetaTag05ViewModel.cs" />
     <Compile Include="ViewModel\MetaTags\MetaTagStringViewModel.cs" />
     <Compile Include="ViewModel\MetaTags\MetaTagUInt16ViewModel.cs" />
-    <Compile Include="ViewModel\MetaTagViewModel.cs" />
+    <Compile Include="ViewModel\MetaTags\MetaTagViewModel.cs" />
     <Compile Include="ViewModel\SummaryViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\Tree\BindableSelectedItemBehaviour.cs" />
