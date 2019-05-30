@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:view="clr-namespace:EPBLab.View"
+             xmlns:tree="clr-namespace:EPBLab.ViewModel.Tree"
+             xmlns:m="clr-namespace:EPBLib;assembly=EPBLib"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
@@ -127,6 +129,42 @@
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
+
+                <Label Grid.Row="14" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="3" Content="Device groups:" />
+                <TreeView Grid.Row="15" Grid.Column="3" ItemsSource="{Binding DeviceGroups}">
+                    <TreeView.Resources>
+                        <HierarchicalDataTemplate DataType="{x:Type tree:DeviceGroupViewModel}" ItemsSource="{Binding Entries}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Margin="3" Text="{Binding Name}" FontWeight="Bold" />
+                                <TextBlock Grid.Column="1" Margin="3, 3, 0, 3" Text="u3=" />
+                                <TextBlock Grid.Column="2" Margin="0, 3, 3, 3" Text="{Binding DeviceGroupUnknown03}" />
+                                <TextBlock Grid.Column="3" Margin="3, 3, 0, 3" Text="shortcut=" />
+                                <TextBlock Grid.Column="4" Margin="0, 3, 3, 3" Text="{Binding Shortcut}" />
+                                <TextBlock Grid.Column="5" Margin="3, 3, 0, 3" Text="u1=" />
+                                <TextBlock Grid.Column="6" Margin="0, 3, 3, 3" Text="{Binding DeviceGroupUnknown01}" />
+                            </Grid>
+                        </HierarchicalDataTemplate>
+                        <DataTemplate DataType="{x:Type m:EpbDeviceGroupEntry}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Margin="3" Text="{Binding Pos}" />
+                                <TextBlock Grid.Column="1" Margin="3" Text="{Binding Name}" />
+                            </Grid>
+                        </DataTemplate>
+                    </TreeView.Resources>
+                </TreeView>
             </Grid>
         </ScrollViewer>
     </Grid>

@@ -103,6 +103,7 @@
     <Compile Include="ViewModel\SummaryViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\Tree\BindableSelectedItemBehaviour.cs" />
+    <Compile Include="ViewModel\Tree\DeviceGroupViewModel.cs" />
     <Compile Include="ViewModel\Tree\TreeNode.cs" />
     <Compile Include="ViewModel\Tree\GroupNode.cs" />
     <Compile Include="ViewModel\Tree\BlockNode.cs" />

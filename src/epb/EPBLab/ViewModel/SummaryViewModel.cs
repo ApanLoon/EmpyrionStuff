@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using EPBLab.ViewModel.Tree;
 using EPBLib;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -160,6 +161,14 @@ namespace EPBLab.ViewModel
         }
         public static readonly string BlockCountsPropertyName = "BlockCounts";
 
+        private ObservableCollection<DeviceGroupViewModel> _deviceGroups = new ObservableCollection<DeviceGroupViewModel>();
+        public ObservableCollection<DeviceGroupViewModel> DeviceGroups
+        {
+            get => _deviceGroups;
+            set => Set(ref _deviceGroups, value);
+        }
+        public static readonly string DeviceGroupsPropertyName = "DeviceGroups";
+
         public EpBlueprint Blueprint;
 
         #endregion Properties
@@ -216,6 +225,11 @@ namespace EPBLab.ViewModel
             foreach (KeyValuePair<EpbBlock.EpbBlockType, uint> blockCount in blueprint.BlockCounts)
             {
                 BlockCounts.Add(blockCount);
+            }
+
+            foreach (EpbDeviceGroup group in blueprint.DeviceGroups)
+            {
+                DeviceGroups.Add(new DeviceGroupViewModel(group));
             }
         }
     }
