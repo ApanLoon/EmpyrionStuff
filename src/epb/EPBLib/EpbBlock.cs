@@ -108,7 +108,6 @@ namespace EPBLib
             {   431, new EpbBlockType(){Id =   431, Name = "WeaponSV04"                   , Category = "Weapons/Items"                , Ref = ""                             }},
             {   432, new EpbBlockType(){Id =   432, Name = "WeaponSV05"                   , Category = "Weapons/Items"                , Ref = ""                             }},
             {   445, new EpbBlockType(){Id =   445, Name = "LandinggearMSHeavy"           , Category = "Devices"                      , Ref = ""                             }},
-            {   446, new EpbBlockType(){Id =   446, Name = "Deprecated-RampSteep"         , Category = "BuildingBlocks"               , Ref = "Hull"                         }}, //Removed in A10.0.0-2446
             {   449, new EpbBlockType(){Id =   449, Name = "ThrusterSVRoundNormal"        , Category = "Devices"                      , Ref = ""                             }},
             {   450, new EpbBlockType(){Id =   450, Name = "ThrusterSVRoundArmored"       , Category = "Devices"                      , Ref = "ThrusterSVRoundNormal"        }},
             {   451, new EpbBlockType(){Id =   451, Name = "ThrusterSVRoundSlant"         , Category = "Devices"                      , Ref = "ThrusterSVRoundNormal"        }},
@@ -813,9 +812,7 @@ namespace EPBLib
             {  1669, new EpbBlockType(){Id =  1669, Name = "TurretGVToolRetract"          , Category = "Weapons/Items"                , Ref = "TurretGVTool"                 }},
             {  1670, new EpbBlockType(){Id =  1670, Name = "SentryGun03Retract"           , Category = "Weapons/Items"                , Ref = "SentryGun03"                  }},
             {  1671, new EpbBlockType(){Id =  1671, Name = "SentryGun05"                  , Category = "Weapons/Items"                , Ref = "SentryGun03"                  }},
-            {  1672, new EpbBlockType(){Id =  1672, Name = "deprecated-SentryGun05Retract"           , Category = "Weapons/Items"                , Ref = "SentryGun03"                  }}, // Removed in A10.0.0-2446
             {  1673, new EpbBlockType(){Id =  1673, Name = "SentryGunBlocks"              , Category = "Weapons/Items"                , Ref = ""                             }},
-            {  1674, new EpbBlockType(){Id =  1674, Name = "deprecated-SentryGun01Retract"           , Category = "Weapons/Items"                , Ref = "SentryGun01"                  }}, // Removed in A10.0.0-2446
             {  1675, new EpbBlockType(){Id =  1675, Name = "SentryGun02Retract"           , Category = "Weapons/Items"                , Ref = "SentryGun02"                  }},
             {  1676, new EpbBlockType(){Id =  1676, Name = "CargoContainerSmall"          , Category = "Devices"                      , Ref = ""                             }},
             {  1677, new EpbBlockType(){Id =  1677, Name = "CargoContainerMedium"         , Category = "Devices"                      , Ref = "CargoContainerSmall"          }},
@@ -848,7 +845,6 @@ namespace EPBLib
             {  1707, new EpbBlockType(){Id =  1707, Name = "BoardingRamp1x2x3"            , Category = "Devices"                      , Ref = "RampTemplate"                 }},
             {  1708, new EpbBlockType(){Id =  1708, Name = "BoardingRamp2x2x3"            , Category = "Devices"                      , Ref = "RampTemplate"                 }},
             {  1709, new EpbBlockType(){Id =  1709, Name = "BoardingRamp3x2x3"            , Category = "Devices"                      , Ref = "RampTemplate"                 }},
-            {  1710, new EpbBlockType(){Id =  1710, Name = "BoardingRamp3x3x5"            , Category = "Devices"                      , Ref = "RampTemplate"                 }}, // Removed in A10.1.0-2470
             {  1711, new EpbBlockType(){Id =  1711, Name = "ContainerLargeBlocks"         , Category = "Devices"                      , Ref = ""                             }},
             {  1712, new EpbBlockType(){Id =  1712, Name = "ContainerSmallBlocks"         , Category = "Devices"                      , Ref = ""                             }},
             {  1713, new EpbBlockType(){Id =  1713, Name = "ContainerMS01Large"           , Category = "Devices"                      , Ref = "ContainerMS01"                }},
@@ -1095,10 +1091,29 @@ namespace EPBLib
             {    91, new EpbBlockType(){Id =    91, Name = "VoxelZascosium"               , Category = "Voxel/Materials"              , Ref = ""                             }},
             {    95, new EpbBlockType(){Id =    95, Name = "VoxelGold"                    , Category = "Voxel/Materials"              , Ref = ""                             }},
             {   114, new EpbBlockType(){Id =   114, Name = "VoxelPentaxid"                , Category = "Voxel/Materials"              , Ref = ""                             }},
+            {   285, new EpbBlockType(){Id =   285, Name = "WindowVertBase"               , Category = "BuildingBlocks"               , Ref = ""                             }},
+            {   387, new EpbBlockType(){Id =   387, Name = "Hull"                         , Category = "BuildingBlocks"               , Ref = ""                             }},
+            {   388, new EpbBlockType(){Id =   388, Name = "HullWedge"                    , Category = "BuildingBlocks"               , Ref = ""                             }},
+            {   390, new EpbBlockType(){Id =   390, Name = "HullWedgeInverted"            , Category = "BuildingBlocks"               , Ref = ""                             }},
+            {   391, new EpbBlockType(){Id =   391, Name = "HullFull"                     , Category = "BuildingBlocks"               , Ref = ""                             }},
+            {   392, new EpbBlockType(){Id =   392, Name = "HullThin"                     , Category = "BuildingBlocks"               , Ref = ""                             }},
+            {   394, new EpbBlockType(){Id =   394, Name = "HullArmoredFull"              , Category = "BuildingBlocks"               , Ref = ""                             }},
+            {   395, new EpbBlockType(){Id =   395, Name = "HullArmoredThin"              , Category = "BuildingBlocks"               , Ref = ""                             }},
+            {   446, new EpbBlockType(){Id =   446, Name = "RampSteep"                    , Category = "BuildingBlocks"               , Ref = "Hull"                         }}, //Removed in A10.0.0-2446
+            {   495, new EpbBlockType(){Id =   495, Name = "ArtMassMedium"                , Category = "MassBlocks"                   , Ref = ""                             }},
+            {   496, new EpbBlockType(){Id =   496, Name = "ArtMassHeavy"                 , Category = "MassBlocks"                   , Ref = ""                             }},
+            {   616, new EpbBlockType(){Id =   616, Name = "TableTV"                      , Category = "Furnishings (Deco)"           , Ref = ""                             }},
+            {   634, new EpbBlockType(){Id =   634, Name = "ConstructorSV_Old"            , Category = "Devices"                      , Ref = ""                             }},
+            {   704, new EpbBlockType(){Id =   704, Name = "TrussCorner"                  , Category = "BuildingBlocks"               , Ref = "TrussCube"                    }},
+            {   705, new EpbBlockType(){Id =   705, Name = "TrussWedge"                   , Category = "BuildingBlocks"               , Ref = "TrussCube"                    }},
+            {   959, new EpbBlockType(){Id =   959, Name = "ConstructorSmallV2"           , Category = "Devices"                      , Ref = ""                             }},
+            {  1672, new EpbBlockType(){Id =  1672, Name = "SentryGun05Retract"           , Category = "Weapons/Items"                , Ref = "SentryGun03"                  }}, // Removed in A10.0.0-2446
+            {  1674, new EpbBlockType(){Id =  1674, Name = "SentryGun01Retract"           , Category = "Weapons/Items"                , Ref = "SentryGun01"                  }}, // Removed in A10.0.0-2446
             {  1681, new EpbBlockType(){Id =  1681, Name = "Filler"                       , Category = "Voxel/Materials"              , Ref = ""                             }},
+            {  1710, new EpbBlockType(){Id =  1710, Name = "BoardingRamp3x3x5"            , Category = "Devices"                      , Ref = "RampTemplate"                 }}, // Removed in A10.1.0-2470
         };
 
-        /* These block types occur in Prefabs but are not listed in Config_Example.ecf:
+        /* These block types have been seen in Prefabs but are not listed in Config_Example.ecf:
 BlockType=1
 BlockType=1167
 BlockType=1168
@@ -1209,7 +1224,7 @@ BlockType=662
 BlockType=663
 BlockType=664
 BlockType=674
-BlockType=675
+BlockType=675*
 BlockType=677
 BlockType=679
 BlockType=704
@@ -1217,7 +1232,7 @@ BlockType=705
 BlockType=707
 BlockType=709
 BlockType=713
-BlockType=780
+BlockType=780*
 BlockType=820
 BlockType=821
 BlockType=825
