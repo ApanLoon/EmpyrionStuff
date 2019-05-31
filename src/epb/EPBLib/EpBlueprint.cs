@@ -45,7 +45,10 @@ namespace EPBLib
         public Dictionary<EpbBlock.EpbBlockType, UInt32> BlockCounts = new Dictionary<EpbBlock.EpbBlockType, uint>();
 
         public List<EpbDeviceGroup> DeviceGroups = new List<EpbDeviceGroup>();
-        public EpbBlockList Blocks { get; set; }
+
+        EpbBlockList _blocks;
+        public EpbBlockList Blocks => _blocks ?? (_blocks = new EpbBlockList());
+
         public byte[] Unknown07 = new byte[0];
         public List<EpbSignalSource> SignalSources = new List<EpbSignalSource>();
         public List<EpbSignalTarget> SignalTargets = new List<EpbSignalTarget>();
@@ -92,36 +95,22 @@ namespace EPBLib
 
         public void SetBlock(EpbBlock block)
         {
-            if (Blocks == null)
-            {
-                Blocks = new EpbBlockList();
-            }
-
             // TODO: Update blockCounts
             Blocks[block.Position] = block;
         }
 
         public void ComputeDimensions()
         {
-            UInt32 width = 0;
+            UInt32 width  = 0;
             UInt32 height = 0;
-            UInt32 depth = 0;
+            UInt32 depth  = 0;
             foreach (EpbBlock block in Blocks)
             {
-                if (block.Position.X >= width)
-                {
-                    width = (UInt32)(block.Position.X + 1);
-                }
-                if (block.Position.Y >= height)
-                {
-                    height = (UInt32)(block.Position.Y + 1);
-                }
-                if (block.Position.Z >= depth)
-                {
-                    depth = (UInt32)(block.Position.Z + 1);
-                }
+                width  = Math.Max(width,  block.Position.X + 1u);
+                height = Math.Max(height, block.Position.Y + 1u);
+                depth  = Math.Max(depth,  block.Position.Z + 1u);
             }
-            Width = width;
+            Width  = width;
             Height = height;
             Depth = depth;
         }
