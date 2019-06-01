@@ -9,30 +9,93 @@
         xmlns:view="clr-namespace:EPBLab.View"
         xmlns:prop="clr-namespace:EPBLab.Properties"
         mc:Ignorable="d ignore"
-        Width="800"
-        Height="600"
+        Width="1200"
+        Height="800"
         Title="{Binding MainWindowTitle}"
         DataContext="{Binding Main, Source={StaticResource Locator}}">
     
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="24" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="24" />
         </Grid.RowDefinitions>
         <ToolBarTray Grid.Row="0">
             <ToolBar>
-                <Button Command="{Binding CommandNew}" Content="New" />
-                <Button Content="Open">
+                <Border BorderBrush="Black" BorderThickness="1">
+                    <Label Content="File" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Label.LayoutTransform>
+                            <RotateTransform Angle="-90"></RotateTransform>
+                        </Label.LayoutTransform>
+                    </Label>
+                </Border>
+                <Button Command="{Binding CommandNew}">
+                    <Grid>
+                        <Image Source="pack://application:,,,/Images/ToolbarCommandIcons/Empty.png" />
+                        <TextBlock Text="New" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <TextBlock.Effect>
+                                <DropShadowEffect ShadowDepth="0" Color="White" BlurRadius="10" />
+                            </TextBlock.Effect>
+                        </TextBlock>
+                    </Grid>
+                </Button>
+                <Button>
                     <i:Interaction.Behaviors>
                         <b:OpenFileBehaviour MessageIdentifier="OpenBlueprints" Filter="Empyrion blueprints (*.epb)|*.epb|All files (*.*)|*.*" MultiSelect="True" />
                     </i:Interaction.Behaviors>
+                    <Grid>
+                        <Image Source="pack://application:,,,/Images/ToolbarCommandIcons/Empty.png" />
+                        <TextBlock Text="Open" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <TextBlock.Effect>
+                                <DropShadowEffect ShadowDepth="0" Color="White" BlurRadius="10" />
+                            </TextBlock.Effect>
+                        </TextBlock>
+                    </Grid>
                 </Button>
-                <Button Content="Save As">
+                <Button>
                     <i:Interaction.Behaviors>
                         <b:SaveFileBehaviour MessageIdentifier="SaveBlueprint" Filter="Empyrion blueprints (*.epb)|*.epb|All files (*.*)|*.*"/>
                     </i:Interaction.Behaviors>
+                    <Grid>
+                        <Image Source="pack://application:,,,/Images/ToolbarCommandIcons/Empty.png" />
+                        <TextBlock Text="Save As" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <TextBlock.Effect>
+                                <DropShadowEffect ShadowDepth="0" Color="White" BlurRadius="10" />
+                            </TextBlock.Effect>
+                        </TextBlock>
+                    </Grid>
                 </Button>
+            </ToolBar>
+            <ToolBar Visibility="{Binding ShowBuildStructures}">
+                <ToolBar.Resources>
+                    <CollectionViewSource x:Key="BuildStructures" Source="{Binding BuildStructureCommands}" />
+                </ToolBar.Resources>
+                <ToolBar.ItemsSource>
+                    <CompositeCollection>
+                        <Border BorderBrush="Black" BorderThickness="1">
+                            <Label Content="Structures" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Label.LayoutTransform>
+                                    <RotateTransform Angle="-90"></RotateTransform>
+                                </Label.LayoutTransform>
+                            </Label>
+                        </Border>
+                        <CollectionContainer Collection="{Binding Source={StaticResource BuildStructures}}" />
+                    </CompositeCollection>
+                </ToolBar.ItemsSource>
+                <ToolBar.ItemTemplate>
+                    <DataTemplate>
+                        <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Command="{Binding Path=Command}">
+                            <Grid>
+                                <Image Source="{Binding Icon}" />
+                                <TextBlock Text="{Binding Name}" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <TextBlock.Effect>
+                                        <DropShadowEffect ShadowDepth="0" Color="White" BlurRadius="10" />
+                                    </TextBlock.Effect>
+                                </TextBlock>
+                            </Grid>
+                        </Button>
+                    </DataTemplate>
+                </ToolBar.ItemTemplate>
             </ToolBar>
         </ToolBarTray>
 

@@ -152,7 +152,11 @@ namespace EPBLab.ViewModel
         public BlocksViewModel(EpBlueprint blueprint)
         {
             Blueprint = blueprint;
+            Update();
+        }
 
+        public void Update()
+        {
             if (Blueprint.Blocks == null)
             {
                 return;
@@ -162,9 +166,9 @@ namespace EPBLab.ViewModel
             BuildTree();
 
             // Build 3D view:
-            CameraAimPoint = new Point3D(blueprint.Width / 2, blueprint.Height / 2, blueprint.Depth / 2);
-            CameraPosition = new Point3D(blueprint.Width / 2, blueprint.Height / 2, blueprint.Depth);
-            PaletteImageSource = CreateBitmapSource(blueprint.Palette);
+            CameraAimPoint = new Point3D(Blueprint.Width / 2, Blueprint.Height / 2, Blueprint.Depth / 2);
+            CameraPosition = new Point3D(Blueprint.Width / 2, Blueprint.Height / 2, Blueprint.Depth);
+            PaletteImageSource = CreateBitmapSource(Blueprint.Palette);
 
             BuildModel(Blueprint);
         }
@@ -172,6 +176,7 @@ namespace EPBLab.ViewModel
         private void BuildTree()
         {
             BlockNodes.Clear();
+            BlockCategories.Clear();
             foreach (EpbBlock block in Blueprint.Blocks)
             {
                 if (block == null)

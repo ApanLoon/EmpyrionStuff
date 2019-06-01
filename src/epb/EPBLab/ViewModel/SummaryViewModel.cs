@@ -213,8 +213,15 @@ namespace EPBLab.ViewModel
         public SummaryViewModel(EpBlueprint blueprint)
         {
             Blueprint = blueprint;
+            Update();
+        }
 
-            foreach (EpMetaTag tag in blueprint.MetaTags.Values)
+        public void Update()
+        {
+            RaisePropertyChanged(string.Empty);
+
+            MetaTags.Clear();
+            foreach (EpMetaTag tag in Blueprint.MetaTags.Values)
             {
                 MetaTagViewModel vm;
                 switch (tag)
@@ -244,12 +251,14 @@ namespace EPBLab.ViewModel
                 MetaTags.Add(vm);
             }
 
-            foreach (KeyValuePair<EpbBlock.EpbBlockType, uint> blockCount in blueprint.BlockCounts)
+            BlockCounts.Clear();
+            foreach (KeyValuePair<EpbBlock.EpbBlockType, uint> blockCount in Blueprint.BlockCounts)
             {
                 BlockCounts.Add(blockCount);
             }
 
-            foreach (EpbDeviceGroup group in blueprint.DeviceGroups)
+            DeviceGroups.Clear();
+            foreach (EpbDeviceGroup group in Blueprint.DeviceGroups)
             {
                 DeviceGroups.Add(new DeviceGroupViewModel(group));
             }

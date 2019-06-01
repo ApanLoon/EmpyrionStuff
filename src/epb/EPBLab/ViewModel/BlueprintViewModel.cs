@@ -12,6 +12,7 @@ namespace EPBLab.ViewModel
 {
     public class BlueprintViewModel : ViewModelBase
     {
+        #region Properties
         public EpBlueprint Blueprint { get; set; }
 
         public const string TabNamePropertyName = "TabName";
@@ -57,8 +58,9 @@ namespace EPBLab.ViewModel
             get => _logic;
             set => Set(ref _logic, value);
         }
+        #endregion Properties
 
-
+        #region Commands
         #region Command_Close
 
         public RelayCommand CommandClose
@@ -69,8 +71,14 @@ namespace EPBLab.ViewModel
         private RelayCommand _commandClose;
 
         #endregion Command_Close
+        #endregion Commands
 
-
+        public void UpdateViewModels()
+        {
+            Summary.Update();
+            Blocks.Update();
+            Logic.Update();
+        }
 
         public BlueprintViewModel(string fileName, EpBlueprint blueprint)
         {

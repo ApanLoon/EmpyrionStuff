@@ -12,15 +12,15 @@ namespace EPBLab.ViewModel.Logic
 {
     public class LogicViewModel : ViewModelBase
     {
-        protected EpBlueprint BluePrint;
+        protected EpBlueprint Blueprint;
 
+        #region Properties
         public ObservableCollection<SignalSourceViewModel> SignalSources
         {
             get => _SignalSources;
             set => Set (ref _SignalSources, value);
         }
         protected ObservableCollection<SignalSourceViewModel> _SignalSources;
-
 
         public ObservableCollection<SignalTargetViewModel> SignalTargets
         {
@@ -36,34 +36,39 @@ namespace EPBLab.ViewModel.Logic
         }
         protected ObservableCollection<SignalOperatorViewModel> _SignalOperators;
 
-
         public ObservableCollection<ConnectorViewModel> Connectors
         {
             get => _Connectors;
             set => Set(ref _Connectors, value);
         }
         protected ObservableCollection<ConnectorViewModel> _Connectors;
+        #endregion Properties
 
         public LogicViewModel(EpBlueprint blueprint)
         {
-            BluePrint = blueprint;
+            Blueprint = blueprint;
 
+            Update();
+        }
+
+        public void Update()
+        {
             //SignalSources = new ObservableCollection<SignalSourceViewModel>(blueprint.SignalSources.Select(x => new SignalSourceViewModel(blueprint, x) {X = rnd.NextDouble() * 400, Y = rnd.NextDouble() * 400 }));
             SignalSources = new ObservableCollection<SignalSourceViewModel>();
             SignalTargets = new ObservableCollection<SignalTargetViewModel>();
             SignalOperators = new ObservableCollection<SignalOperatorViewModel>();
             Connectors = new ObservableCollection<ConnectorViewModel>();
 
-            for (int i = 0; i < blueprint.SignalSources.Count; i++)
+            for (int i = 0; i < Blueprint.SignalSources.Count; i++)
             {
-                SignalSources.Add(new SignalSourceViewModel(blueprint, blueprint.SignalSources[i], GetPosition(PositionType.Source, i)));
+                SignalSources.Add(new SignalSourceViewModel(Blueprint, Blueprint.SignalSources[i], GetPosition(PositionType.Source, i)));
             }
 
 
-            for (int o = 0; o < blueprint.SignalOperators.Count; o++)
+            for (int o = 0; o < Blueprint.SignalOperators.Count; o++)
             {
-                EpbSignalOperator op = blueprint.SignalOperators[o];
-                SignalOperatorViewModel opVm = new SignalOperatorViewModel(blueprint, op, GetPosition(PositionType.Operator, o));
+                EpbSignalOperator op = Blueprint.SignalOperators[o];
+                SignalOperatorViewModel opVm = new SignalOperatorViewModel(Blueprint, op, GetPosition(PositionType.Operator, o));
                 SignalOperators.Add(opVm);
                 for (int i = 0; i < opVm.Inputs.Count; i++)
                 {
@@ -90,10 +95,10 @@ namespace EPBLab.ViewModel.Logic
 
 
 
-            for (int i = 0; i < blueprint.SignalTargets.Count; i++)
+            for (int i = 0; i < Blueprint.SignalTargets.Count; i++)
             {
-                EpbSignalTarget target = blueprint.SignalTargets[i];
-                SignalTargetViewModel targetVm = new SignalTargetViewModel(blueprint, target, GetPosition(PositionType.Source, i));
+                EpbSignalTarget target = Blueprint.SignalTargets[i];
+                SignalTargetViewModel targetVm = new SignalTargetViewModel(Blueprint, target, GetPosition(PositionType.Source, i));
                 SignalTargets.Add(targetVm);
 
                 SignalOperatorViewModel operatorVm = (from x in SignalOperators where x.OutSig == target.SignalName select x).FirstOrDefault();
@@ -109,6 +114,7 @@ namespace EPBLab.ViewModel.Logic
                 }
             }
         }
+
 
         protected enum PositionType
         {
