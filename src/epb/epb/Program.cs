@@ -484,50 +484,50 @@ namespace epb
 
                         if (isBackEdge && isLeftEdge)
                         {
-                            t = EpbBlock.GetBlockType("HullFullLarge", "Corner Large A");
-                            v = EpbBlock.GetVariant(t.Id, "Corner Large A");
+                            t = EpbBlock.GetBlockType("HullFullLarge", "CornerC");
+                            v = EpbBlock.GetVariant(t.Id, "CornerC");
                             r = EpbBlock.EpbBlockRotation.PxPy;
                         }
                         else if (isBackEdge && isRightEdge)
                         {
-                            t = EpbBlock.GetBlockType("HullFullLarge", "Corner Large A"); 
-                            v = EpbBlock.GetVariant(t.Id, "Corner Large A");
+                            t = EpbBlock.GetBlockType("HullFullLarge", "CornerC"); 
+                            v = EpbBlock.GetVariant(t.Id, "CornerC");
                             r = EpbBlock.EpbBlockRotation.PzPy;
                         }
                         else if (isFrontEdge && isLeftEdge)
                         {
-                            t = EpbBlock.GetBlockType("HullFullLarge", "Corner Large A");
-                            v = EpbBlock.GetVariant(t.Id, "Corner Large A");
+                            t = EpbBlock.GetBlockType("HullFullLarge", "CornerC");
+                            v = EpbBlock.GetVariant(t.Id, "CornerC");
                             r = EpbBlock.EpbBlockRotation.NzPy;
                         }
                         else if (isFrontEdge && isRightEdge)
                         {
-                            t = EpbBlock.GetBlockType("HullFullLarge", "Corner Large A");
-                            v = EpbBlock.GetVariant(t.Id, "Corner Large A");
+                            t = EpbBlock.GetBlockType("HullFullLarge", "CornerC");
+                            v = EpbBlock.GetVariant(t.Id, "CornerC");
                             r = EpbBlock.EpbBlockRotation.NxPy;
                         }
                         else if (isBackEdge)
                         {
-                            t = EpbBlock.GetBlockType("HullFullLarge", "Slope");
-                            v = EpbBlock.GetVariant(t.Id, "Slope");
+                            t = EpbBlock.GetBlockType("HullFullLarge", "RampC");
+                            v = EpbBlock.GetVariant(t.Id, "RampC");
                             r = EpbBlock.EpbBlockRotation.NzPy;
                         }
                         else if (isFrontEdge)
                         {
-                            t = EpbBlock.GetBlockType("HullFullLarge", "Slope");
-                            v = EpbBlock.GetVariant(t.Id, "Slope");
+                            t = EpbBlock.GetBlockType("HullFullLarge", "RampC");
+                            v = EpbBlock.GetVariant(t.Id, "RampC");
                             r = EpbBlock.EpbBlockRotation.PzPy;
                         }
                         else if (isLeftEdge)
                         {
-                            t = EpbBlock.GetBlockType("HullFullLarge", "Slope");
-                            v = EpbBlock.GetVariant(t.Id, "Slope");
+                            t = EpbBlock.GetBlockType("HullFullLarge", "RampC");
+                            v = EpbBlock.GetVariant(t.Id, "RampC");
                             r = EpbBlock.EpbBlockRotation.NxPy;
                         }
                         else if (isRightEdge)
                         {
-                            t = EpbBlock.GetBlockType("HullFullLarge", "Slope");
-                            v = EpbBlock.GetVariant(t.Id, "Slope");
+                            t = EpbBlock.GetBlockType("HullFullLarge", "RampC");
+                            v = EpbBlock.GetVariant(t.Id, "RampC");
                             r = EpbBlock.EpbBlockRotation.PxPy;
                         }
 
