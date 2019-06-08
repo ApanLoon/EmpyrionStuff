@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EPBLib.Logic;
+﻿using EPBLib.Logic;
 using ICSharpCode.SharpZipLib.Core;
 using ICSharpCode.SharpZipLib.Zip;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace EPBLib.Helpers
 {
@@ -38,7 +35,7 @@ namespace EPBLib.Helpers
             writer.Write(epb.TriangleCount);
 
             writer.Write((UInt16)epb.BlockCounts.Count);
-            foreach (EpbBlock.EpbBlockType type in epb.BlockCounts.Keys)
+            foreach (EpbBlockType type in epb.BlockCounts.Keys)
             {
                 writer.Write(type);
                 writer.Write(epb.BlockCounts[type]);
@@ -51,7 +48,7 @@ namespace EPBLib.Helpers
 
         #region EpbBlocks
 
-        public static void Write(this BinaryWriter writer, EpbBlock.EpbBlockType type)
+        public static void Write(this BinaryWriter writer, EpbBlockType type)
         {
             writer.Write((UInt16)type.Id);
         }

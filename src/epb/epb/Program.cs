@@ -35,7 +35,7 @@ namespace epb
         public static bool                  Hollow          = false;
         public static string                OutputPath      = "NewBlueprint.epb";
         public static EpBlueprint.EpbType   BlueprintType   = EpBlueprint.EpbType.Base;
-        public static EpbBlock.EpbBlockType BlockType       = EpbBlock.GetBlockType("HullFullLarge", "Cube");
+        public static EpbBlockType          BlockType       = EpbBlockType.GetBlockType("HullFullLarge", "Cube");
         public static byte                  BlockVariant    = 0x00;
         public static UInt32                Width           = 1;
         public static UInt32                Height          = 1;
@@ -109,11 +109,11 @@ namespace epb
                         {
                             try
                             {
-                                BlockType = EpbBlock.BlockTypes[(UInt16)new System.ComponentModel.ByteConverter().ConvertFromString(v)];
+                                BlockType = EpbBlockType.BlockTypes[(UInt16)new System.ComponentModel.ByteConverter().ConvertFromString(v)];
                             }
                             catch 
                             {
-                                BlockType = EpbBlock.GetBlockType(v, "");
+                                BlockType = EpbBlockType.GetBlockType(v, "");
                             }
                         }
                     }
@@ -131,7 +131,7 @@ namespace epb
                             }
                             catch
                             {
-                                BlockVariant = EpbBlock.GetVariant(BlockType.Id, v);
+                                BlockVariant = EpbBlockType.GetVariant(BlockType.Id, v);
                             }
                         }
                     }
@@ -477,57 +477,57 @@ namespace epb
                         bool isRightEdge = (x == (w - 1));
                         bool isInterior  = !isBackEdge && ! isFrontEdge && !isRightEdge && !isLeftEdge && y > 0 && y < (h - 1);
 
-                        EpbBlock.EpbBlockType     t = BlockType;
+                        EpbBlockType     t = BlockType;
                         EpbBlock.EpbBlockRotation r = EpbBlock.EpbBlockRotation.PzPy;
                         byte                      v = BlockVariant;
                         byte[]                    c = new byte[] { 0, 0, 0, 0, 0, 0 };
 
                         if (isBackEdge && isLeftEdge)
                         {
-                            t = EpbBlock.GetBlockType("HullFullLarge", "CornerC");
-                            v = EpbBlock.GetVariant(t.Id, "CornerC");
+                            t = EpbBlockType.GetBlockType("HullFullLarge", "CornerC");
+                            v = EpbBlockType.GetVariant(t.Id, "CornerC");
                             r = EpbBlock.EpbBlockRotation.PxPy;
                         }
                         else if (isBackEdge && isRightEdge)
                         {
-                            t = EpbBlock.GetBlockType("HullFullLarge", "CornerC"); 
-                            v = EpbBlock.GetVariant(t.Id, "CornerC");
+                            t = EpbBlockType.GetBlockType("HullFullLarge", "CornerC"); 
+                            v = EpbBlockType.GetVariant(t.Id, "CornerC");
                             r = EpbBlock.EpbBlockRotation.PzPy;
                         }
                         else if (isFrontEdge && isLeftEdge)
                         {
-                            t = EpbBlock.GetBlockType("HullFullLarge", "CornerC");
-                            v = EpbBlock.GetVariant(t.Id, "CornerC");
+                            t = EpbBlockType.GetBlockType("HullFullLarge", "CornerC");
+                            v = EpbBlockType.GetVariant(t.Id, "CornerC");
                             r = EpbBlock.EpbBlockRotation.NzPy;
                         }
                         else if (isFrontEdge && isRightEdge)
                         {
-                            t = EpbBlock.GetBlockType("HullFullLarge", "CornerC");
-                            v = EpbBlock.GetVariant(t.Id, "CornerC");
+                            t = EpbBlockType.GetBlockType("HullFullLarge", "CornerC");
+                            v = EpbBlockType.GetVariant(t.Id, "CornerC");
                             r = EpbBlock.EpbBlockRotation.NxPy;
                         }
                         else if (isBackEdge)
                         {
-                            t = EpbBlock.GetBlockType("HullFullLarge", "RampC");
-                            v = EpbBlock.GetVariant(t.Id, "RampC");
+                            t = EpbBlockType.GetBlockType("HullFullLarge", "RampC");
+                            v = EpbBlockType.GetVariant(t.Id, "RampC");
                             r = EpbBlock.EpbBlockRotation.NzPy;
                         }
                         else if (isFrontEdge)
                         {
-                            t = EpbBlock.GetBlockType("HullFullLarge", "RampC");
-                            v = EpbBlock.GetVariant(t.Id, "RampC");
+                            t = EpbBlockType.GetBlockType("HullFullLarge", "RampC");
+                            v = EpbBlockType.GetVariant(t.Id, "RampC");
                             r = EpbBlock.EpbBlockRotation.PzPy;
                         }
                         else if (isLeftEdge)
                         {
-                            t = EpbBlock.GetBlockType("HullFullLarge", "RampC");
-                            v = EpbBlock.GetVariant(t.Id, "RampC");
+                            t = EpbBlockType.GetBlockType("HullFullLarge", "RampC");
+                            v = EpbBlockType.GetVariant(t.Id, "RampC");
                             r = EpbBlock.EpbBlockRotation.NxPy;
                         }
                         else if (isRightEdge)
                         {
-                            t = EpbBlock.GetBlockType("HullFullLarge", "RampC");
-                            v = EpbBlock.GetVariant(t.Id, "RampC");
+                            t = EpbBlockType.GetBlockType("HullFullLarge", "RampC");
+                            v = EpbBlockType.GetVariant(t.Id, "RampC");
                             r = EpbBlock.EpbBlockRotation.PxPy;
                         }
 
@@ -570,7 +570,7 @@ namespace epb
             byte i = 0;
             foreach (UInt16 bt in blockTypes )
             {
-                epb.SetBlock(new EpbBlock(new EpbBlockPos(i, 0, 0)) { BlockType = EpbBlock.BlockTypes[bt], Variant = BlockVariant });
+                epb.SetBlock(new EpbBlock(new EpbBlockPos(i, 0, 0)) { BlockType = EpbBlockType.BlockTypes[bt], Variant = BlockVariant });
                 i += 14;
             }
             epb.CountBlocks();
@@ -597,12 +597,12 @@ namespace epb
             int i = 0;
             foreach (UInt16 t in types)
             {
-                foreach (string variantName in EpbBlock.BlockVariants[t])
+                foreach (string variantName in EpbBlockType.BlockVariants[t])
                 {
                     byte x = (byte)((i % 8) * 2);
                     byte z = (byte)((i / 8) * 2);
-                    EpbBlock.EpbBlockType bt = EpbBlock.BlockTypes[t];
-                    byte v = EpbBlock.GetVariant(t, variantName);
+                    EpbBlockType bt = EpbBlockType.BlockTypes[t];
+                    byte v = EpbBlockType.GetVariant(t, variantName);
                     EpbBlock block =
                         new EpbBlock(new EpbBlockPos(x, 0, z))
                         {

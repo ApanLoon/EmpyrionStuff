@@ -7,7 +7,7 @@ namespace EPBLab.ViewModel.MetaTags
     {
         private EpMetaTagString MyTag => Tag as EpMetaTagString;
 
-        public string Value
+        public override string Value
         {
             get => MyTag.Value;
             set

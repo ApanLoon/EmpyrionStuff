@@ -184,7 +184,7 @@ namespace EPBLab.ViewModel
                     continue;
                 }
 
-                EpbBlock.EpbBlockType t = block.BlockType;
+                EpbBlockType t = block.BlockType;
 
                 string categoryName = t.Category;
                 GroupNode categoryNode = BlockCategories.FirstOrDefault(x => x.Title == categoryName);

@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using EPBLib.BlockData;
+﻿using EPBLib.BlockData;
 using EPBLib.Logic;
 using ICSharpCode.SharpZipLib.Zip;
+using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace EPBLib.Helpers
 {
@@ -104,7 +102,7 @@ namespace EPBLib.Helpers
             UInt32 nBlocksTotal = 0;
             for (int i = 0; i < nBlockCounts; i++)
             {
-                EpbBlock.EpbBlockType blockType = reader.ReadEpbBlockType(ref bytesLeft);
+                EpbBlockType blockType = reader.ReadEpbBlockType(ref bytesLeft);
                 if (version <= 12)
                 {
                     reader.ReadUInt16(); // Block types were 32 bit in the early versions, but these bytes were probably always zero, so we simply ignore them.
@@ -338,11 +336,11 @@ namespace EPBLib.Helpers
 
         #region EpbBlocks
 
-        public static EpbBlock.EpbBlockType ReadEpbBlockType(this BinaryReader reader, ref long bytesLeft)
+        public static EpbBlockType ReadEpbBlockType(this BinaryReader reader, ref long bytesLeft)
         {
             UInt16 id = reader.ReadUInt16();
             bytesLeft -= 2;
-            return EpbBlock.GetBlockType(id);
+            return EpbBlockType.GetBlockType(id);
         }
 
         public static void ReadEpbBlocks(this BinaryReader reader, EpBlueprint epb, UInt32 version, long bytesLeft)
@@ -386,7 +384,7 @@ namespace EPBLib.Helpers
                             bytesLeft -= 4;
                             EpbBlock block = new EpbBlock(new EpbBlockPos((byte)x, (byte)y, (byte)z))
                             {
-                                BlockType = EpbBlock.GetBlockType((UInt16)(data & 0x7ff)),
+                                BlockType = EpbBlockType.GetBlockType((UInt16)(data & 0x7ff)),
                                 Rotation = (EpbBlock.EpbBlockRotation)((data >> 11) & 0x1f),
                                 Unknown00 = (UInt16)((data >> 16) & 0x3ff),
                                 Variant = (byte)((data >> 25) & 0x1f)
@@ -410,7 +408,7 @@ namespace EPBLib.Helpers
                     blockCount++;
                     EpbBlock block = new EpbBlock(new EpbBlockPos(x, y, z))
                     {
-                        BlockType = EpbBlock.GetBlockType((UInt16)(data & 0x7ff)),
+                        BlockType = EpbBlockType.GetBlockType((UInt16)(data & 0x7ff)),
                         Rotation = (EpbBlock.EpbBlockRotation)((data >> 11) & 0x1f),
                         Unknown00 = (UInt16)((data >> 16) & 0x3ff),
                         Variant = (byte)((data >> 25) & 0x1f)

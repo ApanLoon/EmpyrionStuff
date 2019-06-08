@@ -150,8 +150,8 @@ namespace EPBLab.ViewModel
 
         public ObservableCollection<MetaTagViewModel> MetaTags { get; } = new ObservableCollection<MetaTagViewModel>();
 
-        private ObservableCollection<KeyValuePair<EpbBlock.EpbBlockType, UInt32>> _blockCounts = new ObservableCollection<KeyValuePair<EpbBlock.EpbBlockType, UInt32>>();
-        public ObservableCollection<KeyValuePair<EpbBlock.EpbBlockType, UInt32>> BlockCounts
+        private ObservableCollection<KeyValuePair<EpbBlockType, UInt32>> _blockCounts = new ObservableCollection<KeyValuePair<EpbBlockType, UInt32>>();
+        public ObservableCollection<KeyValuePair<EpbBlockType, UInt32>> BlockCounts
         {
             get => _blockCounts;
             set => Set(ref _blockCounts, value);
@@ -165,7 +165,6 @@ namespace EPBLab.ViewModel
             set => Set(ref _deviceGroups, value);
         }
         public static readonly string DeviceGroupsPropertyName = "DeviceGroups";
-
         public EpBlueprint Blueprint;
 
         #endregion Properties
@@ -175,7 +174,8 @@ namespace EPBLab.ViewModel
         #region Command_ComputeDimensions
         public RelayCommand CommandComputeDimensions
         {
-            get {
+            get
+            {
                 return _commandComputeDimensions ?? (_commandComputeDimensions = new RelayCommand(() =>
                            {
                                Blueprint.ComputeDimensions();
@@ -197,7 +197,7 @@ namespace EPBLab.ViewModel
                 {
                     Blueprint.CountBlocks();
                     BlockCounts.Clear();
-                    foreach (KeyValuePair<EpbBlock.EpbBlockType, uint> blockCount in Blueprint.BlockCounts)
+                    foreach (KeyValuePair<EpbBlockType, uint> blockCount in Blueprint.BlockCounts)
                     {
                         BlockCounts.Add(blockCount);
                     }
@@ -252,7 +252,7 @@ namespace EPBLab.ViewModel
             }
 
             BlockCounts.Clear();
-            foreach (KeyValuePair<EpbBlock.EpbBlockType, uint> blockCount in Blueprint.BlockCounts)
+            foreach (KeyValuePair<EpbBlockType, uint> blockCount in Blueprint.BlockCounts)
             {
                 BlockCounts.Add(blockCount);
             }

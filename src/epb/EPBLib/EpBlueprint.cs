@@ -1,13 +1,9 @@
 ﻿
+using EPBLib.BlockData;
 using EPBLib.Helpers;
+using EPBLib.Logic;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using EPBLib.BlockData;
-using EPBLib.Logic;
-using ICSharpCode.SharpZipLib.Core;
-using ICSharpCode.SharpZipLib.Zip;
 
 namespace EPBLib
 {
@@ -42,7 +38,7 @@ namespace EPBLib
         public UInt32 UnknownCount03 { get; set; }
         public UInt32 TriangleCount { get; set; }
 
-        public Dictionary<EpbBlock.EpbBlockType, UInt32> BlockCounts = new Dictionary<EpbBlock.EpbBlockType, uint>();
+        public Dictionary<EpbBlockType, UInt32> BlockCounts = new Dictionary<EpbBlockType, uint>();
 
         public List<EpbDeviceGroup> DeviceGroups = new List<EpbDeviceGroup>();
 
@@ -117,7 +113,7 @@ namespace EPBLib
 
         public void CountBlocks()
         {
-            Dictionary<EpbBlock.EpbBlockType, UInt32> blockCounts = new Dictionary<EpbBlock.EpbBlockType, uint>();
+            Dictionary<EpbBlockType, UInt32> blockCounts = new Dictionary<EpbBlockType, uint>();
             foreach (EpbBlock block in Blocks)
             {
                 // TODO: Take grouping of block types into account
