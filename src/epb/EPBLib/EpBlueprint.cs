@@ -116,12 +116,13 @@ namespace EPBLib
             Dictionary<EpbBlockType, UInt32> blockCounts = new Dictionary<EpbBlockType, uint>();
             foreach (EpbBlock block in Blocks)
             {
-                // TODO: Take grouping of block types into account
-                if (!blockCounts.ContainsKey(block.BlockType))
+                UInt16 id = block.BlockType.CountAs;
+                EpbBlockType t = EpbBlockType.BlockTypes[id];
+                if (!blockCounts.ContainsKey(t))
                 {
-                    blockCounts.Add(block.BlockType, 0);
+                    blockCounts.Add(t, 0);
                 }
-                blockCounts[block.BlockType]++;
+                blockCounts[t]++;
             }
             BlockCounts = blockCounts;
         }
