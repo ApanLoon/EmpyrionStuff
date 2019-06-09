@@ -27,7 +27,7 @@ namespace EPBLib.Helpers
 
             writer.Write(epb.Unknown02);
             writer.Write(epb.LightCount); // TODO: Count the number of light blocks in the model
-            writer.Write(epb.UnknownCount01);
+            writer.Write(epb.DoorCount);
             writer.Write(epb.DeviceCount); // TODO: Count the number of devices in the model
             writer.Write(epb.UnknownCount02);
             writer.Write((UInt32)epb.Blocks.Count);

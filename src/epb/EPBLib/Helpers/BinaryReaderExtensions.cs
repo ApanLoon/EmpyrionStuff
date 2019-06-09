@@ -70,18 +70,18 @@ namespace EPBLib.Helpers
             epb.LightCount = reader.ReadUInt32();
             bytesLeft -= 4;
             Console.WriteLine($"LightCount:     {epb.LightCount} (0x{epb.LightCount:x8})");
-            epb.UnknownCount01 = reader.ReadUInt32();
+            epb.DoorCount = reader.ReadUInt32();
             bytesLeft -= 4;
-            Console.WriteLine($"UnknownCount01: {epb.UnknownCount01} (0x{epb.UnknownCount01:x8})");
+            Console.WriteLine($"DoorCount:      {epb.DoorCount} (0x{epb.DoorCount:x8})");
             epb.DeviceCount = reader.ReadUInt32();
             bytesLeft -= 4;
             Console.WriteLine($"DeviceCount:    {epb.DeviceCount} (0x{epb.DeviceCount:x8})");
             epb.UnknownCount02 = reader.ReadUInt32();
             bytesLeft -= 4;
             Console.WriteLine($"UnknownCount02: {epb.UnknownCount02} (0x{epb.UnknownCount02:x8})");
-            UInt32 nBlocks = reader.ReadUInt32();
+            epb.SolidCount = reader.ReadUInt32();
             bytesLeft -= 4;
-            Console.WriteLine($"nBlocks:        {nBlocks} (0x{nBlocks:x8})");
+            Console.WriteLine($"SolidCount:     {epb.SolidCount} (0x{epb.SolidCount:x8})");
 
             if (version >= 13)
             {

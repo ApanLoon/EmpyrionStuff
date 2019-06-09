@@ -91,16 +91,16 @@ namespace EPBLab.ViewModel
         }
         public static readonly string LightCountPropertyName = "LightCount";
 
-        public UInt32 UnknownCount01
+        public UInt32 DoorCount
         {
-            get => Blueprint.UnknownCount01;
+            get => Blueprint.DoorCount;
             set
             {
-                Blueprint.UnknownCount01 = value;
+                Blueprint.DoorCount = value;
                 RaisePropertyChanged();
             }
         }
-        public static readonly string UnknownCount01PropertyName = "UnknownCount01";
+        public static readonly string DoorCountPropertyName = "DoorCount";
 
         public UInt32 DeviceCount
         {
@@ -124,7 +124,16 @@ namespace EPBLab.ViewModel
         }
         public static readonly string UnknownCount02PropertyName = "UnknownCount02";
 
-        public UInt32 BlockCount => (UInt32)Blueprint.Blocks.Count;
+        public UInt32 SolidCount
+        {
+            get => Blueprint.SolidCount;
+            set
+            {
+                Blueprint.SolidCount = value;
+                RaisePropertyChanged();
+            }
+        }
+        public static readonly string SolidCountPropertyName = "SolidCount";
 
         public UInt32 UnknownCount03
         {

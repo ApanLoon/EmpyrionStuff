@@ -30,9 +30,10 @@ namespace EPBLib
 
         public UInt16 Unknown02 { get; set; }
         public UInt32 LightCount { get; set; }
-        public UInt32 UnknownCount01 { get; set; }
+        public UInt32 DoorCount { get; set; }
         public UInt32 DeviceCount { get; set; }
         public UInt32 UnknownCount02 { get; set; }
+        public UInt32 SolidCount { get; set; }
         public UInt32 UnknownCount03 { get; set; }
         public UInt32 TriangleCount { get; set; }
 
@@ -63,7 +64,7 @@ namespace EPBLib
             Unknown01      = 1;
             Unknown02      = 0;
             LightCount     = 0;
-            UnknownCount01 = 0;
+            DoorCount = 0;
             DeviceCount    = 0;
             UnknownCount02 = 0;
             UnknownCount03 = 0;
