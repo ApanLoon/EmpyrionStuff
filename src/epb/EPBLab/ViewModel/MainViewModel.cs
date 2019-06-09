@@ -99,7 +99,7 @@ namespace EPBLab.ViewModel
         private RelayCommand _commandNew;
         #endregion Command_New
 
-        #region Command_CreateBox
+        #region CommandCreateBox
         public RelayCommand CommandCreateBox
         {
             get
@@ -152,8 +152,8 @@ namespace EPBLab.ViewModel
             }
         }
         private RelayCommand _commandCreateBox;
-        #endregion Command_CreateBox
-        #region Command_CreateBoxFrame
+        #endregion CommandCreateBox
+        #region CommandCreateBoxFrame
         public RelayCommand CommandCreateBoxFrame
         {
             get
@@ -196,8 +196,8 @@ namespace EPBLab.ViewModel
             }
         }
         private RelayCommand _commandCreateBoxFrame;
-        #endregion Command_CreateBoxFrame
-        #region Command_CreatePyramid
+        #endregion CommandCreateBoxFrame
+        #region CommandCreatePyramid
         public RelayCommand CommandCreatePyramid
         {
             get
@@ -302,8 +302,8 @@ namespace EPBLab.ViewModel
             }
         }
         private RelayCommand _commandCreatePyramid;
-        #endregion Command_CreatePyramid
-        #region Command_CreateCore
+        #endregion CommandCreatePyramid
+        #region CommandCreateCore
         public RelayCommand CommandCreateCore
         {
             get { return _commandCreateCore ?? (_commandCreateCore = new RelayCommand(() =>
@@ -338,8 +338,8 @@ namespace EPBLab.ViewModel
             })); }
         }
         private RelayCommand _commandCreateCore;
-        #endregion Command_CreateCore
-        #region Command_CreateCoreWithLever
+        #endregion CommandCreateCore
+        #region CommandCreateCoreWithLever
         public RelayCommand CommandCreateCoreWithLever
         {
             get { return _commandCreateCoreWithLever ?? (_commandCreateCoreWithLever = new RelayCommand(() =>
@@ -391,8 +391,8 @@ namespace EPBLab.ViewModel
         }
         private RelayCommand _commandCreateCoreWithLever;
 
-        #endregion Command_CreateCoreWithLever
-        #region Command_CreateHullVariants
+        #endregion CommandCreateCoreWithLever
+        #region CommandCreateHullVariants
         public RelayCommand CommandCreateHullVariants
         {
             get { return _commandCreateHullVariants ?? (_commandCreateHullVariants = new RelayCommand(() =>
@@ -443,7 +443,67 @@ namespace EPBLab.ViewModel
             })); }
         }
         private RelayCommand _commandCreateHullVariants;
-        #endregion Command_CreateHullVariants
+        #endregion CommandCreateHullVariants
+        #region CommandCreateAllBlocks
+        public RelayCommand CommandCreateAllBlocks
+        {
+            get
+            {
+                return _commandCreateAllBlocks ?? (_commandCreateAllBlocks = new RelayCommand(() =>
+                {
+                    if (SelectedBlueprintIndex == -1)
+                    {
+                        return;
+                    }
+                    EpBlueprint blueprint = Blueprints[SelectedBlueprintIndex].Blueprint;
+
+                    byte x = 0;
+                    byte y = 0;
+                    byte z = 0;
+                    byte spacing = 6;
+                    foreach (EpbBlockType blockType in EpbBlockType.BlockTypes.Values)
+                    {
+                        if (EpbBlockType.IsAllowed(blockType, blueprint.Type))
+                        {
+                            EpbBlock block =
+                                new EpbBlock(new EpbBlockPos(x, y, z))
+                                {
+                                    BlockType = blockType,
+                                    Variant = 0,
+                                    Colours =
+                                    {
+                                        [0] = EpbColourIndex.Red,
+                                        [1] = EpbColourIndex.BrightGreen,
+                                        [2] = EpbColourIndex.Blue,
+                                        [3] = EpbColourIndex.Cyan,
+                                        [4] = EpbColourIndex.Purple,
+                                        [5] = EpbColourIndex.Yellow
+                                    }
+                                };
+                            blueprint.SetBlock(block);
+
+                            x += spacing;
+                            if (x >= 20 * spacing)
+                            {
+                                x = 0;
+                                z += spacing;
+                                if (z >= 20 * spacing)
+                                {
+                                    z = 0;
+                                    y += spacing;
+                                }
+                            }
+                        }
+                    }
+                    blueprint.CountBlocks();
+                    blueprint.ComputeDimensions();
+
+                    Blueprints[SelectedBlueprintIndex].UpdateViewModels();
+                }));
+            }
+        }
+        private RelayCommand _commandCreateAllBlocks;
+        #endregion CommandCreateAllBlocks
 
         #endregion Commands
 
@@ -542,6 +602,7 @@ namespace EPBLab.ViewModel
             BuildStructureCommands.Add(new ToolBarCommand() { Name = "Core",          Icon = "Empty.png",                   Command = CommandCreateCore});
             BuildStructureCommands.Add(new ToolBarCommand() { Name = "Core + lever",  Icon = "Empty.png",                   Command = CommandCreateCoreWithLever});
             BuildStructureCommands.Add(new ToolBarCommand() { Name = "Hull variants", Icon = "Empty.png",                   Command = CommandCreateHullVariants});
+            BuildStructureCommands.Add(new ToolBarCommand() { Name = "All blocks",    Icon = "Empty.png",                   Command = CommandCreateAllBlocks });
 
             /*
             _dataService = dataService;
