@@ -34,7 +34,7 @@ namespace epb
         public static CreateTemplateType    CreateTemplate  = CreateTemplateType.BaseBox;
         public static bool                  Hollow          = false;
         public static string                OutputPath      = "NewBlueprint.epb";
-        public static EpBlueprint.EpbType   BlueprintType   = EpBlueprint.EpbType.Base;
+        public static EpbType               BlueprintType   = EpbType.Base;
         public static EpbBlockType          BlockType       = EpbBlockType.GetBlockType("HullFullLarge", "Cube");
         public static byte                  BlockVariant    = 0x00;
         public static UInt32                Width           = 1;
@@ -591,7 +591,7 @@ namespace epb
             Height = 1;
             Depth = 20;
             EpBlueprint epb = CreateCommon();
-            epb.Type = EpBlueprint.EpbType.SmallVessel;
+            epb.Type = EpbType.SmallVessel;
 
             UInt16[] types = new UInt16[] { 381, 382, 1791}; // HullFullSmall, HullThinSmall, HullExtendedSmall
             int i = 0;

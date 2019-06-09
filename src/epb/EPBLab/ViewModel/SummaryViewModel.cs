@@ -17,10 +17,10 @@ namespace EPBLab.ViewModel
 
         public UInt32 Version => Blueprint.Version;
 
-        public IEnumerable<EpBlueprint.EpbType> BlueprintTypes => Enum.GetValues(typeof(EpBlueprint.EpbType)).Cast<EpBlueprint.EpbType>();
+        public IEnumerable<EpbType> BlueprintTypes => Enum.GetValues(typeof(EpbType)).Cast<EpbType>();
 
         public const string TypePropertyName = "Type";
-        public EpBlueprint.EpbType Type
+        public EpbType Type
         {
             get => Blueprint.Type;
             set => Blueprint.Type = value;

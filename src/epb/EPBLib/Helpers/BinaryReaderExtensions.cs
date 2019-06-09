@@ -33,7 +33,7 @@ namespace EPBLib.Helpers
             bytesLeft -= 4;
             Console.WriteLine($"Version:  {version}");
 
-            EpBlueprint.EpbType type = (EpBlueprint.EpbType)reader.ReadByte();
+            EpbType type = (EpbType)reader.ReadByte();
             bytesLeft -= 1;
             Console.WriteLine($"Type:     {type}");
 

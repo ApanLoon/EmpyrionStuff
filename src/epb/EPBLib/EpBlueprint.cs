@@ -7,19 +7,17 @@ using System.Collections.Generic;
 
 namespace EPBLib
 {
+    public enum EpbType
+    {
+        Voxel = 0x00,
+        Base = 0x02,
+        SmallVessel = 0x04,
+        CapitalVessel = 0x08,
+        HoverVessel = 0x10
+    }
+
     public class EpBlueprint
     {
-        #region Types
-        public enum EpbType
-        {
-            Voxel         = 0x00,
-            Base          = 0x02,
-            SmallVessel   = 0x04,
-            CapitalVessel = 0x08,
-            HoverVessel   = 0x10
-        }
-        #endregion Types
-
         #region Properties
         public UInt32 Version { get; set; }
         public EpbType Type { get; set; }
