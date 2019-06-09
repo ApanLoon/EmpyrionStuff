@@ -64,8 +64,8 @@ namespace EPBLib
             {   329, new EpbBlockType(){Id =   329, Name = "NPCHumanTemplate"             , Category = "Deco Blocks"                  , Ref = ""                             }},
             {   330, new EpbBlockType(){Id =   330, Name = "AntennaBlocks"                , Category = "Deco Blocks"                  , Ref = ""                             }},
             {   331, new EpbBlockType(){Id =   331, Name = "ContainerUltraRare"           , Category = "Devices"                      , Ref = "ContainerMS01"                }},
-            {   333, new EpbBlockType(){Id =   333, Name = "RailingDiagonal"              , Category = "BuildingBlocks"               , Ref = ""                             }},
-            {   334, new EpbBlockType(){Id =   334, Name = "RailingVert"                  , Category = "BuildingBlocks"               , Ref = "RailingDiagonal"              }},
+            {   333, new EpbBlockType(){Id =   333, Name = "RailingDiagonal"              , Category = "BuildingBlocks"               , Ref = ""                             , CountAs = 1691}},
+            {   334, new EpbBlockType(){Id =   334, Name = "RailingVert"                  , Category = "BuildingBlocks"               , Ref = "RailingDiagonal"              , CountAs = 1691}},
             {   335, new EpbBlockType(){Id =   335, Name = "OfflineProtector"             , Category = "Devices"                      , Ref = ""                             }},
             {   336, new EpbBlockType(){Id =   336, Name = "PentaxidTank"                 , Category = "Devices"                      , Ref = ""                             }},
             {   339, new EpbBlockType(){Id =   339, Name = "SurvivalTent"                 , Category = "Devices"                      , Ref = ""                             }},
@@ -191,8 +191,8 @@ namespace EPBLib
             {   672, new EpbBlockType(){Id =   672, Name = "StairsWedge"                  , Category = "BuildingBlocks"               , Ref = ""                             }},
             {   673, new EpbBlockType(){Id =   673, Name = "StairsWedgeLong"              , Category = "BuildingBlocks"               , Ref = ""                             }},
             {   676, new EpbBlockType(){Id =   676, Name = "WalkwaySlope"                 , Category = "BuildingBlocks"               , Ref = ""                             }},
-            {   681, new EpbBlockType(){Id =   681, Name = "RailingL"                     , Category = "BuildingBlocks"               , Ref = "RailingDiagonal"              }},
-            {   682, new EpbBlockType(){Id =   682, Name = "RailingRound"                 , Category = "BuildingBlocks"               , Ref = "RailingDiagonal"              }},
+            {   681, new EpbBlockType(){Id =   681, Name = "RailingL"                     , Category = "BuildingBlocks"               , Ref = "RailingDiagonal"              , CountAs = 1691}},
+            {   682, new EpbBlockType(){Id =   682, Name = "RailingRound"                 , Category = "BuildingBlocks"               , Ref = "RailingDiagonal"              , CountAs = 1691}},
             {   683, new EpbBlockType(){Id =   683, Name = "DrillAttachment"              , Category = "Weapons/Items"                , Ref = ""                             }},
             {   684, new EpbBlockType(){Id =   684, Name = "TurretGVDrill"                , Category = "Weapons/Items"                , Ref = "TurretDrillTemplate"          }},
             {   685, new EpbBlockType(){Id =   685, Name = "TurretMSDrill"                , Category = "Weapons/Items"                , Ref = "TurretDrillTemplate"          }},
@@ -200,8 +200,8 @@ namespace EPBLib
             {   688, new EpbBlockType(){Id =   688, Name = "CockpitSV07New"               , Category = "Devices"                      , Ref = "CockpitSV02"                  }},
             {   689, new EpbBlockType(){Id =   689, Name = "CockpitSV05New"               , Category = "Devices"                      , Ref = "CockpitSV02"                  }},
             {   690, new EpbBlockType(){Id =   690, Name = "CockpitSV02New"               , Category = "Devices"                      , Ref = "CockpitSV02"                  }},
-            {   691, new EpbBlockType(){Id =   691, Name = "RailingSlopeLeft"             , Category = "BuildingBlocks"               , Ref = "RailingDiagonal"              }},
-            {   692, new EpbBlockType(){Id =   692, Name = "RailingSlopeRight"            , Category = "BuildingBlocks"               , Ref = "RailingDiagonal"              }},
+            {   691, new EpbBlockType(){Id =   691, Name = "RailingSlopeLeft"             , Category = "BuildingBlocks"               , Ref = "RailingDiagonal"              , CountAs = 1691}},
+            {   692, new EpbBlockType(){Id =   692, Name = "RailingSlopeRight"            , Category = "BuildingBlocks"               , Ref = "RailingDiagonal"              , CountAs = 1691}},
             {   694, new EpbBlockType(){Id =   694, Name = "ThrusterJetRound3x7x3"        , Category = "Devices"                      , Ref = ""                             }},
             {   695, new EpbBlockType(){Id =   695, Name = "ThrusterJetRound3x10x3"       , Category = "Devices"                      , Ref = "ThrusterJetRound3x7x3"        }},
             {   696, new EpbBlockType(){Id =   696, Name = "ThrusterJetRound3x13x3"       , Category = "Devices"                      , Ref = "ThrusterJetRound3x7x3"        }},
@@ -235,38 +235,38 @@ namespace EPBLib
             {   779, new EpbBlockType(){Id =   779, Name = "LandinggearSingle"            , Category = "Devices"                      , Ref = ""                             }},
             {   780, new EpbBlockType(){Id =   780, Name = "LandinggearDouble"            , Category = "Devices"                      , Ref = "LandinggearSingle"            }},
             {   781, new EpbBlockType(){Id =   781, Name = "CloneChamber"                 , Category = "Devices"                      , Ref = ""                             }},
-            {   795, new EpbBlockType(){Id =   795, Name = "Window_v1x1Inv"               , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  }},
+            {   795, new EpbBlockType(){Id =   795, Name = "Window_v1x1Inv"               , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  , CountAs = 1128}},
             {   796, new EpbBlockType(){Id =   796, Name = "Window_v1x2"                  , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  , CountAs = 1128}},
-            {   797, new EpbBlockType(){Id =   797, Name = "Window_v1x2Inv"               , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  }},
+            {   797, new EpbBlockType(){Id =   797, Name = "Window_v1x2Inv"               , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  , CountAs = 1128}},
             {   798, new EpbBlockType(){Id =   798, Name = "Window_v2x2"                  , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  , CountAs = 1128}},
-            {   799, new EpbBlockType(){Id =   799, Name = "Window_v2x2Inv"               , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  }},
-            {   800, new EpbBlockType(){Id =   800, Name = "Window_s1x1Inv"               , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  }},
+            {   799, new EpbBlockType(){Id =   799, Name = "Window_v2x2Inv"               , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  , CountAs = 1128}},
+            {   800, new EpbBlockType(){Id =   800, Name = "Window_s1x1Inv"               , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  , CountAs = 1128}},
             {   801, new EpbBlockType(){Id =   801, Name = "Window_s1x2"                  , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  , CountAs = 1128}},
-            {   802, new EpbBlockType(){Id =   802, Name = "Window_s1x2Inv"               , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  }},
+            {   802, new EpbBlockType(){Id =   802, Name = "Window_s1x2Inv"               , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  , CountAs = 1128}},
             {   803, new EpbBlockType(){Id =   803, Name = "Window_sd1x1"                 , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  , CountAs = 1128}},
-            {   804, new EpbBlockType(){Id =   804, Name = "Window_sd1x1Inv"              , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  }},
+            {   804, new EpbBlockType(){Id =   804, Name = "Window_sd1x1Inv"              , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  , CountAs = 1128}},
             {   805, new EpbBlockType(){Id =   805, Name = "Window_sd1x2"                 , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  , CountAs = 1128}},
-            {   806, new EpbBlockType(){Id =   806, Name = "Window_sd1x2Inv"              , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  }},
+            {   806, new EpbBlockType(){Id =   806, Name = "Window_sd1x2Inv"              , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  , CountAs = 1128}},
             {   807, new EpbBlockType(){Id =   807, Name = "Window_c1x1"                  , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  , CountAs = 1128}},
-            {   808, new EpbBlockType(){Id =   808, Name = "Window_c1x1Inv"               , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  }},
+            {   808, new EpbBlockType(){Id =   808, Name = "Window_c1x1Inv"               , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  , CountAs = 1128}},
             {   809, new EpbBlockType(){Id =   809, Name = "Window_c1x2"                  , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  , CountAs = 1128}},
-            {   810, new EpbBlockType(){Id =   810, Name = "Window_c1x2Inv"               , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  }},
+            {   810, new EpbBlockType(){Id =   810, Name = "Window_c1x2Inv"               , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  , CountAs = 1128}},
             {   811, new EpbBlockType(){Id =   811, Name = "Window_cr1x1"                 , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  , CountAs = 1128}},
-            {   812, new EpbBlockType(){Id =   812, Name = "Window_cr1x1Inv"              , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  }},
+            {   812, new EpbBlockType(){Id =   812, Name = "Window_cr1x1Inv"              , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  , CountAs = 1128}},
             {   813, new EpbBlockType(){Id =   813, Name = "Window_crc1x1"                , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  , CountAs = 1128}},
-            {   814, new EpbBlockType(){Id =   814, Name = "Window_crc1x1Inv"             , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  }},
+            {   814, new EpbBlockType(){Id =   814, Name = "Window_crc1x1Inv"             , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  , CountAs = 1128}},
             {   815, new EpbBlockType(){Id =   815, Name = "Window_crsd1x1"               , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  , CountAs = 1128}},
-            {   816, new EpbBlockType(){Id =   816, Name = "Window_crsd1x1Inv"            , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  }},
+            {   816, new EpbBlockType(){Id =   816, Name = "Window_crsd1x1Inv"            , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  , CountAs = 1128}},
             {   817, new EpbBlockType(){Id =   817, Name = "Window_sd1x2V2"               , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  , CountAs = 1128}},
-            {   818, new EpbBlockType(){Id =   818, Name = "Window_sd1x2V2Inv"            , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  }},
+            {   818, new EpbBlockType(){Id =   818, Name = "Window_sd1x2V2Inv"            , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  , CountAs = 1128}},
             {   819, new EpbBlockType(){Id =   819, Name = "RampTemplate"                 , Category = "Devices"                      , Ref = ""                             }},
             {   835, new EpbBlockType(){Id =   835, Name = "ThrusterMSRound3x3Blocks"     , Category = "Devices"                      , Ref = ""                             }},
             {   836, new EpbBlockType(){Id =   836, Name = "WindowSmallBlocks"            , Category = "BuildingBlocks"               , Ref = ""                             }},
             {   837, new EpbBlockType(){Id =   837, Name = "TrussSmallBlocks"             , Category = "BuildingBlocks"               , Ref = ""                             }},
             {   838, new EpbBlockType(){Id =   838, Name = "WalkwayBlocks"                , Category = "BuildingBlocks"               , Ref = ""                             }},
             {   839, new EpbBlockType(){Id =   839, Name = "StairsBlocks"                 , Category = "BuildingBlocks"               , Ref = ""                             }},
-            {   884, new EpbBlockType(){Id =   884, Name = "WalkwayVertNew"               , Category = "BuildingBlocks"               , Ref = ""                             }},
-            {   885, new EpbBlockType(){Id =   885, Name = "WalkwaySlopeNew"              , Category = "BuildingBlocks"               , Ref = "WalkwayVertNew"               }},
+            {   884, new EpbBlockType(){Id =   884, Name = "WalkwayVertNew"               , Category = "BuildingBlocks"               , Ref = ""                             , CountAs = 1691}},
+            {   885, new EpbBlockType(){Id =   885, Name = "WalkwaySlopeNew"              , Category = "BuildingBlocks"               , Ref = "WalkwayVertNew"               , CountAs = 1691}},
             {   927, new EpbBlockType(){Id =   927, Name = "DecoBlocks"                   , Category = "Deco Blocks"                  , Ref = ""                             }},
             {   928, new EpbBlockType(){Id =   928, Name = "ConsoleBlocks"                , Category = "Deco Blocks"                  , Ref = ""                             }},
             {   929, new EpbBlockType(){Id =   929, Name = "IndoorPlants"                 , Category = "Deco Blocks"                  , Ref = ""                             }},
@@ -281,42 +281,42 @@ namespace EPBLib
             {   963, new EpbBlockType(){Id =   963, Name = "CockpitSV01"                  , Category = "Devices"                      , Ref = "CockpitSV02"                  }},
             {   964, new EpbBlockType(){Id =   964, Name = "OxygenGeneratorSmall"         , Category = "Devices"                      , Ref = ""                             }},
             {   965, new EpbBlockType(){Id =   965, Name = "DoorArmored"                  , Category = "Devices"                      , Ref = ""                             }},
-            {   966, new EpbBlockType(){Id =   966, Name = "Window_v1x1Thick"             , Category = "BuildingBlocks"               , Ref = ""                             }},
-            {   967, new EpbBlockType(){Id =   967, Name = "Window_v1x2Thick"             , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             }},
-            {   968, new EpbBlockType(){Id =   968, Name = "Window_v2x2Thick"             , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             }},
-            {   969, new EpbBlockType(){Id =   969, Name = "WindowVertShutterArmored"     , Category = "BuildingBlocks"               , Ref = ""                             }},
-            {   970, new EpbBlockType(){Id =   970, Name = "WindowSlopedShutterArmored"   , Category = "BuildingBlocks"               , Ref = "WindowVertShutterArmored"     }},
-            {   971, new EpbBlockType(){Id =   971, Name = "WindowSloped2ShutterArmored"  , Category = "BuildingBlocks"               , Ref = "WindowVertShutterArmored"     }},
-            {   972, new EpbBlockType(){Id =   972, Name = "WindowVertShutterTransArmored", Category = "BuildingBlocks"               , Ref = "WindowVertShutterArmored"     }},
-            {   973, new EpbBlockType(){Id =   973, Name = "WindowSlopedShutterTransArmored", Category = "BuildingBlocks"               , Ref = "WindowVertShutterArmored"     }},
+            {   966, new EpbBlockType(){Id =   966, Name = "Window_v1x1Thick"             , Category = "BuildingBlocks"               , Ref = ""                             , CountAs = 1129}},
+            {   967, new EpbBlockType(){Id =   967, Name = "Window_v1x2Thick"             , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             , CountAs = 1129}},
+            {   968, new EpbBlockType(){Id =   968, Name = "Window_v2x2Thick"             , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             , CountAs = 1129}},
+            {   969, new EpbBlockType(){Id =   969, Name = "WindowVertShutterArmored"     , Category = "BuildingBlocks"               , Ref = ""                             , CountAs = 545}},
+            {   970, new EpbBlockType(){Id =   970, Name = "WindowSlopedShutterArmored"   , Category = "BuildingBlocks"               , Ref = "WindowVertShutterArmored"     , CountAs = 545}},
+            {   971, new EpbBlockType(){Id =   971, Name = "WindowSloped2ShutterArmored"  , Category = "BuildingBlocks"               , Ref = "WindowVertShutterArmored"     , CountAs = 545}},
+            {   972, new EpbBlockType(){Id =   972, Name = "WindowVertShutterTransArmored", Category = "BuildingBlocks"               , Ref = "WindowVertShutterArmored"     , CountAs = 545}},
+            {   973, new EpbBlockType(){Id =   973, Name = "WindowSlopedShutterTransArmored", Category = "BuildingBlocks"             , Ref = "WindowVertShutterArmored"     , CountAs = 545}},
             {   974, new EpbBlockType(){Id =   974, Name = "WindowArmoredSmallBlocks"     , Category = "BuildingBlocks"               , Ref = ""                             }},
             {   975, new EpbBlockType(){Id =   975, Name = "HangarDoor10x5"               , Category = "Devices"                      , Ref = ""                             }},
             {   976, new EpbBlockType(){Id =   976, Name = "WindowShutterSmallBlocks"     , Category = "BuildingBlocks"               , Ref = ""                             }},
-            {   977, new EpbBlockType(){Id =   977, Name = "Window_s1x1Thick"             , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             }},
-            {   978, new EpbBlockType(){Id =   978, Name = "Window_s1x2Thick"             , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             }},
-            {   979, new EpbBlockType(){Id =   979, Name = "Window_sd1x1Thick"            , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             }},
-            {   980, new EpbBlockType(){Id =   980, Name = "Window_sd1x2Thick"            , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             }},
-            {   981, new EpbBlockType(){Id =   981, Name = "Window_c1x1Thick"             , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             }},
-            {   982, new EpbBlockType(){Id =   982, Name = "Window_c1x2Thick"             , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             }},
-            {   983, new EpbBlockType(){Id =   983, Name = "Window_cr1x1Thick"            , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             }},
-            {   984, new EpbBlockType(){Id =   984, Name = "Window_crc1x1Thick"           , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             }},
-            {   985, new EpbBlockType(){Id =   985, Name = "Window_crsd1x1Thick"          , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             }},
-            {   986, new EpbBlockType(){Id =   986, Name = "Window_sd1x2V2Thick"          , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             }},
+            {   977, new EpbBlockType(){Id =   977, Name = "Window_s1x1Thick"             , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             , CountAs = 1129}},
+            {   978, new EpbBlockType(){Id =   978, Name = "Window_s1x2Thick"             , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             , CountAs = 1129}},
+            {   979, new EpbBlockType(){Id =   979, Name = "Window_sd1x1Thick"            , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             , CountAs = 1129}},
+            {   980, new EpbBlockType(){Id =   980, Name = "Window_sd1x2Thick"            , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             , CountAs = 1129}},
+            {   981, new EpbBlockType(){Id =   981, Name = "Window_c1x1Thick"             , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             , CountAs = 1129}},
+            {   982, new EpbBlockType(){Id =   982, Name = "Window_c1x2Thick"             , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             , CountAs = 1129}},
+            {   983, new EpbBlockType(){Id =   983, Name = "Window_cr1x1Thick"            , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             , CountAs = 1129}},
+            {   984, new EpbBlockType(){Id =   984, Name = "Window_crc1x1Thick"           , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             , CountAs = 1129}},
+            {   985, new EpbBlockType(){Id =   985, Name = "Window_crsd1x1Thick"          , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             , CountAs = 1129}},
+            {   986, new EpbBlockType(){Id =   986, Name = "Window_sd1x2V2Thick"          , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             , CountAs = 1129}},
             {   987, new EpbBlockType(){Id =   987, Name = "HangarDoor14x7"               , Category = "Devices"                      , Ref = "HangarDoor10x5"               }},
             {   988, new EpbBlockType(){Id =   988, Name = "HangarDoor6x3"                , Category = "Devices"                      , Ref = "HangarDoor10x5"               }},
-            {   989, new EpbBlockType(){Id =   989, Name = "Window_v1x1ThickInv"          , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             }},
-            {   990, new EpbBlockType(){Id =   990, Name = "Window_v1x2ThickInv"          , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             }},
-            {   991, new EpbBlockType(){Id =   991, Name = "Window_v2x2ThickInv"          , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             }},
-            {   992, new EpbBlockType(){Id =   992, Name = "Window_s1x1ThickInv"          , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             }},
-            {   993, new EpbBlockType(){Id =   993, Name = "Window_s1x2ThickInv"          , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             }},
-            {   994, new EpbBlockType(){Id =   994, Name = "Window_sd1x1ThickInv"         , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             }},
-            {   995, new EpbBlockType(){Id =   995, Name = "Window_sd1x2ThickInv"         , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             }},
-            {   996, new EpbBlockType(){Id =   996, Name = "Window_c1x1ThickInv"          , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             }},
-            {   997, new EpbBlockType(){Id =   997, Name = "Window_c1x2ThickInv"          , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             }},
-            {   998, new EpbBlockType(){Id =   998, Name = "Window_cr1x1ThickInv"         , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             }},
-            {   999, new EpbBlockType(){Id =   999, Name = "Window_crc1x1ThickInv"        , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             }},
-            {  1000, new EpbBlockType(){Id =  1000, Name = "Window_crsd1x1ThickInv"       , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             }},
-            {  1001, new EpbBlockType(){Id =  1001, Name = "Window_sd1x2V2ThickInv"       , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             }},
+            {   989, new EpbBlockType(){Id =   989, Name = "Window_v1x1ThickInv"          , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             , CountAs = 1129}},
+            {   990, new EpbBlockType(){Id =   990, Name = "Window_v1x2ThickInv"          , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             , CountAs = 1129}},
+            {   991, new EpbBlockType(){Id =   991, Name = "Window_v2x2ThickInv"          , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             , CountAs = 1129}},
+            {   992, new EpbBlockType(){Id =   992, Name = "Window_s1x1ThickInv"          , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             , CountAs = 1129}},
+            {   993, new EpbBlockType(){Id =   993, Name = "Window_s1x2ThickInv"          , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             , CountAs = 1129}},
+            {   994, new EpbBlockType(){Id =   994, Name = "Window_sd1x1ThickInv"         , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             , CountAs = 1129}},
+            {   995, new EpbBlockType(){Id =   995, Name = "Window_sd1x2ThickInv"         , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             , CountAs = 1129}},
+            {   996, new EpbBlockType(){Id =   996, Name = "Window_c1x1ThickInv"          , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             , CountAs = 1129}},
+            {   997, new EpbBlockType(){Id =   997, Name = "Window_c1x2ThickInv"          , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             , CountAs = 1129}},
+            {   998, new EpbBlockType(){Id =   998, Name = "Window_cr1x1ThickInv"         , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             , CountAs = 1129}},
+            {   999, new EpbBlockType(){Id =   999, Name = "Window_crc1x1ThickInv"        , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             , CountAs = 1129}},
+            {  1000, new EpbBlockType(){Id =  1000, Name = "Window_crsd1x1ThickInv"       , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             , CountAs = 1129}},
+            {  1001, new EpbBlockType(){Id =  1001, Name = "Window_sd1x2V2ThickInv"       , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             , CountAs = 1129}},
             {  1002, new EpbBlockType(){Id =  1002, Name = "DoorBlocks"                   , Category = "Devices"                      , Ref = ""                             }},
             {  1003, new EpbBlockType(){Id =  1003, Name = "DoorInterior01"               , Category = "Devices"                      , Ref = ""                             }},
             {  1004, new EpbBlockType(){Id =  1004, Name = "DoorInterior02"               , Category = "Devices"                      , Ref = "DoorInterior01"               }},
@@ -336,15 +336,15 @@ namespace EPBLib
             {  1019, new EpbBlockType(){Id =  1019, Name = "ShutterDoor3x3SV"             , Category = "Devices"                      , Ref = "ShutterDoor1x1SV"             }},
             {  1020, new EpbBlockType(){Id =  1020, Name = "ShutterDoorSmallBlocks"       , Category = "Devices"                      , Ref = ""                             }},
             {  1021, new EpbBlockType(){Id =  1021, Name = "ShutterDoor3x4SV"             , Category = "Devices"                      , Ref = "ShutterDoor1x1SV"             }},
-            {  1022, new EpbBlockType(){Id =  1022, Name = "Ramp3x1x1"                    , Category = "Devices"                      , Ref = "RampTemplate"                 }},
-            {  1023, new EpbBlockType(){Id =  1023, Name = "Ramp3x2x1"                    , Category = "Devices"                      , Ref = "RampTemplate"                 }},
-            {  1024, new EpbBlockType(){Id =  1024, Name = "Ramp3x3x1"                    , Category = "Devices"                      , Ref = "RampTemplate"                 }},
-            {  1025, new EpbBlockType(){Id =  1025, Name = "Ramp3x4x2"                    , Category = "Devices"                      , Ref = "RampTemplate"                 }},
-            {  1026, new EpbBlockType(){Id =  1026, Name = "Ramp3x5x3"                    , Category = "Devices"                      , Ref = "RampTemplate"                 }},
-            {  1027, new EpbBlockType(){Id =  1027, Name = "Ramp1x1x1"                    , Category = "Devices"                      , Ref = "RampTemplate"                 }},
-            {  1028, new EpbBlockType(){Id =  1028, Name = "Ramp1x2x1"                    , Category = "Devices"                      , Ref = "RampTemplate"                 }},
-            {  1029, new EpbBlockType(){Id =  1029, Name = "Ramp1x3x1"                    , Category = "Devices"                      , Ref = "RampTemplate"                 }},
-            {  1030, new EpbBlockType(){Id =  1030, Name = "Ramp1x4x2"                    , Category = "Devices"                      , Ref = "RampTemplate"                 }},
+            {  1022, new EpbBlockType(){Id =  1022, Name = "Ramp3x1x1"                    , Category = "Devices"                      , Ref = "RampTemplate"                 , CountAs = 1692}},
+            {  1023, new EpbBlockType(){Id =  1023, Name = "Ramp3x2x1"                    , Category = "Devices"                      , Ref = "RampTemplate"                 , CountAs = 1692}},
+            {  1024, new EpbBlockType(){Id =  1024, Name = "Ramp3x3x1"                    , Category = "Devices"                      , Ref = "RampTemplate"                 , CountAs = 1692}},
+            {  1025, new EpbBlockType(){Id =  1025, Name = "Ramp3x4x2"                    , Category = "Devices"                      , Ref = "RampTemplate"                 , CountAs = 1692}},
+            {  1026, new EpbBlockType(){Id =  1026, Name = "Ramp3x5x3"                    , Category = "Devices"                      , Ref = "RampTemplate"                 , CountAs = 1692}},
+            {  1027, new EpbBlockType(){Id =  1027, Name = "Ramp1x1x1"                    , Category = "Devices"                      , Ref = "RampTemplate"                 , CountAs = 1692}},
+            {  1028, new EpbBlockType(){Id =  1028, Name = "Ramp1x2x1"                    , Category = "Devices"                      , Ref = "RampTemplate"                 , CountAs = 1692}},
+            {  1029, new EpbBlockType(){Id =  1029, Name = "Ramp1x3x1"                    , Category = "Devices"                      , Ref = "RampTemplate"                 , CountAs = 1692}},
+            {  1030, new EpbBlockType(){Id =  1030, Name = "Ramp1x4x2"                    , Category = "Devices"                      , Ref = "RampTemplate"                 , CountAs = 1692}},
             {  1031, new EpbBlockType(){Id =  1031, Name = "RampBlocks"                   , Category = "Devices"                      , Ref = ""                             }},
             {  1034, new EpbBlockType(){Id =  1034, Name = "GeneratorMST2"                , Category = "Devices"                      , Ref = "GeneratorMS"                  }},
             {  1035, new EpbBlockType(){Id =  1035, Name = "FuelTankMSLargeT2"            , Category = "Devices"                      , Ref = "FuelTankMSLarge"              }},
@@ -444,49 +444,49 @@ namespace EPBLib
             {  1165, new EpbBlockType(){Id =  1165, Name = "Wing9x6d"                     , Category = "BuildingBlocks"               , Ref = "Wing6x9a"                     }},
             {  1166, new EpbBlockType(){Id =  1166, Name = "Wing9x6e"                     , Category = "BuildingBlocks"               , Ref = "Wing6x9a"                     }},
             {  1183, new EpbBlockType(){Id =  1183, Name = "Window_3side1x1"              , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  , CountAs = 1128}},
-            {  1184, new EpbBlockType(){Id =  1184, Name = "Window_3side1x1Inv"           , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  }},
+            {  1184, new EpbBlockType(){Id =  1184, Name = "Window_3side1x1Inv"           , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  , CountAs = 1128}},
             {  1185, new EpbBlockType(){Id =  1185, Name = "Window_L1x1"                  , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  , CountAs = 1128}},
-            {  1186, new EpbBlockType(){Id =  1186, Name = "Window_L1x1Inv"               , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  }},
-            {  1187, new EpbBlockType(){Id =  1187, Name = "Window_3side1x1Thick"         , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             }},
-            {  1188, new EpbBlockType(){Id =  1188, Name = "Window_3side1x1ThickInv"      , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             }},
-            {  1189, new EpbBlockType(){Id =  1189, Name = "Window_L1x1Thick"             , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             }},
-            {  1190, new EpbBlockType(){Id =  1190, Name = "Window_L1x1ThickInv"          , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             }},
-            {  1191, new EpbBlockType(){Id =  1191, Name = "RailingVertGlass"             , Category = "BuildingBlocks"               , Ref = ""                             }},
-            {  1192, new EpbBlockType(){Id =  1192, Name = "RailingVertGlassInv"          , Category = "BuildingBlocks"               , Ref = "RailingVertGlass"             }},
-            {  1193, new EpbBlockType(){Id =  1193, Name = "RailingRoundGlass"            , Category = "BuildingBlocks"               , Ref = "RailingVertGlass"             }},
-            {  1194, new EpbBlockType(){Id =  1194, Name = "RailingRoundGlassInv"         , Category = "BuildingBlocks"               , Ref = "RailingVertGlass"             }},
-            {  1195, new EpbBlockType(){Id =  1195, Name = "RailingLGlass"                , Category = "BuildingBlocks"               , Ref = "RailingVertGlass"             }},
-            {  1196, new EpbBlockType(){Id =  1196, Name = "RailingLGlassInv"             , Category = "BuildingBlocks"               , Ref = "RailingVertGlass"             }},
+            {  1186, new EpbBlockType(){Id =  1186, Name = "Window_L1x1Inv"               , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  , CountAs = 1128}},
+            {  1187, new EpbBlockType(){Id =  1187, Name = "Window_3side1x1Thick"         , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             , CountAs = 1129}},
+            {  1188, new EpbBlockType(){Id =  1188, Name = "Window_3side1x1ThickInv"      , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             , CountAs = 1129}},
+            {  1189, new EpbBlockType(){Id =  1189, Name = "Window_L1x1Thick"             , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             , CountAs = 1129}},
+            {  1190, new EpbBlockType(){Id =  1190, Name = "Window_L1x1ThickInv"          , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             , CountAs = 1129}},
+            {  1191, new EpbBlockType(){Id =  1191, Name = "RailingVertGlass"             , Category = "BuildingBlocks"               , Ref = ""                             , CountAs = 1691}},
+            {  1192, new EpbBlockType(){Id =  1192, Name = "RailingVertGlassInv"          , Category = "BuildingBlocks"               , Ref = "RailingVertGlass"             , CountAs = 1691}},
+            {  1193, new EpbBlockType(){Id =  1193, Name = "RailingRoundGlass"            , Category = "BuildingBlocks"               , Ref = "RailingVertGlass"             , CountAs = 1691}},
+            {  1194, new EpbBlockType(){Id =  1194, Name = "RailingRoundGlassInv"         , Category = "BuildingBlocks"               , Ref = "RailingVertGlass"             , CountAs = 1691}},
+            {  1195, new EpbBlockType(){Id =  1195, Name = "RailingLGlass"                , Category = "BuildingBlocks"               , Ref = "RailingVertGlass"             , CountAs = 1691}},
+            {  1196, new EpbBlockType(){Id =  1196, Name = "RailingLGlassInv"             , Category = "BuildingBlocks"               , Ref = "RailingVertGlass"             , CountAs = 1691}},
             {  1197, new EpbBlockType(){Id =  1197, Name = "Window_crctw1x1"              , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  , CountAs = 1128}},
             {  1198, new EpbBlockType(){Id =  1198, Name = "Window_creA1x1"               , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  , CountAs = 1128}},
             {  1199, new EpbBlockType(){Id =  1199, Name = "Window_creB1x1"               , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  , CountAs = 1128}},
             {  1200, new EpbBlockType(){Id =  1200, Name = "Window_crl1x1"                , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  , CountAs = 1128}},
             {  1201, new EpbBlockType(){Id =  1201, Name = "Window_crse1x1"               , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  , CountAs = 1128}},
             {  1202, new EpbBlockType(){Id =  1202, Name = "Window_cc1x1"                 , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  , CountAs = 1128}},
-            {  1203, new EpbBlockType(){Id =  1203, Name = "Window_crctw1x1Thick"         , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             }},
-            {  1204, new EpbBlockType(){Id =  1204, Name = "Window_creA1x1Thick"          , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             }},
-            {  1205, new EpbBlockType(){Id =  1205, Name = "Window_creB1x1Thick"          , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             }},
-            {  1206, new EpbBlockType(){Id =  1206, Name = "Window_crl1x1Thick"           , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             }},
-            {  1207, new EpbBlockType(){Id =  1207, Name = "Window_crse1x1Thick"          , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             }},
-            {  1208, new EpbBlockType(){Id =  1208, Name = "Window_cc1x1Thick"            , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             }},
-            {  1209, new EpbBlockType(){Id =  1209, Name = "Window_creA1x1Inv"            , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  }},
-            {  1210, new EpbBlockType(){Id =  1210, Name = "Window_crctw1x1Inv"           , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  }},
-            {  1211, new EpbBlockType(){Id =  1211, Name = "Window_creB1x1Inv"            , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  }},
-            {  1212, new EpbBlockType(){Id =  1212, Name = "Window_crl1x1Inv"             , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  }},
-            {  1213, new EpbBlockType(){Id =  1213, Name = "Window_crse1x1Inv"            , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  }},
-            {  1214, new EpbBlockType(){Id =  1214, Name = "Window_cc1x1Inv"              , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  }},
-            {  1215, new EpbBlockType(){Id =  1215, Name = "Window_crctw1x1ThickInv"      , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             }},
-            {  1216, new EpbBlockType(){Id =  1216, Name = "Window_creA1x1ThickInv"       , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             }},
-            {  1217, new EpbBlockType(){Id =  1217, Name = "Window_creB1x1ThickInv"       , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             }},
-            {  1218, new EpbBlockType(){Id =  1218, Name = "Window_crl1x1ThickInv"        , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             }},
-            {  1219, new EpbBlockType(){Id =  1219, Name = "Window_crse1x1ThickInv"       , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             }},
-            {  1220, new EpbBlockType(){Id =  1220, Name = "Window_cc1x1ThickInv"         , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             }},
-            {  1221, new EpbBlockType(){Id =  1221, Name = "RailingSlopeGlassRight"       , Category = "BuildingBlocks"               , Ref = "RailingVertGlass"             }},
-            {  1222, new EpbBlockType(){Id =  1222, Name = "RailingSlopeGlassRightInv"    , Category = "BuildingBlocks"               , Ref = "RailingVertGlass"             }},
-            {  1223, new EpbBlockType(){Id =  1223, Name = "RailingSlopeGlassLeft"        , Category = "BuildingBlocks"               , Ref = "RailingVertGlass"             }},
-            {  1224, new EpbBlockType(){Id =  1224, Name = "RailingSlopeGlassLeftInv"     , Category = "BuildingBlocks"               , Ref = "RailingVertGlass"             }},
-            {  1225, new EpbBlockType(){Id =  1225, Name = "RailingDiagonalGlass"         , Category = "BuildingBlocks"               , Ref = "RailingVertGlass"             }},
-            {  1226, new EpbBlockType(){Id =  1226, Name = "RailingDiagonalGlassInv"      , Category = "BuildingBlocks"               , Ref = "RailingVertGlass"             }},
+            {  1203, new EpbBlockType(){Id =  1203, Name = "Window_crctw1x1Thick"         , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             , CountAs = 1129}},
+            {  1204, new EpbBlockType(){Id =  1204, Name = "Window_creA1x1Thick"          , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             , CountAs = 1129}},
+            {  1205, new EpbBlockType(){Id =  1205, Name = "Window_creB1x1Thick"          , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             , CountAs = 1129}},
+            {  1206, new EpbBlockType(){Id =  1206, Name = "Window_crl1x1Thick"           , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             , CountAs = 1129}},
+            {  1207, new EpbBlockType(){Id =  1207, Name = "Window_crse1x1Thick"          , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             , CountAs = 1129}},
+            {  1208, new EpbBlockType(){Id =  1208, Name = "Window_cc1x1Thick"            , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             , CountAs = 1129}},
+            {  1209, new EpbBlockType(){Id =  1209, Name = "Window_creA1x1Inv"            , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  , CountAs = 1128}},
+            {  1210, new EpbBlockType(){Id =  1210, Name = "Window_crctw1x1Inv"           , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  , CountAs = 1128}},
+            {  1211, new EpbBlockType(){Id =  1211, Name = "Window_creB1x1Inv"            , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  , CountAs = 1128}},
+            {  1212, new EpbBlockType(){Id =  1212, Name = "Window_crl1x1Inv"             , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  , CountAs = 1128}},
+            {  1213, new EpbBlockType(){Id =  1213, Name = "Window_crse1x1Inv"            , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  , CountAs = 1128}},
+            {  1214, new EpbBlockType(){Id =  1214, Name = "Window_cc1x1Inv"              , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  , CountAs = 1128}},
+            {  1215, new EpbBlockType(){Id =  1215, Name = "Window_crctw1x1ThickInv"      , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             , CountAs = 1129}},
+            {  1216, new EpbBlockType(){Id =  1216, Name = "Window_creA1x1ThickInv"       , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             , CountAs = 1129}},
+            {  1217, new EpbBlockType(){Id =  1217, Name = "Window_creB1x1ThickInv"       , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             , CountAs = 1129}},
+            {  1218, new EpbBlockType(){Id =  1218, Name = "Window_crl1x1ThickInv"        , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             , CountAs = 1129}},
+            {  1219, new EpbBlockType(){Id =  1219, Name = "Window_crse1x1ThickInv"       , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             , CountAs = 1129}},
+            {  1220, new EpbBlockType(){Id =  1220, Name = "Window_cc1x1ThickInv"         , Category = "BuildingBlocks"               , Ref = "Window_v1x1Thick"             , CountAs = 1129}},
+            {  1221, new EpbBlockType(){Id =  1221, Name = "RailingSlopeGlassRight"       , Category = "BuildingBlocks"               , Ref = "RailingVertGlass"             , CountAs = 1691}},
+            {  1222, new EpbBlockType(){Id =  1222, Name = "RailingSlopeGlassRightInv"    , Category = "BuildingBlocks"               , Ref = "RailingVertGlass"             , CountAs = 1691}},
+            {  1223, new EpbBlockType(){Id =  1223, Name = "RailingSlopeGlassLeft"        , Category = "BuildingBlocks"               , Ref = "RailingVertGlass"             , CountAs = 1691}},
+            {  1224, new EpbBlockType(){Id =  1224, Name = "RailingSlopeGlassLeftInv"     , Category = "BuildingBlocks"               , Ref = "RailingVertGlass"             , CountAs = 1691}},
+            {  1225, new EpbBlockType(){Id =  1225, Name = "RailingDiagonalGlass"         , Category = "BuildingBlocks"               , Ref = "RailingVertGlass"             , CountAs = 1691}},
+            {  1226, new EpbBlockType(){Id =  1226, Name = "RailingDiagonalGlassInv"      , Category = "BuildingBlocks"               , Ref = "RailingVertGlass"             , CountAs = 1691}},
             {  1227, new EpbBlockType(){Id =  1227, Name = "LeverSV"                      , Category = "Devices"                      , Ref = ""                             }},
             {  1228, new EpbBlockType(){Id =  1228, Name = "LightBarrierSV"               , Category = "Devices"                      , Ref = ""                             }},
             {  1229, new EpbBlockType(){Id =  1229, Name = "MotionSensorSV"               , Category = "Devices"                      , Ref = ""                             }},
@@ -1031,13 +1031,13 @@ namespace EPBLib
             {  1896, new EpbBlockType(){Id =  1896, Name = "ShutterDoor4x3"               , Category = "Devices"                      , Ref = "ShutterDoor1x1"               }},
             {  1897, new EpbBlockType(){Id =  1897, Name = "ShutterDoor1x5"               , Category = "Devices"                      , Ref = "ShutterDoor1x1"               }},
             {  1898, new EpbBlockType(){Id =  1898, Name = "ShutterDoor5x3"               , Category = "Devices"                      , Ref = "ShutterDoor1x1"               }},
-            {  1899, new EpbBlockType(){Id =  1899, Name = "Ramp1x4x1"                    , Category = "Devices"                      , Ref = "RampTemplate"                 }},
-            {  1900, new EpbBlockType(){Id =  1900, Name = "Ramp3x4x1"                    , Category = "Devices"                      , Ref = "RampTemplate"                 }},
-            {  1901, new EpbBlockType(){Id =  1901, Name = "Ramp1x5x1"                    , Category = "Devices"                      , Ref = "RampTemplate"                 }},
-            {  1902, new EpbBlockType(){Id =  1902, Name = "Ramp3x5x1"                    , Category = "Devices"                      , Ref = "RampTemplate"                 }},
-            {  1903, new EpbBlockType(){Id =  1903, Name = "Ramp1x5x2"                    , Category = "Devices"                      , Ref = "RampTemplate"                 }},
-            {  1904, new EpbBlockType(){Id =  1904, Name = "Ramp3x5x2"                    , Category = "Devices"                      , Ref = "RampTemplate"                 }},
-            {  1905, new EpbBlockType(){Id =  1905, Name = "Ramp1x5x3"                    , Category = "Devices"                      , Ref = "RampTemplate"                 }},
+            {  1899, new EpbBlockType(){Id =  1899, Name = "Ramp1x4x1"                    , Category = "Devices"                      , Ref = "RampTemplate"                 , CountAs = 1692}},
+            {  1900, new EpbBlockType(){Id =  1900, Name = "Ramp3x4x1"                    , Category = "Devices"                      , Ref = "RampTemplate"                 , CountAs = 1692}},
+            {  1901, new EpbBlockType(){Id =  1901, Name = "Ramp1x5x1"                    , Category = "Devices"                      , Ref = "RampTemplate"                 , CountAs = 1692}},
+            {  1902, new EpbBlockType(){Id =  1902, Name = "Ramp3x5x1"                    , Category = "Devices"                      , Ref = "RampTemplate"                 , CountAs = 1692}},
+            {  1903, new EpbBlockType(){Id =  1903, Name = "Ramp1x5x2"                    , Category = "Devices"                      , Ref = "RampTemplate"                 , CountAs = 1692}},
+            {  1904, new EpbBlockType(){Id =  1904, Name = "Ramp3x5x2"                    , Category = "Devices"                      , Ref = "RampTemplate"                 , CountAs = 1692}},
+            {  1905, new EpbBlockType(){Id =  1905, Name = "Ramp1x5x3"                    , Category = "Devices"                      , Ref = "RampTemplate"                 , CountAs = 1692}},
             {  1906, new EpbBlockType(){Id =  1906, Name = "HeavyWindowK"                 , Category = "BuildingBlocks"               , Ref = "HeavyWindowA"                 }},
             {  1907, new EpbBlockType(){Id =  1907, Name = "HeavyWindowKInv"              , Category = "BuildingBlocks"               , Ref = "HeavyWindowA"                 }},
             {  1908, new EpbBlockType(){Id =  1908, Name = "HeavyWindowL"                 , Category = "BuildingBlocks"               , Ref = "HeavyWindowA"                 }},
@@ -1076,7 +1076,7 @@ namespace EPBLib
             {  1941, new EpbBlockType(){Id =  1941, Name = "HeavyWindowSConnectInv"       , Category = "BuildingBlocks"               , Ref = "HeavyWindowA"                 }},
             {  1942, new EpbBlockType(){Id =  1942, Name = "HeavyWindowTConnectInv"       , Category = "BuildingBlocks"               , Ref = "HeavyWindowA"                 }},
             {  1943, new EpbBlockType(){Id =  1943, Name = "HeavyWindowUConnectInv"       , Category = "BuildingBlocks"               , Ref = "HeavyWindowA"                 }},
-            {  1944, new EpbBlockType(){Id =  1944, Name = "Window_v1x1Bottom"            , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  }},
+            {  1944, new EpbBlockType(){Id =  1944, Name = "Window_v1x1Bottom"            , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  , CountAs = 1128}},
 
             // -------- Manually added: ---------
             {    53, new EpbBlockType(){Id =    53, Name = "VoxelSathium"                 , Category = "Voxel/Materials"              , Ref = ""                             }},
@@ -1447,11 +1447,11 @@ BlockType=959
             if (BlockTypes.ContainsKey(114)) BlockTypes[114].AllowedIn = new EpbType[] { EpbType.Voxel };
             if (BlockTypes.ContainsKey(256)) BlockTypes[256].AllowedIn = new EpbType[] { EpbType.CapitalVessel, EpbType.HoverVessel, EpbType.SmallVessel, EpbType.Base };
             if (BlockTypes.ContainsKey(257)) BlockTypes[257].AllowedIn = new EpbType[] { EpbType.CapitalVessel , EpbType.Voxel };
-            if (BlockTypes.ContainsKey(259)) BlockTypes[259].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel, EpbType.Voxel, EpbType.SmallVessel };
+            if (BlockTypes.ContainsKey(259)) BlockTypes[259].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel, EpbType.Voxel };
             if (BlockTypes.ContainsKey(260)) BlockTypes[260].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel, EpbType.Voxel };
             if (BlockTypes.ContainsKey(261)) BlockTypes[261].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel, EpbType.Voxel };
             if (BlockTypes.ContainsKey(262)) BlockTypes[262].AllowedIn = new EpbType[] { EpbType.Base, EpbType.Voxel, EpbType.CapitalVessel };
-            if (BlockTypes.ContainsKey(263)) BlockTypes[263].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel, EpbType.Voxel, EpbType.SmallVessel };
+            if (BlockTypes.ContainsKey(263)) BlockTypes[263].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel, EpbType.Voxel };
             if (BlockTypes.ContainsKey(264)) BlockTypes[264].AllowedIn = new EpbType[] { EpbType.Base, EpbType.Voxel };
             if (BlockTypes.ContainsKey(265)) BlockTypes[265].AllowedIn = new EpbType[] { EpbType.Base, EpbType.Voxel, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(266)) BlockTypes[266].AllowedIn = new EpbType[] { EpbType.CapitalVessel };
@@ -1479,15 +1479,18 @@ BlockType=959
             if (BlockTypes.ContainsKey(289)) BlockTypes[289].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel, EpbType.SmallVessel, EpbType.Voxel, EpbType.HoverVessel };
             if (BlockTypes.ContainsKey(290)) BlockTypes[290].AllowedIn = new EpbType[] { EpbType.Voxel, EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(291)) BlockTypes[291].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel, EpbType.Voxel };
-            if (BlockTypes.ContainsKey(320)) BlockTypes[320].AllowedIn = new EpbType[] { EpbType.CapitalVessel, EpbType.HoverVessel, EpbType.SmallVessel, EpbType.Voxel };
-            if (BlockTypes.ContainsKey(321)) BlockTypes[321].AllowedIn = new EpbType[] { EpbType.CapitalVessel, EpbType.HoverVessel, EpbType.SmallVessel, EpbType.Voxel };
-            if (BlockTypes.ContainsKey(322)) BlockTypes[322].AllowedIn = new EpbType[] { EpbType.CapitalVessel, EpbType.HoverVessel, EpbType.SmallVessel, EpbType.Voxel };
-            if (BlockTypes.ContainsKey(323)) BlockTypes[323].AllowedIn = new EpbType[] { EpbType.CapitalVessel, EpbType.HoverVessel, EpbType.SmallVessel, EpbType.Voxel };
-            if (BlockTypes.ContainsKey(324)) BlockTypes[324].AllowedIn = new EpbType[] { EpbType.CapitalVessel, EpbType.HoverVessel, EpbType.SmallVessel, EpbType.Voxel };
-            if (BlockTypes.ContainsKey(325)) BlockTypes[325].AllowedIn = new EpbType[] { EpbType.CapitalVessel, EpbType.HoverVessel, EpbType.SmallVessel, EpbType.Voxel };
-            if (BlockTypes.ContainsKey(326)) BlockTypes[326].AllowedIn = new EpbType[] { EpbType.CapitalVessel, EpbType.HoverVessel, EpbType.SmallVessel, EpbType.Voxel };
-            if (BlockTypes.ContainsKey(327)) BlockTypes[327].AllowedIn = new EpbType[] { EpbType.CapitalVessel, EpbType.HoverVessel, EpbType.SmallVessel, EpbType.Voxel };
-            if (BlockTypes.ContainsKey(331)) BlockTypes[331].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel, EpbType.HoverVessel, EpbType.SmallVessel };
+            if (BlockTypes.ContainsKey(320)) BlockTypes[320].AllowedIn = new EpbType[] { EpbType.CapitalVessel, EpbType.HoverVessel, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(321)) BlockTypes[321].AllowedIn = new EpbType[] { EpbType.CapitalVessel, EpbType.HoverVessel, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(322)) BlockTypes[322].AllowedIn = new EpbType[] { EpbType.CapitalVessel, EpbType.HoverVessel, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(323)) BlockTypes[323].AllowedIn = new EpbType[] { EpbType.CapitalVessel, EpbType.HoverVessel, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(324)) BlockTypes[324].AllowedIn = new EpbType[] { EpbType.CapitalVessel, EpbType.HoverVessel, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(325)) BlockTypes[325].AllowedIn = new EpbType[] { EpbType.CapitalVessel, EpbType.HoverVessel, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(326)) BlockTypes[326].AllowedIn = new EpbType[] { EpbType.CapitalVessel, EpbType.HoverVessel, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(327)) BlockTypes[327].AllowedIn = new EpbType[] { EpbType.CapitalVessel, EpbType.HoverVessel, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(328)) BlockTypes[328].AllowedIn = new EpbType[] { EpbType.CapitalVessel, EpbType.HoverVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(329)) BlockTypes[329].AllowedIn = new EpbType[] { EpbType.CapitalVessel, EpbType.HoverVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(330)) BlockTypes[330].AllowedIn = new EpbType[] { EpbType.CapitalVessel, EpbType.HoverVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(331)) BlockTypes[331].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel, EpbType.HoverVessel };
             if (BlockTypes.ContainsKey(333)) BlockTypes[333].AllowedIn = new EpbType[] { EpbType.Base, EpbType.Voxel, EpbType.CapitalVessel, EpbType.HoverVessel, EpbType.SmallVessel };
             if (BlockTypes.ContainsKey(334)) BlockTypes[334].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel, EpbType.SmallVessel, EpbType.Voxel, EpbType.HoverVessel };
             if (BlockTypes.ContainsKey(335)) BlockTypes[335].AllowedIn = new EpbType[] { EpbType.CapitalVessel, EpbType.Base };
@@ -1507,6 +1510,7 @@ BlockType=959
             if (BlockTypes.ContainsKey(393)) BlockTypes[393].AllowedIn = new EpbType[] {  };
             if (BlockTypes.ContainsKey(394)) BlockTypes[394].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.SmallVessel, EpbType.Base };
             if (BlockTypes.ContainsKey(395)) BlockTypes[395].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.SmallVessel, EpbType.Base };
+            if (BlockTypes.ContainsKey(396)) BlockTypes[396].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
             if (BlockTypes.ContainsKey(397)) BlockTypes[397].AllowedIn = new EpbType[] { EpbType.Base };
             if (BlockTypes.ContainsKey(398)) BlockTypes[398].AllowedIn = new EpbType[] { EpbType.Base };
             if (BlockTypes.ContainsKey(399)) BlockTypes[399].AllowedIn = new EpbType[] { EpbType.Voxel };
@@ -1515,6 +1519,7 @@ BlockType=959
             if (BlockTypes.ContainsKey(402)) BlockTypes[402].AllowedIn = new EpbType[] { EpbType.Base };
             if (BlockTypes.ContainsKey(403)) BlockTypes[403].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(404)) BlockTypes[404].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
+            if (BlockTypes.ContainsKey(405)) BlockTypes[405].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
             if (BlockTypes.ContainsKey(406)) BlockTypes[406].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(407)) BlockTypes[407].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(408)) BlockTypes[408].AllowedIn = new EpbType[] {  };
@@ -1551,11 +1556,11 @@ BlockType=959
             if (BlockTypes.ContainsKey(449)) BlockTypes[449].AllowedIn = new EpbType[] { EpbType.SmallVessel };
             if (BlockTypes.ContainsKey(450)) BlockTypes[450].AllowedIn = new EpbType[] { EpbType.SmallVessel, EpbType.Voxel };
             if (BlockTypes.ContainsKey(451)) BlockTypes[451].AllowedIn = new EpbType[] { EpbType.SmallVessel };
-            if (BlockTypes.ContainsKey(453)) BlockTypes[453].AllowedIn = new EpbType[] { EpbType.CapitalVessel, EpbType.SmallVessel };
-            if (BlockTypes.ContainsKey(454)) BlockTypes[454].AllowedIn = new EpbType[] { EpbType.CapitalVessel, EpbType.SmallVessel };
+            if (BlockTypes.ContainsKey(453)) BlockTypes[453].AllowedIn = new EpbType[] { EpbType.CapitalVessel };
+            if (BlockTypes.ContainsKey(454)) BlockTypes[454].AllowedIn = new EpbType[] { EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(455)) BlockTypes[455].AllowedIn = new EpbType[] { EpbType.CapitalVessel, EpbType.Voxel };
             if (BlockTypes.ContainsKey(456)) BlockTypes[456].AllowedIn = new EpbType[] { EpbType.SmallVessel };
-            if (BlockTypes.ContainsKey(457)) BlockTypes[457].AllowedIn = new EpbType[] { EpbType.CapitalVessel, EpbType.Voxel, EpbType.SmallVessel };
+            if (BlockTypes.ContainsKey(457)) BlockTypes[457].AllowedIn = new EpbType[] { EpbType.CapitalVessel, EpbType.Voxel };
             if (BlockTypes.ContainsKey(458)) BlockTypes[458].AllowedIn = new EpbType[] { EpbType.CapitalVessel, EpbType.Voxel };
             if (BlockTypes.ContainsKey(459)) BlockTypes[459].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.SmallVessel };
             if (BlockTypes.ContainsKey(460)) BlockTypes[460].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.SmallVessel };
@@ -1567,7 +1572,7 @@ BlockType=959
             if (BlockTypes.ContainsKey(466)) BlockTypes[466].AllowedIn = new EpbType[] { EpbType.Voxel };
             if (BlockTypes.ContainsKey(467)) BlockTypes[467].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(468)) BlockTypes[468].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel, EpbType.Voxel };
-            if (BlockTypes.ContainsKey(469)) BlockTypes[469].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel, EpbType.Voxel, EpbType.SmallVessel };
+            if (BlockTypes.ContainsKey(469)) BlockTypes[469].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel, EpbType.Voxel };
             if (BlockTypes.ContainsKey(489)) BlockTypes[489].AllowedIn = new EpbType[] { EpbType.SmallVessel };
             if (BlockTypes.ContainsKey(490)) BlockTypes[490].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(491)) BlockTypes[491].AllowedIn = new EpbType[] { EpbType.Voxel, EpbType.CapitalVessel };
@@ -1592,19 +1597,20 @@ BlockType=959
             if (BlockTypes.ContainsKey(542)) BlockTypes[542].AllowedIn = new EpbType[] { EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(543)) BlockTypes[543].AllowedIn = new EpbType[] { EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(544)) BlockTypes[544].AllowedIn = new EpbType[] { EpbType.CapitalVessel };
+            if (BlockTypes.ContainsKey(545)) BlockTypes[545].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
             if (BlockTypes.ContainsKey(554)) BlockTypes[554].AllowedIn = new EpbType[] {  };
             if (BlockTypes.ContainsKey(555)) BlockTypes[555].AllowedIn = new EpbType[] { EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(556)) BlockTypes[556].AllowedIn = new EpbType[] { EpbType.CapitalVessel, EpbType.HoverVessel, EpbType.SmallVessel };
             if (BlockTypes.ContainsKey(557)) BlockTypes[557].AllowedIn = new EpbType[] { EpbType.Voxel, EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(558)) BlockTypes[558].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel, EpbType.HoverVessel, EpbType.SmallVessel, EpbType.Voxel };
-            if (BlockTypes.ContainsKey(560)) BlockTypes[560].AllowedIn = new EpbType[] { EpbType.CapitalVessel, EpbType.SmallVessel };
+            if (BlockTypes.ContainsKey(560)) BlockTypes[560].AllowedIn = new EpbType[] { EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(564)) BlockTypes[564].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel, EpbType.Voxel };
             if (BlockTypes.ContainsKey(565)) BlockTypes[565].AllowedIn = new EpbType[] { EpbType.Voxel, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(566)) BlockTypes[566].AllowedIn = new EpbType[] { EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(567)) BlockTypes[567].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(568)) BlockTypes[568].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(569)) BlockTypes[569].AllowedIn = new EpbType[] {  };
-            if (BlockTypes.ContainsKey(583)) BlockTypes[583].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel, EpbType.Voxel, EpbType.SmallVessel };
+            if (BlockTypes.ContainsKey(583)) BlockTypes[583].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel, EpbType.Voxel };
             if (BlockTypes.ContainsKey(584)) BlockTypes[584].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel, EpbType.Voxel };
             if (BlockTypes.ContainsKey(588)) BlockTypes[588].AllowedIn = new EpbType[] {  };
             if (BlockTypes.ContainsKey(589)) BlockTypes[589].AllowedIn = new EpbType[] { EpbType.HoverVessel };
@@ -1730,8 +1736,8 @@ BlockType=959
             if (BlockTypes.ContainsKey(769)) BlockTypes[769].AllowedIn = new EpbType[] { EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(770)) BlockTypes[770].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel, EpbType.HoverVessel, EpbType.SmallVessel, EpbType.Voxel };
             if (BlockTypes.ContainsKey(771)) BlockTypes[771].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel, EpbType.SmallVessel, EpbType.Voxel, EpbType.HoverVessel };
-            if (BlockTypes.ContainsKey(772)) BlockTypes[772].AllowedIn = new EpbType[] { EpbType.CapitalVessel, EpbType.HoverVessel, EpbType.SmallVessel };
-            if (BlockTypes.ContainsKey(778)) BlockTypes[778].AllowedIn = new EpbType[] { EpbType.CapitalVessel, EpbType.HoverVessel, EpbType.SmallVessel };
+            if (BlockTypes.ContainsKey(772)) BlockTypes[772].AllowedIn = new EpbType[] { EpbType.CapitalVessel, EpbType.HoverVessel };
+            if (BlockTypes.ContainsKey(778)) BlockTypes[778].AllowedIn = new EpbType[] { EpbType.CapitalVessel, EpbType.HoverVessel };
             if (BlockTypes.ContainsKey(779)) BlockTypes[779].AllowedIn = new EpbType[] { EpbType.SmallVessel };
             if (BlockTypes.ContainsKey(780)) BlockTypes[780].AllowedIn = new EpbType[] { EpbType.SmallVessel };
             if (BlockTypes.ContainsKey(781)) BlockTypes[781].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
@@ -1764,13 +1770,17 @@ BlockType=959
             if (BlockTypes.ContainsKey(826)) BlockTypes[826].AllowedIn = new EpbType[] { EpbType.Base };
             if (BlockTypes.ContainsKey(827)) BlockTypes[827].AllowedIn = new EpbType[] { EpbType.Base };
             if (BlockTypes.ContainsKey(828)) BlockTypes[828].AllowedIn = new EpbType[] { EpbType.Base };
-            if (BlockTypes.ContainsKey(835)) BlockTypes[835].AllowedIn = new EpbType[] { EpbType.CapitalVessel, EpbType.HoverVessel, EpbType.SmallVessel };
+            if (BlockTypes.ContainsKey(835)) BlockTypes[835].AllowedIn = new EpbType[] { EpbType.CapitalVessel, EpbType.HoverVessel };
             if (BlockTypes.ContainsKey(836)) BlockTypes[836].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.SmallVessel };
             if (BlockTypes.ContainsKey(837)) BlockTypes[837].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.SmallVessel };
             if (BlockTypes.ContainsKey(838)) BlockTypes[838].AllowedIn = new EpbType[] { EpbType.Base };
+            if (BlockTypes.ContainsKey(839)) BlockTypes[839].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
             if (BlockTypes.ContainsKey(884)) BlockTypes[884].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel, EpbType.HoverVessel, EpbType.SmallVessel, EpbType.Voxel };
             if (BlockTypes.ContainsKey(885)) BlockTypes[885].AllowedIn = new EpbType[] { EpbType.SmallVessel, EpbType.Base, EpbType.CapitalVessel, EpbType.HoverVessel };
-            if (BlockTypes.ContainsKey(934)) BlockTypes[934].AllowedIn = new EpbType[] { EpbType.CapitalVessel, EpbType.SmallVessel };
+            if (BlockTypes.ContainsKey(927)) BlockTypes[927].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(928)) BlockTypes[928].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(929)) BlockTypes[929].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(934)) BlockTypes[934].AllowedIn = new EpbType[] { EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(950)) BlockTypes[950].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(951)) BlockTypes[951].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(952)) BlockTypes[952].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
@@ -1780,7 +1790,7 @@ BlockType=959
             if (BlockTypes.ContainsKey(960)) BlockTypes[960].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(962)) BlockTypes[962].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(963)) BlockTypes[963].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.SmallVessel };
-            if (BlockTypes.ContainsKey(964)) BlockTypes[964].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.SmallVessel };
+            if (BlockTypes.ContainsKey(964)) BlockTypes[964].AllowedIn = new EpbType[] { EpbType.HoverVessel };
             if (BlockTypes.ContainsKey(965)) BlockTypes[965].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(966)) BlockTypes[966].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel, EpbType.HoverVessel, EpbType.SmallVessel };
             if (BlockTypes.ContainsKey(967)) BlockTypes[967].AllowedIn = new EpbType[] { EpbType.CapitalVessel, EpbType.SmallVessel, EpbType.Base };
@@ -1818,17 +1828,20 @@ BlockType=959
             if (BlockTypes.ContainsKey(999)) BlockTypes[999].AllowedIn = new EpbType[] { EpbType.Base };
             if (BlockTypes.ContainsKey(1000)) BlockTypes[1000].AllowedIn = new EpbType[] { EpbType.SmallVessel };
             if (BlockTypes.ContainsKey(1001)) BlockTypes[1001].AllowedIn = new EpbType[] { EpbType.CapitalVessel };
+            if (BlockTypes.ContainsKey(1002)) BlockTypes[1002].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
             if (BlockTypes.ContainsKey(1003)) BlockTypes[1003].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1004)) BlockTypes[1004].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1005)) BlockTypes[1005].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1006)) BlockTypes[1006].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1007)) BlockTypes[1007].AllowedIn = new EpbType[] { EpbType.Base };
+            if (BlockTypes.ContainsKey(1008)) BlockTypes[1008].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
             if (BlockTypes.ContainsKey(1009)) BlockTypes[1009].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.SmallVessel };
             if (BlockTypes.ContainsKey(1011)) BlockTypes[1011].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1012)) BlockTypes[1012].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1013)) BlockTypes[1013].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1014)) BlockTypes[1014].AllowedIn = new EpbType[] { EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1015)) BlockTypes[1015].AllowedIn = new EpbType[] { EpbType.Base };
+            if (BlockTypes.ContainsKey(1016)) BlockTypes[1016].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
             if (BlockTypes.ContainsKey(1017)) BlockTypes[1017].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.SmallVessel };
             if (BlockTypes.ContainsKey(1018)) BlockTypes[1018].AllowedIn = new EpbType[] { EpbType.SmallVessel };
             if (BlockTypes.ContainsKey(1019)) BlockTypes[1019].AllowedIn = new EpbType[] { EpbType.SmallVessel };
@@ -1845,12 +1858,13 @@ BlockType=959
             if (BlockTypes.ContainsKey(1030)) BlockTypes[1030].AllowedIn = new EpbType[] { EpbType.CapitalVessel, EpbType.SmallVessel };
             if (BlockTypes.ContainsKey(1034)) BlockTypes[1034].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1035)) BlockTypes[1035].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
-            if (BlockTypes.ContainsKey(1036)) BlockTypes[1036].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel, EpbType.SmallVessel };
+            if (BlockTypes.ContainsKey(1036)) BlockTypes[1036].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1037)) BlockTypes[1037].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1064)) BlockTypes[1064].AllowedIn = new EpbType[] { EpbType.SmallVessel };
             if (BlockTypes.ContainsKey(1072)) BlockTypes[1072].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1073)) BlockTypes[1073].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1074)) BlockTypes[1074].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
+            if (BlockTypes.ContainsKey(1075)) BlockTypes[1075].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
             if (BlockTypes.ContainsKey(1076)) BlockTypes[1076].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1077)) BlockTypes[1077].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1078)) BlockTypes[1078].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
@@ -1865,6 +1879,7 @@ BlockType=959
             if (BlockTypes.ContainsKey(1087)) BlockTypes[1087].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1088)) BlockTypes[1088].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1089)) BlockTypes[1089].AllowedIn = new EpbType[] { EpbType.CapitalVessel, EpbType.Base };
+            if (BlockTypes.ContainsKey(1090)) BlockTypes[1090].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
             if (BlockTypes.ContainsKey(1091)) BlockTypes[1091].AllowedIn = new EpbType[] { EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1092)) BlockTypes[1092].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.SmallVessel };
             if (BlockTypes.ContainsKey(1093)) BlockTypes[1093].AllowedIn = new EpbType[] { EpbType.SmallVessel };
@@ -1880,11 +1895,12 @@ BlockType=959
             if (BlockTypes.ContainsKey(1104)) BlockTypes[1104].AllowedIn = new EpbType[] { EpbType.HoverVessel };
             if (BlockTypes.ContainsKey(1105)) BlockTypes[1105].AllowedIn = new EpbType[] { EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1106)) BlockTypes[1106].AllowedIn = new EpbType[] { EpbType.HoverVessel };
-            if (BlockTypes.ContainsKey(1107)) BlockTypes[1107].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.SmallVessel, EpbType.CapitalVessel };
+            if (BlockTypes.ContainsKey(1107)) BlockTypes[1107].AllowedIn = new EpbType[] { EpbType.HoverVessel };
             if (BlockTypes.ContainsKey(1108)) BlockTypes[1108].AllowedIn = new EpbType[] { };
             if (BlockTypes.ContainsKey(1109)) BlockTypes[1109].AllowedIn = new EpbType[] { };
             if (BlockTypes.ContainsKey(1110)) BlockTypes[1110].AllowedIn = new EpbType[] { };
             if (BlockTypes.ContainsKey(1111)) BlockTypes[1111].AllowedIn = new EpbType[] { EpbType.Base };
+            if (BlockTypes.ContainsKey(1112)) BlockTypes[1112].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
             if (BlockTypes.ContainsKey(1113)) BlockTypes[1113].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1114)) BlockTypes[1114].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1115)) BlockTypes[1115].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
@@ -1900,6 +1916,8 @@ BlockType=959
             if (BlockTypes.ContainsKey(1125)) BlockTypes[1125].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1126)) BlockTypes[1126].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1127)) BlockTypes[1127].AllowedIn = new EpbType[] { EpbType.HoverVessel };
+            if (BlockTypes.ContainsKey(1128)) BlockTypes[1128].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1129)) BlockTypes[1129].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
             if (BlockTypes.ContainsKey(1130)) BlockTypes[1130].AllowedIn = new EpbType[] { EpbType.HoverVessel };
             if (BlockTypes.ContainsKey(1131)) BlockTypes[1131].AllowedIn = new EpbType[] { EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1132)) BlockTypes[1132].AllowedIn = new EpbType[] { EpbType.Base };
@@ -2004,6 +2022,7 @@ BlockType=959
             if (BlockTypes.ContainsKey(1253)) BlockTypes[1253].AllowedIn = new EpbType[] { EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1254)) BlockTypes[1254].AllowedIn = new EpbType[] {  };
             if (BlockTypes.ContainsKey(1256)) BlockTypes[1256].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel, EpbType.HoverVessel, EpbType.SmallVessel };
+            if (BlockTypes.ContainsKey(1257)) BlockTypes[1257].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
             if (BlockTypes.ContainsKey(1258)) BlockTypes[1258].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1259)) BlockTypes[1259].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1260)) BlockTypes[1260].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
@@ -2017,8 +2036,10 @@ BlockType=959
             if (BlockTypes.ContainsKey(1275)) BlockTypes[1275].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1276)) BlockTypes[1276].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1277)) BlockTypes[1277].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
+            if (BlockTypes.ContainsKey(1278)) BlockTypes[1278].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
             if (BlockTypes.ContainsKey(1279)) BlockTypes[1279].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1280)) BlockTypes[1280].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
+            if (BlockTypes.ContainsKey(1281)) BlockTypes[1281].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
             if (BlockTypes.ContainsKey(1282)) BlockTypes[1282].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1283)) BlockTypes[1283].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1284)) BlockTypes[1284].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
@@ -2037,6 +2058,7 @@ BlockType=959
             if (BlockTypes.ContainsKey(1297)) BlockTypes[1297].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1298)) BlockTypes[1298].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1299)) BlockTypes[1299].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
+            if (BlockTypes.ContainsKey(1300)) BlockTypes[1300].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
             if (BlockTypes.ContainsKey(1301)) BlockTypes[1301].AllowedIn = new EpbType[] { EpbType.Base };
             if (BlockTypes.ContainsKey(1302)) BlockTypes[1302].AllowedIn = new EpbType[] { EpbType.Base };
             if (BlockTypes.ContainsKey(1303)) BlockTypes[1303].AllowedIn = new EpbType[] { EpbType.Base };
@@ -2055,16 +2077,19 @@ BlockType=959
             if (BlockTypes.ContainsKey(1319)) BlockTypes[1319].AllowedIn = new EpbType[] { EpbType.CapitalVessel, EpbType.HoverVessel, EpbType.SmallVessel };
             if (BlockTypes.ContainsKey(1320)) BlockTypes[1320].AllowedIn = new EpbType[] { EpbType.CapitalVessel, EpbType.HoverVessel, EpbType.SmallVessel };
             if (BlockTypes.ContainsKey(1321)) BlockTypes[1321].AllowedIn = new EpbType[] { };
+            if (BlockTypes.ContainsKey(1322)) BlockTypes[1322].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
             if (BlockTypes.ContainsKey(1323)) BlockTypes[1323].AllowedIn = new EpbType[] { EpbType.Base };
             if (BlockTypes.ContainsKey(1324)) BlockTypes[1324].AllowedIn = new EpbType[] { EpbType.Base };
             if (BlockTypes.ContainsKey(1329)) BlockTypes[1329].AllowedIn = new EpbType[] { EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1330)) BlockTypes[1330].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
             if (BlockTypes.ContainsKey(1331)) BlockTypes[1331].AllowedIn = new EpbType[] { EpbType.Base };
             if (BlockTypes.ContainsKey(1332)) BlockTypes[1332].AllowedIn = new EpbType[] { EpbType.Base };
             if (BlockTypes.ContainsKey(1333)) BlockTypes[1333].AllowedIn = new EpbType[] { EpbType.Base };
             if (BlockTypes.ContainsKey(1334)) BlockTypes[1334].AllowedIn = new EpbType[] { EpbType.Base };
             if (BlockTypes.ContainsKey(1335)) BlockTypes[1335].AllowedIn = new EpbType[] { EpbType.Base };
+            if (BlockTypes.ContainsKey(1336)) BlockTypes[1336].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
             if (BlockTypes.ContainsKey(1338)) BlockTypes[1338].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
-            if (BlockTypes.ContainsKey(1360)) BlockTypes[1360].AllowedIn = new EpbType[] { EpbType.SmallVessel, EpbType.CapitalVessel };
+            if (BlockTypes.ContainsKey(1360)) BlockTypes[1360].AllowedIn = new EpbType[] { EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1361)) BlockTypes[1361].AllowedIn = new EpbType[] {  };
             if (BlockTypes.ContainsKey(1362)) BlockTypes[1362].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1363)) BlockTypes[1363].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
@@ -2085,13 +2110,16 @@ BlockType=959
             if (BlockTypes.ContainsKey(1378)) BlockTypes[1378].AllowedIn = new EpbType[] { EpbType.Base };
             if (BlockTypes.ContainsKey(1380)) BlockTypes[1380].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.SmallVessel };
             if (BlockTypes.ContainsKey(1385)) BlockTypes[1385].AllowedIn = new EpbType[] { EpbType.CapitalVessel };
+            if (BlockTypes.ContainsKey(1386)) BlockTypes[1386].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
             if (BlockTypes.ContainsKey(1387)) BlockTypes[1387].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1388)) BlockTypes[1388].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1389)) BlockTypes[1389].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.SmallVessel };
             if (BlockTypes.ContainsKey(1390)) BlockTypes[1390].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.SmallVessel };
             if (BlockTypes.ContainsKey(1391)) BlockTypes[1391].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.SmallVessel };
+            if (BlockTypes.ContainsKey(1392)) BlockTypes[1392].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
             if (BlockTypes.ContainsKey(1393)) BlockTypes[1393].AllowedIn = new EpbType[] { EpbType.Base };
             if (BlockTypes.ContainsKey(1394)) BlockTypes[1394].AllowedIn = new EpbType[] { EpbType.Base };
+            if (BlockTypes.ContainsKey(1395)) BlockTypes[1395].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
             if (BlockTypes.ContainsKey(1396)) BlockTypes[1396].AllowedIn = new EpbType[] { EpbType.Base };
             if (BlockTypes.ContainsKey(1397)) BlockTypes[1397].AllowedIn = new EpbType[] { EpbType.Base };
             if (BlockTypes.ContainsKey(1398)) BlockTypes[1398].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
@@ -2123,10 +2151,14 @@ BlockType=959
             if (BlockTypes.ContainsKey(1429)) BlockTypes[1429].AllowedIn = new EpbType[] { EpbType.SmallVessel };
             if (BlockTypes.ContainsKey(1430)) BlockTypes[1430].AllowedIn = new EpbType[] { EpbType.SmallVessel, EpbType.HoverVessel };
             if (BlockTypes.ContainsKey(1435)) BlockTypes[1435].AllowedIn = new EpbType[] { EpbType.SmallVessel };
+            if (BlockTypes.ContainsKey(1436)) BlockTypes[1436].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
             if (BlockTypes.ContainsKey(1437)) BlockTypes[1437].AllowedIn = new EpbType[] { EpbType.SmallVessel };
+            if (BlockTypes.ContainsKey(1440)) BlockTypes[1440].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
             if (BlockTypes.ContainsKey(1441)) BlockTypes[1441].AllowedIn = new EpbType[] { EpbType.Base };
             if (BlockTypes.ContainsKey(1442)) BlockTypes[1442].AllowedIn = new EpbType[] { EpbType.Base };
+            if (BlockTypes.ContainsKey(1443)) BlockTypes[1443].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
             if (BlockTypes.ContainsKey(1444)) BlockTypes[1444].AllowedIn = new EpbType[] { EpbType.Base };
+            if (BlockTypes.ContainsKey(1445)) BlockTypes[1445].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
             if (BlockTypes.ContainsKey(1446)) BlockTypes[1446].AllowedIn = new EpbType[] { EpbType.SmallVessel };
             if (BlockTypes.ContainsKey(1447)) BlockTypes[1447].AllowedIn = new EpbType[] { EpbType.HoverVessel };
             if (BlockTypes.ContainsKey(1453)) BlockTypes[1453].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
@@ -2141,6 +2173,8 @@ BlockType=959
             if (BlockTypes.ContainsKey(1462)) BlockTypes[1462].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1463)) BlockTypes[1463].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1464)) BlockTypes[1464].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
+            if (BlockTypes.ContainsKey(1465)) BlockTypes[1465].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1466)) BlockTypes[1466].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
             if (BlockTypes.ContainsKey(1467)) BlockTypes[1467].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1468)) BlockTypes[1468].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1469)) BlockTypes[1469].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
@@ -2155,6 +2189,7 @@ BlockType=959
             if (BlockTypes.ContainsKey(1478)) BlockTypes[1478].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.SmallVessel };
             if (BlockTypes.ContainsKey(1479)) BlockTypes[1479].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.SmallVessel };
             if (BlockTypes.ContainsKey(1480)) BlockTypes[1480].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.SmallVessel };
+            if (BlockTypes.ContainsKey(1481)) BlockTypes[1481].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
             if (BlockTypes.ContainsKey(1482)) BlockTypes[1482].AllowedIn = new EpbType[] { EpbType.CapitalVessel, EpbType.Base };
             if (BlockTypes.ContainsKey(1483)) BlockTypes[1483].AllowedIn = new EpbType[] { EpbType.CapitalVessel, EpbType.Base };
             if (BlockTypes.ContainsKey(1484)) BlockTypes[1484].AllowedIn = new EpbType[] { EpbType.HoverVessel };
@@ -2165,6 +2200,7 @@ BlockType=959
             if (BlockTypes.ContainsKey(1491)) BlockTypes[1491].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1492)) BlockTypes[1492].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1493)) BlockTypes[1493].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
+            if (BlockTypes.ContainsKey(1494)) BlockTypes[1494].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
             if (BlockTypes.ContainsKey(1495)) BlockTypes[1495].AllowedIn = new EpbType[] { EpbType.Base };
             if (BlockTypes.ContainsKey(1496)) BlockTypes[1496].AllowedIn = new EpbType[] { EpbType.Base };
             if (BlockTypes.ContainsKey(1497)) BlockTypes[1497].AllowedIn = new EpbType[] { EpbType.Base };
@@ -2177,6 +2213,7 @@ BlockType=959
             if (BlockTypes.ContainsKey(1510)) BlockTypes[1510].AllowedIn = new EpbType[] { EpbType.Base };
             if (BlockTypes.ContainsKey(1511)) BlockTypes[1511].AllowedIn = new EpbType[] { EpbType.Base };
             if (BlockTypes.ContainsKey(1512)) BlockTypes[1512].AllowedIn = new EpbType[] { EpbType.Base };
+            if (BlockTypes.ContainsKey(1513)) BlockTypes[1513].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
             if (BlockTypes.ContainsKey(1514)) BlockTypes[1514].AllowedIn = new EpbType[] { EpbType.Base };
             if (BlockTypes.ContainsKey(1515)) BlockTypes[1515].AllowedIn = new EpbType[] { EpbType.Base };
             if (BlockTypes.ContainsKey(1516)) BlockTypes[1516].AllowedIn = new EpbType[] { EpbType.Base };
@@ -2186,6 +2223,7 @@ BlockType=959
             if (BlockTypes.ContainsKey(1529)) BlockTypes[1529].AllowedIn = new EpbType[] { EpbType.Base };
             if (BlockTypes.ContainsKey(1533)) BlockTypes[1533].AllowedIn = new EpbType[] { EpbType.Base };
             if (BlockTypes.ContainsKey(1535)) BlockTypes[1535].AllowedIn = new EpbType[] {  };
+            if (BlockTypes.ContainsKey(1549)) BlockTypes[1549].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
             if (BlockTypes.ContainsKey(1550)) BlockTypes[1550].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1551)) BlockTypes[1551].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1552)) BlockTypes[1552].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel };
@@ -2196,7 +2234,9 @@ BlockType=959
             if (BlockTypes.ContainsKey(1557)) BlockTypes[1557].AllowedIn = new EpbType[] { EpbType.Base };
             if (BlockTypes.ContainsKey(1558)) BlockTypes[1558].AllowedIn = new EpbType[] { EpbType.Base };
             if (BlockTypes.ContainsKey(1559)) BlockTypes[1559].AllowedIn = new EpbType[] { EpbType.Base };
+            if (BlockTypes.ContainsKey(1560)) BlockTypes[1560].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
             if (BlockTypes.ContainsKey(1561)) BlockTypes[1561].AllowedIn = new EpbType[] { EpbType.Base };
+            if (BlockTypes.ContainsKey(1571)) BlockTypes[1571].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
             if (BlockTypes.ContainsKey(1575)) BlockTypes[1575].AllowedIn = new EpbType[] { EpbType.HoverVessel };
             if (BlockTypes.ContainsKey(1576)) BlockTypes[1576].AllowedIn = new EpbType[] { EpbType.HoverVessel };
             if (BlockTypes.ContainsKey(1577)) BlockTypes[1577].AllowedIn = new EpbType[] { EpbType.Base };
@@ -2209,13 +2249,14 @@ BlockType=959
             if (BlockTypes.ContainsKey(1585)) BlockTypes[1585].AllowedIn = new EpbType[] { EpbType.SmallVessel };
             if (BlockTypes.ContainsKey(1586)) BlockTypes[1586].AllowedIn = new EpbType[] { EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1587)) BlockTypes[1587].AllowedIn = new EpbType[] {  };
+            if (BlockTypes.ContainsKey(1588)) BlockTypes[1588].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
             if (BlockTypes.ContainsKey(1589)) BlockTypes[1589].AllowedIn = new EpbType[] { EpbType.HoverVessel };
             if (BlockTypes.ContainsKey(1590)) BlockTypes[1590].AllowedIn = new EpbType[] { EpbType.HoverVessel };
             if (BlockTypes.ContainsKey(1591)) BlockTypes[1591].AllowedIn = new EpbType[] { EpbType.SmallVessel };
             if (BlockTypes.ContainsKey(1592)) BlockTypes[1592].AllowedIn = new EpbType[] { EpbType.SmallVessel };
-            if (BlockTypes.ContainsKey(1594)) BlockTypes[1594].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.SmallVessel };
-            if (BlockTypes.ContainsKey(1595)) BlockTypes[1595].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.SmallVessel };
-            if (BlockTypes.ContainsKey(1596)) BlockTypes[1596].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.SmallVessel };
+            if (BlockTypes.ContainsKey(1594)) BlockTypes[1594].AllowedIn = new EpbType[] { EpbType.HoverVessel };
+            if (BlockTypes.ContainsKey(1595)) BlockTypes[1595].AllowedIn = new EpbType[] { EpbType.HoverVessel };
+            if (BlockTypes.ContainsKey(1596)) BlockTypes[1596].AllowedIn = new EpbType[] { EpbType.HoverVessel };
             if (BlockTypes.ContainsKey(1598)) BlockTypes[1598].AllowedIn = new EpbType[] { EpbType.Base };
             if (BlockTypes.ContainsKey(1599)) BlockTypes[1599].AllowedIn = new EpbType[] { EpbType.Base };
             if (BlockTypes.ContainsKey(1601)) BlockTypes[1601].AllowedIn = new EpbType[] { EpbType.Base };
@@ -2251,32 +2292,42 @@ BlockType=959
             if (BlockTypes.ContainsKey(1633)) BlockTypes[1633].AllowedIn = new EpbType[] { EpbType.Base };
             if (BlockTypes.ContainsKey(1634)) BlockTypes[1634].AllowedIn = new EpbType[] { EpbType.Base };
             if (BlockTypes.ContainsKey(1635)) BlockTypes[1635].AllowedIn = new EpbType[] { EpbType.Base };
-            if (BlockTypes.ContainsKey(1637)) BlockTypes[1637].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.SmallVessel };
-            if (BlockTypes.ContainsKey(1638)) BlockTypes[1638].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.SmallVessel };
-            if (BlockTypes.ContainsKey(1639)) BlockTypes[1639].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.SmallVessel };
-            if (BlockTypes.ContainsKey(1640)) BlockTypes[1640].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.SmallVessel };
-            if (BlockTypes.ContainsKey(1641)) BlockTypes[1641].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.SmallVessel };
+            if (BlockTypes.ContainsKey(1636)) BlockTypes[1636].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1637)) BlockTypes[1637].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel };
+            if (BlockTypes.ContainsKey(1638)) BlockTypes[1638].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel };
+            if (BlockTypes.ContainsKey(1639)) BlockTypes[1639].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel };
+            if (BlockTypes.ContainsKey(1640)) BlockTypes[1640].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel };
+            if (BlockTypes.ContainsKey(1641)) BlockTypes[1641].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1642)) BlockTypes[1642].AllowedIn = new EpbType[] { EpbType.SmallVessel };
             if (BlockTypes.ContainsKey(1645)) BlockTypes[1645].AllowedIn = new EpbType[] { EpbType.Base };
             if (BlockTypes.ContainsKey(1646)) BlockTypes[1646].AllowedIn = new EpbType[] { EpbType.Base };
             if (BlockTypes.ContainsKey(1647)) BlockTypes[1647].AllowedIn = new EpbType[] { EpbType.Base };
+            if (BlockTypes.ContainsKey(1648)) BlockTypes[1648].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1649)) BlockTypes[1649].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1650)) BlockTypes[1650].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1651)) BlockTypes[1651].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
             if (BlockTypes.ContainsKey(1652)) BlockTypes[1652].AllowedIn = new EpbType[] { EpbType.Base };
+            if (BlockTypes.ContainsKey(1653)) BlockTypes[1653].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
             if (BlockTypes.ContainsKey(1654)) BlockTypes[1654].AllowedIn = new EpbType[] { EpbType.Base };
+            if (BlockTypes.ContainsKey(1655)) BlockTypes[1655].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
             if (BlockTypes.ContainsKey(1656)) BlockTypes[1656].AllowedIn = new EpbType[] { EpbType.Base };
-            if (BlockTypes.ContainsKey(1659)) BlockTypes[1659].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.SmallVessel };
-            if (BlockTypes.ContainsKey(1660)) BlockTypes[1660].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.SmallVessel };
-            if (BlockTypes.ContainsKey(1661)) BlockTypes[1661].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.SmallVessel };
-            if (BlockTypes.ContainsKey(1662)) BlockTypes[1662].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.SmallVessel };
-            if (BlockTypes.ContainsKey(1663)) BlockTypes[1663].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.SmallVessel };
-            if (BlockTypes.ContainsKey(1664)) BlockTypes[1664].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.SmallVessel };
-            if (BlockTypes.ContainsKey(1665)) BlockTypes[1665].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.SmallVessel };
-            if (BlockTypes.ContainsKey(1666)) BlockTypes[1666].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.SmallVessel };
-            if (BlockTypes.ContainsKey(1667)) BlockTypes[1667].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.SmallVessel };
-            if (BlockTypes.ContainsKey(1668)) BlockTypes[1668].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.SmallVessel };
-            if (BlockTypes.ContainsKey(1669)) BlockTypes[1669].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.SmallVessel };
+            if (BlockTypes.ContainsKey(1657)) BlockTypes[1657].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1658)) BlockTypes[1658].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1659)) BlockTypes[1659].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel };
+            if (BlockTypes.ContainsKey(1660)) BlockTypes[1660].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel };
+            if (BlockTypes.ContainsKey(1661)) BlockTypes[1661].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel };
+            if (BlockTypes.ContainsKey(1662)) BlockTypes[1662].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel };
+            if (BlockTypes.ContainsKey(1663)) BlockTypes[1663].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel };
+            if (BlockTypes.ContainsKey(1664)) BlockTypes[1664].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel };
+            if (BlockTypes.ContainsKey(1665)) BlockTypes[1665].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel };
+            if (BlockTypes.ContainsKey(1666)) BlockTypes[1666].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel };
+            if (BlockTypes.ContainsKey(1667)) BlockTypes[1667].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel };
+            if (BlockTypes.ContainsKey(1668)) BlockTypes[1668].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel };
+            if (BlockTypes.ContainsKey(1669)) BlockTypes[1669].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1670)) BlockTypes[1670].AllowedIn = new EpbType[] { EpbType.Base };
             if (BlockTypes.ContainsKey(1671)) BlockTypes[1671].AllowedIn = new EpbType[] { EpbType.Base };
             if (BlockTypes.ContainsKey(1672)) BlockTypes[1672].AllowedIn = new EpbType[] { EpbType.Base };
+            if (BlockTypes.ContainsKey(1673)) BlockTypes[1673].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
             if (BlockTypes.ContainsKey(1674)) BlockTypes[1674].AllowedIn = new EpbType[] {  };
             if (BlockTypes.ContainsKey(1675)) BlockTypes[1675].AllowedIn = new EpbType[] {  };
             if (BlockTypes.ContainsKey(1676)) BlockTypes[1676].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel, EpbType.Voxel };
@@ -2287,11 +2338,13 @@ BlockType=959
             if (BlockTypes.ContainsKey(1683)) BlockTypes[1683].AllowedIn = new EpbType[] { EpbType.CapitalVessel, EpbType.Base };
             if (BlockTypes.ContainsKey(1684)) BlockTypes[1684].AllowedIn = new EpbType[] { EpbType.SmallVessel, EpbType.HoverVessel };
             if (BlockTypes.ContainsKey(1685)) BlockTypes[1685].AllowedIn = new EpbType[] { EpbType.SmallVessel, EpbType.HoverVessel };
-            if (BlockTypes.ContainsKey(1686)) BlockTypes[1686].AllowedIn = new EpbType[] { EpbType.SmallVessel, EpbType.HoverVessel };
+            if (BlockTypes.ContainsKey(1686)) BlockTypes[1686].AllowedIn = new EpbType[] { EpbType.HoverVessel };
             if (BlockTypes.ContainsKey(1687)) BlockTypes[1687].AllowedIn = new EpbType[] { EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1688)) BlockTypes[1688].AllowedIn = new EpbType[] { EpbType.SmallVessel };
             if (BlockTypes.ContainsKey(1689)) BlockTypes[1689].AllowedIn = new EpbType[] { EpbType.Base };
             if (BlockTypes.ContainsKey(1690)) BlockTypes[1690].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.SmallVessel };
+            if (BlockTypes.ContainsKey(1691)) BlockTypes[1691].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1692)) BlockTypes[1692].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
             if (BlockTypes.ContainsKey(1693)) BlockTypes[1693].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.SmallVessel };
             if (BlockTypes.ContainsKey(1694)) BlockTypes[1694].AllowedIn = new EpbType[] { EpbType.SmallVessel };
             if (BlockTypes.ContainsKey(1695)) BlockTypes[1695].AllowedIn = new EpbType[] { EpbType.SmallVessel };
@@ -2305,6 +2358,12 @@ BlockType=959
             if (BlockTypes.ContainsKey(1703)) BlockTypes[1703].AllowedIn = new EpbType[] { EpbType.SmallVessel };
             if (BlockTypes.ContainsKey(1704)) BlockTypes[1704].AllowedIn = new EpbType[] { EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1705)) BlockTypes[1705].AllowedIn = new EpbType[] { EpbType.CapitalVessel };
+            if (BlockTypes.ContainsKey(1706)) BlockTypes[1706].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1707)) BlockTypes[1707].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1708)) BlockTypes[1708].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1709)) BlockTypes[1709].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1710)) BlockTypes[1710].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1711)) BlockTypes[1711].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
             if (BlockTypes.ContainsKey(1712)) BlockTypes[1712].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.SmallVessel };
             if (BlockTypes.ContainsKey(1713)) BlockTypes[1713].AllowedIn = new EpbType[] { EpbType.Base };
             if (BlockTypes.ContainsKey(1714)) BlockTypes[1714].AllowedIn = new EpbType[] { EpbType.Base };
@@ -2324,6 +2383,7 @@ BlockType=959
             if (BlockTypes.ContainsKey(1733)) BlockTypes[1733].AllowedIn = new EpbType[] { EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1735)) BlockTypes[1735].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.SmallVessel };
             if (BlockTypes.ContainsKey(1736)) BlockTypes[1736].AllowedIn = new EpbType[] { EpbType.SmallVessel };
+            if (BlockTypes.ContainsKey(1739)) BlockTypes[1739].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
             if (BlockTypes.ContainsKey(1740)) BlockTypes[1740].AllowedIn = new EpbType[] { EpbType.Base };
             if (BlockTypes.ContainsKey(1741)) BlockTypes[1741].AllowedIn = new EpbType[] { EpbType.Base };
             if (BlockTypes.ContainsKey(1742)) BlockTypes[1742].AllowedIn = new EpbType[] { EpbType.Base };
@@ -2334,23 +2394,23 @@ BlockType=959
             if (BlockTypes.ContainsKey(1747)) BlockTypes[1747].AllowedIn = new EpbType[] { EpbType.Base };
             if (BlockTypes.ContainsKey(1748)) BlockTypes[1748].AllowedIn = new EpbType[] { EpbType.Base };
             if (BlockTypes.ContainsKey(1749)) BlockTypes[1749].AllowedIn = new EpbType[] { EpbType.Base };
-            if (BlockTypes.ContainsKey(1750)) BlockTypes[1750].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.SmallVessel };
-            if (BlockTypes.ContainsKey(1751)) BlockTypes[1751].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.SmallVessel };
-            if (BlockTypes.ContainsKey(1752)) BlockTypes[1752].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.SmallVessel };
-            if (BlockTypes.ContainsKey(1753)) BlockTypes[1753].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.SmallVessel };
-            if (BlockTypes.ContainsKey(1754)) BlockTypes[1754].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.SmallVessel };
-            if (BlockTypes.ContainsKey(1755)) BlockTypes[1755].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.SmallVessel };
-            if (BlockTypes.ContainsKey(1756)) BlockTypes[1756].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.SmallVessel };
-            if (BlockTypes.ContainsKey(1757)) BlockTypes[1757].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.SmallVessel };
-            if (BlockTypes.ContainsKey(1758)) BlockTypes[1758].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.SmallVessel };
-            if (BlockTypes.ContainsKey(1759)) BlockTypes[1759].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.SmallVessel };
-            if (BlockTypes.ContainsKey(1760)) BlockTypes[1760].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.SmallVessel };
-            if (BlockTypes.ContainsKey(1761)) BlockTypes[1761].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.SmallVessel };
-            if (BlockTypes.ContainsKey(1762)) BlockTypes[1762].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.SmallVessel };
-            if (BlockTypes.ContainsKey(1763)) BlockTypes[1763].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.SmallVessel };
-            if (BlockTypes.ContainsKey(1764)) BlockTypes[1764].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.SmallVessel };
-            if (BlockTypes.ContainsKey(1765)) BlockTypes[1765].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.SmallVessel };
-            if (BlockTypes.ContainsKey(1766)) BlockTypes[1766].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.SmallVessel };
+            if (BlockTypes.ContainsKey(1750)) BlockTypes[1750].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel };
+            if (BlockTypes.ContainsKey(1751)) BlockTypes[1751].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel };
+            if (BlockTypes.ContainsKey(1752)) BlockTypes[1752].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel };
+            if (BlockTypes.ContainsKey(1753)) BlockTypes[1753].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel };
+            if (BlockTypes.ContainsKey(1754)) BlockTypes[1754].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel };
+            if (BlockTypes.ContainsKey(1755)) BlockTypes[1755].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel };
+            if (BlockTypes.ContainsKey(1756)) BlockTypes[1756].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel };
+            if (BlockTypes.ContainsKey(1757)) BlockTypes[1757].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel };
+            if (BlockTypes.ContainsKey(1758)) BlockTypes[1758].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel };
+            if (BlockTypes.ContainsKey(1759)) BlockTypes[1759].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel };
+            if (BlockTypes.ContainsKey(1760)) BlockTypes[1760].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel };
+            if (BlockTypes.ContainsKey(1761)) BlockTypes[1761].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel };
+            if (BlockTypes.ContainsKey(1762)) BlockTypes[1762].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel };
+            if (BlockTypes.ContainsKey(1763)) BlockTypes[1763].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel };
+            if (BlockTypes.ContainsKey(1764)) BlockTypes[1764].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel };
+            if (BlockTypes.ContainsKey(1765)) BlockTypes[1765].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel };
+            if (BlockTypes.ContainsKey(1766)) BlockTypes[1766].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1767)) BlockTypes[1767].AllowedIn = new EpbType[] { EpbType.Base };
             if (BlockTypes.ContainsKey(1768)) BlockTypes[1768].AllowedIn = new EpbType[] { EpbType.Base };
             if (BlockTypes.ContainsKey(1769)) BlockTypes[1769].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.SmallVessel };
@@ -2358,20 +2418,30 @@ BlockType=959
             if (BlockTypes.ContainsKey(1771)) BlockTypes[1771].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.SmallVessel };
             if (BlockTypes.ContainsKey(1772)) BlockTypes[1772].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.SmallVessel };
             if (BlockTypes.ContainsKey(1773)) BlockTypes[1773].AllowedIn = new EpbType[] {  };
-            if (BlockTypes.ContainsKey(1774)) BlockTypes[1774].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.SmallVessel };
-            if (BlockTypes.ContainsKey(1775)) BlockTypes[1775].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.SmallVessel };
-            if (BlockTypes.ContainsKey(1776)) BlockTypes[1776].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.SmallVessel };
+            if (BlockTypes.ContainsKey(1774)) BlockTypes[1774].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel };
+            if (BlockTypes.ContainsKey(1775)) BlockTypes[1775].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel };
+            if (BlockTypes.ContainsKey(1776)) BlockTypes[1776].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel };
             if (BlockTypes.ContainsKey(1777)) BlockTypes[1777].AllowedIn = new EpbType[] { EpbType.Base };
             if (BlockTypes.ContainsKey(1778)) BlockTypes[1778].AllowedIn = new EpbType[] { EpbType.Base };
             if (BlockTypes.ContainsKey(1779)) BlockTypes[1779].AllowedIn = new EpbType[] { EpbType.Base };
             if (BlockTypes.ContainsKey(1780)) BlockTypes[1780].AllowedIn = new EpbType[] { EpbType.Base };
+            if (BlockTypes.ContainsKey(1782)) BlockTypes[1782].AllowedIn = new EpbType[] { EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1783)) BlockTypes[1783].AllowedIn = new EpbType[] { EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1784)) BlockTypes[1784].AllowedIn = new EpbType[] { EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1785)) BlockTypes[1785].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1786)) BlockTypes[1786].AllowedIn = new EpbType[] { EpbType.Base, EpbType.CapitalVessel, EpbType.Voxel };
             if (BlockTypes.ContainsKey(1787)) BlockTypes[1787].AllowedIn = new EpbType[] { EpbType.Base };
             if (BlockTypes.ContainsKey(1788)) BlockTypes[1788].AllowedIn = new EpbType[] { EpbType.Base };
-            if (BlockTypes.ContainsKey(1789)) BlockTypes[1789].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.SmallVessel, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1789)) BlockTypes[1789].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Voxel };
             if (BlockTypes.ContainsKey(1790)) BlockTypes[1790].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.SmallVessel };
             if (BlockTypes.ContainsKey(1791)) BlockTypes[1791].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.SmallVessel };
             if (BlockTypes.ContainsKey(1792)) BlockTypes[1792].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.SmallVessel };
-            if (BlockTypes.ContainsKey(1793)) BlockTypes[1793].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.SmallVessel };
+            if (BlockTypes.ContainsKey(1793)) BlockTypes[1793].AllowedIn = new EpbType[] { EpbType.HoverVessel };
+            if (BlockTypes.ContainsKey(1794)) BlockTypes[1794].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1795)) BlockTypes[1795].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1796)) BlockTypes[1796].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1797)) BlockTypes[1797].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1799)) BlockTypes[1799].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
             if (BlockTypes.ContainsKey(1800)) BlockTypes[1800].AllowedIn = new EpbType[] { EpbType.SmallVessel };
             if (BlockTypes.ContainsKey(1801)) BlockTypes[1801].AllowedIn = new EpbType[] { EpbType.SmallVessel };
             if (BlockTypes.ContainsKey(1802)) BlockTypes[1802].AllowedIn = new EpbType[] { EpbType.SmallVessel };
@@ -2388,29 +2458,127 @@ BlockType=959
             if (BlockTypes.ContainsKey(1813)) BlockTypes[1813].AllowedIn = new EpbType[] {  };
             if (BlockTypes.ContainsKey(1814)) BlockTypes[1814].AllowedIn = new EpbType[] { EpbType.Base };
             if (BlockTypes.ContainsKey(1815)) BlockTypes[1815].AllowedIn = new EpbType[] { EpbType.Base };
+            if (BlockTypes.ContainsKey(1816)) BlockTypes[1816].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1817)) BlockTypes[1817].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1818)) BlockTypes[1818].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1819)) BlockTypes[1819].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1820)) BlockTypes[1820].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1821)) BlockTypes[1821].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1822)) BlockTypes[1822].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1823)) BlockTypes[1823].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1824)) BlockTypes[1824].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1825)) BlockTypes[1825].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1826)) BlockTypes[1826].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1827)) BlockTypes[1827].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1828)) BlockTypes[1828].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1829)) BlockTypes[1829].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1830)) BlockTypes[1830].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
             if (BlockTypes.ContainsKey(1831)) BlockTypes[1831].AllowedIn = new EpbType[] { };
             if (BlockTypes.ContainsKey(1832)) BlockTypes[1832].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.SmallVessel };
             if (BlockTypes.ContainsKey(1833)) BlockTypes[1833].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.SmallVessel };
             if (BlockTypes.ContainsKey(1834)) BlockTypes[1834].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.SmallVessel };
-            if (BlockTypes.ContainsKey(1835)) BlockTypes[1835].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.SmallVessel };
-            if (BlockTypes.ContainsKey(1843)) BlockTypes[1843].AllowedIn = new EpbType[] { EpbType.Base };
-            if (BlockTypes.ContainsKey(1844)) BlockTypes[1844].AllowedIn = new EpbType[] { EpbType.CapitalVessel, EpbType.HoverVessel, EpbType.SmallVessel, EpbType.Voxel  };
+            if (BlockTypes.ContainsKey(1835)) BlockTypes[1835].AllowedIn = new EpbType[] { EpbType.HoverVessel };
+            if (BlockTypes.ContainsKey(1836)) BlockTypes[1836].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1837)) BlockTypes[1837].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1838)) BlockTypes[1838].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1839)) BlockTypes[1839].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1840)) BlockTypes[1840].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1841)) BlockTypes[1841].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1842)) BlockTypes[1842].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1843)) BlockTypes[1843].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base };
+            if (BlockTypes.ContainsKey(1844)) BlockTypes[1844].AllowedIn = new EpbType[] { EpbType.CapitalVessel, EpbType.HoverVessel, EpbType.Voxel  };
             if (BlockTypes.ContainsKey(1845)) BlockTypes[1845].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.SmallVessel};
             if (BlockTypes.ContainsKey(1846)) BlockTypes[1846].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.SmallVessel };
             if (BlockTypes.ContainsKey(1847)) BlockTypes[1847].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.SmallVessel };
-            if (BlockTypes.ContainsKey(1848)) BlockTypes[1848].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.SmallVessel };
-            if (BlockTypes.ContainsKey(1857)) BlockTypes[1857].AllowedIn = new EpbType[] { EpbType.CapitalVessel, EpbType.HoverVessel, EpbType.SmallVessel, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1848)) BlockTypes[1848].AllowedIn = new EpbType[] { EpbType.HoverVessel };
+            if (BlockTypes.ContainsKey(1849)) BlockTypes[1849].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1850)) BlockTypes[1850].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1851)) BlockTypes[1851].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1852)) BlockTypes[1852].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1853)) BlockTypes[1853].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1854)) BlockTypes[1854].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1855)) BlockTypes[1855].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1856)) BlockTypes[1856].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1857)) BlockTypes[1857].AllowedIn = new EpbType[] { EpbType.CapitalVessel, EpbType.HoverVessel, EpbType.Voxel };
             if (BlockTypes.ContainsKey(1858)) BlockTypes[1858].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.SmallVessel };
             if (BlockTypes.ContainsKey(1859)) BlockTypes[1859].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.SmallVessel };
             if (BlockTypes.ContainsKey(1860)) BlockTypes[1860].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.SmallVessel };
-            if (BlockTypes.ContainsKey(1861)) BlockTypes[1861].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.SmallVessel };
-            if (BlockTypes.ContainsKey(1870)) BlockTypes[1870].AllowedIn = new EpbType[] { EpbType.CapitalVessel, EpbType.HoverVessel, EpbType.SmallVessel, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1861)) BlockTypes[1861].AllowedIn = new EpbType[] { EpbType.HoverVessel };
+            if (BlockTypes.ContainsKey(1862)) BlockTypes[1862].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1863)) BlockTypes[1863].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1864)) BlockTypes[1864].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1865)) BlockTypes[1865].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1866)) BlockTypes[1866].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1867)) BlockTypes[1867].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1868)) BlockTypes[1868].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1869)) BlockTypes[1869].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1870)) BlockTypes[1870].AllowedIn = new EpbType[] { EpbType.CapitalVessel, EpbType.HoverVessel, EpbType.Voxel };
             if (BlockTypes.ContainsKey(1871)) BlockTypes[1871].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.SmallVessel };
             if (BlockTypes.ContainsKey(1872)) BlockTypes[1872].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.SmallVessel };
             if (BlockTypes.ContainsKey(1873)) BlockTypes[1873].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.SmallVessel };
-            if (BlockTypes.ContainsKey(1874)) BlockTypes[1874].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.SmallVessel };
-            if (BlockTypes.ContainsKey(1876)) BlockTypes[1876].AllowedIn = new EpbType[] { EpbType.CapitalVessel, EpbType.HoverVessel, EpbType.SmallVessel };
+            if (BlockTypes.ContainsKey(1874)) BlockTypes[1874].AllowedIn = new EpbType[] { EpbType.HoverVessel };
+            if (BlockTypes.ContainsKey(1875)) BlockTypes[1875].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1876)) BlockTypes[1876].AllowedIn = new EpbType[] { EpbType.CapitalVessel, EpbType.HoverVessel };
+            if (BlockTypes.ContainsKey(1877)) BlockTypes[1877].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1878)) BlockTypes[1878].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1879)) BlockTypes[1879].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1880)) BlockTypes[1880].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1881)) BlockTypes[1881].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1882)) BlockTypes[1882].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1883)) BlockTypes[1883].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1884)) BlockTypes[1884].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1885)) BlockTypes[1885].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1886)) BlockTypes[1886].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1887)) BlockTypes[1887].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
             if (BlockTypes.ContainsKey(1888)) BlockTypes[1888].AllowedIn = new EpbType[] { EpbType.HoverVessel };
+            if (BlockTypes.ContainsKey(1889)) BlockTypes[1889].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1890)) BlockTypes[1890].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1891)) BlockTypes[1891].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1892)) BlockTypes[1892].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1893)) BlockTypes[1893].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1894)) BlockTypes[1894].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1895)) BlockTypes[1895].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1896)) BlockTypes[1896].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1897)) BlockTypes[1897].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1898)) BlockTypes[1898].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1906)) BlockTypes[1906].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1907)) BlockTypes[1907].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1908)) BlockTypes[1908].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1909)) BlockTypes[1909].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1910)) BlockTypes[1910].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1911)) BlockTypes[1911].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1912)) BlockTypes[1912].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1913)) BlockTypes[1913].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1914)) BlockTypes[1914].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1915)) BlockTypes[1915].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1916)) BlockTypes[1916].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1917)) BlockTypes[1917].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1918)) BlockTypes[1918].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1919)) BlockTypes[1919].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1920)) BlockTypes[1920].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1921)) BlockTypes[1921].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1922)) BlockTypes[1922].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1923)) BlockTypes[1923].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1924)) BlockTypes[1924].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1925)) BlockTypes[1925].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1926)) BlockTypes[1926].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1927)) BlockTypes[1927].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1928)) BlockTypes[1928].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1929)) BlockTypes[1929].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1930)) BlockTypes[1930].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1931)) BlockTypes[1931].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1932)) BlockTypes[1932].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1933)) BlockTypes[1933].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1934)) BlockTypes[1934].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1935)) BlockTypes[1935].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1936)) BlockTypes[1936].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1937)) BlockTypes[1937].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1938)) BlockTypes[1938].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1939)) BlockTypes[1939].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1940)) BlockTypes[1940].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1941)) BlockTypes[1941].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1942)) BlockTypes[1942].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
+            if (BlockTypes.ContainsKey(1943)) BlockTypes[1943].AllowedIn = new EpbType[] { EpbType.HoverVessel, EpbType.CapitalVessel, EpbType.Base, EpbType.Voxel };
         }
 
     }
