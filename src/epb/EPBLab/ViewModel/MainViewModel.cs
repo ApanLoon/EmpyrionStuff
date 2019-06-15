@@ -110,14 +110,14 @@ namespace EPBLab.ViewModel
                     {
                         return;
                     }
-                    EpBlueprint blueprint = Blueprints[SelectedBlueprintIndex].Blueprint;
+                    Blueprint blueprint = Blueprints[SelectedBlueprintIndex].Blueprint;
 
                     int width = 10;
                     int height = 10;
                     int depth = 10;
                     bool hollow = false;
-                    EpbBlockType blockType = EpbBlockType.GetBlockType("HullFullLarge", "Cube");
-                    byte blockVariant = EpbBlockType.GetVariant(blockType.Id, "Cube");
+                    BlockType blockType = BlockType.GetBlockType("HullFullLarge", "Cube");
+                    byte blockVariant = BlockType.GetVariant(blockType.Id, "Cube");
                     for (int z = 0; z < depth; z++)
                     {
                         for (int y = 0; y < height; y++)
@@ -130,15 +130,15 @@ namespace EPBLab.ViewModel
 
                                 if (!isInterior || !hollow)
                                 {
-                                    EpbBlock block = new EpbBlock(new EpbBlockPos((byte)x, (byte)y, (byte)z)) { BlockType = blockType, Variant = blockVariant };
-                                    block.SetColour(isInterior ? EpbColourIndex.Pink : EpbColourIndex.None);
+                                    Block block = new Block(new BlockPos((byte)x, (byte)y, (byte)z)) { BlockType = blockType, Variant = blockVariant };
+                                    block.SetColour(isInterior ? ColourIndex.Pink : ColourIndex.None);
                                     block.SetTexture(14, (x % 2) == 1);
-                                    block.SetSymbol(1, (EpbBlock.SymbolRotation)(x % 4), EpbBlock.FaceIndex.Back);
-                                    block.SetSymbol(2, face: EpbBlock.FaceIndex.Right);
-                                    block.SetSymbol(3, face: EpbBlock.FaceIndex.Front);
-                                    block.SetSymbol(4, face: EpbBlock.FaceIndex.Left);
-                                    block.SetSymbol(5, face: EpbBlock.FaceIndex.Top);
-                                    block.SetSymbol(6, face: EpbBlock.FaceIndex.Bottom);
+                                    block.SetSymbol(1, (Block.SymbolRotation)(x % 4), Block.FaceIndex.Back);
+                                    block.SetSymbol(2, face: Block.FaceIndex.Right);
+                                    block.SetSymbol(3, face: Block.FaceIndex.Front);
+                                    block.SetSymbol(4, face: Block.FaceIndex.Left);
+                                    block.SetSymbol(5, face: Block.FaceIndex.Top);
+                                    block.SetSymbol(6, face: Block.FaceIndex.Bottom);
                                     blueprint.SetBlock(block);
                                 }
                             }
@@ -164,13 +164,13 @@ namespace EPBLab.ViewModel
                     {
                         return;
                     }
-                    EpBlueprint blueprint = Blueprints[SelectedBlueprintIndex].Blueprint;
+                    Blueprint blueprint = Blueprints[SelectedBlueprintIndex].Blueprint;
 
                     int width = 10;
                     int height = 10;
                     int depth = 10;
-                    EpbBlockType blockType = EpbBlockType.GetBlockType("HullFullLarge", "Cube");
-                    byte blockVariant = EpbBlockType.GetVariant(blockType.Id, "Cube");
+                    BlockType blockType = BlockType.GetBlockType("HullFullLarge", "Cube");
+                    byte blockVariant = BlockType.GetVariant(blockType.Id, "Cube");
                     for (int z = 0; z < depth; z++)
                     {
                         for (int y = 0; y < height; y++)
@@ -183,7 +183,7 @@ namespace EPBLab.ViewModel
                                 int d = (a ? 1 : 0) + (b ? 1 : 0) + (c ? 1 : 0);
                                 if (d >= 2)
                                 {
-                                    blueprint.SetBlock(new EpbBlock(new EpbBlockPos((byte)x, (byte)y, (byte)z)) { BlockType = blockType, Variant = blockVariant });
+                                    blueprint.SetBlock(new Block(new BlockPos((byte)x, (byte)y, (byte)z)) { BlockType = blockType, Variant = blockVariant });
                                 }
                             }
                         }
@@ -208,14 +208,14 @@ namespace EPBLab.ViewModel
                     {
                         return;
                     }
-                    EpBlueprint blueprint = Blueprints[SelectedBlueprintIndex].Blueprint;
+                    Blueprint blueprint = Blueprints[SelectedBlueprintIndex].Blueprint;
 
                     int width = 10;
                     int height = 10;
                     int depth = 10;
                     bool hollow = false;
-                    EpbBlockType blockType = EpbBlockType.GetBlockType("HullFullLarge", "Cube");
-                    byte blockVariant = EpbBlockType.GetVariant(blockType.Id, "Cube");
+                    BlockType blockType = BlockType.GetBlockType("HullFullLarge", "Cube");
+                    byte blockVariant = BlockType.GetVariant(blockType.Id, "Cube");
 
                     for (int y = 0; y < height; y++)
                     {
@@ -229,64 +229,64 @@ namespace EPBLab.ViewModel
                                 bool isRightEdge = (x == (width - 1));
                                 bool isInterior = !isBackEdge && !isFrontEdge && !isRightEdge && !isLeftEdge && y > 0 && y < (height - 1);
 
-                                EpbBlockType t = blockType;
-                                EpbBlock.EpbBlockRotation r = EpbBlock.EpbBlockRotation.PzPy;
+                                BlockType t = blockType;
+                                Block.BlockRotation r = Block.BlockRotation.PzPy;
                                 byte v = blockVariant;
                                 byte[] c = new byte[] { 0, 0, 0, 0, 0, 0 };
 
                                 if (isBackEdge && isLeftEdge)
                                 {
-                                    t = EpbBlockType.GetBlockType("HullFullLarge", "CornerC");
-                                    v = EpbBlockType.GetVariant(t.Id, "CornerC");
-                                    r = EpbBlock.EpbBlockRotation.PxPy;
+                                    t = BlockType.GetBlockType("HullFullLarge", "CornerC");
+                                    v = BlockType.GetVariant(t.Id, "CornerC");
+                                    r = Block.BlockRotation.PxPy;
                                 }
                                 else if (isBackEdge && isRightEdge)
                                 {
-                                    t = EpbBlockType.GetBlockType("HullFullLarge", "CornerC");
-                                    v = EpbBlockType.GetVariant(t.Id, "CornerC");
-                                    r = EpbBlock.EpbBlockRotation.PzPy;
+                                    t = BlockType.GetBlockType("HullFullLarge", "CornerC");
+                                    v = BlockType.GetVariant(t.Id, "CornerC");
+                                    r = Block.BlockRotation.PzPy;
                                 }
                                 else if (isFrontEdge && isLeftEdge)
                                 {
-                                    t = EpbBlockType.GetBlockType("HullFullLarge", "CornerC");
-                                    v = EpbBlockType.GetVariant(t.Id, "CornerC");
-                                    r = EpbBlock.EpbBlockRotation.NzPy;
+                                    t = BlockType.GetBlockType("HullFullLarge", "CornerC");
+                                    v = BlockType.GetVariant(t.Id, "CornerC");
+                                    r = Block.BlockRotation.NzPy;
                                 }
                                 else if (isFrontEdge && isRightEdge)
                                 {
-                                    t = EpbBlockType.GetBlockType("HullFullLarge", "CornerC");
-                                    v = EpbBlockType.GetVariant(t.Id, "CornerC");
-                                    r = EpbBlock.EpbBlockRotation.NxPy;
+                                    t = BlockType.GetBlockType("HullFullLarge", "CornerC");
+                                    v = BlockType.GetVariant(t.Id, "CornerC");
+                                    r = Block.BlockRotation.NxPy;
                                 }
                                 else if (isBackEdge)
                                 {
-                                    t = EpbBlockType.GetBlockType("HullFullLarge", "RampC");
-                                    v = EpbBlockType.GetVariant(t.Id, "RampC");
-                                    r = EpbBlock.EpbBlockRotation.NzPy;
+                                    t = BlockType.GetBlockType("HullFullLarge", "RampC");
+                                    v = BlockType.GetVariant(t.Id, "RampC");
+                                    r = Block.BlockRotation.NzPy;
                                 }
                                 else if (isFrontEdge)
                                 {
-                                    t = EpbBlockType.GetBlockType("HullFullLarge", "RampC");
-                                    v = EpbBlockType.GetVariant(t.Id, "RampC");
-                                    r = EpbBlock.EpbBlockRotation.PzPy;
+                                    t = BlockType.GetBlockType("HullFullLarge", "RampC");
+                                    v = BlockType.GetVariant(t.Id, "RampC");
+                                    r = Block.BlockRotation.PzPy;
                                 }
                                 else if (isLeftEdge)
                                 {
-                                    t = EpbBlockType.GetBlockType("HullFullLarge", "RampC");
-                                    v = EpbBlockType.GetVariant(t.Id, "RampC");
-                                    r = EpbBlock.EpbBlockRotation.NxPy;
+                                    t = BlockType.GetBlockType("HullFullLarge", "RampC");
+                                    v = BlockType.GetVariant(t.Id, "RampC");
+                                    r = Block.BlockRotation.NxPy;
                                 }
                                 else if (isRightEdge)
                                 {
-                                    t = EpbBlockType.GetBlockType("HullFullLarge", "RampC");
-                                    v = EpbBlockType.GetVariant(t.Id, "RampC");
-                                    r = EpbBlock.EpbBlockRotation.PxPy;
+                                    t = BlockType.GetBlockType("HullFullLarge", "RampC");
+                                    v = BlockType.GetVariant(t.Id, "RampC");
+                                    r = Block.BlockRotation.PxPy;
                                 }
 
                                 if (!isInterior || !hollow)
                                 {
-                                    EpbBlock block = new EpbBlock(new EpbBlockPos((byte)x, (byte)y, (byte)z)) { BlockType = t, Rotation = r, Variant = v };
-                                    block.SetColour(isInterior ? EpbColourIndex.Pink : EpbColourIndex.None);
+                                    Block block = new Block(new BlockPos((byte)x, (byte)y, (byte)z)) { BlockType = t, Rotation = r, Variant = v };
+                                    block.SetColour(isInterior ? ColourIndex.Pink : ColourIndex.None);
                                     blueprint.SetBlock(block);
                                 }
                             }
@@ -312,26 +312,26 @@ namespace EPBLab.ViewModel
                 {
                     return;
                 }
-                EpBlueprint blueprint = Blueprints[SelectedBlueprintIndex].Blueprint;
-                EpbBlockPos corePos = new EpbBlockPos(0, 0, 0, 8, 8);
+                Blueprint blueprint = Blueprints[SelectedBlueprintIndex].Blueprint;
+                BlockPos corePos = new BlockPos(0, 0, 0, 8, 8);
                 blueprint.SetBlock(
-                    new EpbBlock(corePos)
+                    new Block(corePos)
                     {
-                        BlockType = EpbBlockType.BlockTypes[558],
+                        BlockType = BlockType.BlockTypes[558],
                         Variant = 0
                     });
                 blueprint.DeviceCount = 1;
                 blueprint.CountBlocks();
                 blueprint.ComputeDimensions();
 
-                EpbDeviceGroup group = new EpbDeviceGroup()
+                DeviceGroup group = new DeviceGroup()
                 {
                     Name = "Ungrouped",
                     DeviceGroupUnknown01 = 1,
                     Shortcut = 255,
                     DeviceGroupUnknown03 = 0
                 };
-                group.Entries.Add(new EpbDeviceGroupEntry() { Pos = corePos });
+                group.Entries.Add(new DeviceGroupEntry() { Pos = corePos });
                 blueprint.DeviceGroups.Add(group);
 
                 Blueprints[SelectedBlueprintIndex].UpdateViewModels();
@@ -348,20 +348,20 @@ namespace EPBLab.ViewModel
                 {
                     return;
                 }
-                EpBlueprint blueprint = Blueprints[SelectedBlueprintIndex].Blueprint;
-                EpbBlockPos leverPos = new EpbBlockPos(0, 0, 0, 8, 8);
-                EpbBlockPos corePos = new EpbBlockPos(0, 0, 1, 8, 8);
+                Blueprint blueprint = Blueprints[SelectedBlueprintIndex].Blueprint;
+                BlockPos leverPos = new BlockPos(0, 0, 0, 8, 8);
+                BlockPos corePos = new BlockPos(0, 0, 1, 8, 8);
 
                 blueprint.SetBlock(
-                    new EpbBlock(leverPos)
+                    new Block(leverPos)
                     {
-                        BlockType = EpbBlockType.BlockTypes[1262],
+                        BlockType = BlockType.BlockTypes[1262],
                         Variant = 0
                     });
                 blueprint.SetBlock(
-                    new EpbBlock(corePos)
+                    new Block(corePos)
                     {
-                        BlockType = EpbBlockType.BlockTypes[558],
+                        BlockType = BlockType.BlockTypes[558],
                         Variant = 0
                     });
 
@@ -369,18 +369,18 @@ namespace EPBLab.ViewModel
                 blueprint.CountBlocks();
                 blueprint.ComputeDimensions();
 
-                EpbDeviceGroup group = new EpbDeviceGroup()
+                DeviceGroup group = new DeviceGroup()
                 {
                     Name = "Ungrouped",
                     DeviceGroupUnknown01 = 1,
                     Shortcut = 255,
                     DeviceGroupUnknown03 = 0
                 };
-                group.Entries.Add(new EpbDeviceGroupEntry() { Pos = corePos });
-                group.Entries.Add(new EpbDeviceGroupEntry() { Pos = leverPos });
+                group.Entries.Add(new DeviceGroupEntry() { Pos = corePos });
+                group.Entries.Add(new DeviceGroupEntry() { Pos = leverPos });
                 blueprint.DeviceGroups.Add(group);
 
-                blueprint.SignalSources.Add(new EpbSignalSource()
+                blueprint.SignalSources.Add(new SignalSource()
                 {
                     Name = "Lever0",
                     Pos = leverPos,
@@ -401,33 +401,33 @@ namespace EPBLab.ViewModel
                 {
                     return;
                 }
-                EpBlueprint blueprint = Blueprints[SelectedBlueprintIndex].Blueprint;
+                Blueprint blueprint = Blueprints[SelectedBlueprintIndex].Blueprint;
                 UInt16[] types = { 381, 382, 1791, 1833, 1846, 1859, 1872 }; // HullFullSmall, HullThinSmall, HullExtendedSmall, HullExtendedSmall2, HullExtendedSmall3, HullExtendedSmall4, HullExtendedSmall5
                 byte y = 0;
                 foreach (UInt16 t in types)
                 {
                     int i = 0;
-                    foreach (string variantName in EpbBlockType.BlockVariants[t])
+                    foreach (string variantName in BlockType.BlockVariants[t])
                     {
                         if (variantName != null)
                         {
                             byte x = (byte)((i % 8) * 2);
                             byte z = (byte)((i / 8) * 2);
-                            EpbBlockType bt = EpbBlockType.BlockTypes[t];
-                            byte v = EpbBlockType.GetVariant(t, variantName);
-                            EpbBlock block =
-                                new EpbBlock(new EpbBlockPos(x, y, z))
+                            BlockType bt = BlockType.BlockTypes[t];
+                            byte v = BlockType.GetVariant(t, variantName);
+                            Block block =
+                                new Block(new BlockPos(x, y, z))
                                 {
                                     BlockType = bt,
                                     Variant = v,
                                     Colours =
                                     {
-                                        [0] = EpbColourIndex.Red,
-                                        [1] = EpbColourIndex.BrightGreen,
-                                        [2] = EpbColourIndex.Blue,
-                                        [3] = EpbColourIndex.Cyan,
-                                        [4] = EpbColourIndex.Purple,
-                                        [5] = EpbColourIndex.Yellow
+                                        [0] = ColourIndex.Red,
+                                        [1] = ColourIndex.BrightGreen,
+                                        [2] = ColourIndex.Blue,
+                                        [3] = ColourIndex.Cyan,
+                                        [4] = ColourIndex.Purple,
+                                        [5] = ColourIndex.Yellow
                                     }
                                 };
                             blueprint.SetBlock(block);
@@ -455,29 +455,29 @@ namespace EPBLab.ViewModel
                     {
                         return;
                     }
-                    EpBlueprint blueprint = Blueprints[SelectedBlueprintIndex].Blueprint;
+                    Blueprint blueprint = Blueprints[SelectedBlueprintIndex].Blueprint;
 
                     byte x = 0;
                     byte y = 0;
                     byte z = 0;
                     byte spacing = 6;
-                    foreach (EpbBlockType blockType in EpbBlockType.BlockTypes.Values)
+                    foreach (BlockType blockType in BlockType.BlockTypes.Values)
                     {
-                        if (EpbBlockType.IsAllowed(blockType, blueprint.Type))
+                        if (BlockType.IsAllowed(blockType, blueprint.Type))
                         {
-                            EpbBlock block =
-                                new EpbBlock(new EpbBlockPos(x, y, z))
+                            Block block =
+                                new Block(new BlockPos(x, y, z))
                                 {
                                     BlockType = blockType,
                                     Variant = 0,
                                     Colours =
                                     {
-                                        [0] = EpbColourIndex.Red,
-                                        [1] = EpbColourIndex.BrightGreen,
-                                        [2] = EpbColourIndex.Blue,
-                                        [3] = EpbColourIndex.Cyan,
-                                        [4] = EpbColourIndex.Purple,
-                                        [5] = EpbColourIndex.Yellow
+                                        [0] = ColourIndex.Red,
+                                        [1] = ColourIndex.BrightGreen,
+                                        [2] = ColourIndex.Blue,
+                                        [3] = ColourIndex.Cyan,
+                                        [4] = ColourIndex.Purple,
+                                        [5] = ColourIndex.Yellow
                                     }
                                 };
                             blueprint.SetBlock(block);
@@ -517,7 +517,7 @@ namespace EPBLab.ViewModel
 
         protected void NewBlueprint()
         {
-            EpBlueprint blueprint = new EpBlueprint();
+            Blueprint blueprint = new Blueprint();
 
             BlueprintViewModel vm = new BlueprintViewModel("New", blueprint);
             Blueprints.Add(vm);
@@ -532,22 +532,22 @@ namespace EPBLab.ViewModel
 
             foreach (string fileName in m.Content)
             {
-                EpBlueprint blueprint = OpenEpb(fileName);
+                Blueprint blueprint = OpenEpb(fileName);
                 BlueprintViewModel vm = new BlueprintViewModel(fileName, blueprint);
                 Blueprints.Add(vm);
                 SelectedBlueprintIndex = Blueprints.Count - 1;
             }
         }
-        protected EpBlueprint OpenEpb(string path)
+        protected Blueprint OpenEpb(string path)
         {
-            EpBlueprint blueprint = null;
+            Blueprint blueprint = null;
 
             using (BinaryReader reader = new BinaryReader(File.OpenRead(path)))
             {
                 try
                 {
                     long bytesLeft = reader.BaseStream.Length;
-                    blueprint = reader.ReadEpBlueprint(ref bytesLeft);
+                    blueprint = reader.ReadBlueprint(ref bytesLeft);
                 }
                 catch (System.Exception ex)
                 {
@@ -627,7 +627,7 @@ namespace EPBLab.ViewModel
             {
                 // Code runs in Blend --> create design time data.
                 //Messenger.Default.Send(new FilesOpenedMessage(new string[]{ "BA_Logic.epb" }) { Identifier = "OpenBlueprints" });
-                EpBlueprint blueprint = OpenEpb("C:\\Users\\fredrik\\Documents\\Projects\\Empyrion\\EmpyrionStuff\\Research\\SampleData\\v22\\BA_Logic.epb");
+                Blueprint blueprint = OpenEpb("C:\\Users\\fredrik\\Documents\\Projects\\Empyrion\\EmpyrionStuff\\Research\\SampleData\\v22\\BA_Logic.epb");
                 BlueprintViewModel vm = new BlueprintViewModel("BA_Logic.epb", blueprint);
                 Blueprints.Add(vm);
                 SelectedBlueprintIndex = Blueprints.Count - 1;

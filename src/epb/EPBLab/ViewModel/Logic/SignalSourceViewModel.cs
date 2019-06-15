@@ -8,7 +8,7 @@ namespace EPBLab.ViewModel.Logic
 {
     public class SignalSourceViewModel : LogicNodeViewModel
     {
-        protected EpbSignalSource Source;
+        protected SignalSource Source;
 
         public string Name
         {
@@ -24,14 +24,14 @@ namespace EPBLab.ViewModel.Logic
         public string Pos => Source.Pos.ToString();
 
 
-        public SignalSourceViewModel(EpBlueprint blueprint, EpbSignalSource source, Point initialPosition)
+        public SignalSourceViewModel(Blueprint blueprint, SignalSource source, Point initialPosition)
         {
             Source = source;
             X = initialPosition.X;
             Y = initialPosition.Y;
 
-            EpbBlockPos pos = source.Pos;
-            EpbBlock block = blueprint.Blocks[pos.X, pos.Y, pos.Z];
+            BlockPos pos = source.Pos;
+            Block block = blueprint.Blocks[pos.X, pos.Y, pos.Z];
             NodeType = block != null ? block.BlockType.ToString() : "Source";
 
             Outputs.Add(new ConnectionPointViewModel() { Name = "0", Type = ConnectionPointViewModel.ConnectorType.OutputLast });

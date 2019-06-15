@@ -10,11 +10,11 @@ namespace EPBLib.Helpers
 {
     public static class BinaryWriterExtensions
     {
-        #region EpBlueprint
+        #region Blueprint
         public static readonly UInt32 EpbIdentifier = 0x78945245;
         public static UInt32 EpbVersion = 20;
 
-        public static void Write(this BinaryWriter writer, EpBlueprint epb)
+        public static void Write(this BinaryWriter writer, Blueprint epb)
         {
             writer.Write(EpbIdentifier);
             writer.Write(EpbVersion);
@@ -35,30 +35,30 @@ namespace EPBLib.Helpers
             writer.Write(epb.TriangleCount);
 
             writer.Write((UInt16)epb.BlockCounts.Count);
-            foreach (EpbBlockType type in epb.BlockCounts.Keys)
+            foreach (BlockType type in epb.BlockCounts.Keys)
             {
                 writer.Write(type);
                 writer.Write(epb.BlockCounts[type]);
             }
 
             writer.Write(epb.DeviceGroups);
-            writer.WriteEpbBlocks(epb);
+            writer.WriteBlocks(epb);
         }
-        #endregion EpBlueprint
+        #endregion Blueprint
 
-        #region EpbBlocks
+        #region Blocks
 
-        public static void Write(this BinaryWriter writer, EpbBlockType type)
+        public static void Write(this BinaryWriter writer, BlockType type)
         {
             writer.Write((UInt16)type.Id);
         }
 
-        public static void WriteEpbBlocks(this BinaryWriter writer, EpBlueprint epb)
+        public static void WriteBlocks(this BinaryWriter writer, Blueprint epb)
         {
             long byteCount = 0;
             List<byte> byteList = new List<byte>();
 
-            byteCount = AddEpbBlockTypesToList(epb, byteCount, byteList);
+            byteCount = AddBlockTypesToList(epb, byteCount, byteList);
             byteCount = AddDamageStatesToList(epb, byteCount, byteList);
             byteCount = AddUnknown02ToList(byteList, byteCount);
             byteCount = AddColourMatrixToList(epb, byteCount, byteList);
@@ -99,9 +99,9 @@ namespace EPBLib.Helpers
             }
         }
 
-        private static long AddEpbBlockTypesToList(EpBlueprint epb, long byteCount, List<byte> byteList)
+        private static long AddBlockTypesToList(Blueprint epb, long byteCount, List<byte> byteList)
         {
-            byteCount += AddEpbMatrixToList(epb, byteList, (blueprint, block, list) =>
+            byteCount += AddMatrixToList(epb, byteList, (blueprint, block, list) =>
             {
                 if (block == null)
                 {
@@ -116,9 +116,9 @@ namespace EPBLib.Helpers
             return byteCount;
         }
 
-        private static long AddDamageStatesToList(EpBlueprint epb, long byteCount, List<byte> byteList)
+        private static long AddDamageStatesToList(Blueprint epb, long byteCount, List<byte> byteList)
         {
-            byteCount += AddEpbMatrixToList(epb, byteList, (blueprint, block, list) =>
+            byteCount += AddMatrixToList(epb, byteList, (blueprint, block, list) =>
             {
                 if (block == null || block.DamageState == 0)
                 {
@@ -139,9 +139,9 @@ namespace EPBLib.Helpers
             return byteCount;
         }
 
-        private static long AddColourMatrixToList(EpBlueprint epb, long byteCount, List<byte> byteList)
+        private static long AddColourMatrixToList(Blueprint epb, long byteCount, List<byte> byteList)
         {
-            byteCount += AddEpbMatrixToList(epb, byteList, (blueprint, block, list) =>
+            byteCount += AddMatrixToList(epb, byteList, (blueprint, block, list) =>
             {
                 if (block == null)
                 {
@@ -167,9 +167,9 @@ namespace EPBLib.Helpers
             return byteCount;
         }
 
-        private static long AddTextureMatrixToList(EpBlueprint epb, long byteCount, List<byte> byteList)
+        private static long AddTextureMatrixToList(Blueprint epb, long byteCount, List<byte> byteList)
         {
-            byteCount += AddEpbMatrixToList(epb, byteList, (blueprint, block, list) =>
+            byteCount += AddMatrixToList(epb, byteList, (blueprint, block, list) =>
             {
                 if (block == null)
                 {
@@ -195,9 +195,9 @@ namespace EPBLib.Helpers
             return byteCount;
         }
 
-        private static long AddTextureFlipMatrixToList(EpBlueprint epb, long byteCount, List<byte> byteList)
+        private static long AddTextureFlipMatrixToList(Blueprint epb, long byteCount, List<byte> byteList)
         {
-            byteCount += AddEpbMatrixToList(epb, byteList, (blueprint, block, list) =>
+            byteCount += AddMatrixToList(epb, byteList, (blueprint, block, list) =>
             {
                 if (block == null)
                 {
@@ -223,9 +223,9 @@ namespace EPBLib.Helpers
             return byteCount;
         }
 
-        private static long AddSymbolMatrixToList(EpBlueprint epb, long byteCount, List<byte> byteList)
+        private static long AddSymbolMatrixToList(Blueprint epb, long byteCount, List<byte> byteList)
         {
-            byteCount += AddEpbMatrixToList(epb, byteList, (blueprint, block, list) =>
+            byteCount += AddMatrixToList(epb, byteList, (blueprint, block, list) =>
             {
                 if (block == null)
                 {
@@ -253,9 +253,9 @@ namespace EPBLib.Helpers
             return byteCount;
         }
 
-        private static long AddSymbolRotationMatrixToList(EpBlueprint epb, long byteCount, List<byte> byteList)
+        private static long AddSymbolRotationMatrixToList(Blueprint epb, long byteCount, List<byte> byteList)
         {
-            byteCount += AddEpbMatrixToList(epb, byteList, (blueprint, block, list) =>
+            byteCount += AddMatrixToList(epb, byteList, (blueprint, block, list) =>
             {
                 if (block == null)
                 {
@@ -281,11 +281,11 @@ namespace EPBLib.Helpers
             return byteCount;
         }
 
-        private static long AddBlockTagsToList(EpBlueprint epb, long byteCount, List<byte> byteList)
+        private static long AddBlockTagsToList(Blueprint epb, long byteCount, List<byte> byteList)
         {
             int nBlocks = 0;
             List<byte> l = new List<byte>();
-            foreach (EpbBlock block in epb.Blocks)
+            foreach (Block block in epb.Blocks)
             {
                 if (block.Tags.Count != 0)
                 {
@@ -302,7 +302,7 @@ namespace EPBLib.Helpers
             return byteCount;
         }
 
-        private static long AddUnknown07ToList(EpBlueprint epb, long byteCount, List<byte> byteList)
+        private static long AddUnknown07ToList(Blueprint epb, long byteCount, List<byte> byteList)
         {
             UInt16 nUnknown07 = (UInt16)(epb.Unknown07.Length / 6);
             byteList.AddRange(BitConverter.GetBytes(nUnknown07));
@@ -310,12 +310,12 @@ namespace EPBLib.Helpers
             return byteCount;
         }
 
-        private static long AddSignalSourcesToList(EpBlueprint epb, long byteCount, List<byte> byteList)
+        private static long AddSignalSourcesToList(Blueprint epb, long byteCount, List<byte> byteList)
         {
             UInt16 nSignalSources = (UInt16)epb.SignalSources.Count;
             byteList.AddRange(BitConverter.GetBytes(nSignalSources));
             byteCount += 2;
-            foreach (EpbSignalSource source in epb.SignalSources)
+            foreach (SignalSource source in epb.SignalSources)
             {
                 byteList.Add(source.Unknown01);
                 byteCount += 1;
@@ -324,14 +324,14 @@ namespace EPBLib.Helpers
             return byteCount;
         }
 
-        private static long AddSignalTargetsToList(EpBlueprint epb, long byteCount, List<byte> byteList)
+        private static long AddSignalTargetsToList(Blueprint epb, long byteCount, List<byte> byteList)
         {
             UInt16 nSignalSources = 0;
             List<byte> bufAll = new List<byte>();
             List<byte> bufOne = new List<byte>();
             string signalName = "";
             UInt16 nSignalTargets = 0;
-            foreach (EpbSignalTarget target in epb.SignalTargets.OrderBy(target => target.SignalName))
+            foreach (SignalTarget target in epb.SignalTargets.OrderBy(target => target.SignalName))
             {
                 if (signalName != target.SignalName)
                 {
@@ -365,12 +365,12 @@ namespace EPBLib.Helpers
             return byteCount;
         }
 
-        private static long AddSignalOperatorsToList(EpBlueprint epb, long byteCount, List<byte> byteList)
+        private static long AddSignalOperatorsToList(Blueprint epb, long byteCount, List<byte> byteList)
         {
             UInt16 nSignalOperators = (UInt16)epb.SignalOperators.Count;
             byteList.AddRange(BitConverter.GetBytes(nSignalOperators));
             byteCount += 2;
-            foreach (EpbSignalOperator signalOperator in epb.SignalOperators)
+            foreach (SignalOperator signalOperator in epb.SignalOperators)
             {
                 byteList.Add(signalOperator.Unknown01);
                 byteCount += 1;
@@ -379,7 +379,7 @@ namespace EPBLib.Helpers
             return byteCount;
         }
 
-        private static long AddCustomNamesToList(EpBlueprint epb, long byteCount, List<byte> byteList)
+        private static long AddCustomNamesToList(Blueprint epb, long byteCount, List<byte> byteList)
         {
             UInt16 nCustom = (UInt16)epb.CustomNames.Count;
             byteList.AddRange(BitConverter.GetBytes(nCustom));
@@ -391,7 +391,7 @@ namespace EPBLib.Helpers
             return byteCount;
         }
 
-        private static long AddUnknown08ToList(EpBlueprint epb, long byteCount, List<byte> byteList)
+        private static long AddUnknown08ToList(Blueprint epb, long byteCount, List<byte> byteList)
         {
             UInt16 nUnknown08 = (UInt16)epb.Unknown08.Count;
             byteList.AddRange(BitConverter.GetBytes(nUnknown08));
@@ -405,7 +405,7 @@ namespace EPBLib.Helpers
             return byteCount;
         }
 
-        private static long AddCustomPalettesToList(EpBlueprint epb, long byteCount, List<byte> byteList)
+        private static long AddCustomPalettesToList(Blueprint epb, long byteCount, List<byte> byteList)
         {
             return byteCount;
         }
@@ -413,33 +413,33 @@ namespace EPBLib.Helpers
 
 
         #region BlockTags
-        private static long AddBlockTagListToList(EpBlueprint epb, List<byte> byteList, EpbBlockTag[] tags)
+        private static long AddBlockTagListToList(Blueprint epb, List<byte> byteList, BlockTag[] tags)
         {
             long byteCount = 0;
             byteList.AddRange(BitConverter.GetBytes((UInt16)tags.Length));
-            foreach (EpbBlockTag tag in tags)
+            foreach (BlockTag tag in tags)
             {
                 byteList.Add((byte)tag.BlockTagType);
                 byteCount += 1;
                 byteCount += AddStringToList(epb, byteList, tag.Name);
                 switch (tag)
                 {
-                    case EpbBlockTagBool tagBool:
+                    case BlockTagBool tagBool:
                         byteCount += AddBlockTagValueToList(epb, byteList, tagBool);
                         break;
-                    case EpbBlockTagColour tagColour:
+                    case BlockTagColour tagColour:
                         byteCount += AddBlockTagValueToList(epb, byteList, tagColour);
                         break;
-                    case EpbBlockTagFloat tagFloat:
+                    case BlockTagFloat tagFloat:
                         byteCount += AddBlockTagValueToList(epb, byteList, tagFloat);
                         break;
-                    case EpbBlockTagPos tagPos:
+                    case BlockTagPos tagPos:
                         byteCount += AddBlockTagValueToList(epb, byteList, tagPos);
                         break;
-                    case EpbBlockTagString tagString:
+                    case BlockTagString tagString:
                         byteCount += AddBlockTagValueToList(epb, byteList, tagString);
                         break;
-                    case EpbBlockTagUInt32 tagUInt32:
+                    case BlockTagUInt32 tagUInt32:
                         byteCount += AddBlockTagValueToList(epb, byteList, tagUInt32);
                         break;
                 }
@@ -447,32 +447,32 @@ namespace EPBLib.Helpers
             return byteCount;
         }
 
-        private static long AddBlockTagValueToList(EpBlueprint epb, List<byte> byteList, EpbBlockTagBool tag)
+        private static long AddBlockTagValueToList(Blueprint epb, List<byte> byteList, BlockTagBool tag)
         {
             byteList.Add(tag.Value ? (byte)1 : (byte)0);
             return 1;
         }
-        private static long AddBlockTagValueToList(EpBlueprint epb, List<byte> byteList, EpbBlockTagColour tag)
+        private static long AddBlockTagValueToList(Blueprint epb, List<byte> byteList, BlockTagColour tag)
         {
             byteList.AddRange(BitConverter.GetBytes(tag.Value));
             return 4;
         }
-        private static long AddBlockTagValueToList(EpBlueprint epb, List<byte> byteList, EpbBlockTagFloat tag)
+        private static long AddBlockTagValueToList(Blueprint epb, List<byte> byteList, BlockTagFloat tag)
         {
             byteList.AddRange(BitConverter.GetBytes(tag.Value));
             return 4;
         }
-        private static long AddBlockTagValueToList(EpBlueprint epb, List<byte> byteList, EpbBlockTagPos tag)
+        private static long AddBlockTagValueToList(Blueprint epb, List<byte> byteList, BlockTagPos tag)
         {
             return AddBlockPosToList(epb, byteList, tag.Value);
         }
 
-        private static long AddBlockTagValueToList(EpBlueprint epb, List<byte> byteList, EpbBlockTagString tag)
+        private static long AddBlockTagValueToList(Blueprint epb, List<byte> byteList, BlockTagString tag)
         {
             return AddStringToList(epb, byteList, tag.Value);
         }
 
-        private static long AddBlockTagValueToList(EpBlueprint epb, List<byte> byteList, EpbBlockTagUInt32 tag)
+        private static long AddBlockTagValueToList(Blueprint epb, List<byte> byteList, BlockTagUInt32 tag)
         {
             byteList.AddRange(BitConverter.GetBytes(tag.Value));
             return 4;
@@ -481,7 +481,7 @@ namespace EPBLib.Helpers
 
 
 
-        public static long AddEpbMatrixToList(EpBlueprint epb, List<byte> list, Func<EpBlueprint, EpbBlock, List<byte>, bool> func)
+        public static long AddMatrixToList(Blueprint epb, List<byte> list, Func<Blueprint, Block, List<byte>, bool> func)
         {
             bool[] m = new bool[epb.Width * epb.Height * epb.Depth];
             List<byte> tmpList = new List<byte>();
@@ -492,10 +492,10 @@ namespace EPBLib.Helpers
                 {
                     for (UInt32 x = 0; x < epb.Width; x++)
                     {
-                        EpbBlock block = epb.Blocks[(byte)x, (byte)y, (byte)z];
+                        Block block = epb.Blocks[(byte)x, (byte)y, (byte)z];
                         if (func(epb, block, tmpList))
                         {
-                            EpbBlockPos pos = block.Position;
+                            BlockPos pos = block.Position;
                             m[pos.Z * epb.Width * epb.Height + pos.Y * epb.Width + pos.X] = true;
                         }
                     }
@@ -510,7 +510,7 @@ namespace EPBLib.Helpers
             return 4 + matrix.Length + tmpList.Count;
         }
 
-        private static long AddBlockPosToList(EpBlueprint epb, List<byte> byteList, EpbBlockPos pos)
+        private static long AddBlockPosToList(Blueprint epb, List<byte> byteList, BlockPos pos)
         {
             UInt32 data = ((UInt32)(pos.X  & 0xff) << 20)
                         + ((UInt32)(pos.Y  & 0xff) << 12)
@@ -521,7 +521,7 @@ namespace EPBLib.Helpers
             return 4;
         }
 
-        private static long AddStringToList(EpBlueprint epb, List<byte> byteList, string s)
+        private static long AddStringToList(Blueprint epb, List<byte> byteList, string s)
         {
             long byteCount = 0;
             if (s == null)
@@ -548,82 +548,82 @@ namespace EPBLib.Helpers
             return byteCount;
         }
 
-        #endregion EpbBlocks
+        #endregion Blocks
 
-        #region EpbMetaTags
-        public static void Write(this BinaryWriter writer, Dictionary<EpMetaTagKey, EpMetaTag> dictionary)
+        #region MetaTags
+        public static void Write(this BinaryWriter writer, Dictionary<MetaTagKey, MetaTag> dictionary)
         {
             writer.Write((UInt16)dictionary.Count);
-            foreach (EpMetaTag tag in dictionary.Values)
+            foreach (MetaTag tag in dictionary.Values)
             {
                 switch (tag.TagType)
                 {
-                    case EpMetaTagType.String:
-                        writer.Write((EpMetaTagString)tag);
+                    case MetaTagType.String:
+                        writer.Write((MetaTagString)tag);
                         break;
-                    case EpMetaTagType.UInt16:
-                        writer.Write((EpMetaTagUInt16)tag);
+                    case MetaTagType.UInt16:
+                        writer.Write((MetaTagUInt16)tag);
                         break;
-                    case EpMetaTagType.Unknownx02:
-                        writer.Write((EpMetaTag02)tag);
+                    case MetaTagType.Unknownx02:
+                        writer.Write((MetaTag02)tag);
                         break;
-                    case EpMetaTagType.Unknownx03:
-                        writer.Write((EpMetaTag03)tag);
+                    case MetaTagType.Unknownx03:
+                        writer.Write((MetaTag03)tag);
                         break;
-                    case EpMetaTagType.Unknownx04:
-                        writer.Write((EpMetaTag04)tag);
+                    case MetaTagType.Unknownx04:
+                        writer.Write((MetaTag04)tag);
                         break;
-                    case EpMetaTagType.Unknownx05:
-                        writer.Write((EpMetaTag05)tag);
+                    case MetaTagType.Unknownx05:
+                        writer.Write((MetaTag05)tag);
                         break;
                 }
             }
         }
 
-        public static void Write(this BinaryWriter writer, EpMetaTagString tag)
+        public static void Write(this BinaryWriter writer, MetaTagString tag)
         {
-            writer.Write((EpMetaTag)tag);
+            writer.Write((MetaTag)tag);
             writer.WriteEpString(tag.Value);
         }
-        public static void Write(this BinaryWriter writer, EpMetaTagUInt16 tag)
+        public static void Write(this BinaryWriter writer, MetaTagUInt16 tag)
         {
-            writer.Write((EpMetaTag)tag);
+            writer.Write((MetaTag)tag);
             writer.Write(tag.Value);
         }
-        public static void Write(this BinaryWriter writer, EpMetaTag02 tag)
+        public static void Write(this BinaryWriter writer, MetaTag02 tag)
         {
-            writer.Write((EpMetaTag)tag);
+            writer.Write((MetaTag)tag);
             writer.Write(tag.Value);
             writer.Write(tag.Unknown);
         }
-        public static void Write(this BinaryWriter writer, EpMetaTag03 tag)
+        public static void Write(this BinaryWriter writer, MetaTag03 tag)
         {
-            writer.Write((EpMetaTag)tag);
+            writer.Write((MetaTag)tag);
             writer.Write(tag.Value);
         }
-        public static void Write(this BinaryWriter writer, EpMetaTag04 tag)
+        public static void Write(this BinaryWriter writer, MetaTag04 tag)
         {
-            writer.Write((EpMetaTag)tag);
+            writer.Write((MetaTag)tag);
             writer.Write(tag.Value);
         }
-        public static void Write(this BinaryWriter writer, EpMetaTag05 tag)
+        public static void Write(this BinaryWriter writer, MetaTag05 tag)
         {
-            writer.Write((EpMetaTag)tag);
+            writer.Write((MetaTag)tag);
             writer.Write(tag.Value.ToBinary());
             writer.Write(tag.Unknown);
         }
 
-        public static void Write(this BinaryWriter writer, EpMetaTag tag)
+        public static void Write(this BinaryWriter writer, MetaTag tag)
         {
             writer.Write((UInt32)tag.Key);
             writer.Write((UInt32)tag.TagType);
         }
 
-        #endregion EpbMetaTags
+        #endregion MetaTags
 
-        #region EpbDevices
+        #region Devices
 
-        public static void Write(this BinaryWriter writer, List<EpbDeviceGroup> groups)
+        public static void Write(this BinaryWriter writer, List<DeviceGroup> groups)
         {
             writer.Write((byte)5);
             writer.Write((UInt16)groups.Count);
@@ -633,7 +633,7 @@ namespace EPBLib.Helpers
             }
         }
 
-        public static void Write(this BinaryWriter writer, EpbDeviceGroup group)
+        public static void Write(this BinaryWriter writer, DeviceGroup group)
         {
             writer.WriteEpString(group.Name);
             writer.Write(group.DeviceGroupUnknown03);
@@ -646,14 +646,14 @@ namespace EPBLib.Helpers
             }
         }
 
-        public static void Write(this BinaryWriter writer, EpbDeviceGroupEntry entry)
+        public static void Write(this BinaryWriter writer, DeviceGroupEntry entry)
         {
             writer.Write(entry.Pos);
             writer.WriteEpString(entry.Name);
         }
-        #endregion EpbDevices
+        #endregion Devices
 
-        public static void Write(this BinaryWriter writer, EpbBlockPos pos)
+        public static void Write(this BinaryWriter writer, BlockPos pos)
         {
             UInt32 data = (UInt32)(pos.U1 << 28 | pos.X << 20 | pos.Y << 12 | pos.U2 << 8 | pos.Z);
             writer.Write(data);

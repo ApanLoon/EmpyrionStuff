@@ -11,8 +11,8 @@ namespace EPBLab.ViewModel.Tree
 {
     public class BlockNode : TreeNode
     {
-        public EpbBlock Block;
-        protected EpBlueprint Blueprint;
+        public Block Block;
+        protected Blueprint Blueprint;
 
         public string BlockType => Block.BlockType.ToString();
         public string VariantName => Block.VariantName;
@@ -20,12 +20,12 @@ namespace EPBLab.ViewModel.Tree
 
         public Point3D Position { get; set; }
 
-        public EpbBlock.EpbBlockRotation Rotation => Block.Rotation;
+        public Block.BlockRotation Rotation => Block.Rotation;
 
         public ColourInfo[] Colours { get; set; }
         public byte[] Textures => Block.Textures;
 
-        public BlockNode(EpbBlock block, EpBlueprint blueprint)
+        public BlockNode(Block block, Blueprint blueprint)
         {
             Block = block;
             Blueprint = blueprint;
@@ -35,12 +35,12 @@ namespace EPBLab.ViewModel.Tree
                 Title += "/" + block.VariantName;
             }
 
-            EpbBlockPos pos = block.Position;
+            BlockPos pos = block.Position;
             Position = new Point3D(pos.X, pos.Y, pos.Z);
 
             Colours = Block.Colours.Select((colourIndex, faceIndex) => new ColourInfo()
             {
-                Face = ((EpbBlock.FaceIndex)faceIndex).ToString(),
+                Face = ((Block.FaceIndex)faceIndex).ToString(),
                 Index = (byte)colourIndex,
                 Colour = Blueprint.Palette[colourIndex].ToColor()
             } ).ToArray();

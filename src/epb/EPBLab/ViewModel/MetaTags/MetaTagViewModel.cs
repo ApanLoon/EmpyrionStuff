@@ -5,7 +5,7 @@ namespace EPBLab.ViewModel
 {
     public class MetaTagViewModel : ViewModelBase
     {
-        protected EpMetaTag Tag;
+        protected MetaTag Tag;
 
         public string Key
         {
@@ -25,7 +25,7 @@ namespace EPBLab.ViewModel
             set => throw new System.NotImplementedException();
         }
 
-        public MetaTagViewModel(EpMetaTag tag)
+        public MetaTagViewModel(MetaTag tag)
         {
             Tag = tag;
         }

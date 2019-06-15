@@ -253,7 +253,7 @@
                                 <TextBlock Grid.Column="6" Margin="0, 3, 3, 3" Text="{Binding DeviceGroupUnknown01}" />
                             </Grid>
                         </HierarchicalDataTemplate>
-                        <DataTemplate DataType="{x:Type m:EpbDeviceGroupEntry}">
+                        <DataTemplate DataType="{x:Type m:DeviceGroupEntry}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />

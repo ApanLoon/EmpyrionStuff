@@ -17,33 +17,33 @@ namespace EPBLab.ViewModel
     public class BlocksViewModel : ViewModelBase
     {
         #region Static
-        protected static Dictionary<EpbBlock.EpbBlockRotation, Quaternion> Rotation = new Dictionary<EpbBlock.EpbBlockRotation, Quaternion>()
+        protected static Dictionary<Block.BlockRotation, Quaternion> Rotation = new Dictionary<Block.BlockRotation, Quaternion>()
         {
             // FwdUp : P=Positive, N=Negative
-            {EpbBlock.EpbBlockRotation.PzPy, Euler2Quaternion(  0,   0,   0)},
-            {EpbBlock.EpbBlockRotation.PxPy, Euler2Quaternion(  0, -90,   0)},
-            {EpbBlock.EpbBlockRotation.NzPy, Euler2Quaternion(  0, 180,   0)},
-            {EpbBlock.EpbBlockRotation.NxPy, Euler2Quaternion(  0,  90,   0)},
-            {EpbBlock.EpbBlockRotation.PzPx, Euler2Quaternion(  0,   0, 180)},
-            {EpbBlock.EpbBlockRotation.PyPx, Euler2Quaternion(-90, -90, -90)},
-            {EpbBlock.EpbBlockRotation.NzPx, Euler2Quaternion(  0, 180, 180)},
-            {EpbBlock.EpbBlockRotation.NyPx, Euler2Quaternion( 90,  90, -90)},
-            {EpbBlock.EpbBlockRotation.NzNy, Euler2Quaternion( 90, 180,   0)},
-            {EpbBlock.EpbBlockRotation.NxNy, Euler2Quaternion( 90, 180,  90)},
-            {EpbBlock.EpbBlockRotation.PzNy, Euler2Quaternion( 90, 180, 180)},
-            {EpbBlock.EpbBlockRotation.PxNy, Euler2Quaternion( 90, 180, -90)},
-            {EpbBlock.EpbBlockRotation.PzNx, Euler2Quaternion(  0,   0,  90)},
-            {EpbBlock.EpbBlockRotation.PyNx, Euler2Quaternion(180, -90, -90)},
-            {EpbBlock.EpbBlockRotation.NzNx, Euler2Quaternion(180,   0, -90)},
-            {EpbBlock.EpbBlockRotation.NyNx, Euler2Quaternion(180,  90, -90)},
-            {EpbBlock.EpbBlockRotation.PyNz, Euler2Quaternion( 90,   0,   0)},
-            {EpbBlock.EpbBlockRotation.PxNz, Euler2Quaternion( 90,   0, -90)},
-            {EpbBlock.EpbBlockRotation.NyNz, Euler2Quaternion( 90,   0, 180)},
-            {EpbBlock.EpbBlockRotation.NxNz, Euler2Quaternion( 90,   0,  90)},
-            {EpbBlock.EpbBlockRotation.NxPz, Euler2Quaternion(  0,   0, -90)},
-            {EpbBlock.EpbBlockRotation.NyPz, Euler2Quaternion(  0, -90, -90)},
-            {EpbBlock.EpbBlockRotation.PxPz, Euler2Quaternion(  0, 180, -90)},
-            {EpbBlock.EpbBlockRotation.PyPz, Euler2Quaternion(  0,  90, -90)}
+            {Block.BlockRotation.PzPy, Euler2Quaternion(  0,   0,   0)},
+            {Block.BlockRotation.PxPy, Euler2Quaternion(  0, -90,   0)},
+            {Block.BlockRotation.NzPy, Euler2Quaternion(  0, 180,   0)},
+            {Block.BlockRotation.NxPy, Euler2Quaternion(  0,  90,   0)},
+            {Block.BlockRotation.PzPx, Euler2Quaternion(  0,   0, 180)},
+            {Block.BlockRotation.PyPx, Euler2Quaternion(-90, -90, -90)},
+            {Block.BlockRotation.NzPx, Euler2Quaternion(  0, 180, 180)},
+            {Block.BlockRotation.NyPx, Euler2Quaternion( 90,  90, -90)},
+            {Block.BlockRotation.NzNy, Euler2Quaternion( 90, 180,   0)},
+            {Block.BlockRotation.NxNy, Euler2Quaternion( 90, 180,  90)},
+            {Block.BlockRotation.PzNy, Euler2Quaternion( 90, 180, 180)},
+            {Block.BlockRotation.PxNy, Euler2Quaternion( 90, 180, -90)},
+            {Block.BlockRotation.PzNx, Euler2Quaternion(  0,   0,  90)},
+            {Block.BlockRotation.PyNx, Euler2Quaternion(180, -90, -90)},
+            {Block.BlockRotation.NzNx, Euler2Quaternion(180,   0, -90)},
+            {Block.BlockRotation.NyNx, Euler2Quaternion(180,  90, -90)},
+            {Block.BlockRotation.PyNz, Euler2Quaternion( 90,   0,   0)},
+            {Block.BlockRotation.PxNz, Euler2Quaternion( 90,   0, -90)},
+            {Block.BlockRotation.NyNz, Euler2Quaternion( 90,   0, 180)},
+            {Block.BlockRotation.NxNz, Euler2Quaternion( 90,   0,  90)},
+            {Block.BlockRotation.NxPz, Euler2Quaternion(  0,   0, -90)},
+            {Block.BlockRotation.NyPz, Euler2Quaternion(  0, -90, -90)},
+            {Block.BlockRotation.PxPz, Euler2Quaternion(  0, 180, -90)},
+            {Block.BlockRotation.PyPz, Euler2Quaternion(  0,  90, -90)}
         };
 
         protected static Quaternion Euler2Quaternion(double x, double y, double z)
@@ -56,7 +56,7 @@ namespace EPBLab.ViewModel
         #endregion Static
 
         #region Fields
-        protected EpBlueprint Blueprint;
+        protected Blueprint Blueprint;
         protected List<BlockNode> BlockNodes = new List<BlockNode>();
         protected BitmapSource PaletteImageSource;
         protected int PaletteResolution = 10;
@@ -149,7 +149,7 @@ namespace EPBLab.ViewModel
 
         #endregion Commands
 
-        public BlocksViewModel(EpBlueprint blueprint)
+        public BlocksViewModel(Blueprint blueprint)
         {
             Blueprint = blueprint;
             Update();
@@ -177,14 +177,14 @@ namespace EPBLab.ViewModel
         {
             BlockNodes.Clear();
             BlockCategories.Clear();
-            foreach (EpbBlock block in Blueprint.Blocks)
+            foreach (Block block in Blueprint.Blocks)
             {
                 if (block == null)
                 {
                     continue;
                 }
 
-                EpbBlockType t = block.BlockType;
+                BlockType t = block.BlockType;
 
                 string categoryName = t.Category;
                 GroupNode categoryNode = BlockCategories.FirstOrDefault(x => x.Title == categoryName);
@@ -225,13 +225,13 @@ namespace EPBLab.ViewModel
             }
         }
 
-        private void BuildModel(EpBlueprint blueprint)
+        private void BuildModel(Blueprint blueprint)
         {
             Model3DGroup group = new Model3DGroup();
             GeometryModel3D model = null;
             foreach (BlockNode node in BlockNodes)
             {
-                EpbBlock block = node.Block;
+                Block block = node.Block;
                 Point3D pos = node.Position;
 
                 if (block == null)
@@ -346,8 +346,8 @@ namespace EPBLab.ViewModel
                         model = CreateBuildingBlock(pos, block, blueprint, MeshGenerators.BuildingBlockVariants_ExtendedLarge5_MeshGenerators);
                         break;
                     default:
-                        EpbColourIndex colourIndex = block.Colours[0];
-                        EpbColour colour = blueprint.Palette[colourIndex];
+                        ColourIndex colourIndex = block.Colours[0];
+                        Colour colour = blueprint.Palette[colourIndex];
                         Color c = Color.FromArgb(128, colour.R, colour.G, colour.B);
 
                         model = CreateSelectionBox(pos, 1.0, c);
@@ -399,7 +399,7 @@ namespace EPBLab.ViewModel
             }
         }
 
-        private GeometryModel3D CreateBuildingBlock(Point3D pos, EpbBlock block, EpBlueprint blueprint, MeshGenerators.MeshGenerator[] generators)
+        private GeometryModel3D CreateBuildingBlock(Point3D pos, Block block, Blueprint blueprint, MeshGenerators.MeshGenerator[] generators)
         {
             GeometryModel3D model = new GeometryModel3D();
             MeshGeometry3D mesh = new MeshGeometry3D();
@@ -426,7 +426,7 @@ namespace EPBLab.ViewModel
             return model;
         }
 
-        private BitmapSource CreateBitmapSource(EpbPalette palette)
+        private BitmapSource CreateBitmapSource(Palette palette)
         {
             PixelFormat pf = PixelFormats.Bgr24;
             int width = palette.Length * PaletteResolution;
@@ -439,7 +439,7 @@ namespace EPBLab.ViewModel
             {
                 for (int c = 0; c < palette.Length; c++)
                 {
-                    EpbColour color = palette[c];
+                    Colour color = palette[c];
                     for (int x = 0; x < PaletteResolution; x++)
                     {
                         pixels[i++] = color.B;
@@ -472,7 +472,7 @@ namespace EPBLab.ViewModel
             GeometryModel3D model = new GeometryModel3D();
             MeshGeometry3D mesh = new MeshGeometry3D();
 
-            EpbColourIndex[] colours = new EpbColourIndex[6] {0, 0, 0, 0, 0, 0};
+            ColourIndex[] colours = new ColourIndex[6] {0, 0, 0, 0, 0, 0};
             int faceIndex = 0;
             faceIndex = DefaultMeshGenerator(Blueprint, mesh, colours, faceIndex);
 
@@ -490,17 +490,17 @@ namespace EPBLab.ViewModel
             return model;
         }
 
-        private int DefaultMeshGenerator(EpBlueprint blueprint, MeshGeometry3D mesh, EpbColourIndex[] colours, int faceIndex)
+        private int DefaultMeshGenerator(Blueprint blueprint, MeshGeometry3D mesh, ColourIndex[] colours, int faceIndex)
         {
             // Back
             mesh.Positions.Add(new Point3D(0.500000, -0.500000, 0.500000));
             mesh.Positions.Add(new Point3D(-0.500000, 0.500000, 0.500000));
             mesh.Positions.Add(new Point3D(0.500000, 0.500000, 0.500000));
             mesh.Positions.Add(new Point3D(-0.500000, -0.500000, 0.500000));
-            mesh.TextureCoordinates.Add(MeshGenerators.GetUV(blueprint, colours[(int)EpbBlock.FaceIndex.Back], 1.000000, 1.000000));
-            mesh.TextureCoordinates.Add(MeshGenerators.GetUV(blueprint, colours[(int)EpbBlock.FaceIndex.Back], 0.000000, 0.000000));
-            mesh.TextureCoordinates.Add(MeshGenerators.GetUV(blueprint, colours[(int)EpbBlock.FaceIndex.Back], 1.000000, 0.000000));
-            mesh.TextureCoordinates.Add(MeshGenerators.GetUV(blueprint, colours[(int)EpbBlock.FaceIndex.Back], 0.000000, 1.000000));
+            mesh.TextureCoordinates.Add(MeshGenerators.GetUV(blueprint, colours[(int)Block.FaceIndex.Back], 1.000000, 1.000000));
+            mesh.TextureCoordinates.Add(MeshGenerators.GetUV(blueprint, colours[(int)Block.FaceIndex.Back], 0.000000, 0.000000));
+            mesh.TextureCoordinates.Add(MeshGenerators.GetUV(blueprint, colours[(int)Block.FaceIndex.Back], 1.000000, 0.000000));
+            mesh.TextureCoordinates.Add(MeshGenerators.GetUV(blueprint, colours[(int)Block.FaceIndex.Back], 0.000000, 1.000000));
             mesh.Normals.Add(new Vector3D(0.000000, -0.000000, 1.000000));
             mesh.Normals.Add(new Vector3D(-0.000000, 0.000000, 1.000000));
             mesh.Normals.Add(new Vector3D(0.000000, 0.000000, 1.000000));
@@ -513,10 +513,10 @@ namespace EPBLab.ViewModel
             mesh.Positions.Add(new Point3D(-0.500000, 0.500000, -0.500000));
             mesh.Positions.Add(new Point3D(0.500000, 0.500000, -0.500000));
             mesh.Positions.Add(new Point3D(-0.500000, -0.500000, -0.500000));
-            mesh.TextureCoordinates.Add(MeshGenerators.GetUV(blueprint, colours[(int)EpbBlock.FaceIndex.Front], 0.000000, 1.000000));
-            mesh.TextureCoordinates.Add(MeshGenerators.GetUV(blueprint, colours[(int)EpbBlock.FaceIndex.Front], 1.000000, 0.000000));
-            mesh.TextureCoordinates.Add(MeshGenerators.GetUV(blueprint, colours[(int)EpbBlock.FaceIndex.Front], 0.000000, 0.000000));
-            mesh.TextureCoordinates.Add(MeshGenerators.GetUV(blueprint, colours[(int)EpbBlock.FaceIndex.Front], 1.000000, 1.000000));
+            mesh.TextureCoordinates.Add(MeshGenerators.GetUV(blueprint, colours[(int)Block.FaceIndex.Front], 0.000000, 1.000000));
+            mesh.TextureCoordinates.Add(MeshGenerators.GetUV(blueprint, colours[(int)Block.FaceIndex.Front], 1.000000, 0.000000));
+            mesh.TextureCoordinates.Add(MeshGenerators.GetUV(blueprint, colours[(int)Block.FaceIndex.Front], 0.000000, 0.000000));
+            mesh.TextureCoordinates.Add(MeshGenerators.GetUV(blueprint, colours[(int)Block.FaceIndex.Front], 1.000000, 1.000000));
             mesh.Normals.Add(new Vector3D(-0.000000, -0.000000, -1.000000));
             mesh.Normals.Add(new Vector3D(-0.000000, -0.000000, -1.000000));
             mesh.Normals.Add(new Vector3D(-0.000000, -0.000000, -1.000000));
@@ -529,10 +529,10 @@ namespace EPBLab.ViewModel
             mesh.Positions.Add(new Point3D(0.500000, 0.500000, 0.500000));
             mesh.Positions.Add(new Point3D(0.500000, 0.500000, -0.500000));
             mesh.Positions.Add(new Point3D(0.500000, -0.500000, 0.500000));
-            mesh.TextureCoordinates.Add(MeshGenerators.GetUV(blueprint, colours[(int)EpbBlock.FaceIndex.Right], 1.000000, 1.000000));
-            mesh.TextureCoordinates.Add(MeshGenerators.GetUV(blueprint, colours[(int)EpbBlock.FaceIndex.Right], 0.000000, 0.000000));
-            mesh.TextureCoordinates.Add(MeshGenerators.GetUV(blueprint, colours[(int)EpbBlock.FaceIndex.Right], 1.000000, 0.000000));
-            mesh.TextureCoordinates.Add(MeshGenerators.GetUV(blueprint, colours[(int)EpbBlock.FaceIndex.Right], 0.000000, 1.000000));
+            mesh.TextureCoordinates.Add(MeshGenerators.GetUV(blueprint, colours[(int)Block.FaceIndex.Right], 1.000000, 1.000000));
+            mesh.TextureCoordinates.Add(MeshGenerators.GetUV(blueprint, colours[(int)Block.FaceIndex.Right], 0.000000, 0.000000));
+            mesh.TextureCoordinates.Add(MeshGenerators.GetUV(blueprint, colours[(int)Block.FaceIndex.Right], 1.000000, 0.000000));
+            mesh.TextureCoordinates.Add(MeshGenerators.GetUV(blueprint, colours[(int)Block.FaceIndex.Right], 0.000000, 1.000000));
             mesh.Normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
             mesh.Normals.Add(new Vector3D(1.000000, -0.000000, -0.000000));
             mesh.Normals.Add(new Vector3D(1.000000, 0.000000, -0.000000));
@@ -545,10 +545,10 @@ namespace EPBLab.ViewModel
             mesh.Positions.Add(new Point3D(-0.500000, 0.500000, -0.500000));
             mesh.Positions.Add(new Point3D(-0.500000, 0.500000, 0.500000));
             mesh.Positions.Add(new Point3D(-0.500000, -0.500000, -0.500000));
-            mesh.TextureCoordinates.Add(MeshGenerators.GetUV(blueprint, colours[(int)EpbBlock.FaceIndex.Left], 1.000000, 1.000000));
-            mesh.TextureCoordinates.Add(MeshGenerators.GetUV(blueprint, colours[(int)EpbBlock.FaceIndex.Left], 0.000000, 0.000000));
-            mesh.TextureCoordinates.Add(MeshGenerators.GetUV(blueprint, colours[(int)EpbBlock.FaceIndex.Left], 1.000000, 0.000000));
-            mesh.TextureCoordinates.Add(MeshGenerators.GetUV(blueprint, colours[(int)EpbBlock.FaceIndex.Left], 0.000000, 1.000000));
+            mesh.TextureCoordinates.Add(MeshGenerators.GetUV(blueprint, colours[(int)Block.FaceIndex.Left], 1.000000, 1.000000));
+            mesh.TextureCoordinates.Add(MeshGenerators.GetUV(blueprint, colours[(int)Block.FaceIndex.Left], 0.000000, 0.000000));
+            mesh.TextureCoordinates.Add(MeshGenerators.GetUV(blueprint, colours[(int)Block.FaceIndex.Left], 1.000000, 0.000000));
+            mesh.TextureCoordinates.Add(MeshGenerators.GetUV(blueprint, colours[(int)Block.FaceIndex.Left], 0.000000, 1.000000));
             mesh.Normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
             mesh.Normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
             mesh.Normals.Add(new Vector3D(-1.000000, -0.000000, 0.000000));
@@ -561,10 +561,10 @@ namespace EPBLab.ViewModel
             mesh.Positions.Add(new Point3D(0.500000, 0.500000, -0.500000));
             mesh.Positions.Add(new Point3D(0.500000, 0.500000, 0.500000));
             mesh.Positions.Add(new Point3D(-0.500000, 0.500000, -0.500000));
-            mesh.TextureCoordinates.Add(MeshGenerators.GetUV(blueprint, colours[(int)EpbBlock.FaceIndex.Top], 0.000000, 1.000000));
-            mesh.TextureCoordinates.Add(MeshGenerators.GetUV(blueprint, colours[(int)EpbBlock.FaceIndex.Top], 1.000000, 0.000000));
-            mesh.TextureCoordinates.Add(MeshGenerators.GetUV(blueprint, colours[(int)EpbBlock.FaceIndex.Top], 1.000000, 1.000000));
-            mesh.TextureCoordinates.Add(MeshGenerators.GetUV(blueprint, colours[(int)EpbBlock.FaceIndex.Top], 0.000000, 0.000000));
+            mesh.TextureCoordinates.Add(MeshGenerators.GetUV(blueprint, colours[(int)Block.FaceIndex.Top], 0.000000, 1.000000));
+            mesh.TextureCoordinates.Add(MeshGenerators.GetUV(blueprint, colours[(int)Block.FaceIndex.Top], 1.000000, 0.000000));
+            mesh.TextureCoordinates.Add(MeshGenerators.GetUV(blueprint, colours[(int)Block.FaceIndex.Top], 1.000000, 1.000000));
+            mesh.TextureCoordinates.Add(MeshGenerators.GetUV(blueprint, colours[(int)Block.FaceIndex.Top], 0.000000, 0.000000));
             mesh.Normals.Add(new Vector3D(-0.000000, 1.000000, -0.000000));
             mesh.Normals.Add(new Vector3D(-0.000000, 1.000000, -0.000000));
             mesh.Normals.Add(new Vector3D(-0.000000, 1.000000, -0.000000));
@@ -577,10 +577,10 @@ namespace EPBLab.ViewModel
             mesh.Positions.Add(new Point3D(0.500000, -0.500000, -0.500000));
             mesh.Positions.Add(new Point3D(0.500000, -0.500000, 0.500000));
             mesh.Positions.Add(new Point3D(-0.500000, -0.500000, -0.500000));
-            mesh.TextureCoordinates.Add(MeshGenerators.GetUV(blueprint, colours[(int)EpbBlock.FaceIndex.Bottom], 0.000000, 0.000000));
-            mesh.TextureCoordinates.Add(MeshGenerators.GetUV(blueprint, colours[(int)EpbBlock.FaceIndex.Bottom], 1.000000, 1.000000));
-            mesh.TextureCoordinates.Add(MeshGenerators.GetUV(blueprint, colours[(int)EpbBlock.FaceIndex.Bottom], 1.000000, 0.000000));
-            mesh.TextureCoordinates.Add(MeshGenerators.GetUV(blueprint, colours[(int)EpbBlock.FaceIndex.Bottom], 0.000000, 1.000000));
+            mesh.TextureCoordinates.Add(MeshGenerators.GetUV(blueprint, colours[(int)Block.FaceIndex.Bottom], 0.000000, 0.000000));
+            mesh.TextureCoordinates.Add(MeshGenerators.GetUV(blueprint, colours[(int)Block.FaceIndex.Bottom], 1.000000, 1.000000));
+            mesh.TextureCoordinates.Add(MeshGenerators.GetUV(blueprint, colours[(int)Block.FaceIndex.Bottom], 1.000000, 0.000000));
+            mesh.TextureCoordinates.Add(MeshGenerators.GetUV(blueprint, colours[(int)Block.FaceIndex.Bottom], 0.000000, 1.000000));
             mesh.Normals.Add(new Vector3D(0.000000, -1.000000, 0.000000));
             mesh.Normals.Add(new Vector3D(0.000000, -1.000000, 0.000000));
             mesh.Normals.Add(new Vector3D(0.000000, -1.000000, 0.000000));

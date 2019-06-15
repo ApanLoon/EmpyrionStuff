@@ -12,7 +12,7 @@ namespace EPBLab.ViewModel.Logic
 {
     public class LogicViewModel : ViewModelBase
     {
-        protected EpBlueprint Blueprint;
+        protected Blueprint Blueprint;
 
         #region Properties
         public ObservableCollection<SignalSourceViewModel> SignalSources
@@ -44,7 +44,7 @@ namespace EPBLab.ViewModel.Logic
         protected ObservableCollection<ConnectorViewModel> _Connectors;
         #endregion Properties
 
-        public LogicViewModel(EpBlueprint blueprint)
+        public LogicViewModel(Blueprint blueprint)
         {
             Blueprint = blueprint;
 
@@ -67,12 +67,12 @@ namespace EPBLab.ViewModel.Logic
 
             for (int o = 0; o < Blueprint.SignalOperators.Count; o++)
             {
-                EpbSignalOperator op = Blueprint.SignalOperators[o];
+                SignalOperator op = Blueprint.SignalOperators[o];
                 SignalOperatorViewModel opVm = new SignalOperatorViewModel(Blueprint, op, GetPosition(PositionType.Operator, o));
                 SignalOperators.Add(opVm);
                 for (int i = 0; i < opVm.Inputs.Count; i++)
                 {
-                    SignalSourceViewModel sourceVm = (from x in SignalSources where x.Name == ((EpbBlockTagString)op.Tags[$"InSig{i}"]).Value select x).FirstOrDefault();
+                    SignalSourceViewModel sourceVm = (from x in SignalSources where x.Name == ((BlockTagString)op.Tags[$"InSig{i}"]).Value select x).FirstOrDefault();
                     if (sourceVm != null)
                     {
                         Connectors.Add(new ConnectorViewModel(sourceVm.Outputs[0], opVm.Inputs[i]));
@@ -85,7 +85,7 @@ namespace EPBLab.ViewModel.Logic
             {
                 for (int i = 0; i < opVm.Inputs.Count; i++)
                 {
-                    SignalOperatorViewModel sourceVm = (from x in SignalOperators where x.OutSig == ((EpbBlockTagString)opVm.Operator.Tags[$"InSig{i}"]).Value select x).FirstOrDefault();
+                    SignalOperatorViewModel sourceVm = (from x in SignalOperators where x.OutSig == ((BlockTagString)opVm.Operator.Tags[$"InSig{i}"]).Value select x).FirstOrDefault();
                     if (sourceVm != null)
                     {
                         Connectors.Add(new ConnectorViewModel(sourceVm.Outputs[0], opVm.Inputs[i]));
@@ -97,7 +97,7 @@ namespace EPBLab.ViewModel.Logic
 
             for (int i = 0; i < Blueprint.SignalTargets.Count; i++)
             {
-                EpbSignalTarget target = Blueprint.SignalTargets[i];
+                SignalTarget target = Blueprint.SignalTargets[i];
                 SignalTargetViewModel targetVm = new SignalTargetViewModel(Blueprint, target, GetPosition(PositionType.Source, i));
                 SignalTargets.Add(targetVm);
 

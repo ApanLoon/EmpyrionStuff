@@ -7,15 +7,15 @@ namespace EPBLab.ViewModel.Logic
 {
     public class SignalOperatorViewModel : LogicNodeViewModel
     {
-        protected EpBlueprint Blueprint;
-        public EpbSignalOperator Operator { get; protected set; }
+        protected Blueprint Blueprint;
+        public SignalOperator Operator { get; protected set; }
 
         public string Name => Operator.OutSig;
         public string OpName => Operator.OpName;
         public string OutSig => Operator.OutSig;
 
 
-        public SignalOperatorViewModel(EpBlueprint blueprint, EpbSignalOperator op, Point initialPosition)
+        public SignalOperatorViewModel(Blueprint blueprint, SignalOperator op, Point initialPosition)
         {
             Blueprint = blueprint;
             Operator = op;
@@ -24,67 +24,67 @@ namespace EPBLab.ViewModel.Logic
 
             switch (op)
             {
-                case EpbSignalOperatorAnd2 opAnd2:
+                case SignalOperatorAnd2 opAnd2:
                     NodeType = "AND";
                     AddInputs(2);                  
                     break;
 
-                case EpbSignalOperatorAnd4 opAnd4:
+                case SignalOperatorAnd4 opAnd4:
                     NodeType = "AND";
                     AddInputs(4);
                     break;
 
-                case EpbSignalOperatorNand2 opNand2:
+                case SignalOperatorNand2 opNand2:
                     NodeType = "NAND";
                     AddInputs(2);
                     break;
 
-                case EpbSignalOperatorNand4 opNand4:
+                case SignalOperatorNand4 opNand4:
                     NodeType = "NAND";
                     AddInputs(4);
                     break;
 
-                case EpbSignalOperatorOr2 opOr2:
+                case SignalOperatorOr2 opOr2:
                     NodeType = "OR";
                     AddInputs(2);
                     break;
 
-                case EpbSignalOperatorOr4 opOr4:
+                case SignalOperatorOr4 opOr4:
                     NodeType = "OR";
                     AddInputs(4);
                     break;
 
-                case EpbSignalOperatorNor2 opNor2:
+                case SignalOperatorNor2 opNor2:
                     NodeType = "NOR";
                     AddInputs(2);
                     break;
 
-                case EpbSignalOperatorNor4 opNor4:
+                case SignalOperatorNor4 opNor4:
                     NodeType = "NOR";
                     AddInputs(4);
                     break;
 
-                case EpbSignalOperatorXor opXor:
+                case SignalOperatorXor opXor:
                     NodeType = "XOR";
                     AddInputs(2);
                     break;
 
-                case EpbSignalOperatorXnor opXnor:
+                case SignalOperatorXnor opXnor:
                     NodeType = "XNOR";
                     AddInputs(2);
                     break;
 
-                case EpbSignalOperatorInverter opInverter:
+                case SignalOperatorInverter opInverter:
                     NodeType = "NOT";
                     AddInputs(1);
                     break;
 
-                case EpbSignalOperatorSRLatch opSrLatch:
+                case SignalOperatorSrLatch opSrLatch:
                     NodeType = "Set/Reset Latch";
                     AddInputs(2);
                     break;
 
-                case EpbSignalOperatorDelay opDelay:
+                case SignalOperatorDelay opDelay:
                     NodeType = "Delay";
                     AddInputs(1);
                     break;

@@ -60,12 +60,12 @@ namespace ecf
         {
             if (OutputCode)
             {
-                Console.WriteLine($"        public static readonly Dictionary<UInt16, EpbBlockType> BlockTypes = new Dictionary<UInt16, EpbBlockType>()");
+                Console.WriteLine($"        public static readonly Dictionary<UInt16, BlockType> BlockTypes = new Dictionary<UInt16, BlockType>()");
                 Console.WriteLine( "        {");
 
                 foreach (Block block in config.Blocks)
                 {
-                    Console.WriteLine($"            {{ {block.Id,5}, new EpbBlockType(){{Id = {block.Id,5}, Name = {"\"" + block.Name + "\"",-31}, Category = {"\"" + block.Category + "\"",-31}, Ref = {"\"" + block.RefName + "\"",-31}}}}},");
+                    Console.WriteLine($"            {{ {block.Id,5}, new BlockType(){{Id = {block.Id,5}, Name = {"\"" + block.Name + "\"",-31}, Category = {"\"" + block.Category + "\"",-31}, Ref = {"\"" + block.RefName + "\"",-31}}}}},");
                 }
                 Console.WriteLine("        };");
             }

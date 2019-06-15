@@ -10,8 +10,8 @@ namespace EPBLab.ViewModel.Tree
         {
             get
             {
-                EpbBlockTag tag = Block.GetTag("Text");
-                if (tag != null && tag is EpbBlockTagString s)
+                BlockTag tag = Block.GetTag("Text");
+                if (tag != null && tag is BlockTagString s)
                 {
                     return s.Value;
                 }
@@ -22,8 +22,8 @@ namespace EPBLab.ViewModel.Tree
         {
             get
             {
-                EpbBlockTag tag = Block.GetTag("ColB");
-                if (tag != null && tag is EpbBlockTagColour t)
+                BlockTag tag = Block.GetTag("ColB");
+                if (tag != null && tag is BlockTagColour t)
                 {
                     return Color.FromArgb(t.Alpha, t.Red, t.Green, t.Blue);
                 }
@@ -34,8 +34,8 @@ namespace EPBLab.ViewModel.Tree
         {
             get
             {
-                EpbBlockTag tag = Block.GetTag("ColF");
-                if (tag != null && tag is EpbBlockTagColour t)
+                BlockTag tag = Block.GetTag("ColF");
+                if (tag != null && tag is BlockTagColour t)
                 {
                     return Color.FromArgb(t.Alpha, t.Red, t.Green, t.Blue);
                 }
@@ -43,7 +43,7 @@ namespace EPBLab.ViewModel.Tree
             }
         }
 
-        public LcdNode(EpbBlock block, EpBlueprint blueprint):base (block, blueprint)
+        public LcdNode(Block block, Blueprint blueprint):base (block, blueprint)
         {
         }
     }

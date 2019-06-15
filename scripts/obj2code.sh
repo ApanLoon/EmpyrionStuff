@@ -47,7 +47,7 @@ BEGIN \
     printf ("{\r\n");
     printf ("    public static class MeshGenerators\r\n");
     printf ("    {\r\n");
-    printf ("        public delegate int MeshGenerator(EpBlueprint blueprint, MeshGeometry3D mesh, EpbColourIndex[] colours, int faceIndex);\r\n");
+    printf ("        public delegate int MeshGenerator(Blueprint blueprint, MeshGeometry3D mesh, ColourIndex[] colours, int faceIndex);\r\n");
     printf ("\r\n");
     printf ("        public static void AddTriangle(Int32Collection triangles, int a, int b, int c)\r\n");
     printf ("        {\r\n");
@@ -55,7 +55,7 @@ BEGIN \
     printf ("            triangles.Add(b);\r\n");
     printf ("            triangles.Add(c);\r\n");
     printf ("        }\r\n");
-    printf ("        public static Point GetUV(EpBlueprint blueprint, EpbColourIndex c, double s, double t)\r\n");
+    printf ("        public static Point GetUV(Blueprint blueprint, ColourIndex c, double s, double t)\r\n");
     printf ("        {\r\n");
     printf ("            Point p = new Point((double)c / (blueprint.Palette.Length - 1), t);\r\n");
     printf ("            return p;\r\n");
@@ -95,7 +95,7 @@ BEGIN \
         face = "";               # Prevent close face
         methodName = sprintf("AddMesh_%s", strip(variant));
         meshGenerators[block][variantIndex] =  methodName;
-        printf ("        private static int %s(EpBlueprint blueprint, MeshGeometry3D mesh, EpbColourIndex[] colours, int faceIndex)\r\n        {\r\n", methodName);
+        printf ("        private static int %s(Blueprint blueprint, MeshGeometry3D mesh, ColourIndex[] colours, int faceIndex)\r\n        {\r\n", methodName);
     }
 
     if (newFace != face)
@@ -125,7 +125,7 @@ BEGIN \
     {
         next;
     }
-    printf ("            mesh.TextureCoordinates.Add(GetUV(blueprint, colours[(int)EpbBlock.FaceIndex.%s], %f, %f));\r\n", face, $2, $3);
+    printf ("            mesh.TextureCoordinates.Add(GetUV(blueprint, colours[(int)Block.FaceIndex.%s], %f, %f));\r\n", face, $2, $3);
 }
 /^vn /\
 {

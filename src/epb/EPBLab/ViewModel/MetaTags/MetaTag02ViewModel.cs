@@ -11,15 +11,15 @@ namespace EPBLab.ViewModel.MetaTags
     {
         public override string Value
         {
-            get => (Tag as EpMetaTag02).Value.ToString();
+            get => (Tag as MetaTag02).Value.ToString();
             set
             {
-                (Tag as EpMetaTag02).Value = UInt32.Parse(value);
+                (Tag as MetaTag02).Value = UInt32.Parse(value);
                 RaisePropertyChanged();
             }
         }
 
-        public MetaTag02ViewModel(EpMetaTag02 tag) : base(tag)
+        public MetaTag02ViewModel(MetaTag02 tag) : base(tag)
         {
         }
     }

@@ -17,10 +17,10 @@ namespace EPBLab.ViewModel
 
         public UInt32 Version => Blueprint.Version;
 
-        public IEnumerable<EpbType> BlueprintTypes => Enum.GetValues(typeof(EpbType)).Cast<EpbType>();
+        public IEnumerable<BlueprintType> BlueprintTypes => Enum.GetValues(typeof(BlueprintType)).Cast<BlueprintType>();
 
         public const string TypePropertyName = "Type";
-        public EpbType Type
+        public BlueprintType Type
         {
             get => Blueprint.Type;
             set => Blueprint.Type = value;
@@ -159,8 +159,8 @@ namespace EPBLab.ViewModel
 
         public ObservableCollection<MetaTagViewModel> MetaTags { get; } = new ObservableCollection<MetaTagViewModel>();
 
-        private ObservableCollection<KeyValuePair<EpbBlockType, UInt32>> _blockCounts = new ObservableCollection<KeyValuePair<EpbBlockType, UInt32>>();
-        public ObservableCollection<KeyValuePair<EpbBlockType, UInt32>> BlockCounts
+        private ObservableCollection<KeyValuePair<BlockType, UInt32>> _blockCounts = new ObservableCollection<KeyValuePair<BlockType, UInt32>>();
+        public ObservableCollection<KeyValuePair<BlockType, UInt32>> BlockCounts
         {
             get => _blockCounts;
             set => Set(ref _blockCounts, value);
@@ -174,7 +174,7 @@ namespace EPBLab.ViewModel
             set => Set(ref _deviceGroups, value);
         }
         public static readonly string DeviceGroupsPropertyName = "DeviceGroups";
-        public EpBlueprint Blueprint;
+        public Blueprint Blueprint;
 
         #endregion Properties
 
@@ -206,7 +206,7 @@ namespace EPBLab.ViewModel
                 {
                     Blueprint.CountBlocks();
                     BlockCounts.Clear();
-                    foreach (KeyValuePair<EpbBlockType, uint> blockCount in Blueprint.BlockCounts)
+                    foreach (KeyValuePair<BlockType, uint> blockCount in Blueprint.BlockCounts)
                     {
                         BlockCounts.Add(blockCount);
                     }
@@ -219,7 +219,7 @@ namespace EPBLab.ViewModel
 
         #endregion Commands
 
-        public SummaryViewModel(EpBlueprint blueprint)
+        public SummaryViewModel(Blueprint blueprint)
         {
             Blueprint = blueprint;
             Update();
@@ -230,27 +230,27 @@ namespace EPBLab.ViewModel
             RaisePropertyChanged(string.Empty);
 
             MetaTags.Clear();
-            foreach (EpMetaTag tag in Blueprint.MetaTags.Values)
+            foreach (MetaTag tag in Blueprint.MetaTags.Values)
             {
                 MetaTagViewModel vm;
                 switch (tag)
                 {
-                    case EpMetaTag02 t:
+                    case MetaTag02 t:
                         vm = new MetaTag02ViewModel(t);
                         break;
-                    case EpMetaTag03 t:
+                    case MetaTag03 t:
                         vm = new MetaTag03ViewModel(t);
                         break;
-                    case EpMetaTag04 t:
+                    case MetaTag04 t:
                         vm = new MetaTag04ViewModel(t);
                         break;
-                    case EpMetaTag05 t:
+                    case MetaTag05 t:
                         vm = new MetaTag05ViewModel(t);
                         break;
-                    case EpMetaTagString t:
+                    case MetaTagString t:
                         vm = new MetaTagStringViewModel(t);
                         break;
-                    case EpMetaTagUInt16 t:
+                    case MetaTagUInt16 t:
                         vm = new MetaTagUInt16ViewModel(t);
                         break;
                     default:
@@ -261,13 +261,13 @@ namespace EPBLab.ViewModel
             }
 
             BlockCounts.Clear();
-            foreach (KeyValuePair<EpbBlockType, uint> blockCount in Blueprint.BlockCounts)
+            foreach (KeyValuePair<BlockType, uint> blockCount in Blueprint.BlockCounts)
             {
                 BlockCounts.Add(blockCount);
             }
 
             DeviceGroups.Clear();
-            foreach (EpbDeviceGroup group in Blueprint.DeviceGroups)
+            foreach (DeviceGroup group in Blueprint.DeviceGroups)
             {
                 DeviceGroups.Add(new DeviceGroupViewModel(group));
             }

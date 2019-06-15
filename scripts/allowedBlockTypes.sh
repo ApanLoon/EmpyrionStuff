@@ -25,13 +25,13 @@ BEGIN \
     blockType = int(m[1]);
     if (types[blockType] == "")
     {
-        types[blockType] = "EpbType." bpType;
+        types[blockType] = "BlueprintType." bpType;
     }
     else
     {
         if (index(types[blockType], bpType) == 0)
         {
-            types[blockType] = sprintf("%s, EpbType.%s", types[blockType], bpType);
+            types[blockType] = sprintf("%s, BlueprintType.%s", types[blockType], bpType);
         }
     }
 }
@@ -43,7 +43,7 @@ END \
     for (i = 1; i <=n; i++)
     {
         blockType = sortedIndices[i];
-        printf ("            if (BlockTypes.ContainsKey(%s)) BlockTypes[%s].AllowedIn = new EpbType[] {%s};\n", blockType, blockType, types[blockType]);
+        printf ("            if (BlockTypes.ContainsKey(%s)) BlockTypes[%s].AllowedIn = new BlueprintType[] {%s};\n", blockType, blockType, types[blockType]);
     }
     printf ("        }\n");
 }

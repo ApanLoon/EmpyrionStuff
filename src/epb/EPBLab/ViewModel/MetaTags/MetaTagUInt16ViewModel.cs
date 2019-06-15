@@ -7,7 +7,7 @@ namespace EPBLab.ViewModel.MetaTags
 {
     class MetaTagUInt16ViewModel : MetaTagViewModel
     {
-        private EpMetaTagUInt16 MyTag => Tag as EpMetaTagUInt16;
+        private MetaTagUInt16 MyTag => Tag as MetaTagUInt16;
         public override string Value
         {
             get => MyTag.Value.ToString();
@@ -18,7 +18,7 @@ namespace EPBLab.ViewModel.MetaTags
             }
         }
 
-        public MetaTagUInt16ViewModel(EpMetaTagUInt16 tag) : base(tag)
+        public MetaTagUInt16ViewModel(MetaTagUInt16 tag) : base(tag)
         {
         }
     }

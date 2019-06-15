@@ -7,7 +7,7 @@ namespace EPBLab.ViewModel.MetaTags
 {
     public class MetaTag03ViewModel : MetaTagViewModel
     {
-        private EpMetaTag03 MyTag => Tag as EpMetaTag03;
+        private MetaTag03 MyTag => Tag as MetaTag03;
 
         public override string Value
         {
@@ -27,7 +27,7 @@ namespace EPBLab.ViewModel.MetaTags
             }
         }
 
-        public MetaTag03ViewModel(EpMetaTag03 tag) : base(tag)
+        public MetaTag03ViewModel(MetaTag03 tag) : base(tag)
         {
         }
     }

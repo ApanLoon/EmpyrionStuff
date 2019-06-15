@@ -5,7 +5,7 @@ namespace EPBLab.ViewModel.MetaTags
 {
     public class MetaTag05ViewModel : MetaTagViewModel
     {
-        private EpMetaTag05 MyTag => Tag as EpMetaTag05;
+        private MetaTag05 MyTag => Tag as MetaTag05;
 
         public string Date
         {
@@ -31,7 +31,7 @@ namespace EPBLab.ViewModel.MetaTags
             }
         }
 
-        public MetaTag05ViewModel(EpMetaTag05 tag) : base(tag)
+        public MetaTag05ViewModel(MetaTag05 tag) : base(tag)
         {
         }
     }

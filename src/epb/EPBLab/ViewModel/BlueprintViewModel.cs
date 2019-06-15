@@ -13,7 +13,7 @@ namespace EPBLab.ViewModel
     public class BlueprintViewModel : ViewModelBase
     {
         #region Properties
-        public EpBlueprint Blueprint { get; set; }
+        public Blueprint Blueprint { get; set; }
 
         public const string TabNamePropertyName = "TabName";
         private string _tabName;
@@ -80,7 +80,7 @@ namespace EPBLab.ViewModel
             Logic.Update();
         }
 
-        public BlueprintViewModel(string fileName, EpBlueprint blueprint)
+        public BlueprintViewModel(string fileName, Blueprint blueprint)
         {
             FileName = fileName;
             Blueprint = blueprint;
