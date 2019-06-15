@@ -27,7 +27,7 @@ namespace EPBLib
             return $"{Name} (0x{Id:x4}={Id})";
         }
 
-        public static readonly Dictionary<ushort, EpbBlockType> BlockTypes = new Dictionary<ushort, EpbBlockType>()
+        public static readonly Dictionary<UInt16, EpbBlockType> BlockTypes = new Dictionary<UInt16, EpbBlockType>()
         {
             {   256, new EpbBlockType(){Id =   256, Name = "CapacitorMS"                  , Category = "Deco Blocks"                  , Ref = ""                             }},
             {   257, new EpbBlockType(){Id =   257, Name = "CockpitMS01"                  , Category = "Devices"                      , Ref = ""                             }},
@@ -702,6 +702,7 @@ namespace EPBLib
             {  1506, new EpbBlockType(){Id =  1506, Name = "ForcefieldEmitter5x11"        , Category = "Devices"                      , Ref = "ForcefieldEmitter1x1"         }},
             {  1507, new EpbBlockType(){Id =  1507, Name = "ForcefieldEmitter7x14"        , Category = "Devices"                      , Ref = "ForcefieldEmitter1x1"         }},
             {  1508, new EpbBlockType(){Id =  1508, Name = "ForcefieldEmitter7x12"        , Category = "Devices"                      , Ref = "ForcefieldEmitter1x1"         }},
+            {  1509, new EpbBlockType(){Id =  1509, Name = "VentilatorThin"               , Category = "Devices"                      , Ref = "Ventilator"                   }},
             {  1510, new EpbBlockType(){Id =  1510, Name = "SolarPanelSlope2"             , Category = "Devices"                      , Ref = "SolarPanelSlope"              }},
             {  1511, new EpbBlockType(){Id =  1511, Name = "SolarPanelSlope3"             , Category = "Devices"                      , Ref = "SolarPanelSlope"              }},
             {  1512, new EpbBlockType(){Id =  1512, Name = "SolarPanelHorizontalStand"    , Category = "Devices"                      , Ref = "SolarPanelSlope"              }},
@@ -1052,15 +1053,15 @@ namespace EPBLib
             {  1917, new EpbBlockType(){Id =  1917, Name = "HeavyWindowPInv"              , Category = "BuildingBlocks"               , Ref = "HeavyWindowA"                 }},
             {  1918, new EpbBlockType(){Id =  1918, Name = "HeavyWindowQ"                 , Category = "BuildingBlocks"               , Ref = "HeavyWindowA"                 }},
             {  1919, new EpbBlockType(){Id =  1919, Name = "HeavyWindowQInv"              , Category = "BuildingBlocks"               , Ref = "HeavyWindowA"                 }},
-            {  1920, new EpbBlockType(){Id =  1920, Name = "HeavyWindowR"                 , Category = "BuildingBlocks"               , Ref = "HeavyWindowA"                 }},
-            {  1921, new EpbBlockType(){Id =  1921, Name = "HeavyWindowRInv"              , Category = "BuildingBlocks"               , Ref = "HeavyWindowA"                 }},
+            {  1920, new EpbBlockType(){Id =  1920, Name = "HeavyWindowV"                 , Category = "BuildingBlocks"               , Ref = "HeavyWindowA"                 }},
+            {  1921, new EpbBlockType(){Id =  1921, Name = "HeavyWindowVInv"              , Category = "BuildingBlocks"               , Ref = "HeavyWindowA"                 }},
             {  1922, new EpbBlockType(){Id =  1922, Name = "HeavyWindowS"                 , Category = "BuildingBlocks"               , Ref = "HeavyWindowA"                 }},
             {  1923, new EpbBlockType(){Id =  1923, Name = "HeavyWindowSInv"              , Category = "BuildingBlocks"               , Ref = "HeavyWindowA"                 }},
             {  1924, new EpbBlockType(){Id =  1924, Name = "HeavyWindowT"                 , Category = "BuildingBlocks"               , Ref = "HeavyWindowA"                 }},
             {  1925, new EpbBlockType(){Id =  1925, Name = "HeavyWindowTInv"              , Category = "BuildingBlocks"               , Ref = "HeavyWindowA"                 }},
             {  1926, new EpbBlockType(){Id =  1926, Name = "HeavyWindowU"                 , Category = "BuildingBlocks"               , Ref = "HeavyWindowA"                 }},
             {  1927, new EpbBlockType(){Id =  1927, Name = "HeavyWindowUInv"              , Category = "BuildingBlocks"               , Ref = "HeavyWindowA"                 }},
-            {  1928, new EpbBlockType(){Id =  1928, Name = "HeavyWindowPConnect"          , Category = "BuildingBlocks"               , Ref = "HeavyWindowA"                 }},
+            {  1928, new EpbBlockType(){Id =  1928, Name = "HeavyWindowPConnectLeft"      , Category = "BuildingBlocks"               , Ref = "HeavyWindowA"                 }},
             {  1929, new EpbBlockType(){Id =  1929, Name = "HeavyWindowPConnectTwo"       , Category = "BuildingBlocks"               , Ref = "HeavyWindowA"                 }},
             {  1930, new EpbBlockType(){Id =  1930, Name = "HeavyWindowQConnect"          , Category = "BuildingBlocks"               , Ref = "HeavyWindowA"                 }},
             {  1931, new EpbBlockType(){Id =  1931, Name = "HeavyWindowQConnectTwo"       , Category = "BuildingBlocks"               , Ref = "HeavyWindowA"                 }},
@@ -1068,7 +1069,7 @@ namespace EPBLib
             {  1933, new EpbBlockType(){Id =  1933, Name = "HeavyWindowSConnect"          , Category = "BuildingBlocks"               , Ref = "HeavyWindowA"                 }},
             {  1934, new EpbBlockType(){Id =  1934, Name = "HeavyWindowTConnect"          , Category = "BuildingBlocks"               , Ref = "HeavyWindowA"                 }},
             {  1935, new EpbBlockType(){Id =  1935, Name = "HeavyWindowUConnect"          , Category = "BuildingBlocks"               , Ref = "HeavyWindowA"                 }},
-            {  1936, new EpbBlockType(){Id =  1936, Name = "HeavyWindowPConnectInv"       , Category = "BuildingBlocks"               , Ref = "HeavyWindowA"                 }},
+            {  1936, new EpbBlockType(){Id =  1936, Name = "HeavyWindowPConnectLeftInv"   , Category = "BuildingBlocks"               , Ref = "HeavyWindowA"                 }},
             {  1937, new EpbBlockType(){Id =  1937, Name = "HeavyWindowPConnectTwoInv"    , Category = "BuildingBlocks"               , Ref = "HeavyWindowA"                 }},
             {  1938, new EpbBlockType(){Id =  1938, Name = "HeavyWindowQConnectInv"       , Category = "BuildingBlocks"               , Ref = "HeavyWindowA"                 }},
             {  1939, new EpbBlockType(){Id =  1939, Name = "HeavyWindowQConnectTwoInv"    , Category = "BuildingBlocks"               , Ref = "HeavyWindowA"                 }},
@@ -1076,7 +1077,14 @@ namespace EPBLib
             {  1941, new EpbBlockType(){Id =  1941, Name = "HeavyWindowSConnectInv"       , Category = "BuildingBlocks"               , Ref = "HeavyWindowA"                 }},
             {  1942, new EpbBlockType(){Id =  1942, Name = "HeavyWindowTConnectInv"       , Category = "BuildingBlocks"               , Ref = "HeavyWindowA"                 }},
             {  1943, new EpbBlockType(){Id =  1943, Name = "HeavyWindowUConnectInv"       , Category = "BuildingBlocks"               , Ref = "HeavyWindowA"                 }},
-            {  1944, new EpbBlockType(){Id =  1944, Name = "Window_v1x1Bottom"            , Category = "BuildingBlocks"               , Ref = "Window_v1x1"                  , CountAs = 1128}},
+            {  1944, new EpbBlockType(){Id =  1944, Name = "HeavyWindowQConnectFourInv"   , Category = "BuildingBlocks"               , Ref = "HeavyWindowA"                 }},
+            {  1945, new EpbBlockType(){Id =  1945, Name = "HeavyWindowPConnectRight"     , Category = "BuildingBlocks"               , Ref = "HeavyWindowA"                 }},
+            {  1946, new EpbBlockType(){Id =  1946, Name = "HeavyWindowPConnectRightInv"  , Category = "BuildingBlocks"               , Ref = "HeavyWindowA"                 }},
+            {  1947, new EpbBlockType(){Id =  1947, Name = "HeavyWindowVConnect"          , Category = "BuildingBlocks"               , Ref = "HeavyWindowA"                 }},
+            {  1948, new EpbBlockType(){Id =  1948, Name = "HeavyWindowVConnectInv"       , Category = "BuildingBlocks"               , Ref = "HeavyWindowA"                 }},
+            {  1949, new EpbBlockType(){Id =  1949, Name = "HeavyWindowQConnectFour"      , Category = "BuildingBlocks"               , Ref = "HeavyWindowA"                 }},
+            {  1950, new EpbBlockType(){Id =  1950, Name = "CockpitSV03New"               , Category = "Devices"                      , Ref = "CockpitSV03"                  }},
+            {  1951, new EpbBlockType(){Id =  1951, Name = "CockpitSV03NewT2"             , Category = "Devices"                      , Ref = "CockpitSV03New"               }},
 
             // -------- Manually added: ---------
             {    53, new EpbBlockType(){Id =    53, Name = "VoxelSathium"                 , Category = "Voxel/Materials"              , Ref = ""                             }},
