@@ -108,6 +108,10 @@
     <Compile Include="ViewModel\MetaTags\MetaTagViewModel.cs" />
     <Compile Include="ViewModel\SummaryViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\ToolbarCommands\Command.cs" />
+    <Compile Include="ViewModel\ToolbarCommands\Parameter.cs" />
+    <Compile Include="ViewModel\ToolbarCommands\ParameterBool.cs" />
+    <Compile Include="ViewModel\ToolbarCommands\ParameterIntVector.cs" />
     <Compile Include="ViewModel\Tree\BindableSelectedItemBehaviour.cs" />
     <Compile Include="ViewModel\Tree\DeviceGroupViewModel.cs" />
     <Compile Include="ViewModel\Tree\TreeNode.cs" />

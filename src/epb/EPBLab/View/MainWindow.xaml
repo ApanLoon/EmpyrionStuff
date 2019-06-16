@@ -7,6 +7,7 @@
         xmlns:ignore="http://www.galasoft.ch/ignore"
         xmlns:b="clr-namespace:EPBLab.Behaviours"
         xmlns:view="clr-namespace:EPBLab.View"
+        xmlns:parameters="clr-namespace:EPBLab.ViewModel.ToolbarCommands"
         xmlns:prop="clr-namespace:EPBLab.Properties"
         mc:Ignorable="d ignore"
         Width="1200"
@@ -16,6 +17,7 @@
     
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="24" />
@@ -84,7 +86,7 @@
                 </ToolBar.ItemsSource>
                 <ToolBar.ItemTemplate>
                     <DataTemplate>
-                        <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Command="{Binding Path=Command}">
+                        <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Command="{Binding Path=Select}" CommandParameter="{Binding Path=Self}">
                             <Grid>
                                 <Image Source="{Binding Icon}" />
                                 <TextBlock Text="{Binding Name}" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -99,7 +101,71 @@
             </ToolBar>
         </ToolBarTray>
 
-        <TabControl Grid.Row="1"
+        <ToolBarTray Grid.Row="1" Visibility="{Binding ShowCommandParameters}">
+            <ToolBar>
+                <ToolBar.Resources>
+                    <CollectionViewSource x:Key="CommandParameters" Source="{Binding CurrentCommand.Parameters}" />
+                    <DataTemplate DataType="{x:Type parameters:ParameterIntVector}">
+                        <Grid ToolTip="{Binding Description}" Margin="5" Width="50">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Text="{Binding Name}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            <TextBox Grid.Row="1" Text="{Binding X}" ToolTip="X" />
+                            <TextBox Grid.Row="2" Text="{Binding Y}" ToolTip="Y" />
+                            <TextBox Grid.Row="3" Text="{Binding Z}" ToolTip="Z" />
+                        </Grid>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type parameters:ParameterBool}">
+                        <Grid ToolTip="{Binding Description}" Margin="5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Text="{Binding Name}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            <CheckBox Grid.Row="1" HorizontalAlignment="Center" IsChecked="{Binding IsTrue}" />
+                        </Grid>
+                    </DataTemplate>
+                </ToolBar.Resources>
+                <ToolBar.ItemsSource>
+                    <CompositeCollection>
+                        <Border BorderBrush="Black" BorderThickness="1">
+                            <Label Content="{Binding CurrentCommand.Name}" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Label.LayoutTransform>
+                                    <RotateTransform Angle="-90"></RotateTransform>
+                                </Label.LayoutTransform>
+                            </Label>
+                        </Border>
+                        <Button Command="{Binding CurrentCommand.Accept}">
+                            <Grid>
+                                <Image Source="pack://application:,,,/Images/ToolbarCommandIcons/Empty.png" />
+                                <TextBlock Text="Accept" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <TextBlock.Effect>
+                                        <DropShadowEffect ShadowDepth="0" Color="White" BlurRadius="10" />
+                                    </TextBlock.Effect>
+                                </TextBlock>
+                            </Grid>
+                        </Button>
+                        <Button Command="{Binding CurrentCommand.Cancel}">
+                            <Grid>
+                                <Image Source="pack://application:,,,/Images/ToolbarCommandIcons/Empty.png" />
+                                <TextBlock Text="Cancel" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <TextBlock.Effect>
+                                        <DropShadowEffect ShadowDepth="0" Color="White" BlurRadius="10" />
+                                    </TextBlock.Effect>
+                                </TextBlock>
+                            </Grid>
+                        </Button>
+                        <CollectionContainer Collection="{Binding Source={StaticResource CommandParameters}}" />
+                    </CompositeCollection>
+                </ToolBar.ItemsSource>
+            </ToolBar>
+        </ToolBarTray>
+
+        <TabControl Grid.Row="2"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
                     ItemsSource="{Binding Blueprints}"
@@ -119,7 +185,7 @@
             </TabControl.ContentTemplate>
         </TabControl>
         
-        <StatusBar Grid.Row="2" HorizontalAlignment="Stretch">
+        <StatusBar Grid.Row="3" HorizontalAlignment="Stretch">
             <StatusBarItem HorizontalAlignment="Right">
                 <TextBlock>Test</TextBlock>
             </StatusBarItem>

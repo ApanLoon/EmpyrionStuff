@@ -1,10 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Input;
-using EPBLab.Behaviours;
 using EPBLab.Messages;
 using GalaSoft.MvvmLight;
 using EPBLab.Model;
@@ -14,6 +12,7 @@ using EPBLib.BlockData;
 using EPBLib.Helpers;
 using EPBLib.Logic;
 using GalaSoft.MvvmLight.Messaging;
+using EPBLab.ViewModel.ToolbarCommands;
 
 namespace EPBLab.ViewModel
 {
@@ -62,30 +61,27 @@ namespace EPBLab.ViewModel
         public Visibility ShowBuildStructures => SelectedBlueprintIndex != -1 ? Visibility.Visible : Visibility.Collapsed;
 
         public const string BuildStructureCommandsPropertyName = "BuildStructureCommands";
-        private ObservableCollection<ToolBarCommand> _buildStructureCommands = new ObservableCollection<ToolBarCommand>();
-        public ObservableCollection<ToolBarCommand> BuildStructureCommands
+        private ObservableCollection<Command> _buildStructureCommands = new ObservableCollection<Command>();
+        public ObservableCollection<Command> BuildStructureCommands
         {
             get => _buildStructureCommands;
             set => Set(ref _buildStructureCommands, value);
         }
 
-        /*
-        public const string BlueprintIsLoadedPropertyName = "BlueprintIsLoaded";
-        private bool _blueprintIsLoaded = false;
-        public bool BlueprintIsLoaded
+        public const string CuirrentCommandPropertyName = "CurrentCommand";
+        private Command _currentCommand = null;
+        public Command CurrentCommand
         {
-            get
-            {
-                return _blueprintIsLoaded;
-            }
+            get => _currentCommand;
             set
             {
-                Set(ref _blueprintIsLoaded, value);
-                CommandSave.RaiseCanExecuteChanged();
+                Set(ref _currentCommand, value);
+                RaisePropertyChanged(ShowCommandParametersPropertyName);
             }
         }
 
-        */
+        public const string ShowCommandParametersPropertyName = "ShowCommandParameters";
+        public Visibility ShowCommandParameters => CurrentCommand != null ? Visibility.Visible : Visibility.Collapsed;
 
         #endregion Properties
 
@@ -112,10 +108,19 @@ namespace EPBLab.ViewModel
                     }
                     Blueprint blueprint = Blueprints[SelectedBlueprintIndex].Blueprint;
 
-                    int width = 10;
-                    int height = 10;
-                    int depth = 10;
-                    bool hollow = false;
+                    ParameterIntVector originParameter = (ParameterIntVector)CurrentCommand.ParameterByName("Origin");
+                    ParameterIntVector sizeParameter = (ParameterIntVector)CurrentCommand.ParameterByName("Size");
+                    ParameterBool hollowParameter = (ParameterBool) CurrentCommand.ParameterByName("Hollow");
+
+                    if (originParameter == null || sizeParameter == null || hollowParameter == null)
+                    {
+                        return; // TODO: should we also cancel here?
+                    }
+
+                    int width   = sizeParameter.X;
+                    int height  = sizeParameter.Y;
+                    int depth   = sizeParameter.Z;
+                    bool hollow = hollowParameter.IsTrue;
                     BlockType blockType = BlockType.GetBlockType("HullFullLarge", "Cube");
                     byte blockVariant = BlockType.GetVariant(blockType.Id, "Cube");
                     for (int z = 0; z < depth; z++)
@@ -130,7 +135,11 @@ namespace EPBLab.ViewModel
 
                                 if (!isInterior || !hollow)
                                 {
-                                    Block block = new Block(new BlockPos((byte)x, (byte)y, (byte)z)) { BlockType = blockType, Variant = blockVariant };
+                                    Block block = new Block(new BlockPos((byte)(x + originParameter.X), (byte)(y + originParameter.Y), (byte)(z + originParameter.Z)))
+                                    {
+                                        BlockType = blockType,
+                                        Variant = blockVariant
+                                    };
                                     block.SetColour(isInterior ? ColourIndex.Pink : ColourIndex.None);
                                     block.SetTexture(14, (x % 2) == 1);
                                     block.SetSymbol(1, (Block.SymbolRotation)(x % 4), Block.FaceIndex.Back);
@@ -148,6 +157,7 @@ namespace EPBLab.ViewModel
                     blueprint.ComputeDimensions();
 
                     Blueprints[SelectedBlueprintIndex].UpdateViewModels();
+                    CurrentCommand = null;
                 }));
             }
         }
@@ -166,9 +176,18 @@ namespace EPBLab.ViewModel
                     }
                     Blueprint blueprint = Blueprints[SelectedBlueprintIndex].Blueprint;
 
-                    int width = 10;
-                    int height = 10;
-                    int depth = 10;
+                    ParameterIntVector originParameter = (ParameterIntVector)CurrentCommand.ParameterByName("Origin");
+                    ParameterIntVector sizeParameter = (ParameterIntVector)CurrentCommand.ParameterByName("Size");
+
+                    if (originParameter == null || sizeParameter == null)
+                    {
+                        return; // TODO: should we also cancel here?
+                    }
+
+                    int width  = sizeParameter.X;
+                    int height = sizeParameter.Y;
+                    int depth  = sizeParameter.Z;
+
                     BlockType blockType = BlockType.GetBlockType("HullFullLarge", "Cube");
                     byte blockVariant = BlockType.GetVariant(blockType.Id, "Cube");
                     for (int z = 0; z < depth; z++)
@@ -183,7 +202,11 @@ namespace EPBLab.ViewModel
                                 int d = (a ? 1 : 0) + (b ? 1 : 0) + (c ? 1 : 0);
                                 if (d >= 2)
                                 {
-                                    blueprint.SetBlock(new Block(new BlockPos((byte)x, (byte)y, (byte)z)) { BlockType = blockType, Variant = blockVariant });
+                                    blueprint.SetBlock(new Block(new BlockPos((byte)(x + originParameter.X), (byte)(y + originParameter.Y), (byte)(z + originParameter.Z)))
+                                    {
+                                        BlockType = blockType,
+                                        Variant = blockVariant
+                                    });
                                 }
                             }
                         }
@@ -192,6 +215,7 @@ namespace EPBLab.ViewModel
                     blueprint.ComputeDimensions();
 
                     Blueprints[SelectedBlueprintIndex].UpdateViewModels();
+                    CurrentCommand = null;
                 }));
             }
         }
@@ -210,10 +234,19 @@ namespace EPBLab.ViewModel
                     }
                     Blueprint blueprint = Blueprints[SelectedBlueprintIndex].Blueprint;
 
-                    int width = 10;
-                    int height = 10;
-                    int depth = 10;
-                    bool hollow = false;
+                    ParameterIntVector originParameter = (ParameterIntVector)CurrentCommand.ParameterByName("Origin");
+                    ParameterIntVector sizeParameter = (ParameterIntVector)CurrentCommand.ParameterByName("Size");
+                    ParameterBool hollowParameter = (ParameterBool)CurrentCommand.ParameterByName("Hollow");
+
+                    if (originParameter == null || sizeParameter == null || hollowParameter == null)
+                    {
+                        return; // TODO: should we also cancel here?
+                    }
+
+                    int width = sizeParameter.X;
+                    int height = sizeParameter.Y;
+                    int depth = sizeParameter.Z;
+                    bool hollow = hollowParameter.IsTrue;
                     BlockType blockType = BlockType.GetBlockType("HullFullLarge", "Cube");
                     byte blockVariant = BlockType.GetVariant(blockType.Id, "Cube");
 
@@ -285,7 +318,12 @@ namespace EPBLab.ViewModel
 
                                 if (!isInterior || !hollow)
                                 {
-                                    Block block = new Block(new BlockPos((byte)x, (byte)y, (byte)z)) { BlockType = t, Rotation = r, Variant = v };
+                                    Block block = new Block(new BlockPos((byte)(x + originParameter.X), (byte)(y + originParameter.Y), (byte)(z + originParameter.Z)))
+                                    {
+                                        BlockType = t,
+                                        Rotation = r,
+                                        Variant = v
+                                    };
                                     block.SetColour(isInterior ? ColourIndex.Pink : ColourIndex.None);
                                     blueprint.SetBlock(block);
                                 }
@@ -298,6 +336,7 @@ namespace EPBLab.ViewModel
                     blueprint.ComputeDimensions();
 
                     Blueprints[SelectedBlueprintIndex].UpdateViewModels();
+                    CurrentCommand = null;
                 }));
             }
         }
@@ -335,6 +374,7 @@ namespace EPBLab.ViewModel
                 blueprint.DeviceGroups.Add(group);
 
                 Blueprints[SelectedBlueprintIndex].UpdateViewModels();
+                CurrentCommand = null;
             })); }
         }
         private RelayCommand _commandCreateCore;
@@ -387,6 +427,7 @@ namespace EPBLab.ViewModel
                     State = 0x00020000
                 });
                 Blueprints[SelectedBlueprintIndex].UpdateViewModels();
+                CurrentCommand = null;
             })); }
         }
         private RelayCommand _commandCreateCoreWithLever;
@@ -440,6 +481,7 @@ namespace EPBLab.ViewModel
                 blueprint.ComputeDimensions();
 
                 Blueprints[SelectedBlueprintIndex].UpdateViewModels();
+                CurrentCommand = null;
             })); }
         }
         private RelayCommand _commandCreateHullVariants;
@@ -499,21 +541,29 @@ namespace EPBLab.ViewModel
                     blueprint.ComputeDimensions();
 
                     Blueprints[SelectedBlueprintIndex].UpdateViewModels();
+                    CurrentCommand = null;
                 }));
             }
         }
         private RelayCommand _commandCreateAllBlocks;
         #endregion CommandCreateAllBlocks
 
-        #endregion Commands
-
-        public class ToolBarCommand
+        #region Command_Select
+        public RelayCommand<Command> CommandSelect
         {
-            public string Name { get; set; }
-            public string Icon { get => _icon; set => _icon = $"pack://application:,,,/Images/ToolbarCommandIcons/{value}"; }
-            private string _icon;
-            public RelayCommand Command { get; set; }
+            get { return _commandSelect ?? (_commandSelect = new RelayCommand<Command>((command) => { CurrentCommand = command; })); }
         }
+        private RelayCommand<Command> _commandSelect;
+        #endregion Command_Select
+        #region Command_Cancel
+        public RelayCommand CommandCancel
+        {
+            get { return _commandCancel ?? (_commandCancel = new RelayCommand(() => { CurrentCommand = null; })); }
+        }
+        private RelayCommand _commandCancel;
+        #endregion Command_Cancel
+
+        #endregion Commands
 
         protected void NewBlueprint()
         {
@@ -596,13 +646,98 @@ namespace EPBLab.ViewModel
         {
             SetMainWindowTitle();
 
-            BuildStructureCommands.Add(new ToolBarCommand() { Name = "Box",           Icon = "BuildStructure/Box.png",      Command = CommandCreateBox });
-            BuildStructureCommands.Add(new ToolBarCommand() { Name = "Box frame",     Icon = "BuildStructure/BoxFrame.png", Command = CommandCreateBoxFrame });
-            BuildStructureCommands.Add(new ToolBarCommand() { Name = "Pyramid",       Icon = "BuildStructure/Pyramid.png",  Command = CommandCreatePyramid });
-            BuildStructureCommands.Add(new ToolBarCommand() { Name = "Core",          Icon = "Empty.png",                   Command = CommandCreateCore});
-            BuildStructureCommands.Add(new ToolBarCommand() { Name = "Core + lever",  Icon = "Empty.png",                   Command = CommandCreateCoreWithLever});
-            BuildStructureCommands.Add(new ToolBarCommand() { Name = "Hull variants", Icon = "Empty.png",                   Command = CommandCreateHullVariants});
-            BuildStructureCommands.Add(new ToolBarCommand() { Name = "All blocks",    Icon = "Empty.png",                   Command = CommandCreateAllBlocks });
+            // Box
+            BuildStructureCommands.Add(new Command()
+            {
+                Name = "Box",
+                Icon = "BuildStructure/Box.png",
+                Parameters = new List<Parameter>()
+                {
+                    new ParameterIntVector()
+                    {
+                        Name = "Origin",
+                        Description = "Places the structure in the blueprint"
+                    },
+                    new ParameterIntVector()
+                    {
+                        Name = "Size",
+                        Description = "Width, height and depth of the new structure",
+                        X = 10,
+                        Y = 10,
+                        Z = 10
+                    },
+                    new ParameterBool()
+                    {
+                        Name = "Hollow",
+                        Description = "Make the box hollow",
+                        IsTrue = false
+                    }
+                },
+                Accept = CommandCreateBox,
+                Select = CommandSelect,
+                Cancel = CommandCancel
+            });
+            // BoxFrame
+            BuildStructureCommands.Add(new Command()
+            {
+                Name = "Box frame",
+                Icon = "BuildStructure/BoxFrame.png",
+                Parameters = new List<Parameter>()
+                {
+                    new ParameterIntVector()
+                    {
+                        Name = "Origin",
+                        Description = "Places the structure in the blueprint"
+                    },
+                    new ParameterIntVector()
+                    {
+                        Name = "Size",
+                        Description = "Width, height and depth of the new structure",
+                        X = 10,
+                        Y = 10,
+                        Z = 10
+                    }
+                },
+                Accept = CommandCreateBoxFrame,
+                Select = CommandSelect,
+                Cancel = CommandCancel
+            });
+            // Pyramid
+            BuildStructureCommands.Add(new Command()
+            {
+                Name = "Pyramid",
+                Icon = "BuildStructure/Pyramid.png",
+                Parameters = new List<Parameter>()
+                {
+                    new ParameterIntVector()
+                    {
+                        Name = "Origin",
+                        Description = "Places the structure in the blueprint"
+                    },
+                    new ParameterIntVector()
+                    {
+                        Name = "Size",
+                        Description = "Width, height and depth of the new structure",
+                        X = 10,
+                        Y = 10,
+                        Z = 10
+                    },
+                    new ParameterBool()
+                    {
+                        Name = "Hollow",
+                        Description = "Make the pyramid hollow",
+                        IsTrue = false
+                    }
+                },
+                Accept = CommandCreatePyramid,
+                Select = CommandSelect,
+                Cancel = CommandCancel
+            });
+
+            BuildStructureCommands.Add(new Command() { Name = "Core",          Icon = "Empty.png",                   Accept = CommandCreateCore,          Select = CommandSelect, Cancel = CommandCancel });
+            BuildStructureCommands.Add(new Command() { Name = "Core + lever",  Icon = "Empty.png",                   Accept = CommandCreateCoreWithLever, Select = CommandSelect, Cancel = CommandCancel });
+            BuildStructureCommands.Add(new Command() { Name = "Hull variants", Icon = "Empty.png",                   Accept = CommandCreateHullVariants,  Select = CommandSelect, Cancel = CommandCancel });
+            BuildStructureCommands.Add(new Command() { Name = "All blocks",    Icon = "Empty.png",                   Accept = CommandCreateAllBlocks,     Select = CommandSelect, Cancel = CommandCancel });
 
             /*
             _dataService = dataService;
