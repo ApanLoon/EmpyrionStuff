@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace EPBLab.View
+namespace EPBLab.View.BlockInfo
 {
     /// <summary>
     /// Interaction logic for BlockInfoCommon.xaml
     /// </summary>
-    public partial class BlockInfoCommon : UserControl
+    public partial class Common : UserControl
     {
-        public BlockInfoCommon()
+        public Common()
         {
             InitializeComponent();
         }

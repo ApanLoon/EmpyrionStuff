@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:EPBLab.View"
-             xmlns:vm="clr-namespace:EPBLab.ViewModel"
+             xmlns:bi="clr-namespace:EPBLab.View.BlockInfo"
              xmlns:tree="clr-namespace:EPBLab.ViewModel.Tree"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
@@ -62,7 +62,7 @@
 
                 <GridSplitter Grid.Row="1"  HorizontalAlignment="Stretch" Height="5" />
 
-                <ScrollViewer Grid.Row="2" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                <ScrollViewer Grid.Row="2"  HorizontalAlignment="Stretch" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                     <ItemsControl ItemsSource="{Binding SelectedBlocks}" HorizontalAlignment="Left">
                         <ItemsControl.Resources>
                             <DataTemplate DataType="{x:Type tree:GroupNode}">
@@ -70,7 +70,14 @@
                             </DataTemplate>
 
                             <DataTemplate DataType="{x:Type tree:BlockNode}">
-                                <local:BlockInfoCommon/>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <bi:Common Grid.Row="0"/>
+                                    <bi:Tags Grid.Row="1"/>
+                                </Grid>
                             </DataTemplate>
 
                             <DataTemplate DataType="{x:Type tree:LcdNode}">
@@ -79,7 +86,7 @@
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition Height="Auto" />
                                     </Grid.RowDefinitions>
-                                    <local:BlockInfoCommon Grid.Row="0" />
+                                    <bi:Common Grid.Row="0" />
                                     <Border Grid.Row="1" Margin="20 0 0 0" BorderBrush="CadetBlue" BorderThickness="2">
                                         <Border.Background>
                                             <DrawingBrush TileMode="Tile" Viewport="0,0,32,32" ViewportUnits="Absolute">

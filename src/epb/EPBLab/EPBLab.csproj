@@ -120,7 +120,11 @@
     <Compile Include="ViewModel\Tree\LcdNode.cs" />
     <Compile Include="ViewModel\Tree\ITreeNode.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
-    <Page Include="View\BlockInfoCommon.xaml">
+    <Page Include="View\BlockInfo\Common.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\BlockInfo\Tags.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -168,8 +172,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="View\BlockInfoCommon.xaml.cs">
-      <DependentUpon>BlockInfoCommon.xaml</DependentUpon>
+    <Compile Include="View\BlockInfo\Common.xaml.cs">
+      <DependentUpon>Common.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\BlockInfo\Tags.xaml.cs">
+      <DependentUpon>Tags.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\BlocksView.xaml.cs">
       <DependentUpon>BlocksView.xaml</DependentUpon>
