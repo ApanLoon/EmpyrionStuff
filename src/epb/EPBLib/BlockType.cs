@@ -867,7 +867,7 @@ namespace EPBLib
             {  1730, new BlockType(){Id =  1730, Name = "SVDecoGreeble02"              , Category = "Deco Blocks"                  , Ref = "SVDecoAeroblister01"          }},
             {  1731, new BlockType(){Id =  1731, Name = "SVDecoGreeble03"              , Category = "Deco Blocks"                  , Ref = "SVDecoAeroblister01"          }},
             {  1732, new BlockType(){Id =  1732, Name = "SVDecoIntake01"               , Category = "Deco Blocks"                  , Ref = "SVDecoAeroblister01"          }},
-            {  1733, new BlockType(){Id =  1733, Name = "SVDecoIntake02"               , Category = "Deco Blocks"                  , Ref = "SVDecoAeroblister01"          }},
+            {  1733, new BlockType(){Id =  1733, Name = "SVDecoIntake02a"              , Category = "Deco Blocks"                  , Ref = "SVDecoAeroblister01"          }},
             {  1734, new BlockType(){Id =  1734, Name = "SVDecoLightslot2x"            , Category = "Deco Blocks"                  , Ref = "SVDecoAeroblister01"          }},
             {  1735, new BlockType(){Id =  1735, Name = "SVDecoLightslot3x"            , Category = "Deco Blocks"                  , Ref = "SVDecoAeroblister01"          }},
             {  1736, new BlockType(){Id =  1736, Name = "SVDecoStrake01"               , Category = "Deco Blocks"                  , Ref = "SVDecoAeroblister01"          }},
@@ -1085,6 +1085,10 @@ namespace EPBLib
             {  1949, new BlockType(){Id =  1949, Name = "HeavyWindowQConnectFour"      , Category = "BuildingBlocks"               , Ref = "HeavyWindowA"                 }},
             {  1950, new BlockType(){Id =  1950, Name = "CockpitSV03New"               , Category = "Devices"                      , Ref = "CockpitSV03"                  }},
             {  1951, new BlockType(){Id =  1951, Name = "CockpitSV03NewT2"             , Category = "Devices"                      , Ref = "CockpitSV03New"               }},
+            {  1952, new BlockType(){Id =  1952, Name = "SVDecoIntake02New"            , Category = "Deco Blocks"                  , Ref = "SVDecoAeroblister01"          }},
+            {  1953, new BlockType(){Id =  1953, Name = "DoorSingleTwoWings"           , Category = "Devices"                      , Ref = "DoorArmored"                  }},
+            {  1954, new BlockType(){Id =  1954, Name = "DoorSingleTwoWingsGlass"      , Category = "Devices"                      , Ref = "DoorArmored"                  }},
+            {  1955, new BlockType(){Id =  1955, Name = "DoorSingleTwoWingsGlassFull"  , Category = "Devices"                      , Ref = "DoorArmored"                  }},
 
             // -------- Manually added: ---------
             {    53, new BlockType(){Id =    53, Name = "VoxelSathium"                 , Category = "Voxel/Materials"              , Ref = ""                             }},
