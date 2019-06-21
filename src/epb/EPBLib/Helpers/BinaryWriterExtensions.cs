@@ -600,6 +600,7 @@ namespace EPBLib.Helpers
         {
             writer.Write((MetaTag)tag);
             writer.Write(tag.Value);
+            writer.Write(tag.Unknown);
         }
         public static void Write(this BinaryWriter writer, MetaTag04 tag)
         {

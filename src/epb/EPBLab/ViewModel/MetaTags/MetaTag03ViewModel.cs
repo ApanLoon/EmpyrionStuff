@@ -11,18 +11,23 @@ namespace EPBLab.ViewModel.MetaTags
 
         public override string Value
         {
-            get => $"{BitConverter.ToString(MyTag.Value).Replace("-", "")}"; 
+            get => $"{MyTag.Value}";
             set
             {
-                int n = value.Length;
-                if (n == 10)
+                if (float.TryParse(value, out float f))
                 {
-                    byte[] buf = Enumerable.Range(0, n)
-                        .Where(x => x % 2 == 0)
-                        .Select(x => Convert.ToByte(value.Substring(x, 2), 16))
-                        .ToArray();
-                    MyTag.Value = buf;
+                    MyTag.Value = f;
                 }
+                RaisePropertyChanged();
+            }
+        }
+
+        public string Unknown
+        {
+            get => MyTag.Unknown.ToString();
+            set
+            {
+                MyTag.Unknown = byte.Parse(value);
                 RaisePropertyChanged();
             }
         }

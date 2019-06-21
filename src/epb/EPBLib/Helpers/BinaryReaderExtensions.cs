@@ -1228,7 +1228,8 @@ namespace EPBLib.Helpers
                     break;
                 case MetaTagType.Unknownx03:
                     MetaTag03 tag03 = new MetaTag03(key);
-                    tag03.Value = reader.ReadBytes(5);
+                    tag03.Value = reader.ReadSingle();
+                    tag03.Unknown = reader.ReadByte();
                     bytesLeft -= 5;
                     tag = tag03;
                     break;

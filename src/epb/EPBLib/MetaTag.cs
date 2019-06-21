@@ -20,23 +20,25 @@ namespace EPBLib
 
     public enum MetaTagKey
     {
-        UnknownMetax01 = 0x01,
-        UnknownMetax03 = 0x03,
-        UnknownMetax04 = 0x04,
-        UnknownMetax05 = 0x05,
-        UnknownMetax06 = 0x06,
-        BlueprintName  = 0x07,
-        BuildVersion   = 0x08,
-        CreationTime   = 0x09,
-        CreatorName    = 0x0a,
-        CreatorId      = 0x0b, // Shows up in the statistics tab in game
-        OwnerName      = 0x0c,
-        OwnerId        = 0x0d,
-        UnknownMetax0E = 0x0e,
-        UnknownMetax0F = 0x0f,
-        DisplayName    = 0x10, // Shown in hover text
-        UnknownMetax11 = 0x11,
-        UnknownMetax12 = 0x12
+        TerrainRemoval = 1,
+        FlattensGround = 2,
+        UnknownMetax03 = 3,
+        UnknownMetax04 = 4,
+        UnknownMetax05 = 5,
+        UnknownMetax06 = 6,
+        GroupName      = 7,
+        BuildVersion   = 8,
+        CreationTime   = 9,
+        CreatorName    = 10,
+        CreatorId      = 11, // Shows up in the statistics tab in game
+        OwnerName      = 12,
+        OwnerId        = 13,
+        UnknownMetax0E = 14,
+        UnknownMetax0F = 15, // In CV_Prefab_Tier1 and CV_Prefab_Tier1a this matches fuel fill percentage, in CV_Prefab_Tier5 it matches number of fuel tanks.
+        SpawnName      = 16, // Shown in hover text
+        GroundOffset   = 17,
+        UnknownMetax12 = 18,
+        KeepTopSoil    = 19
     }
 
     public enum MetaTagType

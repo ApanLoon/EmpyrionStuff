@@ -10,16 +10,17 @@ namespace EPBLib
             Key = key;
         }
 
-        public byte[] Value { get; set; }
+        public float Value { get; set; }
+        public byte Unknown { get; set; }
 
         public override string ValueToString()
         {
-            return $"{BitConverter.ToString(Value).Replace("-", "")}";
+            return $"{Value} (0x{Unknown:x2})";
         }
 
         public override string ToString()
         {
-            return $"{base.ToString()} Value={BitConverter.ToString(Value).Replace("-", "")}";
+            return $"{base.ToString()} Value={Value} Unknown=0x{Unknown:x2}";
         }
     }
 }

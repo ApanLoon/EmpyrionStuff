@@ -131,16 +131,18 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="120" />
                                     <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
                                 <Grid.ToolTip>
                                     <StackPanel Orientation="Horizontal">
                                         <Label Content="Type: " />
                                         <Label Content="{Binding TypeName}" />
-                                        <Label Content=" (Exactly 10 hexadecimal digits)" />
+                                        <Label Content=" (Float and a byte)" />
                                     </StackPanel>
                                 </Grid.ToolTip>
                                 <TextBlock Grid.Column="0" Margin="3" Text="{Binding Key}" />
                                 <TextBox Grid.Column="1" Margin="3" TextAlignment="Right" Text="{Binding Value}" />
+                                <TextBox Grid.Column="2" Margin="3" TextAlignment="Right" Text="{Binding Unknown}" />
                             </Grid>
                         </DataTemplate>
                         <DataTemplate DataType="{x:Type vm:MetaTag04ViewModel}">

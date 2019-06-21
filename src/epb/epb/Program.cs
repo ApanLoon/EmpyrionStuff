@@ -214,104 +214,25 @@ namespace epb
         static Blueprint CreateCommon()
         {
             Blueprint epb = new Blueprint(BlueprintType, Width, Height, Depth);
-
-            MetaTag03 metaTag11 = new MetaTag03(MetaTagKey.UnknownMetax11)
-            {
-                Value = new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00 }
-            };
-            epb.MetaTags.Add(metaTag11.Key, metaTag11);
-
-            MetaTagUInt16 metaTagUInt16 = new MetaTagUInt16(MetaTagKey.UnknownMetax01)
-            {
-                Value = 0x0000
-            };
-            epb.MetaTags.Add(metaTagUInt16.Key, metaTagUInt16);
-
-            MetaTag03 metaTag0E = new MetaTag03(MetaTagKey.UnknownMetax0E)
-            {
-                Value = new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00 }
-            };
-            epb.MetaTags.Add(metaTag0E.Key, metaTag0E);
-
-            MetaTag03 metaTag0F = new MetaTag03(MetaTagKey.UnknownMetax0F)
-            {
-                Value = new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00 }
-            };
-            epb.MetaTags.Add(metaTag0F.Key, metaTag0F);
-
-            MetaTagUInt16 metaTag05 = new MetaTagUInt16(MetaTagKey.UnknownMetax05)
-            {
-                Value = 0x0000
-            };
-            epb.MetaTags.Add(metaTag05.Key, metaTag05);
-
-            MetaTag02 metaTag04 = new MetaTag02(MetaTagKey.UnknownMetax04)
-            {
-                Value = 0,
-                Unknown = 0
-            };
-            epb.MetaTags.Add(metaTag04.Key, metaTag04);
-
-            MetaTag04 metaTag06 = new MetaTag04(MetaTagKey.UnknownMetax06)
+            epb.MetaTags.Add(MetaTagKey.GroundOffset,   new MetaTag03     (MetaTagKey.GroundOffset)   { Value = 0f, Unknown = 0 });            
+            epb.MetaTags.Add(MetaTagKey.TerrainRemoval, new MetaTagUInt16 (MetaTagKey.TerrainRemoval) { Value = 0x0000 });
+            epb.MetaTags.Add(MetaTagKey.UnknownMetax0E, new MetaTag03     (MetaTagKey.UnknownMetax0E) { Value = 0f, Unknown = 0 });
+            epb.MetaTags.Add(MetaTagKey.UnknownMetax0F, new MetaTag03     (MetaTagKey.UnknownMetax0F) { Value = 0f, Unknown = 0 });
+            epb.MetaTags.Add(MetaTagKey.UnknownMetax05, new MetaTagUInt16 (MetaTagKey.UnknownMetax05) { Value = 0x0000 });
+            epb.MetaTags.Add(MetaTagKey.UnknownMetax04, new MetaTag02     (MetaTagKey.UnknownMetax04) { Value = 0, Unknown = 0 });
+            epb.MetaTags.Add(MetaTagKey.UnknownMetax06, new MetaTag04     (MetaTagKey.UnknownMetax06)
             {
                 Value = new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }
-            };
-            epb.MetaTags.Add(metaTag06.Key, metaTag06);
-
-            MetaTagString metaTag07 = new MetaTagString(MetaTagKey.BlueprintName)
-            {
-                Value = ""
-            };
-            epb.MetaTags.Add(metaTag07.Key, metaTag07);
-
-            MetaTag05 metaTag09 = new MetaTag05(MetaTagKey.CreationTime)
-            {
-                Value = DateTime.Now,
-                Unknown = 0
-            };
-            epb.MetaTags.Add(metaTag09.Key, metaTag09);
-
-            MetaTag02 metaTag08 = new MetaTag02(MetaTagKey.BuildVersion)
-            {
-                Value = 1838,
-                Unknown = 0
-            };
-            epb.MetaTags.Add(metaTag08.Key, metaTag08);
-
-            MetaTagString creatorIdTag = new MetaTagString(MetaTagKey.CreatorId)
-            {
-                Value = CreatorId
-            };
-            epb.MetaTags.Add(creatorIdTag.Key, creatorIdTag);
-
-            MetaTagString creatorNameTag = new MetaTagString(MetaTagKey.CreatorName)
-            {
-                Value = CreatorName
-            };
-            epb.MetaTags.Add(creatorNameTag.Key, creatorNameTag);
-
-            MetaTagString ownerIdTag = new MetaTagString(MetaTagKey.OwnerId)
-            {
-                Value = OwnerId
-            };
-            epb.MetaTags.Add(ownerIdTag.Key, ownerIdTag);
-
-            MetaTagString ownerNameTag = new MetaTagString(MetaTagKey.OwnerName)
-            {
-                Value = OwnerName
-            };
-            epb.MetaTags.Add(ownerNameTag.Key, ownerNameTag);
-
-            MetaTagString metaTag10 = new MetaTagString(MetaTagKey.DisplayName) { Value = "" };
-            epb.MetaTags.Add(metaTag10.Key, metaTag10);
-
-            MetaTag05 metaTag12 = new MetaTag05(MetaTagKey.UnknownMetax12)
-            {
-                Value = DateTime.MinValue,
-                Unknown = 0
-            };
-            epb.MetaTags.Add(metaTag12.Key, metaTag12);
-
+            });
+            epb.MetaTags.Add(MetaTagKey.GroupName,      new MetaTagString (MetaTagKey.GroupName)      { Value = "" });
+            epb.MetaTags.Add(MetaTagKey.CreationTime,   new MetaTag05     (MetaTagKey.CreationTime)   { Value = DateTime.Now, Unknown = 0 });
+            epb.MetaTags.Add(MetaTagKey.BuildVersion,   new MetaTag02     (MetaTagKey.BuildVersion)   { Value = 1838, Unknown = 0 });
+            epb.MetaTags.Add(MetaTagKey.CreatorId,      new MetaTagString (MetaTagKey.CreatorId)      { Value = CreatorId });
+            epb.MetaTags.Add(MetaTagKey.CreatorName,    new MetaTagString (MetaTagKey.CreatorName)    { Value = CreatorName });
+            epb.MetaTags.Add(MetaTagKey.OwnerId,        new MetaTagString (MetaTagKey.OwnerId)        { Value = OwnerId });
+            epb.MetaTags.Add(MetaTagKey.OwnerName,      new MetaTagString (MetaTagKey.OwnerName)      { Value = OwnerName });
+            epb.MetaTags.Add(MetaTagKey.SpawnName,      new MetaTagString (MetaTagKey.SpawnName)      { Value = "" });
+            epb.MetaTags.Add(MetaTagKey.UnknownMetax12, new MetaTag05     (MetaTagKey.UnknownMetax12) { Value = DateTime.MinValue, Unknown = 0 });
             return epb;
         }
 

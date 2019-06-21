@@ -70,22 +70,22 @@ namespace EPBLib
             UnknownCount03 = 0;
             TriangleCount  = 0;
 
-            MetaTags[MetaTagKey.UnknownMetax11] = new MetaTag03(MetaTagKey.UnknownMetax11)     { Value = new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00 }};
-            MetaTags[MetaTagKey.UnknownMetax01] = new MetaTagUInt16(MetaTagKey.UnknownMetax01) { Value = 0x0000};
-            MetaTags[MetaTagKey.UnknownMetax0E] = new MetaTag03(MetaTagKey.UnknownMetax0E)     { Value = new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00 }};
-            MetaTags[MetaTagKey.UnknownMetax0F] = new MetaTag03(MetaTagKey.UnknownMetax0F)     { Value = new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00 }};
-            MetaTags[MetaTagKey.UnknownMetax05] = new MetaTagUInt16(MetaTagKey.UnknownMetax05) { Value = 0x0000 };
-            MetaTags[MetaTagKey.UnknownMetax04] = new MetaTag02(MetaTagKey.UnknownMetax04)     { Value = 0, Unknown = 0 };
-            MetaTags[MetaTagKey.UnknownMetax06] = new MetaTag04(MetaTagKey.UnknownMetax06)     { Value = new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }};
-            MetaTags[MetaTagKey.BlueprintName]  = new MetaTagString(MetaTagKey.BlueprintName)  { Value = "" };
-            MetaTags[MetaTagKey.CreationTime]   = new MetaTag05(MetaTagKey.CreationTime)       { Value = DateTime.Now, Unknown = 0 };
-            MetaTags[MetaTagKey.BuildVersion]   = new MetaTag02(MetaTagKey.BuildVersion)       { Value = 1838, Unknown = 0 };
-            MetaTags[MetaTagKey.CreatorId]      = new MetaTagString(MetaTagKey.CreatorId)      { Value = "" };
-            MetaTags[MetaTagKey.CreatorName]    = new MetaTagString(MetaTagKey.CreatorName)    { Value = "" };
-            MetaTags[MetaTagKey.OwnerId]        = new MetaTagString(MetaTagKey.OwnerId)        { Value = "" };
-            MetaTags[MetaTagKey.OwnerName]      = new MetaTagString(MetaTagKey.OwnerName)      { Value = "" };
-            MetaTags[MetaTagKey.DisplayName]    = new MetaTagString(MetaTagKey.DisplayName)    { Value = "" };
-            MetaTags[MetaTagKey.UnknownMetax12] = new MetaTag05(MetaTagKey.UnknownMetax12)     { Value = DateTime.MinValue, Unknown = 0 };
+            MetaTags[MetaTagKey.GroundOffset]   = new MetaTag03     (MetaTagKey.GroundOffset)   { Value = 0f, Unknown = 0 };
+            MetaTags[MetaTagKey.TerrainRemoval] = new MetaTagUInt16 (MetaTagKey.TerrainRemoval) { Value = 0x0000};
+            MetaTags[MetaTagKey.UnknownMetax0E] = new MetaTag03     (MetaTagKey.UnknownMetax0E) { Value = 0f, Unknown = 0 };
+            MetaTags[MetaTagKey.UnknownMetax0F] = new MetaTag03     (MetaTagKey.UnknownMetax0F) { Value = 0f, Unknown = 0 };
+            MetaTags[MetaTagKey.UnknownMetax05] = new MetaTagUInt16 (MetaTagKey.UnknownMetax05) { Value = 0x0000 };
+            MetaTags[MetaTagKey.UnknownMetax04] = new MetaTag02     (MetaTagKey.UnknownMetax04) { Value = 0, Unknown = 0 };
+            MetaTags[MetaTagKey.UnknownMetax06] = new MetaTag04     (MetaTagKey.UnknownMetax06) { Value = new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }};
+            MetaTags[MetaTagKey.GroupName]      = new MetaTagString (MetaTagKey.GroupName)      { Value = "" };
+            MetaTags[MetaTagKey.CreationTime]   = new MetaTag05     (MetaTagKey.CreationTime)   { Value = DateTime.Now, Unknown = 0 };
+            MetaTags[MetaTagKey.BuildVersion]   = new MetaTag02     (MetaTagKey.BuildVersion)   { Value = 1838, Unknown = 0 };
+            MetaTags[MetaTagKey.CreatorId]      = new MetaTagString (MetaTagKey.CreatorId)      { Value = "" };
+            MetaTags[MetaTagKey.CreatorName]    = new MetaTagString (MetaTagKey.CreatorName)    { Value = "" };
+            MetaTags[MetaTagKey.OwnerId]        = new MetaTagString (MetaTagKey.OwnerId)        { Value = "" };
+            MetaTags[MetaTagKey.OwnerName]      = new MetaTagString (MetaTagKey.OwnerName)      { Value = "" };
+            MetaTags[MetaTagKey.SpawnName]      = new MetaTagString (MetaTagKey.SpawnName)      { Value = "" };
+            MetaTags[MetaTagKey.UnknownMetax12] = new MetaTag05     (MetaTagKey.UnknownMetax12) { Value = DateTime.MinValue, Unknown = 0 };
         }
 
         public void SetBlock(Block block)
