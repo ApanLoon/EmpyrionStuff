@@ -235,7 +235,7 @@ namespace EPBLab.ViewModel
                     Blueprint blueprint = Blueprints[SelectedBlueprintIndex].Blueprint;
 
                     ParameterIntVector originParameter = (ParameterIntVector)CurrentCommand.ParameterByName("Origin");
-                    ParameterIntVector sizeParameter = (ParameterIntVector)CurrentCommand.ParameterByName("Size");
+                    ParameterInt sizeParameter = (ParameterInt)CurrentCommand.ParameterByName("Size");
                     ParameterBool hollowParameter = (ParameterBool)CurrentCommand.ParameterByName("Hollow");
 
                     if (originParameter == null || sizeParameter == null || hollowParameter == null)
@@ -243,29 +243,34 @@ namespace EPBLab.ViewModel
                         return; // TODO: should we also cancel here?
                     }
 
-                    int width = sizeParameter.X;
-                    int height = sizeParameter.Y;
-                    int depth = sizeParameter.Z;
+                    int width = sizeParameter.Value;
                     bool hollow = hollowParameter.IsTrue;
                     BlockType blockType = BlockType.GetBlockType("HullFullLarge", "Cube");
                     byte blockVariant = BlockType.GetVariant(blockType.Id, "Cube");
 
-                    for (int y = 0; y < height; y++)
-                    {
-                        for (int z = y; z < depth; z++)
-                        {
-                            for (int x = y; x < width; x++)
-                            {
-                                bool isBackEdge = (z == y);
-                                bool isFrontEdge = (z == (depth - 1));
-                                bool isLeftEdge = (x == y);
-                                bool isRightEdge = (x == (width - 1));
-                                bool isInterior = !isBackEdge && !isFrontEdge && !isRightEdge && !isLeftEdge && y > 0 && y < (height - 1);
+                    bool cap = width % 2 == 1;
 
-                                BlockType t = blockType;
-                                Block.BlockRotation r = Block.BlockRotation.PzPy;
-                                byte v = blockVariant;
-                                byte[] c = new byte[] { 0, 0, 0, 0, 0, 0 };
+                    BlockType t;
+                    Block.BlockRotation r;
+                    byte v;
+                    byte[] c = new byte[] { 0, 0, 0, 0, 0, 0 };
+
+                    int y = 0;
+                    while (width > 1)
+                    {
+                        for (int z = 0; z < width; z++)
+                        {
+                            for (int x = 0; x < width; x++)
+                            {
+                                bool isBackEdge = (z == 0);
+                                bool isFrontEdge = (z == (width - 1));
+                                bool isLeftEdge = (x == 0);
+                                bool isRightEdge = (x == (width - 1));
+                                bool isInterior = !isBackEdge && !isFrontEdge && !isRightEdge && !isLeftEdge && y > 0;
+
+                                t = blockType;
+                                r = Block.BlockRotation.PzPy;
+                                v = blockVariant;
 
                                 if (isBackEdge && isLeftEdge)
                                 {
@@ -318,7 +323,7 @@ namespace EPBLab.ViewModel
 
                                 if (!isInterior || !hollow)
                                 {
-                                    Block block = new Block(new BlockPos((byte)(x + originParameter.X), (byte)(y + originParameter.Y), (byte)(z + originParameter.Z)))
+                                    Block block = new Block(new BlockPos((byte)(x + originParameter.X + y), (byte)(y + originParameter.Y), (byte)(z + originParameter.Z + y)))
                                     {
                                         BlockType = t,
                                         Rotation = r,
@@ -329,8 +334,21 @@ namespace EPBLab.ViewModel
                                 }
                             }
                         }
-                        width -= 1;
-                        depth -= 1;
+                        width -= 2;
+                        y++;
+                    }
+                    if (cap)
+                    {
+                        t = BlockType.GetBlockType("HullFullLarge", "PyramidA");
+                        v = BlockType.GetVariant(t.Id, "PyramidA");
+                        r = Block.BlockRotation.PxPy;
+                        Block block = new Block(new BlockPos((byte)(y + originParameter.X), (byte)(y + originParameter.Y), (byte)(y + originParameter.Z)))
+                        {
+                            BlockType = t,
+                            Rotation = r,
+                            Variant = v
+                        };
+                        blueprint.SetBlock(block);
                     }
                     blueprint.CountBlocks();
                     blueprint.ComputeDimensions();
@@ -714,13 +732,11 @@ namespace EPBLab.ViewModel
                         Name = "Origin",
                         Description = "Places the structure in the blueprint"
                     },
-                    new ParameterIntVector()
+                    new ParameterInt()
                     {
                         Name = "Size",
-                        Description = "Width, height and depth of the new structure",
-                        X = 10,
-                        Y = 10,
-                        Z = 10
+                        Description = "Number of blocks in the side edge of the base square",
+                        Value = 10
                     },
                     new ParameterBool()
                     {

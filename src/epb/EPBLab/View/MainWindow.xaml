@@ -119,6 +119,16 @@
                             <TextBox Grid.Row="3" Text="{Binding Z}" ToolTip="Z" />
                         </Grid>
                     </DataTemplate>
+                    <DataTemplate DataType="{x:Type parameters:ParameterInt}">
+                        <Grid ToolTip="{Binding Description}" Margin="5" Width="50">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Text="{Binding Name}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            <TextBox Grid.Row="1" Text="{Binding Value}" ToolTip="Value" />
+                        </Grid>
+                    </DataTemplate>
                     <DataTemplate DataType="{x:Type parameters:ParameterBool}">
                         <Grid ToolTip="{Binding Description}" Margin="5">
                             <Grid.RowDefinitions>

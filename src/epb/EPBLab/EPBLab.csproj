@@ -111,6 +111,7 @@
     <Compile Include="ViewModel\ToolbarCommands\Command.cs" />
     <Compile Include="ViewModel\ToolbarCommands\Parameter.cs" />
     <Compile Include="ViewModel\ToolbarCommands\ParameterBool.cs" />
+    <Compile Include="ViewModel\ToolbarCommands\ParameterInt.cs" />
     <Compile Include="ViewModel\ToolbarCommands\ParameterIntVector.cs" />
     <Compile Include="ViewModel\Tree\BindableSelectedItemBehaviour.cs" />
     <Compile Include="ViewModel\Tree\DeviceGroupViewModel.cs" />
