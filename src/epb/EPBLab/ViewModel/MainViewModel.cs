@@ -360,6 +360,76 @@ namespace EPBLab.ViewModel
         }
         private RelayCommand _commandCreatePyramid;
         #endregion CommandCreatePyramid
+        #region CommandCreateSphere
+        public RelayCommand CommandCreateSphere
+        {
+            get
+            {
+                return _commandCreateSphere ?? (_commandCreateSphere = new RelayCommand(() =>
+                {
+                    if (SelectedBlueprintIndex == -1)
+                    {
+                        return;
+                    }
+                    Blueprint blueprint = Blueprints[SelectedBlueprintIndex].Blueprint;
+
+                    ParameterIntVector originParameter = (ParameterIntVector)CurrentCommand.ParameterByName("Origin");
+                    ParameterInt radiusParameter = (ParameterInt)CurrentCommand.ParameterByName("Radius");
+                    ParameterBool hollowParameter = (ParameterBool)CurrentCommand.ParameterByName("Hollow");
+
+                    if (originParameter == null || radiusParameter == null || hollowParameter == null)
+                    {
+                        return; // TODO: should we also cancel here?
+                    }
+
+                    int radius = radiusParameter.Value;
+                    bool hollow = hollowParameter.IsTrue;
+                    BlockType blockType = BlockType.GetBlockType("HullFullLarge", "Cube");
+                    byte blockVariant = BlockType.GetVariant(blockType.Id, "Cube");
+
+                    int rSquared = radius * radius;
+
+                    for (int x = -radius; x < radius + 1; x++)
+                    {
+                        for (int y = -radius; y < radius + 1; y++)
+                        {
+                            for (int z = -radius; z < radius + 1; z++)
+                            {
+                                int d = x * x + y * y + z * z;
+
+                                if (d > rSquared)
+                                {
+                                    continue;
+                                }
+
+                                bool edge = d > rSquared - 10; // TODO: How can I determine if this block is on the surface of the sphere?
+
+                                if (!edge && hollow)
+                                {
+                                    continue;
+                                }
+
+                                Block block = new Block(new BlockPos((byte) (radius + x + originParameter.X), (byte) (radius + y + originParameter.Y), (byte) (radius + z + originParameter.Z)))
+                                {
+                                    BlockType = blockType,
+                                    Variant = blockVariant
+                                };
+                                block.SetColour(edge ? ColourIndex.None : ColourIndex.Pink);
+                                blueprint.SetBlock(block);
+                            }
+                        }
+                    }
+
+                    blueprint.CountBlocks();
+                    blueprint.ComputeDimensions();
+
+                    Blueprints[SelectedBlueprintIndex].UpdateViewModels();
+                    CurrentCommand = null;
+                }));
+            }
+        }
+        private RelayCommand _commandCreateSphere;
+        #endregion CommandCreateSphere
         #region CommandCreateCore
         public RelayCommand CommandCreateCore
         {
@@ -746,6 +816,35 @@ namespace EPBLab.ViewModel
                     }
                 },
                 Accept = CommandCreatePyramid,
+                Select = CommandSelect,
+                Cancel = CommandCancel
+            });
+            // Sphere
+            BuildStructureCommands.Add(new Command()
+            {
+                Name = "Sphere",
+                Icon = "BuildStructure/Sphere.png",
+                Parameters = new List<Parameter>()
+                {
+                    new ParameterIntVector()
+                    {
+                        Name = "Origin",
+                        Description = "Places the structure in the blueprint"
+                    },
+                    new ParameterInt()
+                    {
+                        Name = "Radius",
+                        Description = "Number of blocks",
+                        Value = 10
+                    },
+                    new ParameterBool()
+                    {
+                        Name = "Hollow",
+                        Description = "Make the sphere hollow",
+                        IsTrue = false
+                    }
+                },
+                Accept = CommandCreateSphere,
                 Select = CommandSelect,
                 Cancel = CommandCancel
             });
