@@ -1089,6 +1089,8 @@ namespace EPBLib
             {  1953, new BlockType(){Id =  1953, Name = "DoorSingleTwoWings"           , Category = "Devices"                      , Ref = "DoorArmored"                  }},
             {  1954, new BlockType(){Id =  1954, Name = "DoorSingleTwoWingsGlass"      , Category = "Devices"                      , Ref = "DoorArmored"                  }},
             {  1955, new BlockType(){Id =  1955, Name = "DoorSingleTwoWingsGlassFull"  , Category = "Devices"                      , Ref = "DoorArmored"                  }},
+            {  1956, new BlockType(){Id =  1956, Name = "VentilatorBlocks"             , Category = "Devices"                      , Ref = ""                             }},
+            {  1957, new BlockType(){Id =  1957, Name = "VentilatorCubeHalf"           , Category = "Devices"                      , Ref = "Ventilator"                   }},
 
             // -------- Manually added: ---------
             {    53, new BlockType(){Id =    53, Name = "VoxelSathium"                 , Category = "Voxel/Materials"              , Ref = ""                             }},
