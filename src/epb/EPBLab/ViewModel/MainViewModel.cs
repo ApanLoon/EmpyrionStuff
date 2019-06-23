@@ -135,7 +135,9 @@ namespace EPBLab.ViewModel
 
                                 if (!isInterior || !hollow)
                                 {
-                                    Block block = new Block(new BlockPos((byte)(x + originParameter.X), (byte)(y + originParameter.Y), (byte)(z + originParameter.Z)))
+                                    Block block = new Block((byte)(x + originParameter.X),
+                                                            (byte)(y + originParameter.Y),
+                                                            (byte)(z + originParameter.Z))
                                     {
                                         BlockType = blockType,
                                         Variant = blockVariant
@@ -202,7 +204,9 @@ namespace EPBLab.ViewModel
                                 int d = (a ? 1 : 0) + (b ? 1 : 0) + (c ? 1 : 0);
                                 if (d >= 2)
                                 {
-                                    blueprint.SetBlock(new Block(new BlockPos((byte)(x + originParameter.X), (byte)(y + originParameter.Y), (byte)(z + originParameter.Z)))
+                                    blueprint.SetBlock(new Block((byte)(x + originParameter.X),
+                                                                 (byte)(y + originParameter.Y),
+                                                                 (byte)(z + originParameter.Z))
                                     {
                                         BlockType = blockType,
                                         Variant = blockVariant
@@ -323,7 +327,9 @@ namespace EPBLab.ViewModel
 
                                 if (!isInterior || !hollow)
                                 {
-                                    Block block = new Block(new BlockPos((byte)(x + originParameter.X + y), (byte)(y + originParameter.Y), (byte)(z + originParameter.Z + y)))
+                                    Block block = new Block((byte)(x + originParameter.X + y),
+                                                            (byte)(y + originParameter.Y),
+                                                            (byte)(z + originParameter.Z + y))
                                     {
                                         BlockType = t,
                                         Rotation = r,
@@ -342,7 +348,9 @@ namespace EPBLab.ViewModel
                         t = BlockType.GetBlockType("HullFullLarge", "PyramidA");
                         v = BlockType.GetVariant(t.Id, "PyramidA");
                         r = Block.BlockRotation.PxPy;
-                        Block block = new Block(new BlockPos((byte)(y + originParameter.X), (byte)(y + originParameter.Y), (byte)(y + originParameter.Z)))
+                        Block block = new Block((byte)(y + originParameter.X),
+                                                (byte)(y + originParameter.Y),
+                                                (byte)(y + originParameter.Z))
                         {
                             BlockType = t,
                             Rotation = r,
@@ -409,7 +417,9 @@ namespace EPBLab.ViewModel
                                     continue;
                                 }
 
-                                Block block = new Block(new BlockPos((byte) (radius + x + originParameter.X), (byte) (radius + y + originParameter.Y), (byte) (radius + z + originParameter.Z)))
+                                Block block = new Block((byte) (radius + x + originParameter.X),
+                                                        (byte) (radius + y + originParameter.Y),
+                                                        (byte) (radius + z + originParameter.Z))
                                 {
                                     BlockType = blockType,
                                     Variant = blockVariant
@@ -545,7 +555,7 @@ namespace EPBLab.ViewModel
                             BlockType bt = BlockType.BlockTypes[t];
                             byte v = BlockType.GetVariant(t, variantName);
                             Block block =
-                                new Block(new BlockPos(x, y, z))
+                                new Block(x, y, z)
                                 {
                                     BlockType = bt,
                                     Variant = v,
@@ -596,7 +606,7 @@ namespace EPBLab.ViewModel
                         if (BlockType.IsAllowed(blockType, blueprint.Type))
                         {
                             Block block =
-                                new Block(new BlockPos(x, y, z))
+                                new Block(x, y, z)
                                 {
                                     BlockType = blockType,
                                     Variant = 0,

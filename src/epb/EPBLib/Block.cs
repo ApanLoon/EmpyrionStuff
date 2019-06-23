@@ -138,5 +138,9 @@ namespace EPBLib
             Rotation = Block.BlockRotation.PzPy;
             Unknown00 = 0x0000;
         }
+
+        public Block(byte x, byte y, byte z) : this(new BlockPos(x, y, z))
+        {
+        }
     }
 }

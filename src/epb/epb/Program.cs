@@ -248,7 +248,7 @@ namespace epb
             byte x = 0;
             foreach (Block.BlockRotation rot in Enum.GetValues(typeof(Block.BlockRotation)))
             {
-                block = new Block(new BlockPos(x, 0, 0 )) { BlockType = BlockType, Variant = BlockVariant };
+                block = new Block(x, 0, 0) { BlockType = BlockType, Variant = BlockVariant };
                 block.SetColour(ColourIndex.Red, Block.FaceIndex.Right);
                 block.SetColour(ColourIndex.BrightGreen, Block.FaceIndex.Top);
                 block.SetColour(ColourIndex.Blue, Block.FaceIndex.Front);
@@ -260,10 +260,10 @@ namespace epb
                 x += 2;
             }
 
-            block = new Block(new BlockPos(2, 0, 0 )) { BlockType = BlockType, Variant = BlockVariant };
+            block = new Block(2, 0, 0) { BlockType = BlockType, Variant = BlockVariant };
             block.SetColour(ColourIndex.Red);
             epb.SetBlock(block);
-            block = new Block(new BlockPos(0, 2, 0)) { BlockType = BlockType, Variant = BlockVariant };
+            block = new Block(0, 2, 0) { BlockType = BlockType, Variant = BlockVariant };
             block.SetColour(ColourIndex.BrightGreen);
             epb.SetBlock(block);
             epb.CountBlocks();
@@ -294,7 +294,7 @@ namespace epb
 
                         if (!isInterior || !hollow)
                         {
-                            Block block = new Block(new BlockPos((byte)x, (byte)y, (byte)z)) { BlockType = BlockType, Variant = BlockVariant };
+                            Block block = new Block((byte)x, (byte)y, (byte)z) { BlockType = BlockType, Variant = BlockVariant };
                             block.SetColour(isInterior ? ColourIndex.Pink : ColourIndex.None);
                             block.SetTexture(14, (x % 2) == 1);
                             block.SetSymbol(1, (Block.SymbolRotation)(x % 4), Block.FaceIndex.Back);
@@ -335,7 +335,7 @@ namespace epb
                         int d = (a ? 1 : 0) + (b ? 1 : 0) + (c ? 1 : 0);
                         if (d >= 2)
                         {
-                            epb.SetBlock(new Block(new BlockPos((byte)x, (byte)y, (byte)z)) { BlockType = BlockType, Variant = BlockVariant });
+                            epb.SetBlock(new Block((byte)x, (byte)y, (byte)z) { BlockType = BlockType, Variant = BlockVariant });
                         }
                     }
                 }
@@ -428,7 +428,7 @@ namespace epb
 
                         if (!isInterior || !hollow)
                         {
-                            Block block = new Block(new BlockPos((byte)x, (byte)y, (byte)z)) {BlockType = t, Rotation = r, Variant = v};
+                            Block block = new Block((byte)x, (byte)y, (byte)z) {BlockType = t, Rotation = r, Variant = v};
                             block.SetColour(isInterior ? ColourIndex.Pink : ColourIndex.None);
                             epb.SetBlock(block);
                         }
@@ -465,7 +465,7 @@ namespace epb
             byte i = 0;
             foreach (UInt16 bt in blockTypes )
             {
-                epb.SetBlock(new Block(new BlockPos(i, 0, 0)) { BlockType = BlockType.BlockTypes[bt], Variant = BlockVariant });
+                epb.SetBlock(new Block(i, 0, 0) { BlockType = BlockType.BlockTypes[bt], Variant = BlockVariant });
                 i += 14;
             }
             epb.CountBlocks();
@@ -499,7 +499,7 @@ namespace epb
                     BlockType bt = BlockType.BlockTypes[t];
                     byte v = BlockType.GetVariant(t, variantName);
                     Block block =
-                        new Block(new BlockPos(x, 0, z))
+                        new Block(x, 0, z)
                         {
                             BlockType = bt,
                             Variant = v,
