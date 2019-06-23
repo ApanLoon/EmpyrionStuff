@@ -60,6 +60,7 @@ namespace EPBLab.ViewModel
         protected List<BlockNode> BlockNodes = new List<BlockNode>();
         protected BitmapSource PaletteImageSource;
         protected int PaletteResolution = 10;
+        protected DiffuseMaterial BuildingBlockMaterial;
         #endregion Fields
 
         #region Properties
@@ -168,7 +169,10 @@ namespace EPBLab.ViewModel
             // Build 3D view:
             CameraAimPoint = new Point3D(Blueprint.Width / 2, Blueprint.Height / 2, Blueprint.Depth / 2);
             CameraPosition = new Point3D(Blueprint.Width / 2, Blueprint.Height / 2, Blueprint.Depth);
+
             PaletteImageSource = CreateBitmapSource(Blueprint.Palette);
+            ImageBrush brush = new ImageBrush(PaletteImageSource) { AlignmentX = AlignmentX.Left, AlignmentY = AlignmentY.Top, Stretch = Stretch.Fill, ViewportUnits = BrushMappingMode.Absolute };
+            BuildingBlockMaterial = new DiffuseMaterial(brush);
 
             BuildModel(Blueprint);
         }
@@ -420,9 +424,7 @@ namespace EPBLab.ViewModel
             tg.Children.Add(new RotateTransform3D(new QuaternionRotation3D(Rotation[block.Rotation])));
             tg.Children.Add(new TranslateTransform3D(pos.X, pos.Y, -pos.Z));
             model.Transform = tg;
-            ImageBrush brush = new ImageBrush(PaletteImageSource) { AlignmentX = AlignmentX.Left, AlignmentY = AlignmentY.Top, Stretch = Stretch.Fill, ViewportUnits = BrushMappingMode.Absolute };
-            var material = new DiffuseMaterial(brush);
-            model.Material = material;
+            model.Material = BuildingBlockMaterial;
             return model;
         }
 
