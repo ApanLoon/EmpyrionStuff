@@ -174,7 +174,7 @@ namespace EPBLab.ViewModel
             ImageBrush brush = new ImageBrush(PaletteImageSource) { AlignmentX = AlignmentX.Left, AlignmentY = AlignmentY.Top, Stretch = Stretch.Fill, ViewportUnits = BrushMappingMode.Absolute };
             BuildingBlockMaterial = new DiffuseMaterial(brush);
 
-            BuildModel(Blueprint);
+            Model = BuildModel(Blueprint);
         }
 
         private void BuildTree()
@@ -229,7 +229,7 @@ namespace EPBLab.ViewModel
             }
         }
 
-        private void BuildModel(Blueprint blueprint)
+        private Model3DGroup BuildModel(Blueprint blueprint)
         {
             Model3DGroup group = new Model3DGroup();
             GeometryModel3D model = null;
@@ -359,7 +359,7 @@ namespace EPBLab.ViewModel
                 }
                 group.Children.Add(model);
             }
-            Model = group;
+            return group;
         }
 
         private void BuildSelectionModel()

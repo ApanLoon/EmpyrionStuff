@@ -450,7 +450,13 @@ namespace EPBLab.ViewModel
                     return;
                 }
                 Blueprint blueprint = Blueprints[SelectedBlueprintIndex].Blueprint;
-                BlockPos corePos = new BlockPos(0, 0, 0, 8, 8);
+                ParameterIntVector originParameter = (ParameterIntVector)CurrentCommand.ParameterByName("Origin");
+                if (originParameter == null)
+                {
+                    return; // TODO: should we also cancel here?
+                }
+
+                BlockPos corePos = new BlockPos((byte)originParameter.X, (byte)originParameter.Y, (byte)originParameter.Z, 8, 8);
                 blueprint.SetBlock(
                     new Block(corePos)
                     {
@@ -704,7 +710,6 @@ namespace EPBLab.ViewModel
             }
             return blueprint;
         }
-
         protected void SaveBlueprint(SaveFileSelectedMessage m)
         {
             if (m.Identifier != "SaveBlueprint")
@@ -728,7 +733,6 @@ namespace EPBLab.ViewModel
                 stream?.Dispose();
             }
         }
-
         protected void CloseBlueprint(CloseBlueprintMessage m)
         {
             if (Blueprints.Contains(m.Content))
@@ -859,10 +863,25 @@ namespace EPBLab.ViewModel
                 Cancel = CommandCancel
             });
 
-            BuildStructureCommands.Add(new Command() { Name = "Core",          Icon = "Empty.png",                   Accept = CommandCreateCore,          Select = CommandSelect, Cancel = CommandCancel });
-            BuildStructureCommands.Add(new Command() { Name = "Core + lever",  Icon = "Empty.png",                   Accept = CommandCreateCoreWithLever, Select = CommandSelect, Cancel = CommandCancel });
-            BuildStructureCommands.Add(new Command() { Name = "Hull variants", Icon = "Empty.png",                   Accept = CommandCreateHullVariants,  Select = CommandSelect, Cancel = CommandCancel });
-            BuildStructureCommands.Add(new Command() { Name = "All blocks",    Icon = "Empty.png",                   Accept = CommandCreateAllBlocks,     Select = CommandSelect, Cancel = CommandCancel });
+            BuildStructureCommands.Add(new Command()
+            {
+                Name = "Core",
+                Icon = "Empty.png",
+                Parameters = new List<Parameter>()
+                {
+                    new ParameterIntVector()
+                    {
+                        Name = "Origin",
+                        Description = "Places the structure in the blueprint"
+                    }
+                },
+                Accept = CommandCreateCore,
+                Select = CommandSelect,
+                Cancel = CommandCancel
+            });
+            BuildStructureCommands.Add(new Command() { Name = "Core + lever", Icon = "Empty.png", Accept = CommandCreateCoreWithLever, Select = CommandSelect, Cancel = CommandCancel });
+            BuildStructureCommands.Add(new Command() { Name = "Hull variants", Icon = "Empty.png", Accept = CommandCreateHullVariants, Select = CommandSelect, Cancel = CommandCancel });
+            BuildStructureCommands.Add(new Command() { Name = "All blocks", Icon = "Empty.png", Accept = CommandCreateAllBlocks, Select = CommandSelect, Cancel = CommandCancel });
 
             /*
             _dataService = dataService;
