@@ -80,10 +80,12 @@
     <Compile Include="Helpers\ColourExtensions.cs" />
     <Compile Include="Helpers\Point3DExtensions.cs" />
     <Compile Include="Helpers\Vector3DExtensions.cs" />
+    <Compile Include="Messages\BuildBlocksMessage.cs" />
     <Compile Include="Messages\CloseBlueprintMessage.cs" />
     <Compile Include="Messages\FilesOpenedMessage.cs" />
     <Compile Include="Behaviours\OpenFileBehaviour.cs" />
     <Compile Include="Design\DesignDataService.cs" />
+    <Compile Include="Messages\ProgressUpdateMessage.cs" />
     <Compile Include="Messages\SaveFileSelectedMessage.cs" />
     <Compile Include="Model\DataItem.cs" />
     <Compile Include="Model\DataService.cs" />

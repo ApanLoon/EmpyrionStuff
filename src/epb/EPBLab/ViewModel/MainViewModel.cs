@@ -68,7 +68,7 @@ namespace EPBLab.ViewModel
             set => Set(ref _buildStructureCommands, value);
         }
 
-        public const string CuirrentCommandPropertyName = "CurrentCommand";
+        public const string CurrentCommandPropertyName = "CurrentCommand";
         private Command _currentCommand = null;
         public Command CurrentCommand
         {
@@ -82,6 +82,25 @@ namespace EPBLab.ViewModel
 
         public const string ShowCommandParametersPropertyName = "ShowCommandParameters";
         public Visibility ShowCommandParameters => CurrentCommand != null ? Visibility.Visible : Visibility.Collapsed;
+
+        public string ProgressDescription
+        {
+            get { return _progressDescription; }
+            set { Set(ref _progressDescription, value); }
+        }
+        private string _progressDescription;
+        public int ProgressGoal
+        {
+            get { return _progressGoal; }
+            set { Set(ref _progressGoal, value); }
+        }
+        private int _progressGoal;
+        public int ProgressCurrent
+        {
+            get { return _progressCurrent; }
+            set { Set(ref _progressCurrent, value); }
+        }
+        private int _progressCurrent;
 
         #endregion Properties
 
@@ -740,7 +759,12 @@ namespace EPBLab.ViewModel
                 Blueprints.Remove(m.Content);
             }
         }
-
+        protected void UpdateProgress(ProgressUpdateMessage m)
+        {
+            ProgressDescription = m.Content.Description;
+            ProgressGoal = m.Content.Goal;
+            ProgressCurrent = m.Content.Current;
+        }
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
@@ -901,6 +925,7 @@ namespace EPBLab.ViewModel
             Messenger.Default.Register<FilesOpenedMessage>(this, OpenBlueprints);
             Messenger.Default.Register<SaveFileSelectedMessage>(this, SaveBlueprint);
             Messenger.Default.Register<CloseBlueprintMessage>(this, CloseBlueprint);
+            Messenger.Default.Register<ProgressUpdateMessage>(this, UpdateProgress);
 
             if (IsInDesignMode)
             {

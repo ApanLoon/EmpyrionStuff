@@ -1,16 +1,22 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Windows;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
 using EPBLab.Helpers;
+using EPBLab.Messages;
 using EPBLab.ViewModel.BlockMeshes;
 using EPBLab.ViewModel.Tree;
 using EPBLib;
 using EPBLib.BlockData;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
+using GalaSoft.MvvmLight.Threading;
 
 namespace EPBLab.ViewModel
 {
@@ -152,6 +158,8 @@ namespace EPBLab.ViewModel
 
         public BlocksViewModel(Blueprint blueprint)
         {
+            Messenger.Default.Register<BuildBlocksMessage>(this, BuildBlocks);
+
             Blueprint = blueprint;
             Update();
         }
@@ -174,7 +182,7 @@ namespace EPBLab.ViewModel
             ImageBrush brush = new ImageBrush(PaletteImageSource) { AlignmentX = AlignmentX.Left, AlignmentY = AlignmentY.Top, Stretch = Stretch.Fill, ViewportUnits = BrushMappingMode.Absolute };
             BuildingBlockMaterial = new DiffuseMaterial(brush);
 
-            Model = BuildModel(Blueprint);
+            BuildModel(Blueprint);
         }
 
         private void BuildTree()
@@ -229,12 +237,55 @@ namespace EPBLab.ViewModel
             }
         }
 
-        private Model3DGroup BuildModel(Blueprint blueprint)
+        private int tempGoal;
+        private int tempNodeCount;
+        private Model3DGroup tempModelGroup;
+
+        private void BuildModel(Blueprint blueprint)
         {
-            Model3DGroup group = new Model3DGroup();
-            GeometryModel3D model = null;
-            foreach (BlockNode node in BlockNodes)
+            tempGoal = BlockNodes.Count;
+            tempNodeCount = 0;
+
+            BackgroundWorker worker = new BackgroundWorker();
+            worker.DoWork += (sender, args) =>
             {
+                List<BlockNode> nodes = new List<BlockNode>();
+                int i = 0;
+                foreach (BlockNode node in BlockNodes)
+                {
+                    if (i > 0 && i % 100 == 0)
+                    {
+                        DispatcherHelper.CheckBeginInvokeOnUI(() => { Messenger.Default.Send(new BuildBlocksMessage(nodes)); });
+                        worker.ReportProgress(100 * tempNodeCount / tempGoal);
+                        nodes.Clear();
+                    }
+                    nodes.Add(node);
+                }
+                if (nodes.Count > 0)
+                {
+                    DispatcherHelper.CheckBeginInvokeOnUI(() => { Messenger.Default.Send(new BuildBlocksMessage(nodes)); });
+                }
+            };
+            worker.ProgressChanged += (sender, args) =>
+            {
+                DispatcherHelper.CheckBeginInvokeOnUI(() => { Messenger.Default.Send(new ProgressUpdateMessage("Building 3D model", tempGoal, tempNodeCount)); });
+            };
+            worker.WorkerReportsProgress = true;
+            worker.RunWorkerAsync();
+        }
+
+        private void BuildBlocks(BuildBlocksMessage msg)
+        {
+            if (tempModelGroup == null)
+            {
+                tempModelGroup = new Model3DGroup();
+            }
+
+            GeometryModel3D model = null;
+            int count = 0;
+            foreach (BlockNode node in msg.Content)
+            {
+                count++;
                 Block block = node.Block;
                 Point3D pos = node.Position;
 
@@ -242,37 +293,40 @@ namespace EPBLab.ViewModel
                 {
                     continue;
                 }
+
                 switch (block.BlockType.Id)
                 {
-                    case 381:  //HullFullSmall
-                    case 383:  //HullArmoredFullSmall
-                    case 397:  //WoodFull
-                    case 400:  //ConcreteFull
-                    case 403:  //HullFullLarge
-                    case 406:  //HullArmormedFullLarge
-                    case 409:  //AlienFull
-                    case 412:  //HullCombatFullLarge
+                    case 381: //HullFullSmall
+                    case 383: //HullArmoredFullSmall
+                    case 397: //WoodFull
+                    case 400: //ConcreteFull
+                    case 403: //HullFullLarge
+                    case 406: //HullArmormedFullLarge
+                    case 409: //AlienFull
+                    case 412: //HullCombatFullLarge
                     case 1323: //ConcreteArmoredFull
                     case 1396: //AlienFullLarge
                     case 1479: //PlasticFullSmall
                     case 1482: //PlasticFullLarge
                     case 1595: //HullCombatFullSmall
-                        model = CreateBuildingBlock(pos, block, blueprint, MeshGenerators.BuildingBlockVariants_FullLarge_MeshGenerators);
+                        model = CreateBuildingBlock(pos, block, Blueprint,
+                            MeshGenerators.BuildingBlockVariants_FullLarge_MeshGenerators);
                         break;
-                    case 382:  //HullThinSmall
-                    case 384:  //HullArmoredThinSmall
-                    case 398:  //WoodThin
-                    case 401:  //ConcreteThin
-                    case 404:  //HullThinLarge
-                    case 407:  //HullArmoredThinLarge
-                    case 410:  //AlienThin
-                    case 413:  //HullCombatThinLarge
+                    case 382: //HullThinSmall
+                    case 384: //HullArmoredThinSmall
+                    case 398: //WoodThin
+                    case 401: //ConcreteThin
+                    case 404: //HullThinLarge
+                    case 407: //HullArmoredThinLarge
+                    case 410: //AlienThin
+                    case 413: //HullCombatThinLarge
                     case 1324: //ConcreteArmoredThin
                     case 1397: //AlienThinLarge
                     case 1480: //PlasticThinSmall
                     case 1483: //PlasticThinLarge
                     case 1596: //HullCombatThinSmall
-                        model = CreateBuildingBlock(pos, block, blueprint, MeshGenerators.BuildingBlockVariants_ThinLarge_MeshGenerators);
+                        model = CreateBuildingBlock(pos, block, Blueprint,
+                            MeshGenerators.BuildingBlockVariants_ThinLarge_MeshGenerators);
                         break;
                     case 1782: //WoodExtended
                     case 1783: //ConcreteExtended
@@ -287,7 +341,8 @@ namespace EPBLab.ViewModel
                     case 1792: //HullArmoredExtendedSmall
                     case 1793: //HullCombatExtendedSmall
                     case 1794: //AlienExtendedLarge
-                        model = CreateBuildingBlock(pos, block, blueprint, MeshGenerators.BuildingBlockVariants_ExtendedLarge_MeshGenerators);
+                        model = CreateBuildingBlock(pos, block, Blueprint,
+                            MeshGenerators.BuildingBlockVariants_ExtendedLarge_MeshGenerators);
                         break;
                     case 1824: //WoodExtended2
                     case 1825: //ConcreteExtended2
@@ -302,7 +357,8 @@ namespace EPBLab.ViewModel
                     case 1834: //HullArmoredExtendedSmall2
                     case 1835: //HullCombatExtendedSmall2
                     case 1836: //AlienExtendedLarge2
-                        model = CreateBuildingBlock(pos, block, blueprint, MeshGenerators.BuildingBlockVariants_ExtendedLarge2_MeshGenerators);
+                        model = CreateBuildingBlock(pos, block, Blueprint,
+                            MeshGenerators.BuildingBlockVariants_ExtendedLarge2_MeshGenerators);
                         break;
                     case 1837: //WoodExtended3
                     case 1838: //ConcreteExtended3
@@ -317,7 +373,8 @@ namespace EPBLab.ViewModel
                     case 1847: //HullArmoredExtendedSmall3
                     case 1848: //HullCombatExtendedSmall3
                     case 1849: //AlienExtendedLarge3
-                        model = CreateBuildingBlock(pos, block, blueprint, MeshGenerators.BuildingBlockVariants_ExtendedLarge3_MeshGenerators);
+                        model = CreateBuildingBlock(pos, block, Blueprint,
+                            MeshGenerators.BuildingBlockVariants_ExtendedLarge3_MeshGenerators);
                         break;
                     case 1850: //WoodExtended4
                     case 1851: //ConcreteExtended4
@@ -332,7 +389,8 @@ namespace EPBLab.ViewModel
                     case 1860: //HullArmoredExtendedSmall4
                     case 1861: //HullCombatExtendedSmall4
                     case 1862: //AlienExtendedLarge4
-                        model = CreateBuildingBlock(pos, block, blueprint, MeshGenerators.BuildingBlockVariants_ExtendedLarge4_MeshGenerators);
+                        model = CreateBuildingBlock(pos, block, Blueprint,
+                            MeshGenerators.BuildingBlockVariants_ExtendedLarge4_MeshGenerators);
                         break;
                     case 1863: //WoodExtended5
                     case 1864: //ConcreteExtended5
@@ -347,19 +405,28 @@ namespace EPBLab.ViewModel
                     case 1873: //HullArmoredExtendedSmall5
                     case 1874: //HullCombatExtendedSmall5
                     case 1875: //AlienExtendedLarge5
-                        model = CreateBuildingBlock(pos, block, blueprint, MeshGenerators.BuildingBlockVariants_ExtendedLarge5_MeshGenerators);
+                        model = CreateBuildingBlock(pos, block, Blueprint,
+                            MeshGenerators.BuildingBlockVariants_ExtendedLarge5_MeshGenerators);
                         break;
                     default:
                         ColourIndex colourIndex = block.Colours[0];
-                        Colour colour = blueprint.Palette[colourIndex];
+                        Colour colour = Blueprint.Palette[colourIndex];
                         Color c = Color.FromArgb(128, colour.R, colour.G, colour.B);
 
                         model = CreateSelectionBox(pos, 1.0, c);
                         break;
                 }
-                group.Children.Add(model);
+                tempModelGroup.Children.Add(model);
             }
-            return group;
+
+            tempNodeCount += count;
+            if (tempNodeCount == tempGoal)
+            {
+                Model = tempModelGroup;
+                tempModelGroup = null;
+                tempGoal = 0;
+                tempNodeCount = 0;
+            }
         }
 
         private void BuildSelectionModel()
