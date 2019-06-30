@@ -30,6 +30,23 @@ namespace EPBLib
 
         public int Count => Blocks.Count;
 
+        public void Remove(BlockPos pos)
+        {
+            if (Blocks.ContainsKey(pos))
+            {
+                Blocks.Remove(pos);
+            }
+        }
+        public void Remove(byte x, byte y, byte z)
+        {
+            Remove(new BlockPos(x, y, z));
+        }
+
+        public void Remove(Block block)
+        {
+            Remove(block.Position);
+        }
+
         public class KeyComparer : IEqualityComparer<BlockPos>
         {
             public bool Equals(BlockPos a, BlockPos b)

@@ -93,6 +93,13 @@ namespace EPBLib
             // TODO: Update blockCounts
             Blocks[block.Position] = block;
         }
+        public void SetBlock(BlockList blocks)
+        {
+            foreach (Block block in blocks)
+            {
+                Blocks[block.Position] = block;
+            }           
+        }
 
         public void ComputeDimensions()
         {
