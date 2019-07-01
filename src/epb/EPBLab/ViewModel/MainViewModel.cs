@@ -89,12 +89,6 @@ namespace EPBLab.ViewModel
             set { Set(ref _progressDescription, value); }
         }
         private string _progressDescription;
-        public int ProgressGoal
-        {
-            get { return _progressGoal; }
-            set { Set(ref _progressGoal, value); }
-        }
-        private int _progressGoal;
         public int ProgressCurrent
         {
             get { return _progressCurrent; }
@@ -173,7 +167,6 @@ namespace EPBLab.ViewModel
                     }
                     blueprint.CountBlocks();
                     blueprint.ComputeDimensions();
-
                     Blueprints[SelectedBlueprintIndex].UpdateViewModels();
                     CurrentCommand = null;
                 }));
@@ -776,8 +769,7 @@ namespace EPBLab.ViewModel
         protected void UpdateProgress(ProgressUpdateMessage m)
         {
             ProgressDescription = m.Content.Description;
-            ProgressGoal = m.Content.Goal;
-            ProgressCurrent = m.Content.Current;
+            ProgressCurrent = (int)(m.Content.Progress * 100);
         }
 
         #region CreationHelpers

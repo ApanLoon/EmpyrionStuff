@@ -5,20 +5,18 @@ namespace EPBLab.Messages
     public class ProgressUpdateData
     {
         public string Description;
-        public int Goal;
-        public int Current;
+        public float Progress;
 
-        public ProgressUpdateData(string description, int goal, int current)
+        public ProgressUpdateData(string description, float progress)
         {
             Description = description;
-            Goal = goal;
-            Current = current;
+            Progress = progress;
         }
     }
 
     public class ProgressUpdateMessage : GenericMessage<ProgressUpdateData>
     {
-        public ProgressUpdateMessage(string description, int goal, int current) : base(new ProgressUpdateData(description, goal, current))
+        public ProgressUpdateMessage(string description, float progress) : base(new ProgressUpdateData(description, progress))
         {
             Identifier = string.Empty;
         }

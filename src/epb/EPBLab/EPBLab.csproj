@@ -80,7 +80,6 @@
     <Compile Include="Helpers\ColourExtensions.cs" />
     <Compile Include="Helpers\Point3DExtensions.cs" />
     <Compile Include="Helpers\Vector3DExtensions.cs" />
-    <Compile Include="Messages\BuildBlocksMessage.cs" />
     <Compile Include="Messages\CloseBlueprintMessage.cs" />
     <Compile Include="Messages\FilesOpenedMessage.cs" />
     <Compile Include="Behaviours\OpenFileBehaviour.cs" />

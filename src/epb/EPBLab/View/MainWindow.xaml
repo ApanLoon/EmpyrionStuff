@@ -197,16 +197,13 @@
         
         <StatusBar Grid.Row="3" HorizontalAlignment="Stretch">
             <StatusBarItem HorizontalAlignment="Stretch" Width="712">
-                <ProgressBar Minimum="0" Maximum="{Binding ProgressGoal}" Value="{Binding ProgressCurrent}" Height="14" Width="702" />
+                <ProgressBar Minimum="0" Maximum="100" Value="{Binding ProgressCurrent}" Height="14" Width="702" />
             </StatusBarItem>
             <StatusBarItem HorizontalAlignment="Right">
                 <TextBlock Text="{Binding ProgressDescription}" />
             </StatusBarItem>
             <StatusBarItem HorizontalAlignment="Right">
                 <TextBlock Text="{Binding ProgressCurrent}" />
-            </StatusBarItem>
-            <StatusBarItem HorizontalAlignment="Right">
-                <TextBlock Text="{Binding ProgressGoal}" />
             </StatusBarItem>
         </StatusBar>
 
