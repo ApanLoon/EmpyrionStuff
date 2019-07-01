@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using EPBLab.Messages;
@@ -27,7 +28,7 @@ namespace EPBLab.ViewModel
         //private readonly IDataService _dataService;
 
         #region Properties
-
+        #region Window
         public const string MainWindowTitlePropertyName = "MainWindowTitle";
         private string _mainWindowTitle = string.Empty;
         public string MainWindowTitle
@@ -35,7 +36,8 @@ namespace EPBLab.ViewModel
             get => _mainWindowTitle;
             set => Set(ref _mainWindowTitle, value);
         }
-
+        #endregion Window
+        #region Blueprints
         public const string BlueprintsPropertyName = "Blueprints";
         private ObservableCollection<BlueprintViewModel> _blueprints = new ObservableCollection<BlueprintViewModel>();
         public ObservableCollection<BlueprintViewModel> Blueprints
@@ -55,7 +57,8 @@ namespace EPBLab.ViewModel
                 RaisePropertyChanged(ShowBuildStructuresPropertyName);
             } 
         }
-
+        #endregion Blueprints
+        #region ToolbarCommandProperties
         public const string ShowBuildStructuresPropertyName = "ShowBuildStructures";
 
         public Visibility ShowBuildStructures => SelectedBlueprintIndex != -1 ? Visibility.Visible : Visibility.Collapsed;
@@ -82,7 +85,8 @@ namespace EPBLab.ViewModel
 
         public const string ShowCommandParametersPropertyName = "ShowCommandParameters";
         public Visibility ShowCommandParameters => CurrentCommand != null ? Visibility.Visible : Visibility.Collapsed;
-
+        #endregion ToolbarCommandProperties
+        #region Progress
         public string ProgressDescription
         {
             get { return _progressDescription; }
@@ -95,11 +99,28 @@ namespace EPBLab.ViewModel
             set { Set(ref _progressCurrent, value); }
         }
         private int _progressCurrent;
-
+        public string ProgressElapsed
+        {
+            get { return _progressElapsed; }
+            set { Set(ref _progressElapsed, value); }
+        }
+        private string _progressElapsed;
+        public string ProgressRemaining
+        {
+            get { return _progressRemaining; }
+            set { Set(ref _progressRemaining, value); }
+        }
+        private string _progressRemaining;
+        public Visibility ProgressVisibility
+        {
+            get { return _progressVisibility; }
+            set { Set(ref _progressVisibility, value); }
+        }
+        private Visibility _progressVisibility;
+        #endregion Progress
         #endregion Properties
 
         #region Commands
-
         #region Command_New
         public RelayCommand CommandNew
         {
@@ -692,9 +713,10 @@ namespace EPBLab.ViewModel
         }
         private RelayCommand _commandCancel;
         #endregion Command_Cancel
-
         #endregion Commands
 
+        #region MessageHandlers
+        #region NewBlueprint
         protected void NewBlueprint()
         {
             Blueprint blueprint = new Blueprint();
@@ -703,6 +725,8 @@ namespace EPBLab.ViewModel
             Blueprints.Add(vm);
             SelectedBlueprintIndex = Blueprints.Count - 1;
         }
+        #endregion NewBlueprint
+        #region OpenBlueprints
         protected void OpenBlueprints(FilesOpenedMessage m)
         {
             if (m.Identifier != "OpenBlueprints")
@@ -718,6 +742,8 @@ namespace EPBLab.ViewModel
                 SelectedBlueprintIndex = Blueprints.Count - 1;
             }
         }
+        #endregion OpenBlueprints
+        #region OpenEpb
         protected Blueprint OpenEpb(string path)
         {
             Blueprint blueprint = null;
@@ -736,6 +762,8 @@ namespace EPBLab.ViewModel
             }
             return blueprint;
         }
+        #endregion OpenEpb
+        #region SaveBlueprint
         protected void SaveBlueprint(SaveFileSelectedMessage m)
         {
             if (m.Identifier != "SaveBlueprint")
@@ -759,6 +787,8 @@ namespace EPBLab.ViewModel
                 stream?.Dispose();
             }
         }
+        #endregion SaveBlueprint
+        #region CloseBlueprint
         protected void CloseBlueprint(CloseBlueprintMessage m)
         {
             if (Blueprints.Contains(m.Content))
@@ -766,11 +796,60 @@ namespace EPBLab.ViewModel
                 Blueprints.Remove(m.Content);
             }
         }
+        #endregion CloseBlueprint
+        #region UpdateProgress
         protected void UpdateProgress(ProgressUpdateMessage m)
         {
+            float progress = m.Content.Progress;
+
+            Console.WriteLine($"UpdateProgress: {m.Content.Progress:0.0%}");
+
+            DateTime now = DateTime.Now;
+            if (progress == 0f)
+            {
+                ProgressElapsed = "";
+                ProgressRemaining = "";
+                ProgressVisibility = Visibility.Visible;
+                ProgressStopwatch.Reset();
+                ProgressStopwatch.Start();
+            }
+            else if (progress >= 1f)
+            {
+                ProgressStopwatch.Stop();
+                ProgressElapsed = "";
+                ProgressRemaining = "";
+                ProgressVisibility = Visibility.Hidden;
+            }
+            else
+            {
+                float elapsedTime = ProgressStopwatch.ElapsedMilliseconds;
+                TimeSpan e = TimeSpan.FromMilliseconds(elapsedTime);
+                ProgressElapsed = $"Elapsed: {TimeSpan2String(e)}";
+                if (elapsedTime > 5000f)
+                {
+                    TimeSpan remainingTime = TimeSpan.FromMilliseconds((elapsedTime / progress) * (1f - progress));
+                    ProgressRemaining = $" Remaining: {TimeSpan2String(remainingTime)}";
+                }
+            }
             ProgressDescription = m.Content.Description;
             ProgressCurrent = (int)(m.Content.Progress * 100);
         }
+        protected Stopwatch ProgressStopwatch = new Stopwatch();
+        #endregion UpdateProgress
+        #endregion MessageHandlers
+
+        #region ConversionHelpers
+        protected string TimeSpan2String(TimeSpan t)
+        {
+            string s = "";
+            if (t.Days    > 0) s += $"{t.Days} day{      (t.Days    > 1 ? "s" : "")} ";
+            if (t.Hours   > 0) s += $"{t.Hours} hour{    (t.Hours   > 1 ? "s" : "")} ";
+            if (t.Minutes > 0) s += $"{t.Minutes} minute{(t.Minutes > 1 ? "s" : "")} ";
+            if (t.Seconds > 0) s += $"{t.Seconds} second{(t.Seconds > 1 ? "s" : "")} ";
+            if (s == "") s = "<1 second";
+            return s;
+        }
+        #endregion ConversionHelpers
 
         #region CreationHelpers
         private string GetDefaultBuildingBlockTypeName(BlueprintType type)

@@ -196,14 +196,17 @@
         </TabControl>
         
         <StatusBar Grid.Row="3" HorizontalAlignment="Stretch">
-            <StatusBarItem HorizontalAlignment="Stretch" Width="712">
+            <StatusBarItem HorizontalAlignment="Stretch" Width="712" Visibility="{Binding ProgressVisibility}">
                 <ProgressBar Minimum="0" Maximum="100" Value="{Binding ProgressCurrent}" Height="14" Width="702" />
             </StatusBarItem>
-            <StatusBarItem HorizontalAlignment="Right">
+            <StatusBarItem HorizontalAlignment="Right" Visibility="{Binding ProgressVisibility}">
                 <TextBlock Text="{Binding ProgressDescription}" />
             </StatusBarItem>
-            <StatusBarItem HorizontalAlignment="Right">
-                <TextBlock Text="{Binding ProgressCurrent}" />
+            <StatusBarItem HorizontalAlignment="Right" Visibility="{Binding ProgressVisibility}">
+                <TextBlock Text="{Binding ProgressElapsed}" />
+            </StatusBarItem>
+            <StatusBarItem HorizontalAlignment="Right" Visibility="{Binding ProgressVisibility}">
+                <TextBlock Text="{Binding ProgressRemaining}" />
             </StatusBarItem>
         </StatusBar>
 

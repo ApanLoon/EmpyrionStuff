@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Windows;
-using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
+using System.Windows.Threading;
 using EPBLab.Helpers;
 using EPBLab.Messages;
 using EPBLab.ViewModel.BlockMeshes;
@@ -236,16 +235,16 @@ namespace EPBLab.ViewModel
             }
         }
 
-        private int tempGoal;
-        private int tempNodeCount;
-        private Model3DGroup tempModelGroup;
+        private int _buildModelFinalCount;
+        private int _buildModelCurrentCount;
+        private Model3DGroup _buildModel3DGroup;
 
         private void BuildModel(Blueprint blueprint)
         {
             Messenger.Default.Send(new ProgressUpdateMessage("Building 3D model", 0f));
 
-            tempGoal = BlockNodes.Count;
-            tempNodeCount = 0;
+            _buildModelFinalCount = BlockNodes.Count;
+            _buildModelCurrentCount = 0;
             BackgroundWorker worker = new BackgroundWorker();
             worker.DoWork += (sender, args) =>
             {
@@ -256,8 +255,7 @@ namespace EPBLab.ViewModel
                     if ((i > 0) && ((i % 100) == 0))
                     {
                         List<BlockNode> list = nodes;
-                        DispatcherHelper.RunAsync(() => { BuildBlocks(list); });
-                        //DispatcherHelper.CheckBeginInvokeOnUI(() => { BuildBlocks(list); });
+                        DispatcherHelper.UIDispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() => { BuildBlocks(list); }));
                         nodes = new List<BlockNode>();
                     }
                     nodes.Add(node);
@@ -265,8 +263,7 @@ namespace EPBLab.ViewModel
                 }
                 if (nodes.Count > 0)
                 {
-                    DispatcherHelper.RunAsync(() => { BuildBlocks(nodes); });
-                    //DispatcherHelper.CheckBeginInvokeOnUI(() => { BuildBlocks(nodes); });
+                    DispatcherHelper.UIDispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() => { BuildBlocks(nodes); }));
                 }
             };
             worker.RunWorkerAsync();
@@ -274,9 +271,9 @@ namespace EPBLab.ViewModel
 
         private void BuildBlocks(List<BlockNode> nodes)
         {
-            if (tempModelGroup == null)
+            if (_buildModel3DGroup == null)
             {
-                tempModelGroup = new Model3DGroup();
+                _buildModel3DGroup = new Model3DGroup();
             }
 
             GeometryModel3D model = null;
@@ -414,18 +411,17 @@ namespace EPBLab.ViewModel
                         model = CreateSelectionBox(pos, 1.0, c);
                         break;
                 }
-                tempModelGroup.Children.Add(model);
+                _buildModel3DGroup.Children.Add(model);
             }
 
-            tempNodeCount += count;
-            Messenger.Default.Send(new ProgressUpdateMessage("Building 3D model", (float)tempNodeCount / tempGoal));
-            if (tempNodeCount == tempGoal)
+            _buildModelCurrentCount += count;
+            Messenger.Default.Send(new ProgressUpdateMessage("Building 3D model", (float)_buildModelCurrentCount / _buildModelFinalCount));
+            if (_buildModelCurrentCount == _buildModelFinalCount)
             {
-                Model = tempModelGroup;
-                tempModelGroup = null;
-                tempGoal = 0;
-                tempNodeCount = 0;
-                Messenger.Default.Send(new ProgressUpdateMessage("", 0f));
+                Model = _buildModel3DGroup;
+                _buildModel3DGroup = null;
+                _buildModelFinalCount = 0;
+                _buildModelCurrentCount = 0;
             }
         }
 
