@@ -131,16 +131,13 @@ namespace EPBLab.ViewModel
                     ParameterIntVector sizeParameter = (ParameterIntVector)CurrentCommand.ParameterByName("Size");
                     ParameterBool hollowParameter = (ParameterBool) CurrentCommand.ParameterByName("Hollow");
 
-                    if (originParameter == null || sizeParameter == null || hollowParameter == null)
-                    {
-                        return; // TODO: should we also cancel here?
-                    }
-
                     int width   = sizeParameter.X;
                     int height  = sizeParameter.Y;
                     int depth   = sizeParameter.Z;
                     bool hollow = hollowParameter.IsTrue;
-                    BlockType blockType = BlockType.GetBlockType("HullFullLarge", "Cube");
+                    string typeName = GetDefaultBuildingBlockTypeName(blueprint.Type);
+
+                    BlockType blockType = BlockType.GetBlockType(typeName, "Cube");
                     byte blockVariant = BlockType.GetVariant(blockType.Id, "Cube");
                     for (int z = 0; z < depth; z++)
                     {
@@ -200,16 +197,12 @@ namespace EPBLab.ViewModel
                     ParameterIntVector originParameter = (ParameterIntVector)CurrentCommand.ParameterByName("Origin");
                     ParameterIntVector sizeParameter = (ParameterIntVector)CurrentCommand.ParameterByName("Size");
 
-                    if (originParameter == null || sizeParameter == null)
-                    {
-                        return; // TODO: should we also cancel here?
-                    }
-
                     int width  = sizeParameter.X;
                     int height = sizeParameter.Y;
                     int depth  = sizeParameter.Z;
+                    string typeName = GetDefaultBuildingBlockTypeName(blueprint.Type);
 
-                    BlockType blockType = BlockType.GetBlockType("HullFullLarge", "Cube");
+                    BlockType blockType = BlockType.GetBlockType(typeName, "Cube");
                     byte blockVariant = BlockType.GetVariant(blockType.Id, "Cube");
                     for (int z = 0; z < depth; z++)
                     {
@@ -261,14 +254,10 @@ namespace EPBLab.ViewModel
                     ParameterInt sizeParameter = (ParameterInt)CurrentCommand.ParameterByName("Size");
                     ParameterBool hollowParameter = (ParameterBool)CurrentCommand.ParameterByName("Hollow");
 
-                    if (originParameter == null || sizeParameter == null || hollowParameter == null)
-                    {
-                        return; // TODO: should we also cancel here?
-                    }
-
                     int width = sizeParameter.Value;
                     bool hollow = hollowParameter.IsTrue;
-                    BlockType blockType = BlockType.GetBlockType("HullFullLarge", "Cube");
+                    string typeName = GetDefaultBuildingBlockTypeName(blueprint.Type);
+                    BlockType blockType = BlockType.GetBlockType(typeName, "Cube");
                     byte blockVariant = BlockType.GetVariant(blockType.Id, "Cube");
 
                     bool cap = width % 2 == 1;
@@ -297,49 +286,49 @@ namespace EPBLab.ViewModel
 
                                 if (isBackEdge && isLeftEdge)
                                 {
-                                    t = BlockType.GetBlockType("HullFullLarge", "CornerC");
+                                    t = BlockType.GetBlockType(typeName, "CornerC");
                                     v = BlockType.GetVariant(t.Id, "CornerC");
                                     r = Block.BlockRotation.PxPy;
                                 }
                                 else if (isBackEdge && isRightEdge)
                                 {
-                                    t = BlockType.GetBlockType("HullFullLarge", "CornerC");
+                                    t = BlockType.GetBlockType(typeName, "CornerC");
                                     v = BlockType.GetVariant(t.Id, "CornerC");
                                     r = Block.BlockRotation.PzPy;
                                 }
                                 else if (isFrontEdge && isLeftEdge)
                                 {
-                                    t = BlockType.GetBlockType("HullFullLarge", "CornerC");
+                                    t = BlockType.GetBlockType(typeName, "CornerC");
                                     v = BlockType.GetVariant(t.Id, "CornerC");
                                     r = Block.BlockRotation.NzPy;
                                 }
                                 else if (isFrontEdge && isRightEdge)
                                 {
-                                    t = BlockType.GetBlockType("HullFullLarge", "CornerC");
+                                    t = BlockType.GetBlockType(typeName, "CornerC");
                                     v = BlockType.GetVariant(t.Id, "CornerC");
                                     r = Block.BlockRotation.NxPy;
                                 }
                                 else if (isBackEdge)
                                 {
-                                    t = BlockType.GetBlockType("HullFullLarge", "RampC");
+                                    t = BlockType.GetBlockType(typeName, "RampC");
                                     v = BlockType.GetVariant(t.Id, "RampC");
                                     r = Block.BlockRotation.NzPy;
                                 }
                                 else if (isFrontEdge)
                                 {
-                                    t = BlockType.GetBlockType("HullFullLarge", "RampC");
+                                    t = BlockType.GetBlockType(typeName, "RampC");
                                     v = BlockType.GetVariant(t.Id, "RampC");
                                     r = Block.BlockRotation.PzPy;
                                 }
                                 else if (isLeftEdge)
                                 {
-                                    t = BlockType.GetBlockType("HullFullLarge", "RampC");
+                                    t = BlockType.GetBlockType(typeName, "RampC");
                                     v = BlockType.GetVariant(t.Id, "RampC");
                                     r = Block.BlockRotation.NxPy;
                                 }
                                 else if (isRightEdge)
                                 {
-                                    t = BlockType.GetBlockType("HullFullLarge", "RampC");
+                                    t = BlockType.GetBlockType(typeName, "RampC");
                                     v = BlockType.GetVariant(t.Id, "RampC");
                                     r = Block.BlockRotation.PxPy;
                                 }
@@ -364,7 +353,7 @@ namespace EPBLab.ViewModel
                     }
                     if (cap)
                     {
-                        t = BlockType.GetBlockType("HullFullLarge", "PyramidA");
+                        t = BlockType.GetBlockType(typeName, "PyramidA");
                         v = BlockType.GetVariant(t.Id, "PyramidA");
                         r = Block.BlockRotation.PxPy;
                         Block block = new Block((byte)(y + originParameter.X),
@@ -398,21 +387,25 @@ namespace EPBLab.ViewModel
                     {
                         return;
                     }
+
                     Blueprint blueprint = Blueprints[SelectedBlueprintIndex].Blueprint;
 
-                    ParameterIntVector originParameter = (ParameterIntVector)CurrentCommand.ParameterByName("Origin");
-                    ParameterInt radiusParameter = (ParameterInt)CurrentCommand.ParameterByName("Radius");
-                    ParameterBool hollowParameter = (ParameterBool)CurrentCommand.ParameterByName("Hollow");
+                    ParameterIntVector originParameter     = (ParameterIntVector)CurrentCommand.ParameterByName("Origin");
+                    ParameterInt       radiusParameter     =       (ParameterInt)CurrentCommand.ParameterByName("Radius");
+                    ParameterBool      hollowParameter     =      (ParameterBool)CurrentCommand.ParameterByName("Hollow");
+                    ParameterBool      thickShellParameter =      (ParameterBool)CurrentCommand.ParameterByName("Thick shell");
+                    ParameterBool      toplessParameter    =      (ParameterBool)CurrentCommand.ParameterByName("Topless");
 
-                    if (originParameter == null || radiusParameter == null || hollowParameter == null)
-                    {
-                        return; // TODO: should we also cancel here?
-                    }
+                    int  radius     = radiusParameter.Value;
+                    bool hollow     = hollowParameter.IsTrue;
+                    bool thickShell = thickShellParameter.IsTrue;
+                    bool topless    = toplessParameter.IsTrue;
+                    string typeName = GetDefaultBuildingBlockTypeName(blueprint.Type);
 
-                    int radius = radiusParameter.Value;
-                    bool hollow = hollowParameter.IsTrue;
-                    BlockType blockType = BlockType.GetBlockType("HullFullLarge", "Cube");
+                    BlockType blockType = BlockType.GetBlockType(typeName, "Cube");
                     byte blockVariant = BlockType.GetVariant(blockType.Id, "Cube");
+
+                    BlockList blocks = new BlockList();
 
                     int rSquared = radius * radius;
 
@@ -423,32 +416,53 @@ namespace EPBLab.ViewModel
                             for (int z = -radius; z < radius + 1; z++)
                             {
                                 int d = x * x + y * y + z * z;
-
                                 if (d > rSquared)
                                 {
                                     continue;
                                 }
 
-                                bool edge = d > rSquared - 10; // TODO: How can I determine if this block is on the surface of the sphere?
-
-                                if (!edge && hollow)
-                                {
-                                    continue;
-                                }
-
-                                Block block = new Block((byte) (radius + x + originParameter.X),
-                                                        (byte) (radius + y + originParameter.Y),
-                                                        (byte) (radius + z + originParameter.Z))
+                                Block block = new Block((byte)(radius + x + originParameter.X),
+                                    (byte)(radius + y + originParameter.Y),
+                                    (byte)(radius + z + originParameter.Z))
                                 {
                                     BlockType = blockType,
                                     Variant = blockVariant
                                 };
-                                block.SetColour(edge ? ColourIndex.None : ColourIndex.Pink);
-                                blueprint.SetBlock(block);
+                                blocks[block.Position] = block;
                             }
                         }
                     }
 
+                    blocks = ModifyInterior(blocks, (l, block) =>
+                    {
+                        if (hollow)
+                        {
+                            l.Remove(block);
+                        }
+                        else
+                        {
+                            l[block.Position].SetColour(ColourIndex.Pink);
+                        }
+                    }, thickShell);
+
+                    if (topless)
+                    {
+                        for (int x = -radius; x < radius + 1; x++)
+                        {
+                            for (int y = 1; y < radius + 1; y++)
+                            {
+                                for (int z = -radius; z < radius + 1; z++)
+                                {
+                                    blocks.Remove(
+                                            (byte)(radius + x + originParameter.X),
+                                            (byte)(radius + y + originParameter.Y),
+                                            (byte)(radius + z + originParameter.Z));
+                                }
+                            }
+                        }
+                    }
+
+                    blueprint.SetBlock(blocks);
                     blueprint.CountBlocks();
                     blueprint.ComputeDimensions();
 
@@ -765,6 +779,72 @@ namespace EPBLab.ViewModel
             ProgressGoal = m.Content.Goal;
             ProgressCurrent = m.Content.Current;
         }
+
+        #region CreationHelpers
+        private string GetDefaultBuildingBlockTypeName(BlueprintType type)
+        {
+            switch (type)
+            {
+                case BlueprintType.Voxel:
+                    return "HullFullLarge";
+                case BlueprintType.Base:
+                    return "HullFullLarge";
+                case BlueprintType.SmallVessel:
+                    return "HullFullSmall";
+                case BlueprintType.CapitalVessel:
+                    return "HullFullLarge";
+                case BlueprintType.HoverVessel:
+                    return "HullFullSmall";
+            }
+            return "HullFullLarge";
+        }
+
+        protected BlockList ModifyInterior(BlockList srcBlocks, Action<BlockList, Block> modifyInterior, bool thickShell = false)
+        {
+            BlockList blocks = new BlockList();
+            foreach (Block block in srcBlocks)
+            {
+                if (block == null)
+                {
+                    continue;
+                }
+                BlockPos pos = block.Position;
+                blocks[pos] = block;
+                bool isInterior = IsInterior(srcBlocks, pos, thickShell);
+                if (isInterior)
+                {
+                    modifyInterior(blocks, block);
+                }
+            }
+            return blocks;
+        }
+
+        protected bool IsInterior(BlockList blocks, BlockPos pos, bool thickShell = true)
+        {
+            for (int i = -1; i <= 1; i++)
+            {
+                for (int j = -1; j <= 1; j++)
+                {
+                    for (int k = -1; k <= 1; k++)
+                    {
+                        if ((!thickShell && (Math.Abs(i) + Math.Abs(j) + Math.Abs(k) != 1)) || (i == 0 && j == 0 && k == 0))
+                        {
+                            continue;
+                        }
+
+                        if (blocks[(byte)(pos.X + i),
+                                (byte)(pos.Y + j),
+                                (byte)(pos.Z + k)] == null)
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+        #endregion CreationHelpers
+
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
@@ -880,13 +960,24 @@ namespace EPBLab.ViewModel
                         Name = "Hollow",
                         Description = "Make the sphere hollow",
                         IsTrue = false
+                    },
+                    new ParameterBool()
+                    {
+                        Name = "Thick shell",
+                        Description = "Include diagonals in interior check to make the shell thicker",
+                        IsTrue = false
+                    },
+                    new ParameterBool()
+                    {
+                        Name = "Topless",
+                        Description = "Cut off top half",
+                        IsTrue = false
                     }
                 },
                 Accept = CommandCreateSphere,
                 Select = CommandSelect,
                 Cancel = CommandCancel
             });
-
             BuildStructureCommands.Add(new Command()
             {
                 Name = "Core",
