@@ -20,7 +20,7 @@ A command line tool that parses EPB blueprint files. It can also create rudiment
     * BaseBlockTypes: Generate a series of blocks of increasing type ids. Most likely generates an EPB that can't be spawned. Debug only.
 
 ## EPBLab
-A Windows application with a graphical user interface for examining EPB files.
+A Windows application with a graphical user interface for examining, modifying or creating EPB files.
 * General
     * Create structures such as: Box, box frame, pyramid, sphere, and some for debugging
 * Summary
