@@ -817,6 +817,7 @@ namespace EPBLib
             {  1676, new BlockType(){Id =  1676, Name = "CargoContainerSmall"          , Category = "Devices"                      , Ref = ""                             }},
             {  1677, new BlockType(){Id =  1677, Name = "CargoContainerMedium"         , Category = "Devices"                      , Ref = "CargoContainerSmall"          }},
             {  1678, new BlockType(){Id =  1678, Name = "CargoContainerSV"             , Category = "Devices"                      , Ref = "CargoContainerSmall"          }},
+            {  1680, new BlockType(){Id =  1680, Name = "TurretEnemyEMP"               , Category = "Weapons/Items"                , Ref = "TurretIONCannon"              }},
             {  1682, new BlockType(){Id =  1682, Name = "ContainerControllerLarge"     , Category = "Devices"                      , Ref = ""                             }},
             {  1683, new BlockType(){Id =  1683, Name = "ContainerExtensionLarge"      , Category = "Devices"                      , Ref = ""                             }},
             {  1684, new BlockType(){Id =  1684, Name = "ContainerControllerSmall"     , Category = "Devices"                      , Ref = "ContainerControllerLarge"     }},
