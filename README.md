@@ -22,7 +22,40 @@ A command line tool that parses EPB blueprint files. It can also create rudiment
 ## EPBLab
 A Windows application with a graphical user interface for examining, modifying or creating EPB files.
 * General
-    * Create structures such as: Box, box frame, pyramid, sphere, and some for debugging
+    * Create structures such as:
+        * Box: Creates a box within the current blueprint
+            * Origin - Position of bottom, left, back corner
+            * Size - Width, height and depth in blocks
+            * Hole size - Width, height and depth of a box hole at the centre of the box. Leave 0 for no hole
+            * Hollow - Make the structure hollow
+            * Thick shell - Make sure that there are no "diagonal gaps" in the shell
+            * Topless - Cut off the top half of the structure
+        * Box frame: Creates a frame outline of a box in the current blueprint
+            * Origin - Position of bottom, left, back corner
+            * Size - Width, height and depth in blocks
+        * Pyramid: Creates a pyramid with 45 degree slopes in the current blueprint
+            * Origin - Position of bottom, left, back corner
+            * Size - Length of the side of the base square in blocks
+            * Hollow - Make the structure hollow
+        * Sphere: Creates a sphere in the current blueprint
+            * Origin - Position of bottom, left, back corner of the bounding box
+            * Diameter - Outer diameter in blocks
+            * Hole diameter - Diameter a spherical hole at the centre of the sphere. Leave 0 for no hole
+            * Hollow - Make the structure hollow
+            * Thick shell - Make sure that there are no "diagonal gaps" in the shell
+            * Topless - Cut off the top half of the structure
+        * Cylinder: Creates a cylinder in the current blueprint
+            * Origin - Position of bottom, left, back corner of the bounding box
+            * Diameter - Outer diameter in blocks
+            * Hole diameter - Diameter a cylindrical hole at the centre of the cylinder. Leave 0 for no hole
+            * Hollow - Make the structure hollow
+            * Thick shell - Make sure that there are no "diagonal gaps" in the shell
+            * Topless - Cut off the top half of the structure
+        * Core: Places a core in the current blueprint
+            * Origin - Position of core
+        * Core + Lever: (Debug) Create a core and a lever in the current blueprint
+        * Hull variants: (Debug) Creates one block of each variant for Hull&ast;Small&ast; blocks. Spaced out in a grid
+        * All blocks: (Debug) Creates one block, variand 0, of each block type that is allowed in the current blueprint. Spaced out in a grid
 * Summary
     * EPB file version
     * Blueprint type (Voxel, Base, Hover vessel, Small vessel or Capital vessel)
