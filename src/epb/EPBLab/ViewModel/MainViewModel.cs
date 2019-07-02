@@ -923,7 +923,8 @@ namespace EPBLab.ViewModel
         {
             SetMainWindowTitle();
 
-            // Box
+            #region BuildStructureCommands
+            #region Box
             BuildStructureCommands.Add(new Command()
             {
                 Name = "Box",
@@ -954,7 +955,8 @@ namespace EPBLab.ViewModel
                 Select = CommandSelect,
                 Cancel = CommandCancel
             });
-            // BoxFrame
+            #endregion Box
+            #region BoxFrame
             BuildStructureCommands.Add(new Command()
             {
                 Name = "Box frame",
@@ -979,7 +981,8 @@ namespace EPBLab.ViewModel
                 Select = CommandSelect,
                 Cancel = CommandCancel
             });
-            // Pyramid
+            #endregion BoxFrame
+            #region Pyramid
             BuildStructureCommands.Add(new Command()
             {
                 Name = "Pyramid",
@@ -1008,7 +1011,8 @@ namespace EPBLab.ViewModel
                 Select = CommandSelect,
                 Cancel = CommandCancel
             });
-            // Sphere
+            #endregion Pyramid
+            #region Sphere
             BuildStructureCommands.Add(new Command()
             {
                 Name = "Sphere",
@@ -1049,6 +1053,8 @@ namespace EPBLab.ViewModel
                 Select = CommandSelect,
                 Cancel = CommandCancel
             });
+            #endregion Sphere
+            #region Core
             BuildStructureCommands.Add(new Command()
             {
                 Name = "Core",
@@ -1065,25 +1071,12 @@ namespace EPBLab.ViewModel
                 Select = CommandSelect,
                 Cancel = CommandCancel
             });
+            #endregion Core
             BuildStructureCommands.Add(new Command() { Name = "Core + lever", Icon = "Empty.png", Accept = CommandCreateCoreWithLever, Select = CommandSelect, Cancel = CommandCancel });
             BuildStructureCommands.Add(new Command() { Name = "Hull variants", Icon = "Empty.png", Accept = CommandCreateHullVariants, Select = CommandSelect, Cancel = CommandCancel });
             BuildStructureCommands.Add(new Command() { Name = "All blocks", Icon = "Empty.png", Accept = CommandCreateAllBlocks, Select = CommandSelect, Cancel = CommandCancel });
+            #endregion BuildStructureCommands
 
-            /*
-            _dataService = dataService;
-            _dataService.GetData(
-                (item, error) =>
-                {
-                    if (error != null)
-                    {
-                        // Report error here
-                        return;
-                    }
-
-                    // Update local properties with information from the data item.
-                    //WelcomeTitle = item.Title;
-                });
-            */
             Messenger.Default.Register<FilesOpenedMessage>(this, OpenBlueprints);
             Messenger.Default.Register<SaveFileSelectedMessage>(this, SaveBlueprint);
             Messenger.Default.Register<CloseBlueprintMessage>(this, CloseBlueprint);
