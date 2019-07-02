@@ -1288,7 +1288,7 @@ namespace EPBLab.ViewModel
                     new ParameterBool()
                     {
                         Name = "Hollow",
-                        Description = "Make the sphere hollow",
+                        Description = "Make the cylinder hollow",
                         IsTrue = false
                     },
                     new ParameterBool()
