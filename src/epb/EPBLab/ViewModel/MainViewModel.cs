@@ -142,52 +142,97 @@ namespace EPBLab.ViewModel
                     }
                     Blueprint blueprint = Blueprints[SelectedBlueprintIndex].Blueprint;
 
-                    ParameterIntVector originParameter = (ParameterIntVector)CurrentCommand.ParameterByName("Origin");
-                    ParameterIntVector sizeParameter = (ParameterIntVector)CurrentCommand.ParameterByName("Size");
-                    ParameterBool hollowParameter = (ParameterBool) CurrentCommand.ParameterByName("Hollow");
+                    ParameterIntVector originParameter     = (ParameterIntVector)CurrentCommand.ParameterByName("Origin");
+                    ParameterIntVector sizeParameter       = (ParameterIntVector)CurrentCommand.ParameterByName("Size");
+                    ParameterIntVector holeSizeParameter   = (ParameterIntVector)CurrentCommand.ParameterByName("Hole size");
+                    ParameterBool      hollowParameter     =      (ParameterBool)CurrentCommand.ParameterByName("Hollow");
+                    ParameterBool      thickShellParameter =      (ParameterBool)CurrentCommand.ParameterByName("Thick shell");
+                    ParameterBool      toplessParameter    =      (ParameterBool)CurrentCommand.ParameterByName("Topless");
 
-                    int width   = sizeParameter.X;
-                    int height  = sizeParameter.Y;
-                    int depth   = sizeParameter.Z;
-                    bool hollow = hollowParameter.IsTrue;
-                    string typeName = GetDefaultBuildingBlockTypeName(blueprint.Type);
+                    int    width      = sizeParameter.X;
+                    int    height     = sizeParameter.Y;
+                    int    depth      = sizeParameter.Z;
+                    int    holeWidth  = holeSizeParameter.X;
+                    int    holeHeight = holeSizeParameter.Y;
+                    int    holeDepth  = holeSizeParameter.Z;
+                    bool   hollow     = hollowParameter.IsTrue;
+                    bool   thickShell = thickShellParameter.IsTrue;
+                    bool   topless    = toplessParameter.IsTrue;
+                    string typeName   = GetDefaultBuildingBlockTypeName(blueprint.Type);
 
                     BlockType blockType = BlockType.GetBlockType(typeName, "Cube");
                     byte blockVariant = BlockType.GetVariant(blockType.Id, "Cube");
-                    for (int z = 0; z < depth; z++)
-                    {
-                        for (int y = 0; y < height; y++)
-                        {
-                            for (int x = 0; x < width; x++)
-                            {
-                                bool isInterior = (x > 0 && x < (width - 1))
-                                                  && (y > 0 && y < (height - 1))
-                                                  && (z > 0 && z < (depth - 1));
 
-                                if (!isInterior || !hollow)
+                    int iMin = (int)(width  / 2f - holeWidth  / 2f + 0.5f);
+                    int iMax = (int)(width  / 2f + holeWidth  / 2f + 0.5f);
+                    int jMin = (int)(height / 2f - holeHeight / 2f + 0.5f);
+                    int jMax = (int)(height / 2f + holeHeight / 2f + 0.5f);
+                    int kMin = (int)(depth  / 2f - holeDepth  / 2f + 0.5f);
+                    int kMax = (int)(depth  / 2f + holeDepth  / 2f + 0.5f);
+
+                    BlockList blocks = CreateStructure (
+                        (byte)(originParameter.X),
+                        (byte)(originParameter.Y),
+                        (byte)(originParameter.Z),
+                        (byte)(width),
+                        (byte)(height),
+                        (byte)(depth),
+                        (i, j, k) =>
+                        {
+                            if (   (i >= iMin && i < iMax)
+                                && (j >= jMin && j < jMax)
+                                && (k >= kMin && k < kMax))
+                            {
+                                return null;
+                            }
+                            Block block = new Block()
+                            {
+                                BlockType = blockType,
+                                Variant = blockVariant
+                            };
+                            block.SetTexture(14, (i % 2) == 1);
+                            block.SetSymbol(1, (Block.SymbolRotation)(i % 4), Block.FaceIndex.Back);
+                            block.SetSymbol(2, face: Block.FaceIndex.Right);
+                            block.SetSymbol(3, face: Block.FaceIndex.Front);
+                            block.SetSymbol(4, face: Block.FaceIndex.Left);
+                            block.SetSymbol(5, face: Block.FaceIndex.Top);
+                            block.SetSymbol(6, face: Block.FaceIndex.Bottom);
+                            return block;
+                        });
+
+                    blocks = ModifyInterior(blocks, (l, block) =>
+                    {
+                        if (hollow)
+                        {
+                            l.Remove(block);
+                        }
+                        else
+                        {
+                            l[block.Position].SetColour(ColourIndex.Pink);
+                        }
+                    }, thickShell);
+
+                    if (topless)
+                    {
+                        for (int x = 0; x < width; x++)
+                        {
+                            for (int y = height / 2 + 1; y < height; y++)
+                            {
+                                for (int z = 0; z < depth; z++)
                                 {
-                                    Block block = new Block((byte)(x + originParameter.X),
-                                                            (byte)(y + originParameter.Y),
-                                                            (byte)(z + originParameter.Z))
-                                    {
-                                        BlockType = blockType,
-                                        Variant = blockVariant
-                                    };
-                                    block.SetColour(isInterior ? ColourIndex.Pink : ColourIndex.None);
-                                    block.SetTexture(14, (x % 2) == 1);
-                                    block.SetSymbol(1, (Block.SymbolRotation)(x % 4), Block.FaceIndex.Back);
-                                    block.SetSymbol(2, face: Block.FaceIndex.Right);
-                                    block.SetSymbol(3, face: Block.FaceIndex.Front);
-                                    block.SetSymbol(4, face: Block.FaceIndex.Left);
-                                    block.SetSymbol(5, face: Block.FaceIndex.Top);
-                                    block.SetSymbol(6, face: Block.FaceIndex.Bottom);
-                                    blueprint.SetBlock(block);
+                                    blocks.Remove(
+                                            (byte)(x + originParameter.X),
+                                            (byte)(y + originParameter.Y),
+                                            (byte)(z + originParameter.Z));
                                 }
                             }
                         }
                     }
+
+                    blueprint.SetBlock(blocks);
                     blueprint.CountBlocks();
                     blueprint.ComputeDimensions();
+
                     Blueprints[SelectedBlueprintIndex].UpdateViewModels();
                     CurrentCommand = null;
                 }));
@@ -209,7 +254,7 @@ namespace EPBLab.ViewModel
                     Blueprint blueprint = Blueprints[SelectedBlueprintIndex].Blueprint;
 
                     ParameterIntVector originParameter = (ParameterIntVector)CurrentCommand.ParameterByName("Origin");
-                    ParameterIntVector sizeParameter = (ParameterIntVector)CurrentCommand.ParameterByName("Size");
+                    ParameterIntVector sizeParameter   = (ParameterIntVector)CurrentCommand.ParameterByName("Size");
 
                     int width  = sizeParameter.X;
                     int height = sizeParameter.Y;
@@ -218,35 +263,39 @@ namespace EPBLab.ViewModel
 
                     BlockType blockType = BlockType.GetBlockType(typeName, "Cube");
                     byte blockVariant = BlockType.GetVariant(blockType.Id, "Cube");
-                    for (int z = 0; z < depth; z++)
+
+                    BlockList blocks = CreateStructure(
+                    (byte)(originParameter.X),
+                    (byte)(originParameter.Y),
+                    (byte)(originParameter.Z),
+                    (byte)(width),
+                    (byte)(height),
+                    (byte)(depth),
+                    (i, j, k) =>
                     {
-                        for (int y = 0; y < height; y++)
+                        bool a = i % (width  - 1) == 0;
+                        bool b = j % (height - 1) == 0;
+                        bool c = k % (depth  - 1) == 0;
+                        int d = (a ? 1 : 0) + (b ? 1 : 0) + (c ? 1 : 0);
+                        if (d < 2)
                         {
-                            for (int x = 0; x < width; x++)
-                            {
-                                bool a = x % (width - 1) == 0;
-                                bool b = y % (height - 1) == 0;
-                                bool c = z % (depth - 1) == 0;
-                                int d = (a ? 1 : 0) + (b ? 1 : 0) + (c ? 1 : 0);
-                                if (d >= 2)
-                                {
-                                    blueprint.SetBlock(new Block((byte)(x + originParameter.X),
-                                                                 (byte)(y + originParameter.Y),
-                                                                 (byte)(z + originParameter.Z))
-                                    {
-                                        BlockType = blockType,
-                                        Variant = blockVariant
-                                    });
-                                }
-                            }
+                            return null;
                         }
-                    }
+                        return new Block()
+                        {
+                            BlockType = blockType,
+                            Variant = blockVariant
+                        };
+                    });
+
+                    blueprint.SetBlock(blocks);
                     blueprint.CountBlocks();
                     blueprint.ComputeDimensions();
 
                     Blueprints[SelectedBlueprintIndex].UpdateViewModels();
                     CurrentCommand = null;
                 }));
+
             }
         }
         private RelayCommand _commandCreateBoxFrame;
@@ -404,48 +453,49 @@ namespace EPBLab.ViewModel
 
                     Blueprint blueprint = Blueprints[SelectedBlueprintIndex].Blueprint;
 
-                    ParameterIntVector originParameter     = (ParameterIntVector)CurrentCommand.ParameterByName("Origin");
-                    ParameterInt       radiusParameter     =       (ParameterInt)CurrentCommand.ParameterByName("Radius");
-                    ParameterBool      hollowParameter     =      (ParameterBool)CurrentCommand.ParameterByName("Hollow");
-                    ParameterBool      thickShellParameter =      (ParameterBool)CurrentCommand.ParameterByName("Thick shell");
-                    ParameterBool      toplessParameter    =      (ParameterBool)CurrentCommand.ParameterByName("Topless");
+                    ParameterIntVector originParameter       = (ParameterIntVector)CurrentCommand.ParameterByName("Origin");
+                    ParameterInt       diameterParameter     =       (ParameterInt)CurrentCommand.ParameterByName("Diameter");
+                    ParameterInt       holeDiameterParameter =       (ParameterInt)CurrentCommand.ParameterByName("Hole diameter");
+                    ParameterBool      hollowParameter       =      (ParameterBool)CurrentCommand.ParameterByName("Hollow");
+                    ParameterBool      thickShellParameter   =      (ParameterBool)CurrentCommand.ParameterByName("Thick shell");
+                    ParameterBool      toplessParameter      =      (ParameterBool)CurrentCommand.ParameterByName("Topless");
 
-                    int  radius     = radiusParameter.Value;
-                    bool hollow     = hollowParameter.IsTrue;
-                    bool thickShell = thickShellParameter.IsTrue;
-                    bool topless    = toplessParameter.IsTrue;
-                    string typeName = GetDefaultBuildingBlockTypeName(blueprint.Type);
+                    int    diameter     = diameterParameter.Value;
+                    int    holeDiameter = holeDiameterParameter.Value;
+                    bool   hollow       = hollowParameter.IsTrue;
+                    bool   thickShell   = thickShellParameter.IsTrue;
+                    bool   topless      = toplessParameter.IsTrue;
+                    string typeName     = GetDefaultBuildingBlockTypeName(blueprint.Type);
 
                     BlockType blockType = BlockType.GetBlockType(typeName, "Cube");
                     byte blockVariant = BlockType.GetVariant(blockType.Id, "Cube");
 
-                    BlockList blocks = new BlockList();
+                    float oSquared = diameter * diameter / 4f;
+                    float iSquared = holeDiameter * holeDiameter / 4f;
 
-                    int rSquared = radius * radius;
-
-                    for (int x = -radius; x < radius + 1; x++)
-                    {
-                        for (int y = -radius; y < radius + 1; y++)
+                    BlockList blocks = CreateStructure(
+                        (byte)(originParameter.X),
+                        (byte)(originParameter.Y),
+                        (byte)(originParameter.Z),
+                        (byte)(diameter),
+                        (byte)(diameter),
+                        (byte)(diameter),
+                        (i, j, k) =>
                         {
-                            for (int z = -radius; z < radius + 1; z++)
+                            float x = i - diameter / 2f + 0.5f;
+                            float y = j - diameter / 2f + 0.5f;
+                            float z = k - diameter / 2f + 0.5f;
+                            float dSquared = x * x + y * y + z * z;
+                            if (dSquared > oSquared || dSquared < iSquared)
                             {
-                                int d = x * x + y * y + z * z;
-                                if (d > rSquared)
-                                {
-                                    continue;
-                                }
-
-                                Block block = new Block((byte)(radius + x + originParameter.X),
-                                    (byte)(radius + y + originParameter.Y),
-                                    (byte)(radius + z + originParameter.Z))
-                                {
-                                    BlockType = blockType,
-                                    Variant = blockVariant
-                                };
-                                blocks[block.Position] = block;
+                                return null;
                             }
-                        }
-                    }
+                            return new Block()
+                            {
+                                BlockType = blockType,
+                                Variant = blockVariant
+                            };
+                        });
 
                     blocks = ModifyInterior(blocks, (l, block) =>
                     {
@@ -461,16 +511,16 @@ namespace EPBLab.ViewModel
 
                     if (topless)
                     {
-                        for (int x = -radius; x < radius + 1; x++)
+                        for (int x = 0; x < diameter; x++)
                         {
-                            for (int y = 1; y < radius + 1; y++)
+                            for (int y = diameter / 2 + 1; y < diameter; y++)
                             {
-                                for (int z = -radius; z < radius + 1; z++)
+                                for (int z = 0; z < diameter; z++)
                                 {
                                     blocks.Remove(
-                                            (byte)(radius + x + originParameter.X),
-                                            (byte)(radius + y + originParameter.Y),
-                                            (byte)(radius + z + originParameter.Z));
+                                            (byte)(x + originParameter.X),
+                                            (byte)(y + originParameter.Y),
+                                            (byte)(z + originParameter.Z));
                                 }
                             }
                         }
@@ -487,6 +537,107 @@ namespace EPBLab.ViewModel
         }
         private RelayCommand _commandCreateSphere;
         #endregion CommandCreateSphere
+        #region CommandCreateCylinder
+        public RelayCommand CommandCreateCylinder
+        {
+            get
+            {
+                return _commandCreateCylinder ?? (_commandCreateCylinder = new RelayCommand(() =>
+                {
+                    if (SelectedBlueprintIndex == -1)
+                    {
+                        return;
+                    }
+
+                    Blueprint blueprint = Blueprints[SelectedBlueprintIndex].Blueprint;
+
+                    ParameterIntVector originParameter       = (ParameterIntVector)CurrentCommand.ParameterByName("Origin");
+                    ParameterInt       diameterParameter     =       (ParameterInt)CurrentCommand.ParameterByName("Diameter");
+                    ParameterInt       holeDiameterParameter =       (ParameterInt)CurrentCommand.ParameterByName("Hole diameter");
+                    ParameterInt       heightParameter       =       (ParameterInt)CurrentCommand.ParameterByName("Height");
+                    ParameterBool      hollowParameter       =      (ParameterBool)CurrentCommand.ParameterByName("Hollow");
+                    ParameterBool      thickShellParameter   =      (ParameterBool)CurrentCommand.ParameterByName("Thick shell");
+                    ParameterBool      toplessParameter      =      (ParameterBool)CurrentCommand.ParameterByName("Topless");
+
+                    int    diameter     = diameterParameter.Value;
+                    int    holeDiameter = holeDiameterParameter.Value;
+                    int    height       = heightParameter.Value;
+                    bool   hollow       = hollowParameter.IsTrue;
+                    bool   thickShell   = thickShellParameter.IsTrue;
+                    bool   topless      = toplessParameter.IsTrue;
+                    string typeName     = GetDefaultBuildingBlockTypeName(blueprint.Type);
+
+                    BlockType blockType = BlockType.GetBlockType(typeName, "Cube");
+                    byte blockVariant = BlockType.GetVariant(blockType.Id, "Cube");
+
+                    float oSquared = diameter * diameter / 4f;
+                    float iSquared = holeDiameter * holeDiameter / 4f;
+
+                    BlockList blocks = CreateStructure(
+                        (byte)(originParameter.X),
+                        (byte)(originParameter.Y),
+                        (byte)(originParameter.Z),
+                        (byte)(diameter),
+                        (byte)(diameter),
+                        (byte)(height),
+                        (i, j, k) =>
+                        {
+                            float x = i - diameter / 2f + 0.5f;
+                            float z = k - diameter / 2f + 0.5f;
+                            float dSquared = x * x + z * z;
+                            //Console.WriteLine($"{i}, {j}, {k} => {x}, {z} => {dSquared}, {oSquared}, {iSquared} => {dSquared > oSquared || dSquared < iSquared}");
+                            if (dSquared > oSquared || dSquared < iSquared)
+                            {
+                                return null;
+                            }
+                            return new Block()
+                            {
+                                BlockType = blockType,
+                                Variant = blockVariant
+                            };
+                        });
+
+
+                    blocks = ModifyInterior(blocks, (l, block) =>
+                    {
+                        if (hollow)
+                        {
+                            l.Remove(block);
+                        }
+                        else
+                        {
+                            l[block.Position].SetColour(ColourIndex.Pink);
+                        }
+                    }, thickShell);
+
+                    if (topless)
+                    {
+                        for (int x = 0; x < diameter; x++)
+                        {
+                            for (int y = height / 2 + 1; y < height; y++)
+                            {
+                                for (int z = 0; z < diameter; z++)
+                                {
+                                    blocks.Remove(
+                                        (byte)(x + originParameter.X),
+                                        (byte)(y + originParameter.Y),
+                                        (byte)(z + originParameter.Z));
+                                }
+                            }
+                        }
+                    }
+
+                    blueprint.SetBlock(blocks);
+                    blueprint.CountBlocks();
+                    blueprint.ComputeDimensions();
+
+                    Blueprints[SelectedBlueprintIndex].UpdateViewModels();
+                    CurrentCommand = null;
+                }));
+            }
+        }
+        private RelayCommand _commandCreateCylinder;
+        #endregion CommandCreateCylinder
         #region CommandCreateCore
         public RelayCommand CommandCreateCore
         {
@@ -802,8 +953,6 @@ namespace EPBLab.ViewModel
         {
             float progress = m.Content.Progress;
 
-            Console.WriteLine($"UpdateProgress: {m.Content.Progress:0.0%}");
-
             DateTime now = DateTime.Now;
             if (progress == 0f)
             {
@@ -852,7 +1001,7 @@ namespace EPBLab.ViewModel
         #endregion ConversionHelpers
 
         #region CreationHelpers
-        private string GetDefaultBuildingBlockTypeName(BlueprintType type)
+        protected string GetDefaultBuildingBlockTypeName(BlueprintType type)
         {
             switch (type)
             {
@@ -868,6 +1017,32 @@ namespace EPBLab.ViewModel
                     return "HullFullSmall";
             }
             return "HullFullLarge";
+        }
+
+        protected BlockList CreateStructure(
+            byte xOffset, byte yOffset, byte zOffset,
+            byte width,   byte height,  byte depth,
+            Func<byte, byte, byte, Block> testPosition)
+        {
+            BlockList blocks = new BlockList();
+            for (byte x = 0; x < width; x++)
+            {
+                for (byte y = 0; y < height; y++)
+                {
+                    for (byte z = 0; z < depth; z++)
+                    {
+                        Block block = testPosition(x, y, z);
+                        if (block != null)
+                        {
+                            BlockPos pos = new BlockPos((byte)(x + xOffset), (byte)(y + yOffset), (byte)(z + zOffset));
+                            block.SetPosition(pos);
+                            blocks[pos] = block;
+                        }
+                    }
+                }
+            }
+
+            return blocks;
         }
 
         protected BlockList ModifyInterior(BlockList srcBlocks, Action<BlockList, Block> modifyInterior, bool thickShell = false)
@@ -944,10 +1119,30 @@ namespace EPBLab.ViewModel
                         Y = 10,
                         Z = 10
                     },
+                    new ParameterIntVector()
+                    {
+                        Name = "Hole size",
+                        Description = "Cut a box hole at the centre",
+                        X = 0,
+                        Y = 0,
+                        Z = 0
+                    },
                     new ParameterBool()
                     {
                         Name = "Hollow",
                         Description = "Make the box hollow",
+                        IsTrue = false
+                    },
+                    new ParameterBool()
+                    {
+                        Name = "Thick shell",
+                        Description = "Include diagonals in interior check to make the shell thicker",
+                        IsTrue = true
+                    },
+                    new ParameterBool()
+                    {
+                        Name = "Topless",
+                        Description = "Cut off top half",
                         IsTrue = false
                     }
                 },
@@ -1026,9 +1221,15 @@ namespace EPBLab.ViewModel
                     },
                     new ParameterInt()
                     {
-                        Name = "Radius",
+                        Name = "Diameter",
                         Description = "Number of blocks",
-                        Value = 10
+                        Value = 21
+                    },
+                    new ParameterInt()
+                    {
+                        Name = "Hole diameter",
+                        Description = "Cut a spherical hole at the centre",
+                        Value = 0
                     },
                     new ParameterBool()
                     {
@@ -1054,6 +1255,60 @@ namespace EPBLab.ViewModel
                 Cancel = CommandCancel
             });
             #endregion Sphere
+            #region Cylinder
+            BuildStructureCommands.Add(new Command()
+            {
+                Name = "Cylinder",
+                Icon = "BuildStructure/Cylinder.png",
+                Parameters = new List<Parameter>()
+                {
+                    new ParameterIntVector()
+                    {
+                        Name = "Origin",
+                        Description = "Places the structure in the blueprint"
+                    },
+                    new ParameterInt()
+                    {
+                        Name = "Diameter",
+                        Description = "Number of blocks",
+                        Value = 21
+                    },
+                    new ParameterInt()
+                    {
+                        Name = "Hole diameter",
+                        Description = "Cut a cylindrical hole at the centre",
+                        Value = 0
+                    },
+                    new ParameterInt()
+                    {
+                        Name = "Height",
+                        Description = "Number of blocks",
+                        Value = 21
+                    },
+                    new ParameterBool()
+                    {
+                        Name = "Hollow",
+                        Description = "Make the sphere hollow",
+                        IsTrue = false
+                    },
+                    new ParameterBool()
+                    {
+                        Name = "Thick shell",
+                        Description = "Include diagonals in interior check to make the shell thicker",
+                        IsTrue = false
+                    },
+                    new ParameterBool()
+                    {
+                        Name = "Topless",
+                        Description = "Cut off top half",
+                        IsTrue = false
+                    }
+                },
+                Accept = CommandCreateCylinder,
+                Select = CommandSelect,
+                Cancel = CommandCancel
+            });
+            #endregion Cylinder
             #region Core
             BuildStructureCommands.Add(new Command()
             {

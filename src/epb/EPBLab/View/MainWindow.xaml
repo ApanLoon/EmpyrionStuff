@@ -33,8 +33,8 @@
                 </Border>
                 <Button Command="{Binding CommandNew}">
                     <Grid>
-                        <Image Source="pack://application:,,,/Images/ToolbarCommandIcons/Empty.png" />
-                        <TextBlock Text="New" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Image Source="pack://application:,,,/Images/ToolbarCommandIcons/Empty.png" Width="64" Height="64" />
+                        <TextBlock Text="New" HorizontalAlignment="Center" VerticalAlignment="Bottom">
                             <TextBlock.Effect>
                                 <DropShadowEffect ShadowDepth="0" Color="White" BlurRadius="10" />
                             </TextBlock.Effect>
@@ -46,8 +46,8 @@
                         <b:OpenFileBehaviour MessageIdentifier="OpenBlueprints" Filter="Empyrion blueprints (*.epb)|*.epb|All files (*.*)|*.*" MultiSelect="True" />
                     </i:Interaction.Behaviors>
                     <Grid>
-                        <Image Source="pack://application:,,,/Images/ToolbarCommandIcons/Empty.png" />
-                        <TextBlock Text="Open" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Image Source="pack://application:,,,/Images/ToolbarCommandIcons/Empty.png" Width="64" Height="64" />
+                        <TextBlock Text="Open" HorizontalAlignment="Center" VerticalAlignment="Bottom">
                             <TextBlock.Effect>
                                 <DropShadowEffect ShadowDepth="0" Color="White" BlurRadius="10" />
                             </TextBlock.Effect>
@@ -59,8 +59,8 @@
                         <b:SaveFileBehaviour MessageIdentifier="SaveBlueprint" Filter="Empyrion blueprints (*.epb)|*.epb|All files (*.*)|*.*"/>
                     </i:Interaction.Behaviors>
                     <Grid>
-                        <Image Source="pack://application:,,,/Images/ToolbarCommandIcons/Empty.png" />
-                        <TextBlock Text="Save As" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Image Source="pack://application:,,,/Images/ToolbarCommandIcons/Empty.png" Width="64" Height="64" />
+                        <TextBlock Text="Save As" HorizontalAlignment="Center" VerticalAlignment="Bottom">
                             <TextBlock.Effect>
                                 <DropShadowEffect ShadowDepth="0" Color="White" BlurRadius="10" />
                             </TextBlock.Effect>
@@ -88,8 +88,8 @@
                     <DataTemplate>
                         <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Command="{Binding Path=Select}" CommandParameter="{Binding Path=Self}">
                             <Grid>
-                                <Image Source="{Binding Icon}" />
-                                <TextBlock Text="{Binding Name}" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Image Source="{Binding Icon}" Width="64" Height="64" />
+                                <TextBlock Text="{Binding Name}" HorizontalAlignment="Center" VerticalAlignment="Bottom">
                                     <TextBlock.Effect>
                                         <DropShadowEffect ShadowDepth="0" Color="White" BlurRadius="10" />
                                     </TextBlock.Effect>
@@ -106,7 +106,7 @@
                 <ToolBar.Resources>
                     <CollectionViewSource x:Key="CommandParameters" Source="{Binding CurrentCommand.Parameters}" />
                     <DataTemplate DataType="{x:Type parameters:ParameterIntVector}">
-                        <Grid ToolTip="{Binding Description}" Margin="5" Width="50">
+                        <Grid ToolTip="{Binding Description}" Margin="5">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
@@ -120,7 +120,7 @@
                         </Grid>
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type parameters:ParameterInt}">
-                        <Grid ToolTip="{Binding Description}" Margin="5" Width="50">
+                        <Grid ToolTip="{Binding Description}" Margin="5">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
