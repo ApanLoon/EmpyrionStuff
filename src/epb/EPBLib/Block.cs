@@ -54,6 +54,19 @@ namespace EPBLib
         public byte[] Symbols = new byte[6];         // 5 bit symbol index
         public SymbolRotation[] SymbolRotations = new SymbolRotation[6]; // 2 bit symbol rotation
 
+        public void SetPosition(BlockPos pos)
+        {
+            Position = pos;
+        }
+
+        public void SetPosition(byte x, byte y, byte z, byte u1 = 0, byte u2 = 0)
+        {
+            Position.X = x;
+            Position.Y = y;
+            Position.Z = z;
+            Position.U1 = u1;
+            Position.U2 = u2;
+        }
 
         public void SetColour(ColourIndex colour, FaceIndex face = FaceIndex.All)
         {
@@ -130,13 +143,17 @@ namespace EPBLib
             return Tags.ContainsKey(name) ? Tags[name] : null;
         }
 
-        public Block(BlockPos position)
+        public Block()
         {
-            Position = position;
+            Position = new BlockPos(0, 0, 0);
             BlockType = BlockType.GetBlockType("HullFullLarge", "Cube");
             Variant = BlockType.GetVariant(BlockType.Id, "Cube");
             Rotation = Block.BlockRotation.PzPy;
             Unknown00 = 0x0000;
+        }
+        public Block(BlockPos position) : this()
+        {
+            SetPosition(position);
         }
 
         public Block(byte x, byte y, byte z) : this(new BlockPos(x, y, z))
