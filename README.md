@@ -21,15 +21,21 @@ A command line tool that parses EPB blueprint files. It can also create rudiment
 
 ## EPBLab
 A Windows application with a graphical user interface for examining EPB files.
+* General
+    * Create structures such as: Box, box frame, pyramid, sphere, and some for debugging
 * Summary
     * EPB file version
     * Blueprint type (Voxel, Base, Hover vessel, Small vessel or Capital vessel)
     * Dimensions
+    * Counters
+    * Block type counts
     * Meta tags
+    * Device groups
 * 3D view of blocks
 * Tree view of blocks
     * Categories
     * Displays content of LCD screens
+    * Displays block tags
     * Identifies selected block in the 3D view
 * Graph of logic nodes
     * Drag nodes around
