@@ -174,9 +174,9 @@ namespace EPBLab.ViewModel
                         (byte)(originParameter.X),
                         (byte)(originParameter.Y),
                         (byte)(originParameter.Z),
-                        (byte)(width),
-                        (byte)(height),
-                        (byte)(depth),
+                        width,
+                        height,
+                        depth,
                         (i, j, k) =>
                         {
                             if (   (i >= iMin && i < iMax)
@@ -268,9 +268,9 @@ namespace EPBLab.ViewModel
                     (byte)(originParameter.X),
                     (byte)(originParameter.Y),
                     (byte)(originParameter.Z),
-                    (byte)(width),
-                    (byte)(height),
-                    (byte)(depth),
+                    width,
+                    height,
+                    depth,
                     (i, j, k) =>
                     {
                         bool a = i % (width  - 1) == 0;
@@ -477,9 +477,9 @@ namespace EPBLab.ViewModel
                         (byte)(originParameter.X),
                         (byte)(originParameter.Y),
                         (byte)(originParameter.Z),
-                        (byte)(diameter),
-                        (byte)(diameter),
-                        (byte)(diameter),
+                        diameter,
+                        diameter,
+                        diameter,
                         (i, j, k) =>
                         {
                             float x = i - diameter / 2f + 0.5f;
@@ -577,9 +577,9 @@ namespace EPBLab.ViewModel
                         (byte)(originParameter.X),
                         (byte)(originParameter.Y),
                         (byte)(originParameter.Z),
-                        (byte)(diameter),
-                        (byte)(diameter),
-                        (byte)(height),
+                        diameter,
+                        diameter,
+                        height,
                         (i, j, k) =>
                         {
                             float x = i - diameter / 2f + 0.5f;
@@ -1021,17 +1021,17 @@ namespace EPBLab.ViewModel
 
         protected BlockList CreateStructure(
             byte xOffset, byte yOffset, byte zOffset,
-            byte width,   byte height,  byte depth,
+            int width,   int height,  int depth,
             Func<byte, byte, byte, Block> testPosition)
         {
             BlockList blocks = new BlockList();
-            for (byte x = 0; x < width; x++)
+            for (int x = 0; x < width; x++)
             {
-                for (byte y = 0; y < height; y++)
+                for (int y = 0; y < height; y++)
                 {
-                    for (byte z = 0; z < depth; z++)
+                    for (int z = 0; z < depth; z++)
                     {
-                        Block block = testPosition(x, y, z);
+                        Block block = testPosition((byte)x, (byte)y, (byte)z);
                         if (block != null)
                         {
                             BlockPos pos = new BlockPos((byte)(x + xOffset), (byte)(y + yOffset), (byte)(z + zOffset));
