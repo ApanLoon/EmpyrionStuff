@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using System.Reflection;
+using ECFLib.IO;
 using ECFLib;
 using Fclp;
 
@@ -45,7 +45,7 @@ namespace ecf
                 return;
             }
 
-            Config config = new Config(EcfPath);
+            Config config = OpenECF(EcfPath);
 
             if (CmdListBlocks)
             {
@@ -53,6 +53,21 @@ namespace ecf
             }
 
             PauseOnExit();
+        }
+
+        private static Config OpenECF(string path)
+        {
+            using (StreamReader reader = new StreamReader(File.OpenRead(path)))
+            {
+                try
+                {
+                    return reader.ReadECF();
+                }
+                catch (System.Exception ex)
+                {
+                    throw new Exception("Failed reading ECF file", ex);
+                }
+            }
         }
 
 
@@ -63,7 +78,7 @@ namespace ecf
                 Console.WriteLine($"        public static readonly Dictionary<UInt16, BlockType> BlockTypes = new Dictionary<UInt16, BlockType>()");
                 Console.WriteLine( "        {");
 
-                foreach (Block block in config.Blocks)
+                foreach (BlockType block in config.BlockTypes)
                 {
                     Console.WriteLine($"            {{ {block.Id,5}, new BlockType(){{Id = {block.Id,5}, Name = {"\"" + block.Name + "\"",-31}, Category = {"\"" + block.Category + "\"",-31}, Ref = {"\"" + block.RefName + "\"",-31}}}}},");
                 }
