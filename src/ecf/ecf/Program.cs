@@ -9,6 +9,7 @@ namespace ecf
     class Program
     {
         private static string EcfPath { get; set; }
+        private static string OutPath { get; set; }
         private static bool OutputCode { get; set; }
         private static bool CmdListBlocks { get; set; }
         private static bool CmdShowHelp { get; set; }
@@ -21,6 +22,11 @@ namespace ecf
                 .SetDefault("G:/Steam/steamapps/common/Empyrion - Galactic Survival/Content/Configuration/Config_Example.ecf")
                 .Callback(path => EcfPath = path)
                 .WithDescription("Path to the ecf file to read.");
+
+            p.Setup<string>('o', "out")
+                .SetDefault("Config.ecf")
+                .Callback(path => OutPath = path)
+                .WithDescription("Path to the ecf file to write.");
 
             p.Setup<bool>('b', "blocks")
                 .Callback(v => CmdListBlocks = v)
@@ -47,10 +53,12 @@ namespace ecf
 
             Config config = OpenECF(EcfPath);
 
-            if (CmdListBlocks)
-            {
-                ListBlocks(config);
-            }
+            //if (CmdListBlocks)
+            //{
+            //    ListBlocks(config);
+            //}
+
+            WriteECF(config, OutPath);
 
             PauseOnExit();
         }
@@ -70,27 +78,42 @@ namespace ecf
             }
         }
 
+        private static void WriteECF(Config config, string path)
+        {
+            using (StreamWriter writer = new StreamWriter(File.OpenWrite(path)))
+            {
+                try
+                {
+                    writer.EcfWrite(config);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Failed writing ECF file", ex);
+                }
+            }
+        }
+
 
         private static void ListBlocks(Config config)
         {
             if (OutputCode)
             {
-                Console.WriteLine($"        public static readonly Dictionary<UInt16, BlockType> BlockTypes = new Dictionary<UInt16, BlockType>()");
-                Console.WriteLine( "        {");
+                //Console.WriteLine($"        public static readonly Dictionary<UInt16, BlockType> BlockTypes = new Dictionary<UInt16, BlockType>()");
+                //Console.WriteLine( "        {");
 
-                foreach (BlockType block in config.BlockTypes)
-                {
-                    Console.WriteLine($"            {{ {block.Id,5}, new BlockType(){{Id = {block.Id,5}, Name = {"\"" + block.Name + "\"",-31}, Category = {"\"" + block.Category + "\"",-31}, Ref = {"\"" + block.RefName + "\"",-31}}}}},");
-                }
-                Console.WriteLine("        };");
+                //foreach (BlockType block in config.BlockTypes)
+                //{
+                //    Console.WriteLine($"            {{ {block.Id,5}, new BlockType(){{Id = {block.Id,5}, Name = {"\"" + block.Name + "\"",-31}, Category = {"\"" + block.Category + "\"",-31}, Ref = {"\"" + block.RefName + "\"",-31}}}}},");
+                //}
+                //Console.WriteLine("        };");
             }
             else
             {
-                Console.WriteLine($"Blocks in {config.Path}:");
-                foreach (Entity block in config.BlockEntities)
-                {
-                    Console.WriteLine(block);
-                }
+                //Console.WriteLine($"Blocks in {config.Path}:");
+                //foreach (Entity block in config.BlockEntities)
+                //{
+                //    Console.WriteLine(block);
+                //}
             }
         }
 

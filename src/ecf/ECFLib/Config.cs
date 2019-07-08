@@ -8,13 +8,9 @@ namespace ECFLib
         public string Path { get; set; }
         public int Version { get; set; }
 
-        public List<Entity> Entities = new List<Entity>();
         public List<BlockType> BlockTypes = new List<BlockType>();
+        public List<ItemType> ItemTypes = new List<ItemType>();
 
-        public IEnumerable<Entity> BlockEntities
-        {
-            get { return Entities.Where(e => e.Name == "Block"); }
-        }
 
         public Config()
         {
@@ -28,14 +24,14 @@ namespace ECFLib
                 {
                     block.Ref = BlockTypes.FirstOrDefault(b => b.Name == block.RefName);
                 }
-                if (block.TemplateRootName != "")
-                {
-                    block.TemplateRoot = BlockTypes.FirstOrDefault(b => b.Name == block.TemplateRootName);
-                }
-                if (block.TechTreeParentName != "")
-                {
-                    block.TechTreeParent = BlockTypes.FirstOrDefault(b => b.TechTreeParentName == block.TechTreeParentName);
-                }
+                //if (block.TemplateRootName != "")
+                //{
+                //    block.TemplateRoot = BlockTypes.FirstOrDefault(b => b.Name == block.TemplateRootName);
+                //}
+                //if (block.TechTreeParentName != "")
+                //{
+                //    block.TechTreeParent = BlockTypes.FirstOrDefault(b => b.TechTreeParentName == block.TechTreeParentName);
+                //}
             }
         }
     }
