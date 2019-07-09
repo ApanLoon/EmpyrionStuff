@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 using ECFLib.Attributes;
@@ -8,7 +7,7 @@ namespace ECFLib.IO
 {
     public static class StreamReaderExtensions
     {
-        public static Config ReadECF(this StreamReader reader)
+        public static Config ReadEcf(this StreamReader reader)
         {
             try
             {
@@ -37,7 +36,8 @@ namespace ECFLib.IO
                         Match m = Regex.Match(s, "{\\s*(?<type>\\S+)\\s*(?<props>.*)$");
                         if (m.Success)
                         {
-                            string type = m.Groups["type"].Value;
+                            string type      = m.Groups["type"].Value;
+
                             int id = -1;
                             string name = null;
                             string reference = null;
@@ -72,22 +72,20 @@ namespace ECFLib.IO
                                 case "Block":
                                     config.BlockTypes.Add(reader.ReadBlockType(id, name, reference));
                                     break;
-                                case "Child":
-                                    break;
-                                case "Entity":
-                                    break;
                                 case "Item":
                                     config.ItemTypes.Add(reader.ReadItemType(id, name, reference));
                                     break;
+                                case "Entity":
+                                    config.EntityTypes.Add(reader.ReadEntityType(id, name, reference));
+                                    break;
                                 case "Template":
+                                    config.TemplateTypes.Add(reader.ReadTemplateType(id, name, reference));
                                     break;
                                 default:
                                     Console.WriteLine($"Unknkown type ({type})");
                                     break;
                             }
                         }
-
-                        continue;
                     }
                 }
 
@@ -105,7 +103,7 @@ namespace ECFLib.IO
             try
             {
                 BlockType blockType = new BlockType(id, name, reference);
-                foreach (EcfAttribute attribute in reader.ReadAttributes((key, value) =>
+                reader.ReadAttributes(blockType, (key, value) =>
                 {
                     EcfAttribute a = null;
                         switch (key)
@@ -182,7 +180,7 @@ namespace ECFLib.IO
                             case "FuelAccept":
                             case "O2Accept":
                             case "TechTreeNames":
-                                a = new AttributeStringArray(Regex.Split(value, "\\s*,\\s*"));
+                                a = new AttributeStringArray(value != null ? Regex.Split(value, "\\s*,\\s*") : null);
                                 break;
 
                             // float
@@ -205,11 +203,7 @@ namespace ECFLib.IO
                         }
 
                     return a;
-
-                }))
-                {
-                    blockType.Attributes.Add(attribute.Key, attribute);
-                }
+                }, null);
 
                 return blockType;
             }
@@ -217,7 +211,6 @@ namespace ECFLib.IO
             {
                 throw new Exception("Failed reading item", ex);
             }
-
         }
 
         public static ItemType ReadItemType(this StreamReader reader, int id, string name, string reference)
@@ -226,7 +219,87 @@ namespace ECFLib.IO
             {
                 ItemType itemType = new ItemType(id, name, reference);
 
-                foreach (EcfAttribute attribute in reader.ReadAttributes((key, value) =>
+                reader.ReadAttributes(itemType, (key, value) =>
+                {
+                    EcfAttribute a = null;
+                    switch (key)
+                    {
+                        // int
+                        case "Armor":
+                        case "BlastDamage":
+                        case "BlastRadius":
+                        case "Cold":
+                        case "Durability":
+                        case "FoodDecayTime":
+                        case "Heat":
+                        case "NrSlots":
+                        case "Oxygen":
+                        case "Radiation":
+                        case "StackSize":
+                        case "UnlockCost":
+                        case "UnlockLevel":
+                            a = new AttributeInt(int.Parse(value));
+                            break;
+
+                        // string[]
+                        case "AllowAt":
+                        case "TechTreeNames":
+                            a = new AttributeStringArray(value != null ? Regex.Split(value, "\\s*,\\s*") : null);
+                            break;
+
+                        // bool
+                        case "PickupToToolbar":
+                        case "RadialMenu":
+                            a = new AttributeBool(value.ToLower() == "true");
+                            break;
+
+                        // string
+                        case "Category":
+                        case "TechTreeParent":
+                            a = new AttributeString(value);
+                            break;
+
+                        // float
+                        case "DegradationProb":
+                        case "FallDamageFac":
+                        case "FoodFac":
+                        case "JetpackFac":
+                        case "JumpFac":
+                        case "Mass":
+                        case "PowerFac":
+                        case "Range":
+                        case "SpeedFac":
+                        case "StaminaFac":
+                        case "Volume":
+                        case "VolumeCapacity":
+                            a = new AttributeFloat(float.Parse(value));
+                            break;
+
+                        default:
+                            Console.WriteLine($"Unknown item attribute: {key}");
+                            break;
+                    }
+                    return a;
+                }, (s, o) =>
+                {
+                    OperationMode child = reader.ReadOperationMode(-1, null, null);
+                    ((ItemType)o).OperationModes.Add(child);
+                });
+
+                return itemType;
+            }
+            catch (System.Exception ex)
+            {
+                throw new Exception("Failed reading item", ex);
+            }
+        }
+
+        public static OperationMode ReadOperationMode(this StreamReader reader, int id, string name, string reference)
+        {
+            try
+            {
+                OperationMode operationMode = new OperationMode();
+                reader.ReadAttributes(operationMode, (key, value) =>
                 {
                     EcfAttribute a = null;
                     switch (key)
@@ -237,33 +310,21 @@ namespace ECFLib.IO
                         case "AddOxygen":
                         case "AddStamina":
                         case "AmmoCapacity":
-                        case "Armor":
                         case "BlastDamage":
                         case "BlastRadius":
                         case "BulletsPerShot":
-                        case "Cold":
-                        case "Damage":
-                        case "Durability":
                         case "CameraShake":
-                        case "FoodDecayTime":
-                        case "Heat":
+                        case "Damage":
                         case "NoiseStrength":
-                        case "NrSlots":
-                        case "Oxygen":
-                        case "Radiation":
-                        case "Speed":
                         case "RangeSpace":
+                        case "Speed":
                         case "SpeedSpace":
-                        case "StackSize":
                         case "TracerPerBullet":
-                        case "UnlockCost":
-                        case "UnlockLevel":
                             a = new AttributeInt(int.Parse(value));
                             break;
 
                         // string[]
                         case "AllowAt":
-                        case "TechTreeNames":
                             a = new AttributeStringArray(Regex.Split(value, "\\s*,\\s*"));
                             break;
 
@@ -275,19 +336,15 @@ namespace ECFLib.IO
                         case "HarvestSupport":
                         case "IgnoreAtmo":
                         case "InfoPopup":
-                        case "PickupToToolbar":
-                        case "RadialMenu":
                         case "TerrainMode":
-                            a = new AttributeBool(value == "true");
+                            a = new AttributeBool(value.ToLower() == "true");
                             break;
 
                         // string
                         case "AmmoType":
-                        case "Category":
                         case "RadialDesc":
                         case "RadialIcon":
                         case "RadialText":
-                        case "TechTreeParent":
                         case "Tracer":
                             a = new AttributeString(value);
                             break;
@@ -307,14 +364,7 @@ namespace ECFLib.IO
                         case "DamageMultiplier_7":
                         case "DamageMultiplier_8":
                         case "DamageMultiplier_9":
-                        case "DegradationProb":
-                        case "FallDamageFac":
-                        case "FoodFac":
                         case "HomingSpeed":
-                        case "JetpackFac":
-                        case "JumpFac":
-                        case "Mass":
-                        case "PowerFac":
                         case "Radius":
                         case "Range":
                         case "RaySpread":
@@ -322,39 +372,127 @@ namespace ECFLib.IO
                         case "ReloadDelay":
                         case "ReturnFactor":
                         case "ROF":
-                        case "SpeedFac":
-                        case "StaminaFac":
-                        case "Volume":
-                        case "VolumeCapacity":
                             a = new AttributeFloat(float.Parse(value));
                             break;
 
                         default:
-                            Console.WriteLine($"Unknown item attribute: {key}");
+                            Console.WriteLine($"Unknown item scope attribute: {key}");
                             break;
                     }
-
                     return a;
+                }, null);
 
-                }))
-                {
-                    itemType.Attributes.Add(attribute.Key, attribute);
-                }
-
-                return itemType;
+                return operationMode;
             }
             catch (System.Exception ex)
             {
-                throw new Exception("Failed reading item", ex);
+                throw new Exception("Failed reading operation mode for item", ex);
             }
-
         }
 
-
-
-        public static List<EcfAttribute> ReadAttributes(this StreamReader reader, Func<string, string, EcfAttribute> createAttribute)
+        public static EntityType ReadEntityType(this StreamReader reader, int id, string name, string reference)
         {
-            List<EcfAttribute> list = new List<EcfAttribute>();
+            try
+            {
+                EntityType entityType = new EntityType(id, name, reference);
+                reader.ReadAttributes(entityType, (key, value) =>
+                {
+                    EcfAttribute a = null;
+                    switch (key)
+                    {
+                        // bool
+                        case "IsEnemy":
+                            a = new AttributeBool(value == "true");
+                            break;
+
+                        // int
+                        case "MaxHealth":
+                            a = new AttributeInt(int.Parse(value));
+                            break;
+
+                        default:
+                            Console.WriteLine($"Unknown entity attribute: {key}");
+                            break;
+                    }
+                    return a;
+                }, null);
+
+                return entityType;
+            }
+            catch (System.Exception ex)
+            {
+                throw new Exception("Failed reading entity", ex);
+            }
+        }
+
+        public static TemplateType ReadTemplateType(this StreamReader reader, int id, string name, string reference)
+        {
+            try
+            {
+                TemplateType templateType = new TemplateType(id, name, reference);
+
+                reader.ReadAttributes(templateType, (key, value) =>
+                {
+                    EcfAttribute a = null;
+                    switch (key)
+                    {
+                        // int
+                        case "CraftTime":
+                        case "OutputCount":
+                            a = new AttributeInt(int.Parse(value));
+                            break;
+
+                        // string[]
+                        case "Target":
+                            a = new AttributeStringArray(value != null ? Regex.Split(value, "\\s*,\\s*") : null);
+                            break;
+
+                        // bool
+                        case "BaseItem":
+                            a = new AttributeBool(value.ToLower() == "true");
+                            break;
+
+                        // string
+                        case "DeconOverride":
+                            a = new AttributeString(value);
+                            break;
+
+                        default:
+                            Console.WriteLine($"Unknown template attribute: {key}");
+                            break;
+                    }
+                    return a;
+                }, (s, o) =>
+                {
+                    EcfObject child = new EcfObject(-1, null, null);
+                    reader.ReadAttributes(child, (key, value) =>
+                    {
+                        int v = int.Parse(value);
+                        TemplateType t = (TemplateType) o;
+                        if (t.Inputs.ContainsKey(key))
+                        {
+                            t.Inputs[key] += v;
+                        }
+                        else
+                        {
+                            t.Inputs.Add(key, v);
+                        }
+                        return null;
+                    }, null);
+                });
+                return templateType;
+            }
+            catch (System.Exception ex)
+            {
+                throw new Exception("Failed reading template", ex);
+            }
+        }
+
+        public static void ReadAttributes(this StreamReader reader,
+                                          EcfObject o,
+                                          Func<string, string, EcfAttribute> createAttribute,
+                                          Action<string, EcfObject> readChild)
+        {
             try
             {
                 while (true)
@@ -376,17 +514,51 @@ namespace ECFLib.IO
                         break;
                     }
 
-                    //TODO: How to deal with nested attribute lists? Scopes?
+                    if (s.StartsWith("{") && readChild != null)
+                    {
+                        readChild(s, o);
+                        continue;
+                    }
 
-                    Match m = Regex.Match(s, "\\s*(?<key>[^:]+):\\s*(?:(?:\"(?<value>.+?)\")|(?<value>[^,]+))(\\s*,\\s*type:\\s*(?<type>[^,]+))?(\\s*,\\s*display:\\s*(?<display>[^,]+))?(\\s*,\\s*formatter:\\s*(?<formatter>[^,]+))?(\\s*,\\s*data:\\s*(?<data>[^,]+))?");
+                    Match m = Regex.Match(s, "\\s*(?<key>[^:]+):\\s*(?:(?:\"(?<value>.+?)\")|(?<value>[^,]+))?\\s*(?<props>.*)$");
                     if (m.Success)
                     {
                         string key = m.Groups["key"].Value;
-                        string value = m.Groups["value"].Value;
-                        string type = m.Groups["type"].Success ? m.Groups["type"].Value : null;
-                        string display = m.Groups["display"].Success ? m.Groups["display"].Value : null;
-                        string formatter = m.Groups["formatter"].Success ? m.Groups["formatter"].Value : null;
-                        string data = m.Groups["data"].Success ? m.Groups["data"].Value : null;
+                        string value = m.Groups["value"].Success ? m.Groups["value"].Value : null;
+
+                        string type = null;
+                        string display = null;
+                        string formatter = null;
+                        string data = null;
+
+                        foreach (string p in m.Groups["props"].Value.Split(','))
+                        {
+                            Match mp = Regex.Match(p, "\\s*(?<pKey>[^:]+):\\s*(?<pValue>.*)\\s*");
+                            if (mp.Success)
+                            {
+                                string pKey = mp.Groups["pKey"].Value;
+                                string pValue = mp.Groups["pValue"].Value;
+                                switch (pKey)
+                                {
+                                    case "type":
+                                        type = pValue;
+                                        break;
+                                    case "data":
+                                        data = pValue;
+                                        break;
+                                    case "display":
+                                        display = pValue;
+                                        break;
+                                    case "formatter":
+                                        formatter = pValue;
+                                        break;
+                                    default:
+                                        Console.WriteLine($"Unknown attribute property: {key} = {pValue}");
+                                        break;
+                                }
+                            }
+                        }
+
                         EcfAttribute a = createAttribute(key, value);
                         if (a != null)
                         {
@@ -395,12 +567,10 @@ namespace ECFLib.IO
                             a.Display = display;
                             a.Formatter = formatter;
                             a.Data = data;
-                            list.Add(a);
+                            o.Attributes.Add(a.Key, a);
                         }
                     }
                 }
-
-                return list;
             }
             catch (System.Exception ex)
             {

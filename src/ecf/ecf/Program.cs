@@ -69,7 +69,7 @@ namespace ecf
             {
                 try
                 {
-                    return reader.ReadECF();
+                    return reader.ReadEcf();
                 }
                 catch (System.Exception ex)
                 {

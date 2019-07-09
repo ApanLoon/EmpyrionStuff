@@ -11,6 +11,10 @@
         public override string ValueString()
         {
             string s = "";
+            if (Value == null)
+            {
+                return s;
+            }
             bool first = true;
             foreach (string v in Value)
             {

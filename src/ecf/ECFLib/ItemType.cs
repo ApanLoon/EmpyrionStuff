@@ -3,23 +3,15 @@ using ECFLib.Attributes;
 
 namespace ECFLib
 {
-    public class ItemType
+    public class ItemType : EcfObject
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string RefName { get; set; }
-        public BlockType Ref { get; set; }
-
-        public Dictionary<string, EcfAttribute> Attributes = new Dictionary<string, EcfAttribute>();
+        public List<EcfObject> OperationModes = new List<EcfObject>();
 
         #region AttributeShortcuts
         #endregion AttributeShortcuts
 
-        public ItemType(int id, string name, string reference)
+        public ItemType(int id, string name, string reference) : base(id, name, reference)
         {
-            Id = id;
-            Name = name;
-            RefName = reference;
         }
 
     }

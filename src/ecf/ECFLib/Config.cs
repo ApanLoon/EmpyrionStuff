@@ -8,9 +8,10 @@ namespace ECFLib
         public string Path { get; set; }
         public int Version { get; set; }
 
-        public List<BlockType> BlockTypes = new List<BlockType>();
-        public List<ItemType> ItemTypes = new List<ItemType>();
-
+        public List<BlockType>    BlockTypes    = new List<BlockType>();
+        public List<ItemType>     ItemTypes     = new List<ItemType>();
+        public List<EntityType>   EntityTypes   = new List<EntityType>();
+        public List<TemplateType> TemplateTypes = new List<TemplateType>();
 
         public Config()
         {

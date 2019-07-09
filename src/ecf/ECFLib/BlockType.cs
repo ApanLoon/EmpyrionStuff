@@ -4,15 +4,8 @@ using System.Collections.Generic;
 
 namespace ECFLib
 {
-    public class BlockType
+    public class BlockType : EcfObject
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string RefName { get; set; }
-        public BlockType Ref { get; set; }
-
-        public Dictionary<string, EcfAttribute> Attributes = new Dictionary<string, EcfAttribute>();
-
         //private string _category = null;
         //public string Category
         //{
@@ -905,11 +898,8 @@ namespace ECFLib
         #endregion AttributeShortcuts
 
 
-        public BlockType (int id, string name, string reference)
+        public BlockType (int id, string name, string reference) : base (id, name, reference)
         {
-            Id = id;
-            Name = name;
-            RefName = reference;
         }
     }
 }
