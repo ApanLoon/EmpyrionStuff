@@ -80,7 +80,7 @@ namespace ecf
 
         private static void WriteECF(Config config, string path)
         {
-            using (StreamWriter writer = new StreamWriter(File.OpenWrite(path)))
+            using (StreamWriter writer = new StreamWriter(File.Open(path, FileMode.Create)))
             {
                 try
                 {

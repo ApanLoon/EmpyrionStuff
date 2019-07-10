@@ -9,29 +9,56 @@ namespace ECFLib.IO
     {
         public static void EcfWrite(this StreamWriter writer, Config config)
         {
-            writer.Write($"VERSION: {config.Version}\r\n");
+            if (config.Version != -1)
+            {
+                writer.Write($"VERSION: {config.Version}\r\n");
+            }
 
             foreach (BlockType blockType in config.BlockTypes)
             {
                 writer.EcfWrite(blockType);
             }
-            writer.Write("\r\n");
-            foreach (ItemType itemType in config.ItemTypes)
+
+            if (config.ItemTypes.Count > 0)
             {
-                writer.EcfWrite(itemType);
+                writer.Write("\r\n");
+                foreach (ItemType itemType in config.ItemTypes)
+                {
+                    writer.EcfWrite(itemType);
+                }
             }
-            writer.Write("\r\n");
-            foreach (EntityType entityType in config.EntityTypes)
+
+            if (config.EntityTypes.Count > 0)
             {
-                writer.EcfWrite(entityType);
+                writer.Write("\r\n");
+                foreach (EntityType entityType in config.EntityTypes)
+                {
+                    writer.EcfWrite(entityType);
+                }
             }
-            writer.Write("\r\n");
-            foreach (TemplateType templateType in config.TemplateTypes)
+
+            if (config.TemplateTypes.Count > 0)
             {
-                writer.EcfWrite(templateType);
+                writer.Write("\r\n");
+                foreach (TemplateType templateType in config.TemplateTypes)
+                {
+                    writer.EcfWrite(templateType);
+                }
             }
+
+            if (config.TabGroupTypes.Count > 0)
+            {
+                writer.Write("\r\n");
+                foreach (TabGroupType tabGroupType in config.TabGroupTypes)
+                {
+                    writer.EcfWrite(tabGroupType);
+                }
+            }
+
+            writer.Flush();
         }
 
+        #region Config
         public static void EcfWrite(this StreamWriter writer, BlockType blockType)
         {
             writer.Write($"{{ Block Id: {blockType.Id}, Name: {blockType.Name}");
@@ -104,14 +131,35 @@ namespace ECFLib.IO
             writer.Write("  }\r\n");
             writer.Write("}\r\n");
         }
+        #endregion Config
 
+        #region BlockShapesWindow
+        public static void EcfWrite(this StreamWriter writer, TabGroupType tabGroupType)
+        {
+            writer.Write($"{{ TabGroup Id: {tabGroupType.Id}\r\n");
+            foreach (EcfAttribute attribute in tabGroupType.Attributes.Values)
+            {
+                writer.EcfWrite(attribute);
+            }
+
+            foreach (TabGroupGridType o in tabGroupType.Grids)
+            {
+                writer.Write($"  {{ Child {o.Name}\r\n");
+                foreach (EcfAttribute attribute in o.Attributes.Values)
+                {
+                    writer.Write("  ");
+                    writer.EcfWrite(attribute);
+                }
+                writer.Write("  }\r\n");
+            }
+            writer.Write("}\r\n");
+        }
+        #endregion BlockShapesWindow
+
+        #region Generic
         public static void EcfWrite(this StreamWriter writer, EcfAttribute attribute)
         {
             string v = attribute.ValueString();
-            if (v.IndexOf(',') != -1)
-            {
-                v = $"\"{v}\"";
-            }
             writer.Write($"  {attribute.Key}: {v}");
             if (attribute.AttributeType != null)
             {
@@ -134,6 +182,7 @@ namespace ECFLib.IO
             }
             writer.Write("\r\n");
         }
+        #endregion Generic
     }
 }
 

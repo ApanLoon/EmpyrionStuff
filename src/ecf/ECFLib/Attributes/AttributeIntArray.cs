@@ -1,13 +1,16 @@
-﻿namespace ECFLib.Attributes
-{
-    public class AttributeStringArray : EcfAttribute
-    {
-        public string[] Value { get; set; }
+﻿using System;
 
-        public AttributeStringArray(string[] value)
+namespace ECFLib.Attributes
+{
+    public class AttributeIntArray : EcfAttribute
+    {
+        public int[] Value { get; set; }
+
+        public AttributeIntArray(int[] value)
         {
             Value = value;
         }
+
         public override string ValueString()
         {
             string s = "";
@@ -17,7 +20,7 @@
             }
             bool first = true;
             bool single = true;
-            foreach (string v in Value)
+            foreach (int v in Value)
             {
                 if (!first)
                 {

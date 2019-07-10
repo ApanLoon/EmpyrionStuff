@@ -1,4 +1,6 @@
 ﻿
+using System.Text.RegularExpressions;
+
 namespace ECFLib.Attributes
 {
     public class AttributeString : EcfAttribute
@@ -11,7 +13,17 @@ namespace ECFLib.Attributes
         }
         public override string ValueString()
         {
-            return $"{Value}";
+            if (Value == null)
+            {
+                return "";
+            }
+
+            if (Regex.IsMatch(Value, "\\s|:"))
+            {
+                return $"\"{Value}\"";
+            }
+
+            return Value;
         }
 
     }

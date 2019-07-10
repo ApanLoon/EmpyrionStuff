@@ -5,16 +5,17 @@ namespace ECFLib
 {
     public class Config
     {
-        public string Path { get; set; }
         public int Version { get; set; }
 
         public List<BlockType>    BlockTypes    = new List<BlockType>();
         public List<ItemType>     ItemTypes     = new List<ItemType>();
         public List<EntityType>   EntityTypes   = new List<EntityType>();
         public List<TemplateType> TemplateTypes = new List<TemplateType>();
+        public List<TabGroupType> TabGroupTypes = new List<TabGroupType>();
 
         public Config()
         {
+            Version = -1;
         }
 
         public void ConnectBlockTypeReferences()

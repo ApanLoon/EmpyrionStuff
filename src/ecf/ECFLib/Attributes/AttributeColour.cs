@@ -14,7 +14,7 @@
         }
         public override string ValueString()
         {
-            return $"{Red}, {Green}, {Blue}";
+            return $"\"{Red}, {Green}, {Blue}\"";
         }
 
     }

@@ -7,11 +7,20 @@ namespace ECFLib.IO
 {
     public static class StreamReaderExtensions
     {
-        public static Config ReadEcf(this StreamReader reader)
+        /// <summary>
+        /// Reads an ECF config file from a given StreamReader.
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <param name="config">If this parameter is given and is not null, the read configuration will be appended otherwise a new configuration will be returned.</param>
+        /// <returns></returns>
+        public static Config ReadEcf(this StreamReader reader, Config config = null)
         {
             try
             {
-                Config config = new Config();
+                if (config == null)
+                {
+                    config = new Config();
+                }
                 while (!reader.EndOfStream)
                 {
                     string s = reader.ReadLine();
@@ -33,40 +42,8 @@ namespace ECFLib.IO
 
                     if (s.StartsWith("{"))
                     {
-                        Match m = Regex.Match(s, "{\\s*(?<type>\\S+)\\s*(?<props>.*)$");
-                        if (m.Success)
+                        if (ParseNodeHeader(s, out string type, out int id, out string name, out string reference))
                         {
-                            string type      = m.Groups["type"].Value;
-
-                            int id = -1;
-                            string name = null;
-                            string reference = null;
-
-                            foreach (string p in m.Groups["props"].Value.Split(','))
-                            {
-                                Match mp = Regex.Match(p, "\\s*(?<key>[^:]+):\\s*(?<value>.*)\\s*");
-                                if (mp.Success)
-                                {
-                                    string key = mp.Groups["key"].Value;
-                                    string value = mp.Groups["value"].Value;
-                                    switch (key)
-                                    {
-                                        case "Id":
-                                            id = int.Parse(value);
-                                            break;
-                                        case "Name":
-                                            name = value;
-                                            break;
-                                        case "Ref":
-                                            reference = value;
-                                            break;
-                                        default:
-                                            Console.WriteLine($"Unknown attribute: {key} = {value}");
-                                            break;
-                                    }
-                                }
-                            }
-
                             switch (type)
                             {
                                 case "Block":
@@ -81,8 +58,11 @@ namespace ECFLib.IO
                                 case "Template":
                                     config.TemplateTypes.Add(reader.ReadTemplateType(id, name, reference));
                                     break;
+                                case "TabGroup":
+                                    config.TabGroupTypes.Add(reader.ReadTabGroupType(id, name, reference));
+                                    break;
                                 default:
-                                    Console.WriteLine($"Unknkown type ({type})");
+                                    Console.WriteLine($"Unknown type ({type})");
                                     break;
                             }
                         }
@@ -98,6 +78,7 @@ namespace ECFLib.IO
             }
         }
 
+        #region Config
         public static BlockType ReadBlockType(this StreamReader reader, int id, string name, string reference)
         {
             try
@@ -282,8 +263,12 @@ namespace ECFLib.IO
                     return a;
                 }, (s, o) =>
                 {
-                    OperationMode child = reader.ReadOperationMode(-1, null, null);
-                    ((ItemType)o).OperationModes.Add(child);
+                    if (ParseChildNodeHeader(s, out string childType, out string childName))
+                    {
+                        // TODO: Verify that childType == "" and childName == ""
+                        OperationMode child = reader.ReadOperationMode(-1, childName, null);
+                        ((ItemType)o).OperationModes.Add(child);
+                    }
                 });
 
                 return itemType;
@@ -464,21 +449,26 @@ namespace ECFLib.IO
                     return a;
                 }, (s, o) =>
                 {
-                    EcfObject child = new EcfObject(-1, null, null);
-                    reader.ReadAttributes(child, (key, value) =>
+                    if (ParseChildNodeHeader(s, out string childType, out string childName))
                     {
-                        int v = int.Parse(value);
-                        TemplateType t = (TemplateType) o;
-                        if (t.Inputs.ContainsKey(key))
+                        // TODO: Verify that childType == "Child" and childName == "Inputs"
+                        EcfObject child = new EcfObject(-1, childName, null);
+                        reader.ReadAttributes(child, (key, value) =>
                         {
-                            t.Inputs[key] += v;
-                        }
-                        else
-                        {
-                            t.Inputs.Add(key, v);
-                        }
-                        return null;
-                    }, null);
+                            int v = int.Parse(value);
+                            TemplateType t = (TemplateType) o;
+                            if (t.Inputs.ContainsKey(key))
+                            {
+                                t.Inputs[key] += v;
+                            }
+                            else
+                            {
+                                t.Inputs.Add(key, v);
+                            }
+
+                            return null;
+                        }, null);
+                    }
                 });
                 return templateType;
             }
@@ -486,6 +476,141 @@ namespace ECFLib.IO
             {
                 throw new Exception("Failed reading template", ex);
             }
+        }
+        #endregion Config
+
+        #region BlockShapesWindow
+        public static TabGroupType ReadTabGroupType(this StreamReader reader, int id, string name, string reference)
+        {
+            try
+            {
+                TabGroupType tabGroupType = new TabGroupType(id);
+
+                reader.ReadAttributes(tabGroupType, (key, value) =>
+                {
+                    EcfAttribute a = null;
+                    switch (key)
+                    {
+                        // string
+                        case "Icon":
+                        case "Name":
+                            a = new AttributeString(value);
+                            break;
+
+                        default:
+                            Console.WriteLine($"Unknown item attribute: {key}");
+                            break;
+                    }
+                    return a;
+                }, (s, o) =>
+                {
+                    if (ParseChildNodeHeader(s, out string type, out string childName))
+                    {
+                        // TODO: Verify that childType == "Child" and childName == "0" or "1"
+                        TabGroupGridType child = reader.ReadTabGroupGridType(-1, childName, null);
+                        ((TabGroupType)o).Grids.Add(child);
+                    }
+                });
+
+                return tabGroupType;
+            }
+            catch (System.Exception ex)
+            {
+                throw new Exception("Failed reading tab group", ex);
+            }
+        }
+
+        public static TabGroupGridType ReadTabGroupGridType(this StreamReader reader, int id, string name, string reference)
+        {
+            try
+            {
+                TabGroupGridType grid = new TabGroupGridType(id, name, reference);
+                reader.ReadAttributes(grid, (key, value) =>
+                {
+                    EcfAttribute a = null;
+                    switch (key)
+                    {
+                        // int[]
+                        case "ParentBlocks":
+                            a = new AttributeIntArray(Array.ConvertAll(Regex.Split(value, "\\s*,\\s*"), int.Parse)); 
+                            break;
+
+                        // string[]
+                        case "Shapes":
+                            a = new AttributeStringArray(Regex.Split(value, "\\s*,\\s*"));
+                            break;
+
+                        default:
+                            Console.WriteLine($"Unknown tab group grid attribute: {key}");
+                            break;
+                    }
+                    return a;
+                }, null);
+
+                return grid;
+            }
+            catch (System.Exception ex)
+            {
+                throw new Exception("Failed child (grid) mode for tab group", ex);
+            }
+        }
+        #endregion BlockShapesWindow
+
+        #region Generic
+        public static bool ParseNodeHeader(string s, out string type, out int id, out string name, out string reference)
+        {
+            type = null;
+            id = -1;
+            name = null;
+            reference = null;
+
+            Match m = Regex.Match(s, "{\\s*(?<type>\\S+)\\s*(?<props>.*)$");
+            if (m.Success)
+            {
+                type = m.Groups["type"].Value;
+
+                foreach (string p in m.Groups["props"].Value.Split(','))
+                {
+                    Match mp = Regex.Match(p, "\\s*(?<key>[^:]+):\\s*(?<value>.*)\\s*");
+                    if (mp.Success)
+                    {
+                        string key = mp.Groups["key"].Value;
+                        string value = mp.Groups["value"].Value;
+                        switch (key)
+                        {
+                            case "Id":
+                                id = int.Parse(value);
+                                break;
+                            case "Name":
+                                name = value;
+                                break;
+                            case "Ref":
+                                reference = value;
+                                break;
+                            default:
+                                Console.WriteLine($"Unknown attribute: {key} = {value}");
+                                break;
+                        }
+                    }
+                }
+                return true;
+            }
+            return false;
+        }
+
+        public static bool ParseChildNodeHeader(string s, out string type, out string name)
+        {
+            Match m = Regex.Match(s, "{\\s*(?<type>\\S+)\\s*(?<name>.*)$");
+            if (m.Success)
+            {
+                type = m.Groups["type"].Value;
+                name = m.Groups["name"].Value;
+                return true;
+            }
+
+            type = "";
+            name = "";
+            return true; // Allow headers with no type and name
         }
 
         public static void ReadAttributes(this StreamReader reader,
@@ -577,6 +702,6 @@ namespace ECFLib.IO
                 throw new Exception("Failed reading attributes", ex);
             }
         }
-
+        #endregion Generic
     }
 }
