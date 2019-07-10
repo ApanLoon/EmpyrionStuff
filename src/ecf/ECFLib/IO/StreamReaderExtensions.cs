@@ -69,7 +69,7 @@ namespace ECFLib.IO
                     }
                 }
 
-                config.ConnectBlockTypeReferences();
+                config.ConnectReferences();
                 return config;
             }
             catch (System.Exception ex)
@@ -571,11 +571,11 @@ namespace ECFLib.IO
 
                 foreach (string p in m.Groups["props"].Value.Split(','))
                 {
-                    Match mp = Regex.Match(p, "\\s*(?<key>[^:]+):\\s*(?<value>.*)\\s*");
+                    Match mp = Regex.Match(p, "\\s*(?<key>[^:]+):\\s*(?<value>.+)\\s*");
                     if (mp.Success)
                     {
                         string key = mp.Groups["key"].Value;
-                        string value = mp.Groups["value"].Value;
+                        string value = mp.Groups["value"].Success ? mp.Groups["value"].Value : null;
                         switch (key)
                         {
                             case "Id":
