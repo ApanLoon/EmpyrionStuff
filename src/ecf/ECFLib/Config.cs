@@ -14,6 +14,39 @@ namespace ECFLib
         public List<TemplateType> TemplateTypes = new List<TemplateType>();
         public List<TabGroupType> TabGroupTypes = new List<TabGroupType>();
 
+        public BlockType GetBlockType(int id)
+        {
+            return BlockTypes.Find(b => b.Id == id);
+        }
+        public BlockType GetBlockType(string name)
+        {
+            return BlockTypes.Find(b => b.Name == name);
+        }
+
+        public ItemType GetItemType(int id)
+        {
+            return ItemTypes.Find(i => i.Id == id);
+        }
+        public ItemType GetItemType(string name)
+        {
+            return ItemTypes.Find(i => i.Name == name);
+        }
+
+        public EntityType GetEntityType(string name)
+        {
+            return EntityTypes.Find(e => e.Name == name);
+        }
+
+        public TemplateType GetTemplateType(string name)
+        {
+            return TemplateTypes.Find(t => t.Name == name);
+        }
+
+        public TabGroupType GetTagGroupType(int id)
+        {
+            return TabGroupTypes.Find(t => t.Id == id);
+        }
+
         public Config()
         {
             Version = -1;
