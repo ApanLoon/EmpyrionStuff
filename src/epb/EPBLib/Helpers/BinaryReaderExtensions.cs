@@ -384,10 +384,10 @@ namespace EPBLib.Helpers
                             bytesLeft -= 4;
                             Block block = new Block(new BlockPos((byte)x, (byte)y, (byte)z))
                             {
-                                BlockType = BlockType.GetBlockType((UInt16)(data & 0x7ff)),
-                                Rotation = (Block.BlockRotation)((data >> 11) & 0x1f),
-                                Unknown00 = (UInt16)((data >> 16) & 0x3ff),
-                                Variant = (byte)((data >> 25) & 0x1f)
+                                BlockType = BlockType.GetBlockType((UInt16)(data        & 0x7ff)),
+                                Rotation  =          (Block.BlockRotation)((data >> 11) & 0x1f),
+                                Unknown00 =                       (UInt16)((data >> 16) & 0x1ff),
+                                Variant   =                         (byte)((data >> 25) & 0x7f)
                             };
                             if (block.BlockType.Id != 0)
                             {
@@ -408,10 +408,10 @@ namespace EPBLib.Helpers
                     blockCount++;
                     Block block = new Block(new BlockPos(x, y, z))
                     {
-                        BlockType = BlockType.GetBlockType((UInt16)(data & 0x7ff)),
-                        Rotation = (Block.BlockRotation)((data >> 11) & 0x1f),
-                        Unknown00 = (UInt16)((data >> 16) & 0x3ff),
-                        Variant = (byte)((data >> 25) & 0x1f)
+                        BlockType = BlockType.GetBlockType((UInt16)(data        & 0x7ff)),
+                        Rotation  =          (Block.BlockRotation)((data >> 11) & 0x1f),
+                        Unknown00 =                       (UInt16)((data >> 16) & 0x1ff),
+                        Variant   =                         (byte)((data >> 25) & 0x7f)
                     };
                     epb.SetBlock(block);
                     Console.WriteLine($"    {blockCount,5} ({x,4}, {y,4}, {z,4}): Rot={block.Rotation} Unknown2=0x{block.Unknown00:x3} Type={block.BlockType,-31} Variant=\"{block.VariantName + "\" (0x" + block.Variant.ToString("x2") + "=" + block.Variant + ")",-31}");
