@@ -113,7 +113,10 @@ A library for parsed EmPyrion Blueprints.
 * Modify custom colour palette entries
 
 ## ecf
-A command line tool that parses ECF configuration files. Currently the only real use for this is to extract block types for use in EPBLib.
+A command line tool that parses ECF configuration files.
+
+## ECFLab
+A Windows application with a graphical user interface for examining, modifying or creating ECF files.
 
 ## ECFLib
 A library for parsed Empyrion Configuration Files.
