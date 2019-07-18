@@ -1,0 +1,50 @@
+﻿<Window x:Class="ECFLab.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ignore="http://www.galasoft.ch/ignore"
+        xmlns:blocks="clr-namespace:ECFLab.View.Blocks"
+        xmlns:items="clr-namespace:ECFLab.View.Items"
+        xmlns:entities="clr-namespace:ECFLab.View.Entities"
+        xmlns:templates="clr-namespace:ECFLab.View.Templates"
+        mc:Ignorable="d ignore"
+        Width="1200"
+        Height="800"
+        Title="{Binding MainWindowTitle}"
+        DataContext="{Binding Main, Source={StaticResource Locator}}">
+    
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Skins/MainSkin.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid x:Name="LayoutRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0">TODO: Toolbar etc</TextBlock>
+        <TabControl Grid.Row="1">
+            <TabItem Header="Blocks">
+                <blocks:BlocksView DataContext="{Binding Blocks}" />
+            </TabItem>
+            <TabItem Header="Items">
+                <items:ItemsView DataContext="{Binding Items}" />
+            </TabItem>
+            <TabItem Header="Entities">
+                <entities:EntitiesView DataContext="{Binding Entities}" />
+            </TabItem>
+            <TabItem Header="Templates">
+                <templates:TemplatesView DataContext="{Binding Templates}" />
+            </TabItem>
+        </TabControl>
+        <StatusBar Grid.Row="2">
+            <StatusBarItem><TextBlock>TODO: Status bar</TextBlock></StatusBarItem>
+        </StatusBar>
+    </Grid>
+</Window>
