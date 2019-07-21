@@ -62,7 +62,7 @@ namespace EPBLib
             Position = pos;
         }
 
-        public void SetPosition(byte x, byte y, byte z, byte u1 = 0, byte u2 = 0)
+        public void SetPosition(byte x, byte y, byte z, byte u1 = 8, byte u2 = 8)
         {
             Position.X = x;
             Position.Y = y;

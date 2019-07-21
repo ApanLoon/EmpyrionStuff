@@ -3,7 +3,7 @@ namespace EPBLib
 {
     public class BlockPos
     {
-        public BlockPos(byte x, byte y, byte z, byte u1 = 0, byte u2 = 0)
+        public BlockPos(byte x, byte y, byte z, byte u1 = 8, byte u2 = 8)
         {
             X = x;
             Y = y;
