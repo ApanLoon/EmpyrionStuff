@@ -354,7 +354,7 @@ namespace EPBLib.Helpers
             bytesLeft = reader.ReadSymbolMatrix(epb, version, bytesLeft);
             bytesLeft = reader.ReadSymbolRotationMatrix(epb, version, bytesLeft);
             bytesLeft = reader.ReadBlockTags(epb, version, bytesLeft);
-            bytesLeft = reader.ReadUnknown07(epb, version, bytesLeft);
+            bytesLeft = reader.ReadLockCodes(epb, version, bytesLeft);
             bytesLeft = reader.ReadSignalSources(epb, version, bytesLeft);
             bytesLeft = reader.ReadSignalTargets(epb, version, bytesLeft);
             bytesLeft = reader.ReadSignalOperators(epb, version, bytesLeft);
@@ -736,22 +736,33 @@ namespace EPBLib.Helpers
         }
         #endregion BlockTags
 
-        #region Unknown07
-        public static long ReadUnknown07(this BinaryReader reader, Blueprint epb, uint version, long bytesLeft)
+        #region LockCodes
+        public static long ReadLockCodes(this BinaryReader reader, Blueprint epb, uint version, long bytesLeft)
         {
             if (version <= 10)
             {
                 return bytesLeft;
             }
 
-            UInt16 unknown07Count = reader.ReadUInt16();
+            UInt16 lockCodeCount = reader.ReadUInt16();
             bytesLeft -= 2;
-            epb.Unknown07 = reader.ReadBytes(unknown07Count * 6);
-            bytesLeft -= unknown07Count * 6;
-            Console.WriteLine($"Unknown07: {epb.Unknown07.ToHexString()}");
+            Console.WriteLine("Lock codes:");
+            for (int i = 0; i < lockCodeCount; i++)
+            {
+                BlockPos pos = reader.ReadBlockPos(ref bytesLeft);
+                UInt16 lockCode = reader.ReadUInt16();
+                bytesLeft -= 2;
+                Block block = epb.Blocks[pos];
+                if (block != null)
+                {
+                    block.LockCode = lockCode;
+                    block.HasLockCode = true;
+                }
+                Console.WriteLine($"  pos: {pos} code: {lockCode:D4}");
+            }
             return bytesLeft;
         }
-        #endregion Unknown07
+        #endregion LockCodes
 
         #region SignalSources
         public static long ReadSignalSources(this BinaryReader reader, Blueprint epb, uint version, long bytesLeft)

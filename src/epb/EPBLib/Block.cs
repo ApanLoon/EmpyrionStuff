@@ -54,6 +54,9 @@ namespace EPBLib
         public byte[] Symbols = new byte[6];         // 5 bit symbol index
         public SymbolRotation[] SymbolRotations = new SymbolRotation[6]; // 2 bit symbol rotation
 
+        public bool HasLockCode = false;
+        public UInt16 LockCode;
+
         public void SetPosition(BlockPos pos)
         {
             Position = pos;

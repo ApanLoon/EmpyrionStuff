@@ -44,7 +44,6 @@ namespace EPBLib
         BlockList _blocks;
         public BlockList Blocks => _blocks ?? (_blocks = new BlockList());
 
-        public byte[] Unknown07 = new byte[0];
         public List<SignalSource> SignalSources = new List<SignalSource>();
         public List<SignalTarget> SignalTargets = new List<SignalTarget>();
         public List<SignalOperator> SignalOperators = new List<SignalOperator>();

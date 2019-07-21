@@ -272,7 +272,7 @@ namespace EPBLib.Helpers
             byteCount = AddSymbolMatrixToList(epb, byteCount, byteList);
             byteCount = AddSymbolRotationMatrixToList(epb, byteCount, byteList);
             byteCount = AddBlockTagsToList(epb, byteCount, byteList);
-            byteCount = AddUnknown07ToList(epb, byteCount, byteList);
+            byteCount = AddLockCodesToList(epb, byteCount, byteList);
             byteCount = AddSignalSourcesToList(epb, byteCount, byteList);
             byteCount = AddSignalTargetsToList(epb, byteCount, byteList);
             byteCount = AddSignalOperatorsToList(epb, byteCount, byteList);
@@ -488,11 +488,23 @@ namespace EPBLib.Helpers
             return byteCount;
         }
 
-        private static long AddUnknown07ToList(Blueprint epb, long byteCount, List<byte> byteList)
+        private static long AddLockCodesToList(Blueprint epb, long byteCount, List<byte> byteList)
         {
-            UInt16 nUnknown07 = (UInt16)(epb.Unknown07.Length / 6);
-            byteList.AddRange(BitConverter.GetBytes(nUnknown07));
-            byteList.AddRange(epb.Unknown07);
+            int nCodes = 0;
+            List<byte> l = new List<byte>();
+            foreach (Block block in epb.Blocks)
+            {
+                if (block.HasLockCode)
+                {
+                    byteCount += AddBlockPosToList(epb, l, block.Position);
+                    l.AddRange(BitConverter.GetBytes(block.LockCode));
+                    byteCount += 2;
+                    nCodes++;
+                }
+            }
+            byteList.AddRange(BitConverter.GetBytes((UInt16)nCodes));
+            byteCount += 2;
+            byteList.AddRange(l);
             return byteCount;
         }
 
