@@ -12,11 +12,17 @@
             Green = g;
             Blue = b;
         }
-        public override string ValueString()
+        public override string ValueString
         {
-            return $"\"{Red}, {Green}, {Blue}\"";
+            get => $"\"{Red}, {Green}, {Blue}\"";
+            set
+            {
+                string[] v = value.Split(',');
+                Red   = byte.Parse(v[0]);
+                Green = byte.Parse(v[1]);
+                Blue  = byte.Parse(v[2]);
+            }
         }
-
     }
 }
 

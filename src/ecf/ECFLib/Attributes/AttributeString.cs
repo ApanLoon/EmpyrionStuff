@@ -11,19 +11,24 @@ namespace ECFLib.Attributes
         {
             Value = value;
         }
-        public override string ValueString()
+
+        public override string ValueString
         {
-            if (Value == null)
+            get
             {
-                return "";
-            }
+                if (Value == null)
+                {
+                    return "";
+                }
 
-            if (Regex.IsMatch(Value, "\\s|:"))
-            {
-                return $"\"{Value}\"";
-            }
+                if (Regex.IsMatch(Value, "\\s|:"))
+                {
+                    return $"\"{Value}\"";
+                }
 
-            return Value;
+                return Value;
+            }
+            set => Value = value;
         }
 
     }

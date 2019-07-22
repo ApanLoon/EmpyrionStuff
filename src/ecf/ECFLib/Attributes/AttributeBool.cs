@@ -10,10 +10,10 @@ namespace ECFLib.Attributes
             Value = value;
         }
 
-        public override string ValueString()
+        public override string ValueString
         {
-            return Value ? "true" : "false";
+            get => Value ? "true" : "false";
+            set => Value = bool.Parse(value);
         }
-
     }
 }

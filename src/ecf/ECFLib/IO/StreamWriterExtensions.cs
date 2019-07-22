@@ -159,7 +159,7 @@ namespace ECFLib.IO
         #region Generic
         public static void EcfWrite(this StreamWriter writer, EcfAttribute attribute)
         {
-            string v = attribute.ValueString();
+            string v = attribute.ValueString;
             writer.Write($"  {attribute.Key}: {v}");
             if (attribute.AttributeType != null)
             {

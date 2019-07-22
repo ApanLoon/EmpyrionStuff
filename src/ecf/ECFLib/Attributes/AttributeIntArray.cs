@@ -11,30 +11,34 @@ namespace ECFLib.Attributes
             Value = value;
         }
 
-        public override string ValueString()
+        public override string ValueString
         {
-            string s = "";
-            if (Value == null)
+            get
             {
+                string s = "";
+                if (Value == null)
+                {
+                    return s;
+                }
+                bool first = true;
+                bool single = true;
+                foreach (int v in Value)
+                {
+                    if (!first)
+                    {
+                        s += ", ";
+                        single = false;
+                    }
+                    s += v;
+                    first = false;
+                }
+                if (!single)
+                {
+                    s = "\"" + s + "\"";
+                }
                 return s;
             }
-            bool first = true;
-            bool single = true;
-            foreach (int v in Value)
-            {
-                if (!first)
-                {
-                    s += ", ";
-                    single = false;
-                }
-                s += v;
-                first = false;
-            }
-            if (!single)
-            {
-                s = "\"" + s + "\"";
-            }
-            return s;
+            set => Value = Array.ConvertAll(value.Split(','), int.Parse);
         }
 
     }

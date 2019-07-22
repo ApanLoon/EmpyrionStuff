@@ -1,4 +1,6 @@
-﻿namespace ECFLib.Attributes
+﻿using System;
+
+namespace ECFLib.Attributes
 {
     public class AttributeStringArray : EcfAttribute
     {
@@ -8,30 +10,35 @@
         {
             Value = value;
         }
-        public override string ValueString()
+
+        public override string ValueString
         {
-            string s = "";
-            if (Value == null)
+            get
             {
+                string s = "";
+                if (Value == null)
+                {
+                    return s;
+                }
+                bool first = true;
+                bool single = true;
+                foreach (string v in Value)
+                {
+                    if (!first)
+                    {
+                        s += ", ";
+                        single = false;
+                    }
+                    s += v;
+                    first = false;
+                }
+                if (!single)
+                {
+                    s = "\"" + s + "\"";
+                }
                 return s;
             }
-            bool first = true;
-            bool single = true;
-            foreach (string v in Value)
-            {
-                if (!first)
-                {
-                    s += ", ";
-                    single = false;
-                }
-                s += v;
-                first = false;
-            }
-            if (!single)
-            {
-                s = "\"" + s + "\"";
-            }
-            return s;
+            set => Value = Array.ConvertAll(value.Split(','), s => s.Trim());
         }
 
     }

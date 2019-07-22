@@ -8,11 +8,11 @@
         {
             Value = value;
         }
-        public override string ValueString()
+        public override string ValueString
         {
-            return $"{Value}";
+            get => $"{Value}";
+            set => Value = float.Parse(value);
         }
-
     }
 }
 
