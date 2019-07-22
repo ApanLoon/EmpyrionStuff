@@ -18,6 +18,14 @@ namespace ECFLab.ViewModel.Blocks
             get => _rootBlockTypes;
             set => Set(ref _rootBlockTypes, value);
         }
+
+        public const string SelectedBlockTypesPropertyName = "SelectedBlockTypes";
+        private ObservableCollection<ITreeNode> _selectedBlockTypes = null;
+        public ObservableCollection<ITreeNode> SelectedBlockTypes
+        {
+            get => _selectedBlockTypes;
+            set => Set(ref _selectedBlockTypes, value);
+        }
         #endregion Properties
 
         private Config _config;

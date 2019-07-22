@@ -11,9 +11,15 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <TreeView Grid.Row="0" ItemsSource="{Binding RootBlockTypes}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="3*" />
+        </Grid.ColumnDefinitions>
+
+        <TreeView Grid.Column="0" ItemsSource="{Binding RootBlockTypes}">
             <i:Interaction.Behaviors>
-                <behaviours:BindableSelectedItemBehaviour SelectedItems="{Binding SelectedBlocks, Mode=TwoWay}" />
+                <behaviours:BindableSelectedItemBehaviour SelectedItems="{Binding SelectedBlockTypes, Mode=TwoWay}" />
             </i:Interaction.Behaviors>
             <TreeView.Resources>
                 <HierarchicalDataTemplate DataType="{x:Type tree:GroupNode}" ItemsSource="{Binding Children}">
@@ -34,5 +40,55 @@
                 </HierarchicalDataTemplate>
             </TreeView.Resources>
         </TreeView>
+
+        <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" Width="5" />
+
+        <ScrollViewer Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <ItemsControl ItemsSource="{Binding SelectedBlockTypes}" HorizontalAlignment="Left">
+                <ItemsControl.Resources>
+                    <DataTemplate DataType="{x:Type tree:GroupNode}" />
+                    <DataTemplate DataType="{x:Type blocks:BlockViewModel}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <Grid Row="0" Margin="2, 2, 2, 2" VerticalAlignment="Top">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Label     Grid.Row="0" Grid.Column="0" Margin="3, 3, 3, 3" Content="Id:" />
+                                <TextBlock Grid.Row="0" Grid.Column="1" Margin="3, 3, 3, 3" Padding="0,3,0,0" Text="{Binding Id}" />
+                                <Label     Grid.Row="1" Grid.Column="0" Margin="3, 3, 3, 3" Content="Name:" />
+                                <TextBlock Grid.Row="1" Grid.Column="1" Margin="3, 3, 3, 3" Padding="0,3,0,0" Text="{Binding Name}" />
+                                <Label     Grid.Row="2" Grid.Column="0" Margin="3, 3, 3, 3" Content="Ref:" />
+                                <TextBlock Grid.Row="2" Grid.Column="1" Margin="3, 3, 3, 3" Padding="0,3,0,0" Text="{Binding RefName}" />
+                            </Grid>
+                            <ListView Grid.Row="1" ItemsSource="{Binding Attributes}">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Header="Key" DisplayMemberBinding="{Binding Key}" />
+                                        <GridViewColumn Header="Value" DisplayMemberBinding="{Binding ValueString}" />
+                                        <GridViewColumn Header="Type" DisplayMemberBinding="{Binding AttributeType}" />
+                                        <GridViewColumn Header="Display" DisplayMemberBinding="{Binding Display}" />
+                                        <GridViewColumn Header="Formatter" DisplayMemberBinding="{Binding Formatter}" />
+                                        <GridViewColumn Header="Data" DisplayMemberBinding="{Binding Data}" />
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.Resources>
+            </ItemsControl>
+        </ScrollViewer>
     </Grid>
 </UserControl>
