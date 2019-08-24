@@ -42,8 +42,8 @@ namespace epb
         public static UInt32                Depth           = 1;
         public static string                CreatorId       = "Gronk";
         public static string                CreatorName     = "Apan Loon";
-        public static string                OwnerId         = "Gronkers";
-        public static string                OwnerName       = "Apan Loony";
+        public static string                ChangedById     = "Gronkers";
+        public static string                ChangedByName   = "Apan Loony";
 
         public static List<string> InputPaths;
 
@@ -225,12 +225,12 @@ namespace epb
                 Value = new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }
             });
             epb.MetaTags.Add(MetaTagKey.GroupName,      new MetaTagString (MetaTagKey.GroupName)      { Value = "" });
-            epb.MetaTags.Add(MetaTagKey.CreationTime,   new MetaTag05     (MetaTagKey.CreationTime)   { Value = DateTime.Now, Unknown = 0 });
+            epb.MetaTags.Add(MetaTagKey.ChangedTime,    new MetaTag05     (MetaTagKey.ChangedTime)    { Value = DateTime.Now, Unknown = 0 });
             epb.MetaTags.Add(MetaTagKey.BuildVersion,   new MetaTag02     (MetaTagKey.BuildVersion)   { Value = 1838, Unknown = 0 });
             epb.MetaTags.Add(MetaTagKey.CreatorId,      new MetaTagString (MetaTagKey.CreatorId)      { Value = CreatorId });
             epb.MetaTags.Add(MetaTagKey.CreatorName,    new MetaTagString (MetaTagKey.CreatorName)    { Value = CreatorName });
-            epb.MetaTags.Add(MetaTagKey.OwnerId,        new MetaTagString (MetaTagKey.OwnerId)        { Value = OwnerId });
-            epb.MetaTags.Add(MetaTagKey.OwnerName,      new MetaTagString (MetaTagKey.OwnerName)      { Value = OwnerName });
+            epb.MetaTags.Add(MetaTagKey.ChangedById,    new MetaTagString (MetaTagKey.ChangedById)    { Value = ChangedById });
+            epb.MetaTags.Add(MetaTagKey.ChangedByName,  new MetaTagString (MetaTagKey.ChangedByName)  { Value = ChangedByName });
             epb.MetaTags.Add(MetaTagKey.SpawnName,      new MetaTagString (MetaTagKey.SpawnName)      { Value = "" });
             epb.MetaTags.Add(MetaTagKey.UnknownMetax12, new MetaTag05     (MetaTagKey.UnknownMetax12) { Value = DateTime.MinValue, Unknown = 0 });
             return epb;

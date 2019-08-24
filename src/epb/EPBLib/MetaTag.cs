@@ -28,11 +28,11 @@ namespace EPBLib
         UnknownMetax06 = 6,
         GroupName      = 7,
         BuildVersion   = 8,
-        CreationTime   = 9,
+        ChangedTime    = 9,
         CreatorName    = 10,
         CreatorId      = 11, // Shows up in the statistics tab in game
-        OwnerName      = 12,
-        OwnerId        = 13,
+        ChangedByName  = 12,
+        ChangedById    = 13,
         UnknownMetax0E = 14,
         UnknownMetax0F = 15, // In CV_Prefab_Tier1 and CV_Prefab_Tier1a this matches fuel fill percentage, in CV_Prefab_Tier5 it matches number of fuel tanks.
         SpawnName      = 16, // Shown in hover text
