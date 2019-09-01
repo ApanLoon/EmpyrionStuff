@@ -624,6 +624,7 @@ namespace EPBLib
             {  1397, new BlockType(){Id =  1397, Name = "AlienThinLarge"               , Category = "BuildingBlocks"               , Ref = "AlienThin"                    }},
             {  1398, new BlockType(){Id =  1398, Name = "ReceptionTableThin"           , Category = "Furnishings (Deco)"           , Ref = "DecoTemplate"                 }},
             {  1399, new BlockType(){Id =  1399, Name = "ReceptionTableCornerThin"     , Category = "Furnishings (Deco)"           , Ref = "DecoTemplate"                 }},
+            {  1400, new BlockType(){Id =  1400, Name = "LCDProjector"                 , Category = "Devices"                      , Ref = ""                             }},
             {  1405, new BlockType(){Id =  1405, Name = "Ventilator"                   , Category = "Devices"                      , Ref = ""                             }},
             {  1406, new BlockType(){Id =  1406, Name = "TrussWall"                    , Category = "BuildingBlocks"               , Ref = "TrussCube"                    , CountAs = 1075}},
             {  1407, new BlockType(){Id =  1407, Name = "TrussCylinder"                , Category = "BuildingBlocks"               , Ref = "TrussCube"                    , CountAs = 1075}},
@@ -1105,6 +1106,13 @@ namespace EPBLib
             {  1956, new BlockType(){Id =  1956, Name = "VentilatorBlocks"             , Category = "Devices"                      , Ref = ""                             }},
             {  1957, new BlockType(){Id =  1957, Name = "VentilatorCubeHalf"           , Category = "Devices"                      , Ref = "Ventilator"                   }},
             {  1958, new BlockType(){Id =  1958, Name = "VentilatorRampC"              , Category = "Devices"                      , Ref = "Ventilator"                   }},
+            {  1960, new BlockType(){Id =  1960, Name = "VentilatorCubeQuarter"        , Category = "Devices"                      , Ref = "Ventilator"                   }},
+            {  1961, new BlockType(){Id =  1961, Name = "VentilatorCylinder"           , Category = "Devices"                      , Ref = "Ventilator"                   }},
+            {  1962, new BlockType(){Id =  1962, Name = "VentilatorCylinderThin"       , Category = "Devices"                      , Ref = "Ventilator"                   }},
+            {  1963, new BlockType(){Id =  1963, Name = "VentilatorEdgeRoundLowHalf"   , Category = "Devices"                      , Ref = "Ventilator"                   }},
+            {  1964, new BlockType(){Id =  1964, Name = "VentilatorEdgeRoundMediumHalf", Category = "Devices"                      , Ref = "Ventilator"                   }},
+            {  1965, new BlockType(){Id =  1965, Name = "VentilatorEdgeRound"          , Category = "Devices"                      , Ref = "Ventilator"                   }},
+            {  1966, new BlockType(){Id =  1966, Name = "VentilatorRampD"              , Category = "Devices"                      , Ref = "Ventilator"                   }},
 
             // -------- Manually added: ---------
             {    57, new BlockType(){Id =    57, Name = "RockResource"                 , Category = "Resource"                     , Ref = ""                             }},
