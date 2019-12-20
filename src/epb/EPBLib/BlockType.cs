@@ -133,6 +133,8 @@ namespace EPBLib
             {   462, new BlockType(){Id =   462, Name = "GrowingPot"                   , Category = "BuildingBlocks"               , Ref = ""                             }},
             {   468, new BlockType(){Id =   468, Name = "ElevatorMS"                   , Category = "Devices"                      , Ref = ""                             }},
             {   469, new BlockType(){Id =   469, Name = "GeneratorMS"                  , Category = "Devices"                      , Ref = ""                             }},
+            {   470, new BlockType(){Id =   470, Name = "FuelTankSVSmall"              , Category = "Devices"                      , Ref = ""                             }},
+            {   471, new BlockType(){Id =   471, Name = "GeneratorSVSmall"             , Category = "Devices"                      , Ref = ""                             }},
             {   489, new BlockType(){Id =   489, Name = "WeaponSV05Homing"             , Category = "Weapons/Items"                , Ref = "WeaponSV05"                   }},
             {   491, new BlockType(){Id =   491, Name = "TurretIONCannon"              , Category = "Weapons/Items"                , Ref = ""                             }},
             {   492, new BlockType(){Id =   492, Name = "TurretEnemyLaser"             , Category = "Weapons/Items"                , Ref = "TurretIONCannon"              }},
@@ -628,6 +630,8 @@ namespace EPBLib
             {  1398, new BlockType(){Id =  1398, Name = "ReceptionTableThin"           , Category = "Furnishings (Deco)"           , Ref = "DecoTemplate"                 }},
             {  1399, new BlockType(){Id =  1399, Name = "ReceptionTableCornerThin"     , Category = "Furnishings (Deco)"           , Ref = "DecoTemplate"                 }},
             {  1400, new BlockType(){Id =  1400, Name = "LCDProjector"                 , Category = "Devices"                      , Ref = ""                             }},
+            {  1401, new BlockType(){Id =  1401, Name = "CoreNPCcpu"                   , Category = "Devices"                      , Ref = "CoreNPC"                      }},
+            {  1402, new BlockType(){Id =  1402, Name = "CoreNoCPU"                    , Category = "Devices"                      , Ref = "CoreNPC"                      }},
             {  1405, new BlockType(){Id =  1405, Name = "Ventilator"                   , Category = "Devices"                      , Ref = ""                             }},
             {  1406, new BlockType(){Id =  1406, Name = "TrussWall"                    , Category = "BuildingBlocks"               , Ref = "TrussCube"                    , CountAs = 1075}},
             {  1407, new BlockType(){Id =  1407, Name = "TrussCylinder"                , Category = "BuildingBlocks"               , Ref = "TrussCube"                    , CountAs = 1075}},
@@ -1206,19 +1210,6 @@ namespace EPBLib
             {  1674, new BlockType(){Id =  1674, Name = "SentryGun01Retract"           , Category = "Weapons/Items"                , Ref = "SentryGun01"                  }}, // Removed in A10.0.0-2446
             {  1681, new BlockType(){Id =  1681, Name = "Filler"                       , Category = "Voxel/Materials"              , Ref = ""                             }},
             {  1710, new BlockType(){Id =  1710, Name = "BoardingRamp3x3x5"            , Category = "Devices"                      , Ref = "RampTemplate"                 }}, // Removed in A10.1.0-2470
-            {  2017, new BlockType(){Id =  2017, Name = "DetailedHeavyWindows"         , Category = "BuildingBlocks"               , Ref = ""                             }},
-            {  2023, new BlockType(){Id =  2023, Name = "CPUExtenderHVT2"              , Category = "CoreExtenders"                , Ref = ""                             }},
-            {  2024, new BlockType(){Id =  2024, Name = "CPUExtenderHVT3"              , Category = "CoreExtenders"                , Ref = ""                             }},
-            {  2025, new BlockType(){Id =  2025, Name = "CPUExtenderHVT4"              , Category = "CoreExtenders"                , Ref = ""                             }},
-            {  2026, new BlockType(){Id =  2026, Name = "CPUExtenderSVT2"              , Category = "CoreExtenders"                , Ref = ""                             }},
-            {  2027, new BlockType(){Id =  2027, Name = "CPUExtenderSVT3"              , Category = "CoreExtenders"                , Ref = ""                             }},
-            {  2028, new BlockType(){Id =  2028, Name = "CPUExtenderSVT4"              , Category = "CoreExtenders"                , Ref = ""                             }},
-            {  2029, new BlockType(){Id =  2029, Name = "CPUExtenderCVT2"              , Category = "CoreExtenders"                , Ref = ""                             }},
-            {  2003, new BlockType(){Id =  2030, Name = "CPUExtenderCVT3"              , Category = "CoreExtenders"                , Ref = ""                             }},
-            {  2031, new BlockType(){Id =  2031, Name = "CPUExtenderCVT4"              , Category = "CoreExtenders"                , Ref = ""                             }},
-            {  2032, new BlockType(){Id =  2032, Name = "CPUExtenderBAT2"              , Category = "CoreExtenders"                , Ref = ""                             }},
-            {  2033, new BlockType(){Id =  2033, Name = "CPUExtenderBAT3"              , Category = "CoreExtenders"                , Ref = ""                             }},
-            {  2034, new BlockType(){Id =  2034, Name = "CPUExtenderBAT4"              , Category = "CoreExtenders"                , Ref = ""                             }},
         };
 
         /* These block types have been seen in Prefabs but are not listed in Config_Example.ecf:
