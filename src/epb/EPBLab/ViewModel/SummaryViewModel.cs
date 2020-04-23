@@ -156,6 +156,39 @@ namespace EPBLab.ViewModel
             }
         }
         public static readonly string TriangleCountPropertyName = "TriangleCount";
+        
+        public UInt32 UnknownCount04
+        {
+            get => Blueprint.UnknownCount04;
+            set
+            {
+                Blueprint.UnknownCount04 = value;
+                RaisePropertyChanged();
+            }
+        }
+        public static readonly string UnknownCount04PropertyName = "UnknownCount04";
+
+        public UInt32 UnknownCount05
+        {
+            get => Blueprint.UnknownCount05;
+            set
+            {
+                Blueprint.UnknownCount05 = value;
+                RaisePropertyChanged();
+            }
+        }
+        public static readonly string UnknownCount05PropertyName = "UnknownCount05";
+
+        public UInt32 UnknownCount06
+        {
+            get => Blueprint.UnknownCount06;
+            set
+            {
+                Blueprint.UnknownCount06 = value;
+                RaisePropertyChanged();
+            }
+        }
+        public static readonly string UnknownCount06PropertyName = "UnknownCount06";
 
         public ObservableCollection<MetaTagViewModel> MetaTags { get; } = new ObservableCollection<MetaTagViewModel>();
 
