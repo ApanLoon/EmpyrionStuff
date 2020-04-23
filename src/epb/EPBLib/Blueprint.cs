@@ -36,6 +36,9 @@ namespace EPBLib
         public UInt32 SolidCount { get; set; }
         public UInt32 UnknownCount03 { get; set; }
         public UInt32 TriangleCount { get; set; }
+        public UInt32 UnknownCount04 { get; set; }
+        public UInt32 UnknownCount05 { get; set; }
+        public UInt32 UnknownCount06 { get; set; }
 
         public Dictionary<BlockType, UInt32> BlockCounts = new Dictionary<BlockType, uint>();
 
@@ -68,6 +71,9 @@ namespace EPBLib
             UnknownCount02 = 0;
             UnknownCount03 = 0;
             TriangleCount  = 0;
+            UnknownCount04 = 0;
+            UnknownCount05 = 0;
+            UnknownCount06 = 0;
 
             MetaTags[MetaTagKey.GroundOffset]   = new MetaTag03     (MetaTagKey.GroundOffset)   { Value = 0f, Unknown = 0 };
             MetaTags[MetaTagKey.TerrainRemoval] = new MetaTagUInt16 (MetaTagKey.TerrainRemoval) { Value = 0x0000};

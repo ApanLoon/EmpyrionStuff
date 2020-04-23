@@ -95,6 +95,18 @@ namespace EPBLib.Helpers
                 bytesLeft -= 4;
                 Console.WriteLine($"TriangleCount:  {epb.TriangleCount} (0x{epb.TriangleCount:x8})");
             }
+            if (version >= 24)
+            {
+                epb.UnknownCount04 = reader.ReadUInt32();
+                bytesLeft -= 4;
+                Console.WriteLine($"UnknownCount04: {epb.UnknownCount04} (0x{epb.UnknownCount04:x8})");
+                epb.UnknownCount05 = reader.ReadUInt32();
+                bytesLeft -= 4;
+                Console.WriteLine($"UnknownCount05: {epb.UnknownCount05} (0x{epb.UnknownCount05:x8})");
+                epb.UnknownCount06 = reader.ReadUInt32();
+                bytesLeft -= 4;
+                Console.WriteLine($"UnknownCount06: {epb.UnknownCount06} (0x{epb.UnknownCount06:x8})");
+            }
 
             UInt16 nBlockCounts = reader.ReadUInt16();
             bytesLeft -= 2;
