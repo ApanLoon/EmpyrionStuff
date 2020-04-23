@@ -1,4 +1,5 @@
-﻿using EPBLab.Helpers;
+﻿using System;
+using EPBLab.Helpers;
 using EPBLib;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,30 @@ namespace EPBLab.ViewModel.Tree
         public byte[] Textures => Block.Textures;
 
         public List<BlockTag> Tags => Block.Tags.Values.ToList();
+
+        public bool HasLockCode
+        {
+            get => Block.HasLockCode;
+            set => Block.HasLockCode = value;
+        }
+
+        public string LockCode
+        {
+            get => Block.LockCode.ToString();
+            set => Block.LockCode = UInt16.Parse(value);
+        }
+
+        public bool LockCodeIsPrivate
+        {
+            get => (Block.LockCodeFlags2 & 1) != 0;
+            set => Block.LockCodeFlags2 = (UInt16)((Block.LockCodeFlags2 & ~1) + (value ? 1 : 0));
+        }
+
+        public bool LockCodeIsToken
+        {
+            get => (Block.LockCodeFlags1 & 1) != 0;
+            set => Block.LockCodeFlags1 = (byte)((Block.LockCodeFlags1 & ~1) + (value ? 1 : 0));
+        }
 
         public BlockNode(Block block, Blueprint blueprint)
         {

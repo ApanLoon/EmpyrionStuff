@@ -14,6 +14,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -59,5 +60,14 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
+        <TextBlock Grid.Row="6" Grid.Column="0" Margin="0 0 5 0" Text="Lock code" />
+        <StackPanel Grid.Row="6" Grid.Column="1" Orientation="Horizontal">
+            <CheckBox           VerticalAlignment="Center" VerticalContentAlignment="Center" IsChecked="{Binding HasLockCode, Mode=TwoWay}" />
+            <TextBox Width="40" VerticalAlignment="Center" VerticalContentAlignment="Center" Text="{Binding LockCode, Mode=TwoWay}" />
+            <TextBlock          VerticalAlignment="Center">Private:</TextBlock>
+            <CheckBox           VerticalAlignment="Center" VerticalContentAlignment="Center" IsChecked="{Binding LockCodeIsPrivate, Mode=TwoWay}" />
+            <TextBlock          VerticalAlignment="Center">Token:</TextBlock>
+            <CheckBox           VerticalAlignment="Center" VerticalContentAlignment="Center" IsChecked="{Binding LockCodeIsToken, Mode=TwoWay}" />
+        </StackPanel>
     </Grid>
 </UserControl>
