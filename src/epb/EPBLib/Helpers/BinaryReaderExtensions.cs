@@ -764,13 +764,25 @@ namespace EPBLib.Helpers
                 BlockPos pos = reader.ReadBlockPos(ref bytesLeft);
                 UInt16 lockCode = reader.ReadUInt16();
                 bytesLeft -= 2;
+
+                byte flags1 = (byte)(lockCode >> 14);
+                lockCode &= 0x3fff;
+
+                UInt16 flags2 = 0x0000;
+                if (epb.Version >= 25)
+                {
+                    flags2 = reader.ReadUInt16();
+                    bytesLeft -= 2;
+                }
                 Block block = epb.Blocks[pos];
                 if (block != null)
                 {
                     block.LockCode = lockCode;
                     block.HasLockCode = true;
+                    block.LockCodeFlags1 = flags1;
+                    block.LockCodeFlags2 = flags2;
                 }
-                Console.WriteLine($"  pos: {pos} code: {lockCode:D4}");
+                Console.WriteLine($"  pos: {pos} code: {lockCode:D4} flags1: {flags1:x1}{((flags1 & 1) != 0 ? "(Token)" : "")} {flags2:x4}{((flags2 & 1) != 0 ? "(Private)" : "")}");
             }
             return bytesLeft;
         }
