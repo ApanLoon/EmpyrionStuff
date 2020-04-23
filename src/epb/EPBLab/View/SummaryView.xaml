@@ -28,6 +28,9 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
@@ -78,10 +81,19 @@
                 <Label Grid.Row="13" Grid.Column="0"  Margin="3, 3, 3, 3" Content="Triangle count:" ToolTip="Type: UInt32" />
                 <TextBox Grid.Row="13" Grid.Column="1" Margin="3, 3, 3, 3" Padding="0,3,0,0" Text="{Binding TriangleCount}" />
 
-                <Label Grid.Row="14" Grid.Column="0" Margin="3, 3, 3, 3" Content="Block counts:" />
-                <Button Grid.Row="14" Grid.Column="1" Margin="3, 3, 3, 3" Content="Count" Command="{Binding CommandCountBlocks}" ToolTip="Count the block types, does not group correctly" />
+                <Label Grid.Row="14" Grid.Column="0"  Margin="3, 3, 3, 3" Content="Unknown count 04:" ToolTip="Type: UInt32" />
+                <TextBox Grid.Row="14" Grid.Column="1" Margin="3, 3, 3, 3" Padding="0,3,0,0" Text="{Binding UnknownCount04}" />
 
-                <ListBox Grid.Row="15" Grid.Column="0" Grid.ColumnSpan="2" HorizontalContentAlignment="Stretch" Margin="3, 3, 3, 3" ItemsSource="{Binding BlockCounts}">
+                <Label Grid.Row="15" Grid.Column="0"  Margin="3, 3, 3, 3" Content="Unknown count 05:" ToolTip="Type: UInt32" />
+                <TextBox Grid.Row="15" Grid.Column="1" Margin="3, 3, 3, 3" Padding="0,3,0,0" Text="{Binding UnknownCount05}" />
+
+                <Label Grid.Row="16" Grid.Column="0"  Margin="3, 3, 3, 3" Content="Unknown count 06:" ToolTip="Type: UInt32" />
+                <TextBox Grid.Row="16" Grid.Column="1" Margin="3, 3, 3, 3" Padding="0,3,0,0" Text="{Binding UnknownCount06}" />
+                
+                <Label Grid.Row="17" Grid.Column="0" Margin="3, 3, 3, 3" Content="Block counts:" />
+                <Button Grid.Row="17" Grid.Column="1" Margin="3, 3, 3, 3" Content="Count" Command="{Binding CommandCountBlocks}" ToolTip="Count the block types, does not group correctly" />
+
+                <ListBox Grid.Row="18" Grid.Column="0" Grid.ColumnSpan="2" HorizontalContentAlignment="Stretch" Margin="3, 3, 3, 3" ItemsSource="{Binding BlockCounts}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid>
@@ -108,7 +120,7 @@
 
 
                 <Label Grid.Row="0" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="3, 3, 3, 3" Content="Meta data:" />
-                <ListBox Grid.Row="1" Grid.Column="3" Grid.RowSpan="13" HorizontalContentAlignment="Stretch" Margin="3, 3, 3, 3" ItemsSource="{Binding MetaTags}">
+                <ListBox Grid.Row="1" Grid.Column="3" Grid.RowSpan="16" HorizontalContentAlignment="Stretch" Margin="3, 3, 3, 3" ItemsSource="{Binding MetaTags}">
                     <ListBox.Resources>
                         <DataTemplate DataType="{x:Type vm:MetaTag02ViewModel}">
                             <Grid>
@@ -232,8 +244,8 @@
                     </ListBox.Resources>
                 </ListBox>
 
-                <Label Grid.Row="14" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="3" Content="Device groups:" />
-                <TreeView Grid.Row="15" Grid.Column="3" ItemsSource="{Binding DeviceGroups}">
+                <Label Grid.Row="17" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="3" Content="Device groups:" />
+                <TreeView Grid.Row="18" Grid.Column="3" ItemsSource="{Binding DeviceGroups}">
                     <TreeView.Resources>
                         <HierarchicalDataTemplate DataType="{x:Type tree:DeviceGroupViewModel}" ItemsSource="{Binding Entries}">
                             <Grid>
