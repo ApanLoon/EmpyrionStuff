@@ -14,7 +14,7 @@ namespace EPBLib.Helpers
     {
         #region Blueprint
         public static readonly UInt32 EpbIdentifier = 0x78945245;
-        public static UInt32 EpbVersion = 23;
+        public static UInt32 EpbVersion = 25;
 
         public static void Write(this BinaryWriter writer, Blueprint epb)
         {
@@ -35,6 +35,9 @@ namespace EPBLib.Helpers
             writer.Write((UInt32)epb.Blocks.Count);
             writer.Write(epb.UnknownCount03);
             writer.Write(epb.TriangleCount);
+            writer.Write(epb.UnknownCount04); //v24
+            writer.Write(epb.UnknownCount05); //v24
+            writer.Write(epb.UnknownCount06); //v24
 
             writer.Write((UInt16)epb.BlockCounts.Count);
             foreach (BlockType type in epb.BlockCounts.Keys)
@@ -497,8 +500,10 @@ namespace EPBLib.Helpers
                 if (block.HasLockCode)
                 {
                     byteCount += AddBlockPosToList(epb, l, block.Position);
-                    l.AddRange(BitConverter.GetBytes(block.LockCode));
+                    UInt16 data = (UInt16)(block.LockCode + (block.LockCodeFlags1 << 14));
+                    l.AddRange(BitConverter.GetBytes(data));
                     byteCount += 2;
+                    l.AddRange(BitConverter.GetBytes(block.LockCodeFlags2)); //v25
                     nCodes++;
                 }
             }
@@ -619,9 +624,7 @@ namespace EPBLib.Helpers
             }
             return byteCount;
         }
-
-
-
+        
         #region BlockTags
         private static long AddBlockTagListToList(Blueprint epb, List<byte> byteList, BlockTag[] tags)
         {
@@ -688,9 +691,7 @@ namespace EPBLib.Helpers
             return 4;
         }
         #endregion BlockTags
-
-
-
+        
         private static long AddBlockPosToList(Blueprint epb, List<byte> byteList, BlockPos pos)
         {
             UInt32 data = ((UInt32)(pos.X  & 0xff) << 20)
