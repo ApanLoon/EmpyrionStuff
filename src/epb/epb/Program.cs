@@ -219,14 +219,14 @@ namespace epb
             epb.MetaTags.Add(MetaTagKey.UnknownMetax0E, new MetaTag03     (MetaTagKey.UnknownMetax0E) { Value = 0f, Unknown = 0 });
             epb.MetaTags.Add(MetaTagKey.UnknownMetax0F, new MetaTag03     (MetaTagKey.UnknownMetax0F) { Value = 0f, Unknown = 0 });
             epb.MetaTags.Add(MetaTagKey.UnknownMetax05, new MetaTagUInt16 (MetaTagKey.UnknownMetax05) { Value = 0x0000 });
-            epb.MetaTags.Add(MetaTagKey.UnknownMetax04, new MetaTag02     (MetaTagKey.UnknownMetax04) { Value = 0, Unknown = 0 });
+            epb.MetaTags.Add(MetaTagKey.UnknownMetax04, new MetaTagUInt32     (MetaTagKey.UnknownMetax04) { Value = 0, Unknown = 0 });
             epb.MetaTags.Add(MetaTagKey.UnknownMetax06, new MetaTag04     (MetaTagKey.UnknownMetax06)
             {
                 Value = new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }
             });
             epb.MetaTags.Add(MetaTagKey.GroupName,      new MetaTagString (MetaTagKey.GroupName)      { Value = "" });
             epb.MetaTags.Add(MetaTagKey.ChangedTime,    new MetaTag05     (MetaTagKey.ChangedTime)    { Value = DateTime.Now, Unknown = 0 });
-            epb.MetaTags.Add(MetaTagKey.BuildVersion,   new MetaTag02     (MetaTagKey.BuildVersion)   { Value = 1838, Unknown = 0 });
+            epb.MetaTags.Add(MetaTagKey.BuildVersion,   new MetaTagUInt32     (MetaTagKey.BuildVersion)   { Value = 1838, Unknown = 0 });
             epb.MetaTags.Add(MetaTagKey.CreatorId,      new MetaTagString (MetaTagKey.CreatorId)      { Value = CreatorId });
             epb.MetaTags.Add(MetaTagKey.CreatorName,    new MetaTagString (MetaTagKey.CreatorName)    { Value = CreatorName });
             epb.MetaTags.Add(MetaTagKey.ChangedById,    new MetaTagString (MetaTagKey.ChangedById)    { Value = ChangedById });

@@ -36,6 +36,7 @@ namespace ECFLab.ViewModel.Blocks
         {
             _config = config;
 
+            // Create VMs:
             foreach (BlockType blockType in _config.BlockTypes)
             {
                 _blockVms[blockType.Name] = new BlockViewModel(blockType);
@@ -45,6 +46,7 @@ namespace ECFLab.ViewModel.Blocks
                 }
             }
 
+            // Organise child block types:
             foreach (BlockType blockType in _config.BlockTypes)
             {
                 BlockViewModel parentVm = _blockVms[blockType.Name];
@@ -64,6 +66,20 @@ namespace ECFLab.ViewModel.Blocks
                 }
             }
 
+            //// Organise Refs: TODO: This makes the same block type appear under multiple parents
+            //foreach (BlockType blockType in _config.BlockTypes)
+            //{
+            //    if (string.IsNullOrEmpty(blockType.RefName) || !_blockVms.ContainsKey(blockType.RefName))
+            //    {
+            //        continue;
+            //    }
+            //    BlockViewModel vm = _blockVms[blockType.Name];
+            //    BlockViewModel refVm = _blockVms[blockType.RefName];
+            //    vm.Parent = refVm;
+            //    refVm.Children.Add(vm);
+            //}
+
+            // Organise categories:
             ObservableCollection<ITreeNode> roots = new ObservableCollection<ITreeNode>(_categoryVms.Values);
 
             foreach (BlockViewModel blockVm in _blockVms.Values.Where(x=>x.Parent == null))

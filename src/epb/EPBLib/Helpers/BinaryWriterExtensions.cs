@@ -70,8 +70,8 @@ namespace EPBLib.Helpers
                     case MetaTagType.UInt16:
                         writer.Write((MetaTagUInt16)tag);
                         break;
-                    case MetaTagType.Unknownx02:
-                        writer.Write((MetaTag02)tag);
+                    case MetaTagType.UInt32:
+                        writer.Write((MetaTagUInt32)tag);
                         break;
                     case MetaTagType.Unknownx03:
                         writer.Write((MetaTag03)tag);
@@ -96,7 +96,7 @@ namespace EPBLib.Helpers
             writer.Write((MetaTag)tag);
             writer.Write(tag.Value);
         }
-        public static void Write(this BinaryWriter writer, MetaTag02 tag)
+        public static void Write(this BinaryWriter writer, MetaTagUInt32 tag)
         {
             writer.Write((MetaTag)tag);
             writer.Write(tag.Value);

@@ -7,19 +7,19 @@ using EPBLib;
 
 namespace EPBLab.ViewModel.MetaTags
 {
-    public class MetaTag02ViewModel : MetaTagViewModel
+    public class MetaTagUInt32ViewModel : MetaTagViewModel
     {
         public override string Value
         {
-            get => (Tag as MetaTag02).Value.ToString();
+            get => (Tag as MetaTagUInt32).Value.ToString();
             set
             {
-                (Tag as MetaTag02).Value = UInt32.Parse(value);
+                (Tag as MetaTagUInt32).Value = UInt32.Parse(value);
                 RaisePropertyChanged();
             }
         }
 
-        public MetaTag02ViewModel(MetaTag02 tag) : base(tag)
+        public MetaTagUInt32ViewModel(MetaTagUInt32 tag) : base(tag)
         {
         }
     }

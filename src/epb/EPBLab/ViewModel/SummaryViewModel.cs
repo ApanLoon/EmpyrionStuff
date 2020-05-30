@@ -268,8 +268,8 @@ namespace EPBLab.ViewModel
                 MetaTagViewModel vm;
                 switch (tag)
                 {
-                    case MetaTag02 t:
-                        vm = new MetaTag02ViewModel(t);
+                    case MetaTagUInt32 t:
+                        vm = new MetaTagUInt32ViewModel(t);
                         break;
                     case MetaTag03 t:
                         vm = new MetaTag03ViewModel(t);

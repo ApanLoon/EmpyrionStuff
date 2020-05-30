@@ -62,7 +62,7 @@
     <Compile Include="DeviceGroupEntry.cs" />
     <Compile Include="DeviceGroup.cs" />
     <Compile Include="Blueprint.cs" />
-    <Compile Include="MetaTag02.cs" />
+    <Compile Include="MetaTagUInt32.cs" />
     <Compile Include="MetaTag03.cs" />
     <Compile Include="MetaTag04.cs" />
     <Compile Include="MetaTag05.cs" />

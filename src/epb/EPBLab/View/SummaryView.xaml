@@ -122,7 +122,7 @@
                 <Label Grid.Row="0" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="3, 3, 3, 3" Content="Meta data:" />
                 <ListBox Grid.Row="1" Grid.Column="3" Grid.RowSpan="16" HorizontalContentAlignment="Stretch" Margin="3, 3, 3, 3" ItemsSource="{Binding MetaTags}">
                     <ListBox.Resources>
-                        <DataTemplate DataType="{x:Type vm:MetaTag02ViewModel}">
+                        <DataTemplate DataType="{x:Type vm:MetaTagUInt32ViewModel}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="120" />

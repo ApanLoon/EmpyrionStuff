@@ -2,11 +2,11 @@
 
 namespace EPBLib
 {
-    public class MetaTag02 : MetaTag
+    public class MetaTagUInt32 : MetaTag
     {
-        public MetaTag02(MetaTagKey key)
+        public MetaTagUInt32(MetaTagKey key)
         {
-            TagType = MetaTagType.Unknownx02;
+            TagType = MetaTagType.UInt32;
             Key = key;
         }
 

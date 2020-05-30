@@ -59,9 +59,9 @@ namespace EPBLib.Helpers
             epb.MetaTags = reader.ReadMetaTagDictionary(ref bytesLeft);
             foreach (MetaTag tag in epb.MetaTags.Values)
             {
-                if (tag.Key == MetaTagKey.RotationSensitivity && tag.TagType == MetaTagType.Unknownx02)
+                if (tag.Key == MetaTagKey.RotationSensitivity && tag.TagType == MetaTagType.UInt32)
                 {
-                    UInt32 value = ((MetaTag02)tag).Value;
+                    UInt32 value = ((MetaTagUInt32)tag).Value;
                     float roll  = (float)((value >> 20) & 0x3ff) / 0x3ff;
                     float yaw   = (float)((value >> 10) & 0x3ff) / 0x3ff;
                     float pitch = (float)((value >> 00) & 0x3ff) / 0x3ff;
@@ -1265,8 +1265,8 @@ namespace EPBLib.Helpers
                     bytesLeft -= 2;
                     tag = tagUInt16;
                     break;
-                case MetaTagType.Unknownx02:
-                    MetaTag02 tag02 = new MetaTag02(key);
+                case MetaTagType.UInt32:
+                    MetaTagUInt32 tag02 = new MetaTagUInt32(key);
                     tag02.Value = reader.ReadUInt32();
                     tag02.Unknown = reader.ReadByte();
                     bytesLeft -= 5;

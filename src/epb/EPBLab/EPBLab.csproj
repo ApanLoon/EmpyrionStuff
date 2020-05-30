@@ -100,7 +100,7 @@
     <Compile Include="ViewModel\Logic\SignalOperatorViewModel.cs" />
     <Compile Include="ViewModel\Logic\SignalSourceViewModel.cs" />
     <Compile Include="ViewModel\Logic\SignalTargetViewModel.cs" />
-    <Compile Include="ViewModel\MetaTags\MetaTag02ViewModel.cs" />
+    <Compile Include="ViewModel\MetaTags\MetaTagUInt32ViewModel.cs" />
     <Compile Include="ViewModel\MetaTags\MetaTag03ViewModel.cs" />
     <Compile Include="ViewModel\MetaTags\MetaTag04ViewModel.cs" />
     <Compile Include="ViewModel\MetaTags\MetaTag05ViewModel.cs" />
