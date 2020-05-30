@@ -1,4 +1,5 @@
 ﻿using EPBLib;
+using EPBLib.MetaTags;
 using GalaSoft.MvvmLight;
 
 namespace EPBLab.ViewModel

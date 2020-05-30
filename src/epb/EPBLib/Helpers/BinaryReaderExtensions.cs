@@ -4,6 +4,7 @@ using ICSharpCode.SharpZipLib.Zip;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using EPBLib.MetaTags;
 
 namespace EPBLib.Helpers
 {

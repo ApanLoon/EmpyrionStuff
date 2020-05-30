@@ -2,6 +2,7 @@
 using System;
 using EPBLib;
 using EPBLib.Helpers;
+using EPBLib.MetaTags;
 
 namespace EPBLab.ViewModel.MetaTags
 {

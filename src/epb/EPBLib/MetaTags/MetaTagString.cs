@@ -1,5 +1,5 @@
 ﻿
-namespace EPBLib
+namespace EPBLib.MetaTags
 {
     public class MetaTagString : MetaTag
     {

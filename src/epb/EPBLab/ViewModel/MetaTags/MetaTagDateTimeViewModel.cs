@@ -1,5 +1,6 @@
 ﻿using System;
 using EPBLib;
+using EPBLib.MetaTags;
 
 namespace EPBLab.ViewModel.MetaTags
 {

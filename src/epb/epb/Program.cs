@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Text;
 using EPBLib.BlockData;
 using EPBLib.Helpers;
+using EPBLib.MetaTags;
 
 namespace epb
 {

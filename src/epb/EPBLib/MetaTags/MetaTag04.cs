@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EPBLib
+namespace EPBLib.MetaTags
 {
     public class MetaTag04 : MetaTag
     {

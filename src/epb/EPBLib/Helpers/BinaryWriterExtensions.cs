@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using EPBLib.BlockData;
+using EPBLib.MetaTags;
 using static EPBLib.Helpers.BinaryReaderExtensions;
 
 namespace EPBLib.Helpers

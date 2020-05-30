@@ -6,6 +6,7 @@ using EPBLab.ViewModel.MetaTags;
 using EPBLab.ViewModel.Tree;
 using EPBLib;
 using EPBLib.Helpers;
+using EPBLib.MetaTags;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 

@@ -1,16 +1,14 @@
-﻿using System;
-
-namespace EPBLib
+﻿namespace EPBLib.MetaTags
 {
-    public class MetaTagUInt32 : MetaTag
+    public class MetaTagFloat : MetaTag
     {
-        public MetaTagUInt32(MetaTagKey key)
+        public MetaTagFloat(MetaTagKey key)
         {
-            TagType = MetaTagType.UInt32;
+            TagType = MetaTagType.Float;
             Key = key;
         }
 
-        public UInt32 Value { get; set; }
+        public float Value { get; set; }
         public byte Unknown { get; set; }
 
         public override string ValueToString()

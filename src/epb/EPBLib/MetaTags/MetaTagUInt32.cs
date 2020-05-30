@@ -1,16 +1,16 @@
 ﻿using System;
 
-namespace EPBLib
+namespace EPBLib.MetaTags
 {
-    public class MetaTagDateTime : MetaTag
+    public class MetaTagUInt32 : MetaTag
     {
-        public MetaTagDateTime(MetaTagKey key)
+        public MetaTagUInt32(MetaTagKey key)
         {
-            TagType = MetaTagType.DateTime;
+            TagType = MetaTagType.UInt32;
             Key = key;
         }
 
-        public DateTime Value { get; set; }
+        public UInt32 Value { get; set; }
         public byte Unknown { get; set; }
 
         public override string ValueToString()

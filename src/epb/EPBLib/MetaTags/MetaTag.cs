@@ -1,8 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Threading.Tasks;
-
-namespace EPBLib
+﻿namespace EPBLib.MetaTags
 {
     public class MetaTag
     {
