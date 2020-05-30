@@ -1272,8 +1272,8 @@ namespace EPBLib.Helpers
                     bytesLeft -= 5;
                     tag = tag02;
                     break;
-                case MetaTagType.Unknownx03:
-                    MetaTag03 tag03 = new MetaTag03(key);
+                case MetaTagType.Float:
+                    MetaTagFloat tag03 = new MetaTagFloat(key);
                     tag03.Value = reader.ReadSingle();
                     tag03.Unknown = reader.ReadByte();
                     bytesLeft -= 5;

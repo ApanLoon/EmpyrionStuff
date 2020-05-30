@@ -63,7 +63,7 @@
     <Compile Include="DeviceGroup.cs" />
     <Compile Include="Blueprint.cs" />
     <Compile Include="MetaTagUInt32.cs" />
-    <Compile Include="MetaTag03.cs" />
+    <Compile Include="MetaTagFloat.cs" />
     <Compile Include="MetaTag04.cs" />
     <Compile Include="MetaTagDateTime.cs" />
     <Compile Include="MetaTagString.cs" />

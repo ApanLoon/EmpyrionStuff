@@ -2,11 +2,11 @@
 
 namespace EPBLib
 {
-    public class MetaTag03 : MetaTag
+    public class MetaTagFloat : MetaTag
     {
-        public MetaTag03(MetaTagKey key)
+        public MetaTagFloat(MetaTagKey key)
         {
-            TagType = MetaTagType.Unknownx03;
+            TagType = MetaTagType.Float;
             Key = key;
         }
 

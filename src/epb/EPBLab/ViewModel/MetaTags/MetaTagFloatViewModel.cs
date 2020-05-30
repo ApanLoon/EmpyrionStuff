@@ -1,13 +1,11 @@
 ﻿
-using System;
-using System.Linq;
 using EPBLib;
 
 namespace EPBLab.ViewModel.MetaTags
 {
-    public class MetaTag03ViewModel : MetaTagViewModel
+    public class MetaTagFloatViewModel : MetaTagViewModel
     {
-        private MetaTag03 MyTag => Tag as MetaTag03;
+        private MetaTagFloat MyTag => Tag as MetaTagFloat;
 
         public override string Value
         {
@@ -32,7 +30,7 @@ namespace EPBLab.ViewModel.MetaTags
             }
         }
 
-        public MetaTag03ViewModel(MetaTag03 tag) : base(tag)
+        public MetaTagFloatViewModel(MetaTagFloat tag) : base(tag)
         {
         }
     }

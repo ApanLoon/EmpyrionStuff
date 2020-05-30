@@ -75,10 +75,10 @@ namespace EPBLib
             UnknownCount05 = 0;
             UnknownCount06 = 0;
 
-            MetaTags[MetaTagKey.GroundOffset]   = new MetaTag03     (MetaTagKey.GroundOffset)   { Value = 0f, Unknown = 0 };
+            MetaTags[MetaTagKey.GroundOffset]   = new MetaTagFloat     (MetaTagKey.GroundOffset)   { Value = 0f, Unknown = 0 };
             MetaTags[MetaTagKey.TerrainRemoval] = new MetaTagUInt16 (MetaTagKey.TerrainRemoval) { Value = 0x0000};
-            MetaTags[MetaTagKey.UnknownMetax0E] = new MetaTag03     (MetaTagKey.UnknownMetax0E) { Value = 0f, Unknown = 0 };
-            MetaTags[MetaTagKey.UnknownMetax0F] = new MetaTag03     (MetaTagKey.UnknownMetax0F) { Value = 0f, Unknown = 0 };
+            MetaTags[MetaTagKey.UnknownMetax0E] = new MetaTagFloat     (MetaTagKey.UnknownMetax0E) { Value = 0f, Unknown = 0 };
+            MetaTags[MetaTagKey.UnknownMetax0F] = new MetaTagFloat     (MetaTagKey.UnknownMetax0F) { Value = 0f, Unknown = 0 };
             MetaTags[MetaTagKey.UnknownMetax05] = new MetaTagUInt16 (MetaTagKey.UnknownMetax05) { Value = 0x0000 };
             MetaTags[MetaTagKey.UnknownMetax04] = new MetaTagUInt32     (MetaTagKey.UnknownMetax04) { Value = 0, Unknown = 0 };
             MetaTags[MetaTagKey.UnknownMetax06] = new MetaTag04     (MetaTagKey.UnknownMetax06) { Value = new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }};

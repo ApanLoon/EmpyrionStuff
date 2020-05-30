@@ -214,10 +214,10 @@ namespace epb
         static Blueprint CreateCommon()
         {
             Blueprint epb = new Blueprint(BlueprintType, Width, Height, Depth);
-            epb.MetaTags.Add(MetaTagKey.GroundOffset,   new MetaTag03     (MetaTagKey.GroundOffset)   { Value = 0f, Unknown = 0 });            
+            epb.MetaTags.Add(MetaTagKey.GroundOffset,   new MetaTagFloat     (MetaTagKey.GroundOffset)   { Value = 0f, Unknown = 0 });            
             epb.MetaTags.Add(MetaTagKey.TerrainRemoval, new MetaTagUInt16 (MetaTagKey.TerrainRemoval) { Value = 0x0000 });
-            epb.MetaTags.Add(MetaTagKey.UnknownMetax0E, new MetaTag03     (MetaTagKey.UnknownMetax0E) { Value = 0f, Unknown = 0 });
-            epb.MetaTags.Add(MetaTagKey.UnknownMetax0F, new MetaTag03     (MetaTagKey.UnknownMetax0F) { Value = 0f, Unknown = 0 });
+            epb.MetaTags.Add(MetaTagKey.UnknownMetax0E, new MetaTagFloat     (MetaTagKey.UnknownMetax0E) { Value = 0f, Unknown = 0 });
+            epb.MetaTags.Add(MetaTagKey.UnknownMetax0F, new MetaTagFloat     (MetaTagKey.UnknownMetax0F) { Value = 0f, Unknown = 0 });
             epb.MetaTags.Add(MetaTagKey.UnknownMetax05, new MetaTagUInt16 (MetaTagKey.UnknownMetax05) { Value = 0x0000 });
             epb.MetaTags.Add(MetaTagKey.UnknownMetax04, new MetaTagUInt32     (MetaTagKey.UnknownMetax04) { Value = 0, Unknown = 0 });
             epb.MetaTags.Add(MetaTagKey.UnknownMetax06, new MetaTag04     (MetaTagKey.UnknownMetax06)
