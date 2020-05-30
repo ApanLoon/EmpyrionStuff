@@ -9,12 +9,24 @@ namespace EPBLab.ViewModel.MetaTags
 {
     public class MetaTagUInt32ViewModel : MetaTagViewModel
     {
+        private MetaTagUInt32 MyTag => Tag as MetaTagUInt32;
+
         public override string Value
         {
-            get => (Tag as MetaTagUInt32).Value.ToString();
+            get => MyTag.Value.ToString();
             set
             {
-                (Tag as MetaTagUInt32).Value = UInt32.Parse(value);
+                MyTag.Value = UInt32.Parse(value);
+                RaisePropertyChanged();
+            }
+        }
+
+        public string Unknown
+        {
+            get => MyTag.Unknown.ToString();
+            set
+            {
+                MyTag.Unknown = byte.Parse(value);
                 RaisePropertyChanged();
             }
         }
