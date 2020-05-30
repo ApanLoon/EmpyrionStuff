@@ -83,14 +83,14 @@ namespace EPBLib
             MetaTags[MetaTagKey.UnknownMetax04] = new MetaTagUInt32     (MetaTagKey.UnknownMetax04) { Value = 0, Unknown = 0 };
             MetaTags[MetaTagKey.UnknownMetax06] = new MetaTag04     (MetaTagKey.UnknownMetax06) { Value = new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }};
             MetaTags[MetaTagKey.GroupName]      = new MetaTagString (MetaTagKey.GroupName)      { Value = "" };
-            MetaTags[MetaTagKey.ChangedTime]    = new MetaTag05     (MetaTagKey.ChangedTime)    { Value = DateTime.Now, Unknown = 0 };
+            MetaTags[MetaTagKey.ChangedTime]    = new MetaTagDateTime     (MetaTagKey.ChangedTime)    { Value = DateTime.Now, Unknown = 0 };
             MetaTags[MetaTagKey.BuildVersion]   = new MetaTagUInt32     (MetaTagKey.BuildVersion)   { Value = 2893, Unknown = 0 };
             MetaTags[MetaTagKey.CreatorId]      = new MetaTagString (MetaTagKey.CreatorId)      { Value = "" };
             MetaTags[MetaTagKey.CreatorName]    = new MetaTagString (MetaTagKey.CreatorName)    { Value = "" };
             MetaTags[MetaTagKey.ChangedById]    = new MetaTagString (MetaTagKey.ChangedById)    { Value = "" };
             MetaTags[MetaTagKey.ChangedByName]  = new MetaTagString (MetaTagKey.ChangedByName)  { Value = "" };
             MetaTags[MetaTagKey.SpawnName]      = new MetaTagString (MetaTagKey.SpawnName)      { Value = "" };
-            MetaTags[MetaTagKey.UnknownMetax12] = new MetaTag05     (MetaTagKey.UnknownMetax12) { Value = DateTime.MinValue, Unknown = 0 };
+            MetaTags[MetaTagKey.UnknownMetax12] = new MetaTagDateTime     (MetaTagKey.UnknownMetax12) { Value = DateTime.MinValue, Unknown = 0 };
         }
 
         public void SetBlock(Block block)

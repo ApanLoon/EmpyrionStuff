@@ -1285,8 +1285,8 @@ namespace EPBLib.Helpers
                     bytesLeft -= 13;
                     tag = tag04;
                     break;
-                case MetaTagType.Unknownx05:
-                    MetaTag05 tag05 = new MetaTag05(key);
+                case MetaTagType.DateTime:
+                    MetaTagDateTime tag05 = new MetaTagDateTime(key);
                     tag05.Value = DateTime.FromBinary(reader.ReadInt64());
                     tag05.Unknown = reader.ReadByte();
                     bytesLeft -= 9;

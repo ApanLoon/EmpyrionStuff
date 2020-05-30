@@ -2,11 +2,11 @@
 
 namespace EPBLib
 {
-    public class MetaTag05 : MetaTag
+    public class MetaTagDateTime : MetaTag
     {
-        public MetaTag05(MetaTagKey key)
+        public MetaTagDateTime(MetaTagKey key)
         {
-            TagType = MetaTagType.Unknownx05;
+            TagType = MetaTagType.DateTime;
             Key = key;
         }
 

@@ -3,9 +3,9 @@ using EPBLib;
 
 namespace EPBLab.ViewModel.MetaTags
 {
-    public class MetaTag05ViewModel : MetaTagViewModel
+    public class MetaTagDateTimeViewModel : MetaTagViewModel
     {
-        private MetaTag05 MyTag => Tag as MetaTag05;
+        private MetaTagDateTime MyTag => Tag as MetaTagDateTime;
 
         public string Date
         {
@@ -31,7 +31,7 @@ namespace EPBLab.ViewModel.MetaTags
             }
         }
 
-        public MetaTag05ViewModel(MetaTag05 tag) : base(tag)
+        public MetaTagDateTimeViewModel(MetaTagDateTime tag) : base(tag)
         {
         }
     }

@@ -174,7 +174,7 @@
                                 <TextBox Grid.Column="1" Margin="3" TextAlignment="Right" Text="{Binding Value}" />
                             </Grid>
                         </DataTemplate>
-                        <DataTemplate DataType="{x:Type vm:MetaTag05ViewModel}">
+                        <DataTemplate DataType="{x:Type vm:MetaTagDateTimeViewModel}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="120" />

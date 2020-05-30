@@ -65,7 +65,7 @@
     <Compile Include="MetaTagUInt32.cs" />
     <Compile Include="MetaTag03.cs" />
     <Compile Include="MetaTag04.cs" />
-    <Compile Include="MetaTag05.cs" />
+    <Compile Include="MetaTagDateTime.cs" />
     <Compile Include="MetaTagString.cs" />
     <Compile Include="Helpers\BinaryReaderExtensions.cs" />
     <Compile Include="Helpers\BinaryWriterExtensions.cs" />

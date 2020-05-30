@@ -49,7 +49,7 @@ namespace EPBLib
         UInt32     = 0x02000000,
         Unknownx03 = 0x03000000,
         Unknownx04 = 0x04000000,
-        Unknownx05 = 0x05000000
+        DateTime   = 0x05000000
     }
 
 }

@@ -79,8 +79,8 @@ namespace EPBLib.Helpers
                     case MetaTagType.Unknownx04:
                         writer.Write((MetaTag04)tag);
                         break;
-                    case MetaTagType.Unknownx05:
-                        writer.Write((MetaTag05)tag);
+                    case MetaTagType.DateTime:
+                        writer.Write((MetaTagDateTime)tag);
                         break;
                 }
             }
@@ -113,7 +113,7 @@ namespace EPBLib.Helpers
             writer.Write((MetaTag)tag);
             writer.Write(tag.Value);
         }
-        public static void Write(this BinaryWriter writer, MetaTag05 tag)
+        public static void Write(this BinaryWriter writer, MetaTagDateTime tag)
         {
             writer.Write((MetaTag)tag);
             writer.Write(tag.Value.ToBinary());

@@ -225,14 +225,14 @@ namespace epb
                 Value = new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }
             });
             epb.MetaTags.Add(MetaTagKey.GroupName,      new MetaTagString (MetaTagKey.GroupName)      { Value = "" });
-            epb.MetaTags.Add(MetaTagKey.ChangedTime,    new MetaTag05     (MetaTagKey.ChangedTime)    { Value = DateTime.Now, Unknown = 0 });
+            epb.MetaTags.Add(MetaTagKey.ChangedTime,    new MetaTagDateTime     (MetaTagKey.ChangedTime)    { Value = DateTime.Now, Unknown = 0 });
             epb.MetaTags.Add(MetaTagKey.BuildVersion,   new MetaTagUInt32     (MetaTagKey.BuildVersion)   { Value = 1838, Unknown = 0 });
             epb.MetaTags.Add(MetaTagKey.CreatorId,      new MetaTagString (MetaTagKey.CreatorId)      { Value = CreatorId });
             epb.MetaTags.Add(MetaTagKey.CreatorName,    new MetaTagString (MetaTagKey.CreatorName)    { Value = CreatorName });
             epb.MetaTags.Add(MetaTagKey.ChangedById,    new MetaTagString (MetaTagKey.ChangedById)    { Value = ChangedById });
             epb.MetaTags.Add(MetaTagKey.ChangedByName,  new MetaTagString (MetaTagKey.ChangedByName)  { Value = ChangedByName });
             epb.MetaTags.Add(MetaTagKey.SpawnName,      new MetaTagString (MetaTagKey.SpawnName)      { Value = "" });
-            epb.MetaTags.Add(MetaTagKey.UnknownMetax12, new MetaTag05     (MetaTagKey.UnknownMetax12) { Value = DateTime.MinValue, Unknown = 0 });
+            epb.MetaTags.Add(MetaTagKey.UnknownMetax12, new MetaTagDateTime     (MetaTagKey.UnknownMetax12) { Value = DateTime.MinValue, Unknown = 0 });
             return epb;
         }
 

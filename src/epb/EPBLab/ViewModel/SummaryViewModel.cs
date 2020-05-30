@@ -277,8 +277,8 @@ namespace EPBLab.ViewModel
                     case MetaTag04 t:
                         vm = new MetaTag04ViewModel(t);
                         break;
-                    case MetaTag05 t:
-                        vm = new MetaTag05ViewModel(t);
+                    case MetaTagDateTime t:
+                        vm = new MetaTagDateTimeViewModel(t);
                         break;
                     case MetaTagString t:
                         vm = new MetaTagStringViewModel(t);
