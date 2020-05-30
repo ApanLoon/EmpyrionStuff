@@ -269,6 +269,9 @@ namespace EPBLab.ViewModel
                 MetaTagViewModel vm;
                 switch (tag)
                 {
+                    case MetaTagUInt10x3 t:
+                        vm = new MetaTagUInt10x3ViewModel(t);
+                        break;
                     case MetaTagUInt32 t:
                         vm = new MetaTagUInt32ViewModel(t);
                         break;

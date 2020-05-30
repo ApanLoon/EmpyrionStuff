@@ -43,7 +43,7 @@
         String     = 0x00000000,
         UInt16     = 0x01000000,
         UInt32     = 0x02000000,
-        Float = 0x03000000,
+        Float      = 0x03000000,
         Unknownx04 = 0x04000000,
         DateTime   = 0x05000000
     }

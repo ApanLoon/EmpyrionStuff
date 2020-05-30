@@ -62,6 +62,7 @@
     <Compile Include="DeviceGroupEntry.cs" />
     <Compile Include="DeviceGroup.cs" />
     <Compile Include="Blueprint.cs" />
+    <Compile Include="MetaTags\MetaTagUInt10x3.cs" />
     <Compile Include="MetaTags\MetaTagUInt32.cs" />
     <Compile Include="MetaTags\MetaTagFloat.cs" />
     <Compile Include="MetaTags\MetaTag04.cs" />

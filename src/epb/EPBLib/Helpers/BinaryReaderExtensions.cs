@@ -60,20 +60,8 @@ namespace EPBLib.Helpers
             epb.MetaTags = reader.ReadMetaTagDictionary(ref bytesLeft);
             foreach (MetaTag tag in epb.MetaTags.Values)
             {
-                if (tag.Key == MetaTagKey.RotationSensitivity && tag.TagType == MetaTagType.UInt32)
-                {
-                    UInt32 value = ((MetaTagUInt32)tag).Value;
-                    float roll  = (float)((value >> 20) & 0x3ff) / 0x3ff;
-                    float yaw   = (float)((value >> 10) & 0x3ff) / 0x3ff;
-                    float pitch = (float)((value >> 00) & 0x3ff) / 0x3ff;
-                    Console.WriteLine($"{tag.Key,-14}: Type={tag.TagType} Pitch={pitch:f1} Roll={roll:f1} Yaw={yaw:f1}");
-                }
-                else
-                {
-                    Console.WriteLine(tag.ToString());
-                }
+                Console.WriteLine(tag.ToString());
             }
-
 
             epb.Unknown02 = reader.ReadUInt16();
             bytesLeft -= 2;
@@ -1267,11 +1255,23 @@ namespace EPBLib.Helpers
                     tag = tagUInt16;
                     break;
                 case MetaTagType.UInt32:
-                    MetaTagUInt32 tag02 = new MetaTagUInt32(key);
-                    tag02.Value = reader.ReadUInt32();
-                    tag02.Unknown = reader.ReadByte();
+                    switch (key)
+                    {
+                        case MetaTagKey.RotationSensitivity:
+                            MetaTagUInt10x3 tagRotSensitivity = new MetaTagUInt10x3(key);
+                            tagRotSensitivity.Value = reader.ReadUInt32();
+                            tagRotSensitivity.Unknown = reader.ReadByte();
+                            tag = tagRotSensitivity;
+                            break;
+
+                        default:
+                            MetaTagUInt32 tag02 = new MetaTagUInt32(key);
+                            tag02.Value = reader.ReadUInt32();
+                            tag02.Unknown = reader.ReadByte();
+                            tag = tag02;
+                            break;
+                    }
                     bytesLeft -= 5;
-                    tag = tag02;
                     break;
                 case MetaTagType.Float:
                     MetaTagFloat tag03 = new MetaTagFloat(key);

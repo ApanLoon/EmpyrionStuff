@@ -122,6 +122,29 @@
                 <Label Grid.Row="0" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="3, 3, 3, 3" Content="Meta data:" />
                 <ListBox Grid.Row="1" Grid.Column="3" Grid.RowSpan="16" HorizontalContentAlignment="Stretch" Margin="3, 3, 3, 3" ItemsSource="{Binding MetaTags}">
                     <ListBox.Resources>
+                        <DataTemplate DataType="{x:Type vm:MetaTagUInt10x3ViewModel}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="120" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.ToolTip>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label Content="Type: " />
+                                        <Label Content="{Binding TypeName}" />
+                                        <Label Content=" (Ten bit (0-1023) X, Y, Z and a byte)" />
+                                    </StackPanel>
+                                </Grid.ToolTip>
+                                <TextBlock Grid.Column="0" Margin="3" Text="{Binding Key}" />
+                                <TextBox Grid.Column="1" Margin="3" TextAlignment="Right" Text="{Binding X}" />
+                                <TextBox Grid.Column="2" Margin="3" TextAlignment="Right" Text="{Binding Y}" />
+                                <TextBox Grid.Column="3" Margin="3" TextAlignment="Right" Text="{Binding Z}" />
+                                <TextBox Grid.Column="4" Margin="3" TextAlignment="Right" Text="{Binding Unknown}" />
+                            </Grid>
+                        </DataTemplate>
                         <DataTemplate DataType="{x:Type vm:MetaTagUInt32ViewModel}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
