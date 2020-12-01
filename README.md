@@ -76,8 +76,8 @@ A Windows application with a graphical user interface for examining, modifying o
 
 ## EPBLib
 A library for parsed EmPyrion Blueprints.
-* Read EPB files up to version 23
-* Write EPB files as version 20
+* Read EPB files up to version 26 (Not all files are read completely)
+* Write EPB files as version 26
 * Get/set blueprint type ("Voxel", "Base", "Small vessel", "Capital vessel" or "Hover vessel")
 * Get/set blueprint dimensions
 * Compute dimensions from the current blocks
