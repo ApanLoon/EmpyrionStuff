@@ -130,6 +130,14 @@ namespace EPBLib.Helpers
             }
             Console.WriteLine($"Total number of blocks: {nBlocksTotal}");
 
+            if (version >= 26)
+            {
+                epb.V26Unknown01 = reader.ReadSingle();
+                Console.WriteLine($"v26Unknown01={epb.V26Unknown01}");
+                epb.V26Unknown02 = reader.ReadSingle();
+                Console.WriteLine($"v26Unknown02={epb.V26Unknown02}");
+            }
+
             if (version > 8)
             {
                 epb.DeviceGroups = reader.ReadDeviceGroups(version, ref bytesLeft);

@@ -201,6 +201,25 @@ namespace EPBLab.ViewModel
         }
         public static readonly string BlockCountsPropertyName = "BlockCounts";
 
+        public float V26Unknown01
+        {
+            get => Blueprint.V26Unknown01;
+            set
+            {
+                Blueprint.V26Unknown01 = value;
+                RaisePropertyChanged();
+            }
+        }
+        public float V26Unknown02
+        {
+            get => Blueprint.V26Unknown02;
+            set
+            {
+                Blueprint.V26Unknown02 = value;
+                RaisePropertyChanged();
+            }
+        }
+
         private ObservableCollection<DeviceGroupViewModel> _deviceGroups = new ObservableCollection<DeviceGroupViewModel>();
         public ObservableCollection<DeviceGroupViewModel> DeviceGroups
         {

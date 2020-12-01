@@ -15,7 +15,7 @@ namespace EPBLib.Helpers
     {
         #region Blueprint
         public static readonly UInt32 EpbIdentifier = 0x78945245;
-        public static UInt32 EpbVersion = 25;
+        public static UInt32 EpbVersion = 26;
 
         public static void Write(this BinaryWriter writer, Blueprint epb)
         {
@@ -46,6 +46,9 @@ namespace EPBLib.Helpers
                 writer.Write(type);
                 writer.Write(epb.BlockCounts[type]);
             }
+
+            writer.Write(epb.V26Unknown01);
+            writer.Write(epb.V26Unknown02);
 
             writer.Write(epb.DeviceGroups);
             writer.WriteEpbDataSection(epb, GenerateSection0);

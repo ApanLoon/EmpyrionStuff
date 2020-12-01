@@ -43,6 +43,9 @@ namespace EPBLib
 
         public Dictionary<BlockType, UInt32> BlockCounts = new Dictionary<BlockType, uint>();
 
+        public float V26Unknown01 { get; set; }
+        public float V26Unknown02 { get; set; }
+
         public List<DeviceGroup> DeviceGroups = new List<DeviceGroup>();
 
         BlockList _blocks;
@@ -59,7 +62,7 @@ namespace EPBLib
 
         public Blueprint (BlueprintType type = BlueprintType.Base, UInt32 width = 0, UInt32 height = 0, UInt32 depth = 0)
         {
-            Version        = 25;
+            Version        = 26;
             Type           = type;
             Width          = width;
             Height         = height;
