@@ -122,10 +122,7 @@ namespace EPBLab.ViewModel
 
         #region Commands
         #region Command_New
-        public RelayCommand CommandNew
-        {
-            get { return _commandNew ??= new RelayCommand(NewBlueprint);}
-        }
+        public RelayCommand CommandNew => _commandNew ?? (_commandNew = new RelayCommand(NewBlueprint));
         private RelayCommand _commandNew;
         #endregion Command_New
 
@@ -134,7 +131,7 @@ namespace EPBLab.ViewModel
         {
             get
             {
-                return _commandCreateBox ??= new RelayCommand(() =>
+                return _commandCreateBox ?? (_commandCreateBox = new RelayCommand(() =>
                 {
                     if (SelectedBlueprintIndex == -1)
                     {
@@ -235,7 +232,7 @@ namespace EPBLab.ViewModel
 
                     Blueprints[SelectedBlueprintIndex].UpdateViewModels();
                     CurrentCommand = null;
-                });
+                }));
             }
         }
         private RelayCommand _commandCreateBox;
@@ -245,7 +242,7 @@ namespace EPBLab.ViewModel
         {
             get
             {
-                return _commandCreateBoxFrame ??= new RelayCommand(() =>
+                return _commandCreateBoxFrame ?? (_commandCreateBoxFrame = new RelayCommand(() =>
                 {
                     if (SelectedBlueprintIndex == -1)
                     {
@@ -294,7 +291,7 @@ namespace EPBLab.ViewModel
 
                     Blueprints[SelectedBlueprintIndex].UpdateViewModels();
                     CurrentCommand = null;
-                });
+                }));
 
             }
         }
@@ -305,7 +302,7 @@ namespace EPBLab.ViewModel
         {
             get
             {
-                return _commandCreatePyramid ??= new RelayCommand(() =>
+                return _commandCreatePyramid ?? (_commandCreatePyramid = new RelayCommand(() =>
                 {
                     if (SelectedBlueprintIndex == -1)
                     {
@@ -434,7 +431,7 @@ namespace EPBLab.ViewModel
 
                     Blueprints[SelectedBlueprintIndex].UpdateViewModels();
                     CurrentCommand = null;
-                });
+                }));
             }
         }
         private RelayCommand _commandCreatePyramid;
@@ -444,7 +441,7 @@ namespace EPBLab.ViewModel
         {
             get
             {
-                return _commandCreateSphere ??= new RelayCommand(() =>
+                return _commandCreateSphere ?? (_commandCreateSphere = new RelayCommand(() =>
                 {
                     if (SelectedBlueprintIndex == -1)
                     {
@@ -532,7 +529,7 @@ namespace EPBLab.ViewModel
 
                     Blueprints[SelectedBlueprintIndex].UpdateViewModels();
                     CurrentCommand = null;
-                });
+                }));
             }
         }
         private RelayCommand _commandCreateSphere;
@@ -542,7 +539,7 @@ namespace EPBLab.ViewModel
         {
             get
             {
-                return _commandCreateCylinder ??= new RelayCommand(() =>
+                return _commandCreateCylinder ?? (_commandCreateCylinder = new RelayCommand(() =>
                 {
                     if (SelectedBlueprintIndex == -1)
                     {
@@ -633,7 +630,7 @@ namespace EPBLab.ViewModel
 
                     Blueprints[SelectedBlueprintIndex].UpdateViewModels();
                     CurrentCommand = null;
-                });
+                }));
             }
         }
         private RelayCommand _commandCreateCylinder;
@@ -641,96 +638,102 @@ namespace EPBLab.ViewModel
         #region CommandCreateCore
         public RelayCommand CommandCreateCore
         {
-            get { return _commandCreateCore ??= new RelayCommand(() =>
+            get 
             {
-                if (SelectedBlueprintIndex == -1)
+                return _commandCreateCore ?? (_commandCreateCore =  new RelayCommand(() =>
                 {
-                    return;
-                }
-                Blueprint blueprint = Blueprints[SelectedBlueprintIndex].Blueprint;
-                ParameterIntVector originParameter = (ParameterIntVector)CurrentCommand.ParameterByName("Origin");
-                if (originParameter == null)
-                {
-                    return; // TODO: should we also cancel here?
-                }
-
-                BlockPos corePos = new BlockPos((byte)originParameter.X, (byte)originParameter.Y, (byte)originParameter.Z, 8, 8);
-                blueprint.SetBlock(
-                    new Block(corePos)
+                    if (SelectedBlueprintIndex == -1)
                     {
-                        BlockType = BlockType.BlockTypes[558],
-                        Variant = 0
-                    });
-                blueprint.DeviceCount = 1;
-                blueprint.CountBlocks();
-                blueprint.ComputeDimensions();
+                        return;
+                    }
+                    Blueprint blueprint = Blueprints[SelectedBlueprintIndex].Blueprint;
+                    ParameterIntVector originParameter = (ParameterIntVector)CurrentCommand.ParameterByName("Origin");
+                    if (originParameter == null)
+                    {
+                        return; // TODO: should we also cancel here?
+                    }
 
-                DeviceGroup group = new DeviceGroup()
-                {
-                    Name = "Ungrouped",
-                    DeviceGroupUnknown01 = 1,
-                    Shortcut = 255,
-                    DeviceGroupUnknown03 = 0
-                };
-                @group.Entries.Add(new DeviceGroupEntry() { Pos = corePos });
-                blueprint.DeviceGroups.Add(@group);
+                    BlockPos corePos = new BlockPos((byte)originParameter.X, (byte)originParameter.Y, (byte)originParameter.Z, 8, 8);
+                    blueprint.SetBlock(
+                        new Block(corePos)
+                        {
+                            BlockType = BlockType.BlockTypes[558],
+                            Variant = 0
+                        });
+                    blueprint.DeviceCount = 1;
+                    blueprint.CountBlocks();
+                    blueprint.ComputeDimensions();
 
-                Blueprints[SelectedBlueprintIndex].UpdateViewModels();
-                CurrentCommand = null;
-            }); }
+                    DeviceGroup group = new DeviceGroup()
+                    {
+                        Name = "Ungrouped",
+                        DeviceGroupUnknown01 = 1,
+                        Shortcut = 255,
+                        DeviceGroupUnknown03 = 0
+                    };
+                    @group.Entries.Add(new DeviceGroupEntry() { Pos = corePos });
+                    blueprint.DeviceGroups.Add(@group);
+
+                    Blueprints[SelectedBlueprintIndex].UpdateViewModels();
+                    CurrentCommand = null;
+                }));
+            }
         }
         private RelayCommand _commandCreateCore;
         #endregion CommandCreateCore
         #region CommandCreateCoreWithLever
         public RelayCommand CommandCreateCoreWithLever
         {
-            get { return _commandCreateCoreWithLever ??= new RelayCommand(() =>
+            get
             {
-                if (SelectedBlueprintIndex == -1)
+                return _commandCreateCoreWithLever ?? (_commandCreateCoreWithLever = new RelayCommand(() =>
                 {
-                    return;
-                }
-                Blueprint blueprint = Blueprints[SelectedBlueprintIndex].Blueprint;
-                BlockPos leverPos = new BlockPos(0, 0, 0, 8, 8);
-                BlockPos corePos = new BlockPos(0, 0, 1, 8, 8);
-
-                blueprint.SetBlock(
-                    new Block(leverPos)
+                    if (SelectedBlueprintIndex == -1)
                     {
-                        BlockType = BlockType.BlockTypes[1262],
-                        Variant = 0
-                    });
-                blueprint.SetBlock(
-                    new Block(corePos)
+                        return;
+                    }
+                    Blueprint blueprint = Blueprints[SelectedBlueprintIndex].Blueprint;
+                    BlockPos leverPos = new BlockPos(0, 0, 0, 8, 8);
+                    BlockPos corePos = new BlockPos(0, 0, 1, 8, 8);
+
+                    blueprint.SetBlock(
+                        new Block(leverPos)
+                        {
+                            BlockType = BlockType.BlockTypes[1262],
+                            Variant = 0
+                        });
+                    blueprint.SetBlock(
+                        new Block(corePos)
+                        {
+                            BlockType = BlockType.BlockTypes[558],
+                            Variant = 0
+                        });
+
+                    blueprint.DeviceCount = 2;
+                    blueprint.CountBlocks();
+                    blueprint.ComputeDimensions();
+
+                    DeviceGroup group = new DeviceGroup()
                     {
-                        BlockType = BlockType.BlockTypes[558],
-                        Variant = 0
+                        Name = "Ungrouped",
+                        DeviceGroupUnknown01 = 1,
+                        Shortcut = 255,
+                        DeviceGroupUnknown03 = 0
+                    };
+                    @group.Entries.Add(new DeviceGroupEntry() { Pos = corePos });
+                    @group.Entries.Add(new DeviceGroupEntry() { Pos = leverPos });
+                    blueprint.DeviceGroups.Add(@group);
+
+                    blueprint.SignalSources.Add(new SignalSource()
+                    {
+                        Name = "Lever0",
+                        Pos = leverPos,
+                        State = 0x00020000
                     });
-
-                blueprint.DeviceCount = 2;
-                blueprint.CountBlocks();
-                blueprint.ComputeDimensions();
-
-                DeviceGroup group = new DeviceGroup()
-                {
-                    Name = "Ungrouped",
-                    DeviceGroupUnknown01 = 1,
-                    Shortcut = 255,
-                    DeviceGroupUnknown03 = 0
-                };
-                @group.Entries.Add(new DeviceGroupEntry() { Pos = corePos });
-                @group.Entries.Add(new DeviceGroupEntry() { Pos = leverPos });
-                blueprint.DeviceGroups.Add(@group);
-
-                blueprint.SignalSources.Add(new SignalSource()
-                {
-                    Name = "Lever0",
-                    Pos = leverPos,
-                    State = 0x00020000
-                });
-                Blueprints[SelectedBlueprintIndex].UpdateViewModels();
-                CurrentCommand = null;
-            }); }
+                    Blueprints[SelectedBlueprintIndex].UpdateViewModels();
+                    CurrentCommand = null;
+                }));
+            }
         }
         private RelayCommand _commandCreateCoreWithLever;
 
@@ -738,53 +741,56 @@ namespace EPBLab.ViewModel
         #region CommandCreateHullVariants
         public RelayCommand CommandCreateHullVariants
         {
-            get { return _commandCreateHullVariants ??= new RelayCommand(() =>
+            get
             {
-                if (SelectedBlueprintIndex == -1)
+                return _commandCreateHullVariants ?? (_commandCreateHullVariants = new RelayCommand(() =>
                 {
-                    return;
-                }
-                Blueprint blueprint = Blueprints[SelectedBlueprintIndex].Blueprint;
-                UInt16[] types = { 381, 382, 1791, 1833, 1846, 1859, 1872 }; // HullFullSmall, HullThinSmall, HullExtendedSmall, HullExtendedSmall2, HullExtendedSmall3, HullExtendedSmall4, HullExtendedSmall5
-                byte y = 0;
-                foreach (UInt16 t in types)
-                {
-                    int i = 0;
-                    foreach (string variantName in BlockType.BlockVariants[t])
+                    if (SelectedBlueprintIndex == -1)
                     {
-                        if (variantName != null)
-                        {
-                            byte x = (byte)((i % 8) * 2);
-                            byte z = (byte)((i / 8) * 2);
-                            BlockType bt = BlockType.BlockTypes[t];
-                            byte v = BlockType.GetVariant(t, variantName);
-                            Block block =
-                                new Block(x, y, z)
-                                {
-                                    BlockType = bt,
-                                    Variant = v,
-                                    Colours =
-                                    {
-                                        [0] = ColourIndex.Red,
-                                        [1] = ColourIndex.BrightGreen,
-                                        [2] = ColourIndex.Blue,
-                                        [3] = ColourIndex.Cyan,
-                                        [4] = ColourIndex.Purple,
-                                        [5] = ColourIndex.Yellow
-                                    }
-                                };
-                            blueprint.SetBlock(block);
-                        }
-                        i++;
+                        return;
                     }
-                    y += 2;
-                }
-                blueprint.CountBlocks();
-                blueprint.ComputeDimensions();
+                    Blueprint blueprint = Blueprints[SelectedBlueprintIndex].Blueprint;
+                    UInt16[] types = { 381, 382, 1791, 1833, 1846, 1859, 1872 }; // HullFullSmall, HullThinSmall, HullExtendedSmall, HullExtendedSmall2, HullExtendedSmall3, HullExtendedSmall4, HullExtendedSmall5
+                    byte y = 0;
+                    foreach (UInt16 t in types)
+                    {
+                        int i = 0;
+                        foreach (string variantName in BlockType.BlockVariants[t])
+                        {
+                            if (variantName != null)
+                            {
+                                byte x = (byte)((i % 8) * 2);
+                                byte z = (byte)((i / 8) * 2);
+                                BlockType bt = BlockType.BlockTypes[t];
+                                byte v = BlockType.GetVariant(t, variantName);
+                                Block block =
+                                    new Block(x, y, z)
+                                    {
+                                        BlockType = bt,
+                                        Variant = v,
+                                        Colours =
+                                        {
+                                            [0] = ColourIndex.Red,
+                                            [1] = ColourIndex.BrightGreen,
+                                            [2] = ColourIndex.Blue,
+                                            [3] = ColourIndex.Cyan,
+                                            [4] = ColourIndex.Purple,
+                                            [5] = ColourIndex.Yellow
+                                        }
+                                    };
+                                blueprint.SetBlock(block);
+                            }
+                            i++;
+                        }
+                        y += 2;
+                    }
+                    blueprint.CountBlocks();
+                    blueprint.ComputeDimensions();
 
-                Blueprints[SelectedBlueprintIndex].UpdateViewModels();
-                CurrentCommand = null;
-            }); }
+                    Blueprints[SelectedBlueprintIndex].UpdateViewModels();
+                    CurrentCommand = null;
+                }));
+            }
         }
         private RelayCommand _commandCreateHullVariants;
         #endregion CommandCreateHullVariants
@@ -793,7 +799,7 @@ namespace EPBLab.ViewModel
         {
             get
             {
-                return _commandCreateAllBlocks ??= new RelayCommand(() =>
+                return _commandCreateAllBlocks ?? (_commandCreateAllBlocks = new RelayCommand(() =>
                 {
                     if (SelectedBlueprintIndex == -1)
                     {
@@ -844,7 +850,7 @@ namespace EPBLab.ViewModel
 
                     Blueprints[SelectedBlueprintIndex].UpdateViewModels();
                     CurrentCommand = null;
-                });
+                }));
             }
         }
         private RelayCommand _commandCreateAllBlocks;
@@ -853,14 +859,14 @@ namespace EPBLab.ViewModel
         #region Command_Select
         public RelayCommand<Command> CommandSelect
         {
-            get { return _commandSelect ??= new RelayCommand<Command>((command) => { CurrentCommand = command; }); }
+            get { return _commandSelect ?? (_commandSelect = new RelayCommand<Command>((command) => { CurrentCommand = command; })); }
         }
         private RelayCommand<Command> _commandSelect;
         #endregion Command_Select
         #region Command_Cancel
         public RelayCommand CommandCancel
         {
-            get { return _commandCancel ??= new RelayCommand(() => { CurrentCommand = null; }); }
+            get { return _commandCancel ?? (_commandCancel = new RelayCommand(() => { CurrentCommand = null; })); }
         }
         private RelayCommand _commandCancel;
         #endregion Command_Cancel
