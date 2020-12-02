@@ -112,11 +112,11 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
 
-                <Label Grid.Row="19" Grid.Column="0"  Margin="3, 3, 3, 3" Content="V26Unknown01:" ToolTip="Type: Float" />
-                <TextBox Grid.Row="19" Grid.Column="1" Margin="3, 3, 3, 3" Padding="0,3,0,0" Text="{Binding V26Unknown01}" />
+                <Label Grid.Row="19" Grid.Column="0"  Margin="3, 3, 3, 3" Content="Attack:" ToolTip="Type: Float" />
+                <TextBox Grid.Row="19" Grid.Column="1" Margin="3, 3, 3, 3" Padding="0,3,0,0" Text="{Binding Attack}" />
 
-                <Label Grid.Row="20" Grid.Column="0"  Margin="3, 3, 3, 3" Content="V26Unknown02:" ToolTip="Type: Float" />
-                <TextBox Grid.Row="20" Grid.Column="1" Margin="3, 3, 3, 3" Padding="0,3,0,0" Text="{Binding V26Unknown02}" />
+                <Label Grid.Row="20" Grid.Column="0"  Margin="3, 3, 3, 3" Content="Defence:" ToolTip="Type: Float" />
+                <TextBox Grid.Row="20" Grid.Column="1" Margin="3, 3, 3, 3" Padding="0,3,0,0" Text="{Binding Defence}" />
 
 
                 <Button Grid.Row="2" Grid.Column="2" Grid.RowSpan="3" Margin="3, 3, 3, 3" Command="{Binding CommandComputeDimensions}" ToolTip="Updates Width, Height and Depth according to the actual blocks">

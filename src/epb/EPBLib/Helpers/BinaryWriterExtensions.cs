@@ -47,8 +47,8 @@ namespace EPBLib.Helpers
                 writer.Write(epb.BlockCounts[type]);
             }
 
-            writer.Write(epb.V26Unknown01);
-            writer.Write(epb.V26Unknown02);
+            writer.Write(epb.Attack);
+            writer.Write(epb.Defence);
 
             writer.Write(epb.DeviceGroups);
             writer.WriteEpbDataSection(epb, GenerateSection0);

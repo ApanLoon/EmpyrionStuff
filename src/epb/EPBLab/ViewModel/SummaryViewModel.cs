@@ -201,21 +201,21 @@ namespace EPBLab.ViewModel
         }
         public static readonly string BlockCountsPropertyName = "BlockCounts";
 
-        public float V26Unknown01
+        public float Attack
         {
-            get => Blueprint.V26Unknown01;
+            get => Blueprint.Attack;
             set
             {
-                Blueprint.V26Unknown01 = value;
+                Blueprint.Attack = value;
                 RaisePropertyChanged();
             }
         }
-        public float V26Unknown02
+        public float Defence
         {
-            get => Blueprint.V26Unknown02;
+            get => Blueprint.Defence;
             set
             {
-                Blueprint.V26Unknown02 = value;
+                Blueprint.Defence = value;
                 RaisePropertyChanged();
             }
         }

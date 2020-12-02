@@ -132,10 +132,10 @@ namespace EPBLib.Helpers
 
             if (version >= 26)
             {
-                epb.V26Unknown01 = reader.ReadSingle();
-                Console.WriteLine($"v26Unknown01={epb.V26Unknown01}");
-                epb.V26Unknown02 = reader.ReadSingle();
-                Console.WriteLine($"v26Unknown02={epb.V26Unknown02}");
+                epb.Attack = reader.ReadSingle();
+                Console.WriteLine($"Attack={epb.Attack}");
+                epb.Defence = reader.ReadSingle();
+                Console.WriteLine($"Defence={epb.Defence}");
             }
 
             if (version > 8)

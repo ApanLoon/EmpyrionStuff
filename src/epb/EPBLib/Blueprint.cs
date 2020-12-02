@@ -43,8 +43,8 @@ namespace EPBLib
 
         public Dictionary<BlockType, UInt32> BlockCounts = new Dictionary<BlockType, uint>();
 
-        public float V26Unknown01 { get; set; }
-        public float V26Unknown02 { get; set; }
+        public float Attack { get; set; }
+        public float Defence { get; set; }
 
         public List<DeviceGroup> DeviceGroups = new List<DeviceGroup>();
 
